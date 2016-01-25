@@ -1,0 +1,3 @@
+agil_hall_homepage:
+    path:     /
+    defaults: { _controller: AGILHallBundle:Default:index }

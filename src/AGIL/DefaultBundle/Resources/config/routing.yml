@@ -1,0 +1,3 @@
+agil_default_homepage:
+    path:     /
+    defaults: { _controller: AGILDefaultBundle:Default:index }

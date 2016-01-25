@@ -1,0 +1,3 @@
+agil_chat_homepage:
+    path:     /
+    defaults: { _controller: AGILChatBundle:Default:index }

@@ -1,3 +1,35 @@
+agil_profile:
+    resource: "@AGILProfileBundle/Resources/config/routing.yml"
+    prefix:   /
+
+agil_admin:
+    resource: "@AGILAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+agil_hall:
+    resource: "@AGILHallBundle/Resources/config/routing.yml"
+    prefix:   /
+
+agil_chat:
+    resource: "@AGILChatBundle/Resources/config/routing.yml"
+    prefix:   /
+
+agil_search:
+    resource: "@AGILSearchBundle/Resources/config/routing.yml"
+    prefix:   /
+
+agil_offer:
+    resource: "@AGILOfferBundle/Resources/config/routing.yml"
+    prefix:   /
+
+agil_forum:
+    resource: "@AGILForumBundle/Resources/config/routing.yml"
+    prefix:   /
+
+agil_default:
+    resource: "@AGILDefaultBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
