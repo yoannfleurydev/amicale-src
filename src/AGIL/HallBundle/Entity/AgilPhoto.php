@@ -12,14 +12,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilPhoto
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\HallBundle\Entity\AgilEvent")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="eventId")
+     */
+    private $event;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="photoId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $photoId;
 
     /**
      * @var string
@@ -51,13 +58,13 @@ class AgilPhoto
 
 
     /**
-     * Get id
+     * Get photoId
      *
      * @return integer 
      */
-    public function getId()
+    public function getPhotoId()
     {
-        return $this->id;
+        return $this->photoId;
     }
 
     /**
@@ -150,5 +157,28 @@ class AgilPhoto
     public function getPhotoTitle()
     {
         return $this->photoTitle;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \AGIL\HallBundle\Entity\AgilEvent $event
+     * @return AgilPhoto
+     */
+    public function setEvent(\AGIL\HallBundle\Entity\AgilEvent $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \AGIL\HallBundle\Entity\AgilEvent 
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

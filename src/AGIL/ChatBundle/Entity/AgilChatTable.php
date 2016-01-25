@@ -12,14 +12,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilChatTable
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilUser")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="userId")
+     */
+    private $user;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="chatTableId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $chatTableId;
 
     /**
      * @var string
@@ -37,13 +44,13 @@ class AgilChatTable
 
 
     /**
-     * Get id
+     * Get chatTableId
      *
      * @return integer 
      */
-    public function getId()
+    public function getChatTableId()
     {
-        return $this->id;
+        return $this->chatTableId;
     }
 
     /**
@@ -90,5 +97,28 @@ class AgilChatTable
     public function getChatTablePassword()
     {
         return $this->chatTablePassword;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @return AgilChatTable
+     */
+    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

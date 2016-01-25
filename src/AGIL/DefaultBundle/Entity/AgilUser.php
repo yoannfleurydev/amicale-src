@@ -13,12 +13,23 @@ use FOS\UserBundle\Entity\User as BaseUser;
  */
 class AgilUser extends BaseUser
 {
+
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilMailingList")
+     * @ORM\JoinTable(name="users_mailing_list",
+     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="userId")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="mailingListId", referencedColumnName="mailingListId")}
+     *      )
+     */
+    private $mailingLists;
+
+
+    /**
+     * @ORM\Column(name="userId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $userId;
 
 
     /**
@@ -211,6 +222,55 @@ class AgilUser extends BaseUser
     }
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->mailingLists = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add mailingLists
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists
+     * @return AgilUser
+     */
+    public function addMailingList(\AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists)
+    {
+        $this->mailingLists[] = $mailingLists;
 
+        return $this;
+    }
+
+    /**
+     * Remove mailingLists
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists
+     */
+    public function removeMailingList(\AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists)
+    {
+        $this->mailingLists->removeElement($mailingLists);
+    }
+
+    /**
+     * Get mailingLists
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMailingLists()
+    {
+        return $this->mailingLists;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer 
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
 }

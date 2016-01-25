@@ -15,11 +15,11 @@ class AgilProfileSkillsCategory
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="profileSkillsCategoryId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $profileSkillsCategoryId;
 
     /**
      * @var string
@@ -30,13 +30,13 @@ class AgilProfileSkillsCategory
 
 
     /**
-     * Get id
+     * Get profileSkillsCategoryId
      *
      * @return integer 
      */
-    public function getId()
+    public function getProfileSkillsCategoryId()
     {
-        return $this->id;
+        return $this->profileSkillsCategoryId;
     }
 
     /**

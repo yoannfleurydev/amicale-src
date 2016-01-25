@@ -12,14 +12,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilVideo
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\HallBundle\Entity\AgilEvent")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="eventId")
+     */
+    private $event;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="videoId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $videoId;
 
     /**
      * @var string
@@ -51,13 +58,13 @@ class AgilVideo
 
 
     /**
-     * Get id
+     * Get videoId
      *
      * @return integer 
      */
-    public function getId()
+    public function getVideoId()
     {
-        return $this->id;
+        return $this->videoId;
     }
 
     /**
@@ -150,5 +157,28 @@ class AgilVideo
     public function getVideoTitle()
     {
         return $this->videoTitle;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \AGIL\HallBundle\Entity\AgilEvent $event
+     * @return AgilVideo
+     */
+    public function setEvent(\AGIL\HallBundle\Entity\AgilEvent $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \AGIL\HallBundle\Entity\AgilEvent 
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

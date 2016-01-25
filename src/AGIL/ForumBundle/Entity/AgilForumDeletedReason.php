@@ -15,11 +15,11 @@ class AgilForumDeletedReason
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="forumDeletedReasonId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $forumDeletedReasonId;
 
     /**
      * @var string
@@ -30,13 +30,13 @@ class AgilForumDeletedReason
 
 
     /**
-     * Get id
+     * Get forumDeletedReasonId
      *
      * @return integer 
      */
-    public function getId()
+    public function getForumDeletedReasonId()
     {
-        return $this->id;
+        return $this->forumDeletedReasonId;
     }
 
     /**

@@ -15,11 +15,11 @@ class AgilMailingList
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="mailingListId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $mailingListId;
 
     /**
      * @var string
@@ -30,13 +30,13 @@ class AgilMailingList
 
 
     /**
-     * Get id
+     * Get mailingListId
      *
      * @return integer 
      */
-    public function getId()
+    public function getMailingListId()
     {
-        return $this->id;
+        return $this->mailingListId;
     }
 
     /**
