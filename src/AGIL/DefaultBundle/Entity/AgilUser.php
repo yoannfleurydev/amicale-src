@@ -3,13 +3,13 @@
 namespace AGIL\DefaultBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
  * AgilUser
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="AGIL\DefaultBundle\Entity\AgilUserRepository")
+ * @ORM\Table(name="agil_user")
+ * @ORM\Entity(repositoryClass="AGIL\DefaultBundle\Repository\AgilUserRepository")
  */
 class AgilUser extends BaseUser
 {
@@ -88,7 +88,7 @@ class AgilUser extends BaseUser
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -111,7 +111,7 @@ class AgilUser extends BaseUser
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -134,7 +134,7 @@ class AgilUser extends BaseUser
     /**
      * Get signupDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getSignupDate()
     {
@@ -157,7 +157,7 @@ class AgilUser extends BaseUser
     /**
      * Get birthdayDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirthdayDate()
     {
@@ -180,7 +180,7 @@ class AgilUser extends BaseUser
     /**
      * Get cvUrl
      *
-     * @return string 
+     * @return string
      */
     public function getCvUrl()
     {
@@ -203,10 +203,14 @@ class AgilUser extends BaseUser
     /**
      * Get profilePictureUrl
      *
-     * @return string 
+     * @return string
      */
     public function getProfilePictureUrl()
     {
         return $this->profilePictureUrl;
     }
+
+
+
+
 }
