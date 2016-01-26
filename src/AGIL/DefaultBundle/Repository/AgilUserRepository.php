@@ -2,6 +2,9 @@
 
 namespace AGIL\DefaultBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+
+
 /**
  * AgilUserRepository
  *

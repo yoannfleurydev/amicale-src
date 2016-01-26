@@ -3,6 +3,7 @@
 namespace AGIL\HallBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilVideo
@@ -12,19 +13,33 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilVideo
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\HallBundle\Entity\AgilEvent")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="eventId")
+     */
+    private $event;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="videoId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $videoId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="videoUrl", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="La vidéo doit contenir une url")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $videoUrl;
 
@@ -39,6 +54,11 @@ class AgilVideo
      * @var string
      *
      * @ORM\Column(name="videoDescription", type="text")
+     * @Assert\NotBlank(message="La vidéo doit contenir une description")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $videoDescription;
 
@@ -46,18 +66,25 @@ class AgilVideo
      * @var string
      *
      * @ORM\Column(name="videoTitle", type="string", length=100)
+     * @Assert\NotBlank(message="La vidéo doit contenir un titre")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $videoTitle;
 
 
     /**
-     * Get id
+     * Get videoId
      *
      * @return integer 
      */
-    public function getId()
+    public function getVideoId()
     {
-        return $this->id;
+        return $this->videoId;
     }
 
     /**
@@ -150,5 +177,28 @@ class AgilVideo
     public function getVideoTitle()
     {
         return $this->videoTitle;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \AGIL\HallBundle\Entity\AgilEvent $event
+     * @return AgilVideo
+     */
+    public function setEvent(\AGIL\HallBundle\Entity\AgilEvent $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \AGIL\HallBundle\Entity\AgilEvent 
+     */
+    public function getEvent()
+    {
+        return $this->event;
     }
 }

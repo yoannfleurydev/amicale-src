@@ -3,6 +3,7 @@
 namespace AGIL\HallBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilEvent
@@ -12,19 +13,34 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilEvent
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilUser")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="userId")
+     */
+    private $user;
+
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="eventId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $eventId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="eventTitle", type="string", length=255)
+     * @Assert\NotBlank(message="Le titre ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $eventTitle;
 
@@ -39,6 +55,7 @@ class AgilEvent
      * @var \DateTime
      *
      * @ORM\Column(name="eventDate", type="datetime")
+     * @Assert\NotBlank(message="La date de l'évènement doit être spécifiée")
      */
     private $eventDate;
 
@@ -46,18 +63,23 @@ class AgilEvent
      * @var string
      *
      * @ORM\Column(name="eventText", type="text")
+     * @Assert\NotBlank(message="La description de l'évènement ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $eventText;
 
 
     /**
-     * Get id
+     * Get eventId
      *
      * @return integer 
      */
-    public function getId()
+    public function getEventId()
     {
-        return $this->id;
+        return $this->eventId;
     }
 
     /**
@@ -150,5 +172,28 @@ class AgilEvent
     public function getEventText()
     {
         return $this->eventText;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @return AgilEvent
+     */
+    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

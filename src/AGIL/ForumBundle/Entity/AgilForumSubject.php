@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilForumSubject
@@ -12,19 +13,50 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilForumSubject
 {
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
+     * @ORM\JoinTable(name="agil_forum_subject_tags",
+     *      joinColumns={@ORM\JoinColumn(name="forumSubjectId", referencedColumnName="forumSubjectId")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="tagId")}
+     *      )
+     */
+    private $tags;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilUser")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="userId")
+     */
+    private $user;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\ForumBundle\Entity\AgilForumCategory")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="forumCategoryId")
+     */
+    private $category;
+
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="forumSubjectId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $forumSubjectId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="forumSubjectTitle", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="Le titre ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $forumSubjectTitle;
 
@@ -39,18 +71,23 @@ class AgilForumSubject
      * @var string
      *
      * @ORM\Column(name="forumSubjectDescription", type="text")
+     * @Assert\NotBlank(message="La description ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $forumSubjectDescription;
 
 
     /**
-     * Get id
+     * Get forumSubjectId
      *
      * @return integer 
      */
-    public function getId()
+    public function getForumSubjectId()
     {
-        return $this->id;
+        return $this->forumSubjectId;
     }
 
     /**
@@ -120,5 +157,94 @@ class AgilForumSubject
     public function getForumSubjectDescription()
     {
         return $this->forumSubjectDescription;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @return AgilForumSubject
+     */
+    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AGIL\ForumBundle\Entity\AgilForumCategory $category
+     * @return AgilForumSubject
+     */
+    public function setCategory(\AGIL\ForumBundle\Entity\AgilForumCategory $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AGIL\ForumBundle\Entity\AgilForumCategory 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     * @return AgilForumSubject
+     */
+    public function addTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     */
+    public function removeTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

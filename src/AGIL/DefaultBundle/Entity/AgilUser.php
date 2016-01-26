@@ -4,6 +4,7 @@ namespace AGIL\DefaultBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilUser
@@ -13,25 +14,48 @@ use FOS\UserBundle\Entity\User as BaseUser;
  */
 class AgilUser extends BaseUser
 {
+
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilMailingList")
+     * @ORM\JoinTable(name="agil_users_mailing_list",
+     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="userId")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="mailingListId", referencedColumnName="mailingListId")}
+     *      )
+     */
+    private $mailingLists;
+
+
+    /**
+     * @ORM\Column(name="userId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $userId;
 
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=50)
+     * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 50,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=50)
+     * @ORM\Column(name="firstName", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 50,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $firstName;
 
@@ -48,7 +72,7 @@ class AgilUser extends BaseUser
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthdayDate", type="datetime")
+     * @ORM\Column(name="birthdayDate", type="datetime", nullable=true)
      */
     protected $birthdayDate;
 
@@ -56,7 +80,13 @@ class AgilUser extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="cvUrl", type="string", length=255)
+     * @ORM\Column(name="cvUrl", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $cvUrl;
 
@@ -64,7 +94,13 @@ class AgilUser extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="profilePictureUrl", type="string", length=255)
+     * @ORM\Column(name="profilePictureUrl", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $profilePictureUrl;
 
@@ -211,6 +247,55 @@ class AgilUser extends BaseUser
     }
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->mailingLists = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add mailingLists
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists
+     * @return AgilUser
+     */
+    public function addMailingList(\AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists)
+    {
+        $this->mailingLists[] = $mailingLists;
 
+        return $this;
+    }
+
+    /**
+     * Remove mailingLists
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists
+     */
+    public function removeMailingList(\AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists)
+    {
+        $this->mailingLists->removeElement($mailingLists);
+    }
+
+    /**
+     * Get mailingLists
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMailingLists()
+    {
+        return $this->mailingLists;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer 
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
 }
