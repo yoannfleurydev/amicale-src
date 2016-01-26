@@ -46,9 +46,9 @@ class AgilChatTable
     /**
      * @var string
      *
-     * @ORM\Column(name="chatTablePassword", type="string", length=255)
+     * @ORM\Column(name="chatTablePassword", type="string", length=255, nullable=true)
      * @Assert\Length(
-     *      min = 2,
+     *      min = 0,
      *      max = 255,
      *      minMessage = "La taille minimale est de {{ limit }} caractères",
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"

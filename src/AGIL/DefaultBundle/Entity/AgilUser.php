@@ -36,7 +36,7 @@ class AgilUser extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
+     * @ORM\Column(name="userLastName", type="string", length=50, nullable=true)
      * @Assert\Length(
      *      min = 0,
      *      max = 50,
@@ -44,12 +44,12 @@ class AgilUser extends BaseUser
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
      */
-    protected $lastName;
+    protected $userLastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=50, nullable=true)
+     * @ORM\Column(name="userFirstName", type="string", length=50, nullable=true)
      * @Assert\Length(
      *      min = 0,
      *      max = 50,
@@ -57,30 +57,30 @@ class AgilUser extends BaseUser
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
      */
-    protected $firstName;
+    protected $userFirstName;
 
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="signupDate", type="datetime")
+     * @ORM\Column(name="userSignupDate", type="datetime")
      */
-    protected $signupDate;
+    protected $userSignupDate;
 
 
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthdayDate", type="datetime", nullable=true)
+     * @ORM\Column(name="userBirthdayDate", type="datetime", nullable=true)
      */
-    protected $birthdayDate;
+    protected $userBirthdayDate;
 
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cvUrl", type="string", length=255, nullable=true)
+     * @ORM\Column(name="userCVUrl", type="string", length=255, nullable=true)
      * @Assert\Length(
      *      min = 0,
      *      max = 255,
@@ -88,13 +88,13 @@ class AgilUser extends BaseUser
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
      */
-    protected $cvUrl;
+    protected $userCVUrl;
 
 
     /**
      * @var string
      *
-     * @ORM\Column(name="profilePictureUrl", type="string", length=255, nullable=true)
+     * @ORM\Column(name="userProfilePictureUrl", type="string", length=255, nullable=true)
      * @Assert\Length(
      *      min = 0,
      *      max = 255,
@@ -102,149 +102,7 @@ class AgilUser extends BaseUser
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
      */
-    protected $profilePictureUrl;
-
-
-
-
-
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     * @return AgilUser
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     * @return AgilUser
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Set signupDate
-     *
-     * @param \DateTime $signupDate
-     * @return AgilUser
-     */
-    public function setSignupDate($signupDate)
-    {
-        $this->signupDate = $signupDate;
-
-        return $this;
-    }
-
-    /**
-     * Get signupDate
-     *
-     * @return \DateTime
-     */
-    public function getSignupDate()
-    {
-        return $this->signupDate;
-    }
-
-    /**
-     * Set birthdayDate
-     *
-     * @param \DateTime $birthdayDate
-     * @return AgilUser
-     */
-    public function setBirthdayDate($birthdayDate)
-    {
-        $this->birthdayDate = $birthdayDate;
-
-        return $this;
-    }
-
-    /**
-     * Get birthdayDate
-     *
-     * @return \DateTime
-     */
-    public function getBirthdayDate()
-    {
-        return $this->birthdayDate;
-    }
-
-    /**
-     * Set cvUrl
-     *
-     * @param string $cvUrl
-     * @return AgilUser
-     */
-    public function setCvUrl($cvUrl)
-    {
-        $this->cvUrl = $cvUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get cvUrl
-     *
-     * @return string
-     */
-    public function getCvUrl()
-    {
-        return $this->cvUrl;
-    }
-
-    /**
-     * Set profilePictureUrl
-     *
-     * @param string $profilePictureUrl
-     * @return AgilUser
-     */
-    public function setProfilePictureUrl($profilePictureUrl)
-    {
-        $this->profilePictureUrl = $profilePictureUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get profilePictureUrl
-     *
-     * @return string
-     */
-    public function getProfilePictureUrl()
-    {
-        return $this->profilePictureUrl;
-    }
+    protected $userProfilePictureUrl;
 
 
     /**
@@ -297,5 +155,145 @@ class AgilUser extends BaseUser
     public function getUserId()
     {
         return $this->userId;
+    }
+
+    
+
+    /**
+     * Set userLastName
+     *
+     * @param string $userLastName
+     * @return AgilUser
+     */
+    public function setUserLastName($userLastName)
+    {
+        $this->userLastName = $userLastName;
+
+        return $this;
+    }
+
+    /**
+     * Get userLastName
+     *
+     * @return string 
+     */
+    public function getUserLastName()
+    {
+        return $this->userLastName;
+    }
+
+    /**
+     * Set userFirstName
+     *
+     * @param string $userFirstName
+     * @return AgilUser
+     */
+    public function setUserFirstName($userFirstName)
+    {
+        $this->userFirstName = $userFirstName;
+
+        return $this;
+    }
+
+    /**
+     * Get userFirstName
+     *
+     * @return string 
+     */
+    public function getUserFirstName()
+    {
+        return $this->userFirstName;
+    }
+
+    /**
+     * Set userSignupDate
+     *
+     * @param \DateTime $userSignupDate
+     * @return AgilUser
+     */
+    public function setUserSignupDate($userSignupDate)
+    {
+        $this->userSignupDate = $userSignupDate;
+
+        return $this;
+    }
+
+    /**
+     * Get userSignupDate
+     *
+     * @return \DateTime 
+     */
+    public function getUserSignupDate()
+    {
+        return $this->userSignupDate;
+    }
+
+    /**
+     * Set userBirthdayDate
+     *
+     * @param \DateTime $userBirthdayDate
+     * @return AgilUser
+     */
+    public function setUserBirthdayDate($userBirthdayDate)
+    {
+        $this->userBirthdayDate = $userBirthdayDate;
+
+        return $this;
+    }
+
+    /**
+     * Get userBirthdayDate
+     *
+     * @return \DateTime 
+     */
+    public function getUserBirthdayDate()
+    {
+        return $this->userBirthdayDate;
+    }
+
+    /**
+     * Set userCVUrl
+     *
+     * @param string $userCVUrl
+     * @return AgilUser
+     */
+    public function setUserCVUrl($userCVUrl)
+    {
+        $this->userCVUrl = $userCVUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get userCVUrl
+     *
+     * @return string 
+     */
+    public function getUserCVUrl()
+    {
+        return $this->userCVUrl;
+    }
+
+    /**
+     * Set userProfilePictureUrl
+     *
+     * @param string $userProfilePictureUrl
+     * @return AgilUser
+     */
+    public function setUserProfilePictureUrl($userProfilePictureUrl)
+    {
+        $this->userProfilePictureUrl = $userProfilePictureUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get userProfilePictureUrl
+     *
+     * @return string 
+     */
+    public function getUserProfilePictureUrl()
+    {
+        return $this->userProfilePictureUrl;
     }
 }
