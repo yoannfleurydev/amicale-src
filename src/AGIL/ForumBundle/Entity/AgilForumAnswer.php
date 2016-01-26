@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilForumAnswer
@@ -32,6 +33,11 @@ class AgilForumAnswer
      * @var string
      *
      * @ORM\Column(name="forumAnswerText", type="text")
+     * @Assert\NotBlank(message="La réponse ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $forumAnswerText;
 

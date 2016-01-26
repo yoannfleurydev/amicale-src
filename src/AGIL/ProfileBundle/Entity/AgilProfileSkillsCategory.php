@@ -3,6 +3,7 @@
 namespace AGIL\ProfileBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilProfileSkillsCategory
@@ -25,6 +26,13 @@ class AgilProfileSkillsCategory
      * @var string
      *
      * @ORM\Column(name="profileSkillsCategoryName", type="string", length=30, unique=true)
+     * @Assert\NotBlank(message="Le nom ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $profileSkillsCategoryName;
 

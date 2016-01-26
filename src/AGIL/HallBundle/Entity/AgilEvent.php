@@ -3,6 +3,7 @@
 namespace AGIL\HallBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilEvent
@@ -33,6 +34,13 @@ class AgilEvent
      * @var string
      *
      * @ORM\Column(name="eventTitle", type="string", length=255)
+     * @Assert\NotBlank(message="Le titre ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $eventTitle;
 
@@ -47,6 +55,7 @@ class AgilEvent
      * @var \DateTime
      *
      * @ORM\Column(name="eventDate", type="datetime")
+     * @Assert\NotBlank(message="La date de l'évènement doit être spécifiée")
      */
     private $eventDate;
 
@@ -54,6 +63,11 @@ class AgilEvent
      * @var string
      *
      * @ORM\Column(name="eventText", type="text")
+     * @Assert\NotBlank(message="La description de l'évènement ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $eventText;
 

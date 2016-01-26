@@ -4,6 +4,7 @@ namespace AGIL\DefaultBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilUser
@@ -35,14 +36,26 @@ class AgilUser extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=50)
+     * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 50,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=50)
+     * @ORM\Column(name="firstName", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 50,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $firstName;
 
@@ -59,7 +72,7 @@ class AgilUser extends BaseUser
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthdayDate", type="datetime")
+     * @ORM\Column(name="birthdayDate", type="datetime", nullable=true)
      */
     protected $birthdayDate;
 
@@ -67,7 +80,13 @@ class AgilUser extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="cvUrl", type="string", length=255)
+     * @ORM\Column(name="cvUrl", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $cvUrl;
 
@@ -75,7 +94,13 @@ class AgilUser extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="profilePictureUrl", type="string", length=255)
+     * @ORM\Column(name="profilePictureUrl", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     protected $profilePictureUrl;
 

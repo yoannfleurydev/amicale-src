@@ -3,6 +3,7 @@
 namespace AGIL\ProfileBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilSkill
@@ -38,6 +39,11 @@ class AgilSkill
      * @var int
      *
      * @ORM\Column(name="skillLevel", type="integer")
+     * @Assert\NotBlank(message="Le niveau /10 doit être spécifié")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 10
+     * )
      */
     private $skillLevel;
 

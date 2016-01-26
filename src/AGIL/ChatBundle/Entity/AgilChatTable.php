@@ -3,6 +3,7 @@
 namespace AGIL\ChatBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilChatTable
@@ -32,6 +33,13 @@ class AgilChatTable
      * @var string
      *
      * @ORM\Column(name="chatTableName", type="string", length=50, unique=true)
+     * @Assert\NotBlank(message="Le nom d'une table ne peut pas être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $chatTableName;
 
@@ -39,6 +47,12 @@ class AgilChatTable
      * @var string
      *
      * @ORM\Column(name="chatTablePassword", type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $chatTablePassword;
 

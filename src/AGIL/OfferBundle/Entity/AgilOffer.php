@@ -40,17 +40,31 @@ class AgilOffer
      */
     private $offerId;
 
+
     /**
      * @var string
      *
      * @ORM\Column(name="offerTitle", type="string", length=255)
+     * @Assert\NotBlank(message="L'offre doit contenir un titre")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $offerTitle;
+
 
     /**
      * @var string
      *
      * @ORM\Column(name="offerText", type="text")
+     * @Assert\NotBlank(message="L'offre doit contenir une description")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $offerText;
 
@@ -66,6 +80,12 @@ class AgilOffer
      * @var string
      *
      * @ORM\Column(name="offerAuthor", type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 100,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $offerAuthor;
 
@@ -87,6 +107,12 @@ class AgilOffer
      * @var string
      *
      * @ORM\Column(name="offerPdfUrl", type="string", length=255, nullable=true, unique=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $offerPdfUrl;
 

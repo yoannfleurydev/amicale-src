@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilForumSubject
@@ -49,6 +50,13 @@ class AgilForumSubject
      * @var string
      *
      * @ORM\Column(name="forumSubjectTitle", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="Le titre ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $forumSubjectTitle;
 
@@ -63,6 +71,11 @@ class AgilForumSubject
      * @var string
      *
      * @ORM\Column(name="forumSubjectDescription", type="text")
+     * @Assert\NotBlank(message="La description ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $forumSubjectDescription;
 

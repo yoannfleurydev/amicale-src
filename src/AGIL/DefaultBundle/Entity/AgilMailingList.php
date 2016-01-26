@@ -3,6 +3,7 @@
 namespace AGIL\DefaultBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilMailingList
@@ -25,6 +26,12 @@ class AgilMailingList
      * @var string
      *
      * @ORM\Column(name="mailingListName", type="string", length=100, unique=true)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $mailingListName;
 

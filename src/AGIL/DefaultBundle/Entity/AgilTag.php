@@ -3,6 +3,7 @@
 namespace AGIL\DefaultBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilTag
@@ -32,6 +33,13 @@ class AgilTag
      * @var string
      *
      * @ORM\Column(name="tagName", type="string", length=20, unique=true)
+     * @Assert\NotBlank(message="Le nom d'un tag ne peut pas être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 20,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $tagName;
 
