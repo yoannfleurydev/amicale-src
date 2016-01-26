@@ -16,7 +16,7 @@ class AgilOffer
 
     /**
      * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
-     * @ORM\JoinTable(name="offer_tags",
+     * @ORM\JoinTable(name="agil_offer_tags",
      *      joinColumns={@ORM\JoinColumn(name="offerId", referencedColumnName="offerId")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="tagId")}
      *      )
