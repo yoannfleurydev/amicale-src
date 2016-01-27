@@ -11,7 +11,7 @@ agil_profile_edit:
     defaults: { _controller: AGILProfileBundle:User:edit }
     method:   [POST]
 
-agil_profile_show:
+agil_profile_showProfil:
     path:    /profil/{id}
-    defaults: { _controller: AGILProfileBundle:User: }
+    defaults: { _controller: AGILProfileBundle:User:showProfil }
     requirement: \d*
