@@ -1,3 +1,17 @@
-agil_profile_homepage:
-    path:     /
-    defaults: { _controller: AGILProfileBundle:Default:index }
+#agil_profile_homepage:
+#    path:     /
+#    defaults: { _controller: AGILProfileBundle:Default:index }
+agil_profile_show:
+    path:     /profile
+    defaults: { _controller: AGILProfileBundle:User:show }
+    method:   [GET]
+
+agil_profile_edit:
+    path:     /profile
+    defaults: { _controller: AGILProfileBundle:User:edit }
+    method:   [POST]
+
+agil_profile_show:
+    path:    /profil/{id}
+    defaults: { _controller: AGILProfileBundle:User: }
+    requirement: \d*
