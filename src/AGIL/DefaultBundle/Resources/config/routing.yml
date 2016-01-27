@@ -2,6 +2,6 @@ agil_default_homepage:
     path: /
     defaults: { _controller: AGILDefaultBundle:Default:index }
 
-agil_add_tag:
+agil_tags_search:
     path : /tags/search
     defaults: { _controller: AGILDefaultBundle:Tag:search }
