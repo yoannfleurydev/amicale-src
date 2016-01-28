@@ -52,6 +52,6 @@ class TagController extends Controller {
 		else {
 			throw new InvalidArgumentException('Les tags ne sont pas admis sur cet objet');
 		}
-		$this->addFlash('notice', 'Tags ajoutés avec succès !');
+		$this->addFlash('success', 'Tags ajoutés avec succès !');
 	}
 }
