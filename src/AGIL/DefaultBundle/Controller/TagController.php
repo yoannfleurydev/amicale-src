@@ -28,14 +28,14 @@ class TagController extends Controller {
 
 	/**
 	 * @param $object L'objet qui doit (et peut) recevoir un tag
-	 * @param AgilTag $tag Le tag à ajouter
+	 * @param AgilTag $tags Le tag à ajouter
 	 * Ajoute un tag à un objet candidat
 	 */
-	public function addTags($object, Array $tag) {
+	public function addTags($object, Array $tags) {
 
 		// Si c'est une compétence, il n'y a qu'un tag
 		if ($object instanceof AgilSkill ) {
-			$object->setTag($tag[0]);
+			$object->setTag($tags[0]);
 		}
 		// Si c'est une offre d'emploi/stage
 		elseif ($object instanceof AgilOffer || $object instanceof AgilForumSubject) {
@@ -44,7 +44,7 @@ class TagController extends Controller {
 			 * car la fonction de l'entité ajoute l'argument
 			 * que l'on passe à un tableau.
 			 */
-			foreach($tag as $t) {
+			foreach ($tags as $t) {
 				$object->addTag($t);
 			}
 		}
