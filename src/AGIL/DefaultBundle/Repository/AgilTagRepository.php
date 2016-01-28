@@ -13,14 +13,15 @@ use Doctrine\ORM\EntityRepository;
 class AgilTagRepository extends EntityRepository
 {
 	/**
-	 * @param $w Le premier caractère du tag
-	 * @return Un texte en JSON avec la liste des tags correspondants
+	 * @param $firstLetter String Le premier caractère du tag
+	 * @return String Un texte en JSON avec la liste des tags correspondants
 	 * Sert à trouver les tags dont la première lettre est $w
 	 */
-	function getStartedTagsList($w) {
+	function getTagsList($firstLetter) {
 		// On créé la requête
-		$r = $this->createQueryBuilder('t')->where('t.tagName LIKE :string')->setParameter('string', $w.'%');
-		// On l'execute et on renvoit le résultat
-		return $r->getQuery()->getResult();
+		$request = $this->createQueryBuilder('t')->where('t.tagName LIKE :string')->setParameter('string', $firstLetter.'%');
+		// On l'execute et on retourne le résultat
+		/* /!\ C'est une liste d'objet de type AgilTag /!\ */
+		return $request->getQuery()->getResult();
 	}
 }
