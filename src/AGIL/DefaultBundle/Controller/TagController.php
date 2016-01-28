@@ -11,8 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class TagController extends Controller {
 
+	public function testFuncAction() {
+		return $this->render('AGILDefaultBundle:Default:tags.html.twig');
+	}
+
 	/**
-	 * @param $char Le préfixe
+	 * @param $char String Le préfixe
 	 * @return string Ensemble de résultat au format JSON
 	 * Récupère une liste de tags dont le préfixe est $char et la renvoie au format JSON
 	 */
@@ -27,7 +31,7 @@ class TagController extends Controller {
 	}
 
 	/**
-	 * @param $object L'objet qui doit (et peut) recevoir un tag
+	 * @param $object mixed L'objet qui doit (et peut) recevoir un tag
 	 * @param AgilTag $tags Le tag à ajouter
 	 * Ajoute un tag à un objet candidat
 	 */
