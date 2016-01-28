@@ -2,6 +2,7 @@
 
 namespace AGIL\DefaultBundle\Controller;
 
+use AGIL\ForumBundle\Entity\AgilForumSubject;
 use AGIL\OfferBundle\Entity\AgilOffer;
 use AGIL\ProfileBundle\Entity\AgilSkill;
 use InvalidArgumentException;
@@ -33,11 +34,11 @@ class TagController extends Controller {
 	public function addTags($object, Array $tag) {
 
 		// Si c'est une compétence, il n'y a qu'un tag
-		if ($object instanceof AgilSkill) {
+		if ($object instanceof AgilSkill ) {
 			$object->setTag($tag[0]);
 		}
 		// Si c'est une offre d'emploi/stage
-		elseif ($object instanceof AgilOffer) {
+		elseif ($object instanceof AgilOffer || $object instanceof AgilForumSubject) {
 			/*
 			 * On est obligé d'ajouter les tags un à un
 			 * car la fonction de l'entité ajoute l'argument
