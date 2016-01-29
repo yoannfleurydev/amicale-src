@@ -1,0 +1,28 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <table>
+        <tr>
+            <td>Nom</td>
+            <td>Mail</td>
+            {#<td>Rôle</td>#}
+            <td>Inscrit le</td>
+        </tr>
+    {% for user in users %}
+
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            {# <td>{{ user.roles }}</td> #}
+            <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
+        </tr>
+
+    {% endfor %}
+    </table>
+
+    <div class="text-center">
+        {% include 'AGILAdminBundle:Default:pagination.html.twig' %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "AGILUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <form class="fos_user_registration_register" action="{{ path('fos_user_registration_register') }}" method="POST">
+        {{ form_widget(form) }}
+
+        <div><input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" /></div>
+    </form>
+{% endblock %}

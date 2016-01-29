@@ -1,3 +1,11 @@
 agil_admin_homepage:
-    path:     /
-    defaults: { _controller: AGILAdminBundle:Default:index }
+    path:     /admin
+    defaults: { _controller: AGILAdminBundle:Default:admin }
+
+agil_admin_user:
+    path:     /admin/user/{page}
+    defaults:
+        _controller: AGILAdminBundle:User:adminUser
+        page:  1
+    requirements:
+            page: \d+
