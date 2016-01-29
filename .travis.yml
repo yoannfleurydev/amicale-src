@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - hhvm
+  - nightly
+
+env:
+  - SYMFONY_VERSION="2.8.*" DB=mysql
+
+before_script:
+  - composer install
+
+notifications:
+  email:
+    - yoann.fleury@yahoo.com
