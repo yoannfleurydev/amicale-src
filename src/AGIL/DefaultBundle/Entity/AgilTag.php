@@ -58,6 +58,23 @@ class AgilTag
      */
     private $tagColor;
 
+    /**
+     * AgilTag constructor.
+     * @param $name
+     * @param $color
+     * @param $skillCategory
+     */
+    public function __construct($name,$color,$skillCategory){
+        $this->tagName = $name;
+        $this->tagColor = $color;
+
+        if($skillCategory != NULL){
+            $this->skillCategory = $skillCategory;
+        }
+    }
+
+
+
 
     /**
      * Get tagId

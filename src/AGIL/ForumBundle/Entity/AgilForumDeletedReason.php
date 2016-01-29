@@ -36,6 +36,14 @@ class AgilForumDeletedReason
 
 
     /**
+     * AgilForumDeletedReason constructor.
+     * @param $text
+     */
+    public function __construct($text){
+        $this->forumDeletedReasonText = $text;
+    }
+
+    /**
      * Get forumDeletedReasonId
      *
      * @return integer 

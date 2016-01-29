@@ -38,6 +38,15 @@ class AgilProfileSkillsCategory
 
 
     /**
+     * AgilProfileSkillsCategory constructor.
+     * @param $name
+     */
+    public function __construct($name){
+        $this->profileSkillsCategoryName = $name;
+    }
+
+
+    /**
      * Get profileSkillsCategoryId
      *
      * @return integer 

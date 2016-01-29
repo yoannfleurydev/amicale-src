@@ -68,6 +68,19 @@ class AgilForumCategory
 
 
     /**
+     * AgilForumCategory constructor.
+     * @param $name
+     * @param $icon
+     * @param $desc
+     */
+    public function __construct($name,$icon,$desc){
+        $this->forumCategoryName = $name;
+        $this->forumCategoryIcon = $icon;
+        $this->forumCategoryText = $desc;
+    }
+
+
+    /**
      * Get forumCategoryId
      *
      * @return integer 
