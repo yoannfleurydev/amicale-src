@@ -1,1 +1,232 @@
-Hello World!
+{% extends "::base.html.twig" %}
+{% block body %}
+    <p>
+        si non connecté
+    </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Qui sommes nous ?
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Bienvenue sur le site AMICALE GIL, ce site à pour but de faciliter l'échange entre les étudiants et ancien
+                        étudiants du master GIL, mais aussi avec les professionnels. Il permet de faciliter la diffusion des offres
+                        d'emploi ou de stage, grace à un accès direct aux étudiants.
+                    </p>
+                    <p>
+                        Le master GIL (Génie de l'Informatique Logicielle) est enseigné à l'université de Rouen, au Madrillet. Ce
+                        master à pour but d'enseigné les diverses techniques de développement afin de formé de futurs développeurs.
+                        Une trentaine d’enseignants et d’enseignants-chercheurs permanents, ainsi qu’une vingtaine d’intervenants
+                        professionnels, dispensent depuis de nombreuses années un enseignement théorique et professionnel de qualité
+                        ayant permis à nos étudiants des filières professionnelles des promotions 2005 à 2008 d’être employés à <strong>100 %</strong>
+                        en CDI (source : Observatoire de la vie étudiante, université de Rouen).
+                        Vous trouverez la plaquette détaillant le Master GIL (première annèe) <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" >ici</a>
+                    </p>
+                    <p>
+                        Ce site à été effectué, par sept étudiants du master GIL, à l'occasion d'un projet annuel pendant la première
+                        année du master.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Vous souhaitez déposer une oﬀre de stage à destination des étudiants du Master GIL ou une oﬀre d’emploi à destination des anciens étudiants du Master GIL ?
+                    <a href="#" >Cliquer ici</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                             Liens Utiles
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="https://dpt-info-sciences.univ-rouen.fr/index.php" class="list-group-item">
+                            Site de l'université.
+                        </a>
+                        <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" class="list-group-item">
+                            Contenu pédagogique, première année.
+                        </a>
+                        <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22" class="list-group-item">
+                            Contenu pédagogique, deuxième année.
+                        </a>
+                    </div>
+                    Une liste de liens utiles en rapport avec le master GIL.
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>
+        si connecté
+    </p>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Calendrier
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    Le calendrier avec les prochains événements.
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Dernières annonces
+                        </span>
+                    </h2>
+                    <!--Les dernières annonces de stage et d’emploi postées sur le site.-->
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <p>Stagiaire en Développement Mobile H/F 19 Oct. 2015</p>
+                            <span class="label label-default">#PHP</span>
+                            <span class="label label-default">#JAVASCRIPT</span>
+                            <span class="label label-default">#SQL</span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p>CDI Chef de projet cher Zoranna 18 Oct. 2015</p>
+                            <span class="label label-default">#BUBULLES</span>
+                            <span class="label label-default">#SQL</span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p>Conférence Codeur en Seine - Le Web d'aujourd'hui ! 12 Oct. 2015</p>
+                            <span class="label label-default">#HTML5</span>
+                            <span class="label label-default">#CSS3</span>
+                            <span class="label label-default">#JAVASCRIPT</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Tables de discussion
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    Les tables de discussion actives.
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <p>GP1 master 1 GIL 19 Oct. 2015</p>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p>Projet SUDOKU 20 Oct. 2015</p>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p>GP1 master 1 SSI 64 Oct. 2035</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Dernières sujets
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <p>Initiation au C++  19 Oct. 2015</p>
+                            <span class="label label-default">#C++</span>
+                            <span class="label label-default">#COURS</span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p>Comment utiliser symfony  20 Oct. 2015</p>
+                            <span class="label label-default">#PHP</span>
+                            <span class="label label-default">#SYMFONY</span>
+                            <span class="label label-default">#WEB</span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p>Le web pour les nuls  64 Oct. 2035</p>
+                            <span class="label label-default">#HTML5</span>
+                            <span class="label label-default">#CSS3</span>
+                            <span class="label label-default">#JAVASCRIPT</span>
+                            <span class="label label-default">#PHP</span>
+                            <span class="label label-default">#WEB</span>
+                            <span class="label label-default">#COURS</span>
+                        </a>
+                    </div>
+                    Les derniers sujets postés sur le forum ou bien ceux qui ont des réponses récentes.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Informations utiles
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fidp.univ-rouen.fr%2Fidp%2FAuthn%2FRemoteUser" class="list-group-item">L'ENT</a>
+                        <a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fwebmail.univ-rouen.fr%2FSOGo%2Fso%2Findex" class="list-group-item">Webmail</a>
+                    </div>
+                    Les informations utiles comme les liens rapides vers les outils de l’Université.
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Boite à suggestions
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="idea">Une idée ?</label>
+                            <textarea class="form-control" name="idea" id="idea" row=5 placeholder="Entrer votre idée ici..."></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Valider">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    La liste des idées déposées pourra être accessible via l’administration.
+
+{% endblock %}

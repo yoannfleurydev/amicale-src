@@ -1,3 +1,7 @@
+agil_default:
+    resource: "@AGILDefaultBundle/Resources/config/routing.yml"
+    prefix:   /
+
 agil_profile:
     resource: "@AGILProfileBundle/Resources/config/routing.yml"
     prefix:   /
@@ -24,10 +28,6 @@ agil_offer:
 
 agil_forum:
     resource: "@AGILForumBundle/Resources/config/routing.yml"
-    prefix:   /
-
-agil_default:
-    resource: "@AGILDefaultBundle/Resources/config/routing.yml"
     prefix:   /
 
 app:
