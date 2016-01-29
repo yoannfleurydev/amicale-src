@@ -1,20 +1,16 @@
-#agil_profile_homepage:
-#    path:     /
-#    defaults: { _controller: AGILProfileBundle:Default:index }
-
 agil_profile:
-    path:     /profil
+    path:     /profile
     defaults: { _controller: AGILProfileBundle:User:index }
     methods:   [GET]
 
 agil_profile_id:
-    path:     /profil/{id}
+    path:     /profile/{id}
     defaults: { _controller: AGILProfileBundle:User:showProfil }
     requirements:
         id:   \d*
     methods:   [GET]
 
 agil_profile_edit:
-    path:     /profil
+    path:     /profile
     defaults: { _controller: AGILProfileBundle:User:edit }
     methods:   [POST]
