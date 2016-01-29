@@ -6,9 +6,10 @@ use AGIL\ForumBundle\Entity\AgilForumSubject;
 use AGIL\OfferBundle\Entity\AgilOffer;
 use AGIL\ProfileBundle\Entity\AgilSkill;
 use InvalidArgumentException;
-use Proxies\__CG__\AGIL\DefaultBundle\Entity\AgilTag;
+use AGIL\DefaultBundle\Entity\AgilTag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TagController extends Controller {
 
@@ -31,10 +32,16 @@ class TagController extends Controller {
 			->getDoctrine()
 			->getManager()
 			->getRepository('AGILDefaultBundle:AgilTag')
-			->getTagsList($prefix);
+			// TODO changer 'a' pour $prefix
+			->getTagsList('a');
+
+		$jsonTagsList = Array();
+		foreach ($tagsList as $tag) {
+			$jsonTagsList[] = $tag->getTagName();
+		}
 
 		// Retourne le tableau encodé en JSON
-		return json_encode($tagsList);
+		return new Response(json_encode($jsonTagsList));
 	}
 
 	/**
