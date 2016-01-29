@@ -6,6 +6,6 @@ agil_tags_search:
     path : /tags/search
     defaults: { _controller: AGILDefaultBundle:Tag:search }
 
-flo_tag_test:
+agil_tags_test:
     path: /tags/test
     defaults: { _controller: AGILDefaultBundle:Tag:testFunc }
