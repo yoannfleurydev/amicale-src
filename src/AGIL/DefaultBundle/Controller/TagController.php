@@ -2,11 +2,6 @@
 
 namespace AGIL\DefaultBundle\Controller;
 
-use AGIL\ForumBundle\Entity\AgilForumSubject;
-use AGIL\OfferBundle\Entity\AgilOffer;
-use AGIL\ProfileBundle\Entity\AgilSkill;
-use InvalidArgumentException;
-use AGIL\DefaultBundle\Entity\AgilTag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
