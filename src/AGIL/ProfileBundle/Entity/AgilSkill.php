@@ -22,7 +22,7 @@ class AgilSkill
 
     /**
      * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilUser")
-     * @ORM\JoinColumn(nullable=false,referencedColumnName="userId")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="id")
      */
     private $user;
 

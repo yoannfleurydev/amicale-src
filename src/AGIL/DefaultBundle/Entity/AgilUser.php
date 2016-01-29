@@ -18,7 +18,7 @@ class AgilUser extends BaseUser
     /**
      * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilMailingList")
      * @ORM\JoinTable(name="agil_users_mailing_list",
-     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="userId")},
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="mailingListId", referencedColumnName="mailingListId")}
      *      )
      */
@@ -26,11 +26,11 @@ class AgilUser extends BaseUser
 
 
     /**
-     * @ORM\Column(name="userId", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $userId;
+    protected $id;
 
 
     /**
@@ -112,6 +112,7 @@ class AgilUser extends BaseUser
     {
         parent::__construct();
         $this->mailingLists = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userSignupDate = new \DateTime();
     }
 
     /**
@@ -148,13 +149,13 @@ class AgilUser extends BaseUser
     }
 
     /**
-     * Get userId
+     * Get id
      *
      * @return integer 
      */
-    public function getUserId()
+    public function getId()
     {
-        return $this->userId;
+        return $this->Id;
     }
 
     

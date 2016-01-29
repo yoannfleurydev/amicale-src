@@ -201,4 +201,12 @@ class AgilVideo
     {
         return $this->event;
     }
+
+    /**
+     * AgilVideo constructor.
+     */
+    public function __construct()
+    {
+        $this->videoUploadDate = new \Datetime();
+    }
 }

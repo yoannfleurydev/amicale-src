@@ -25,7 +25,7 @@ class AgilForumSubject
 
     /**
      * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilUser")
-     * @ORM\JoinColumn(nullable=false,referencedColumnName="userId")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="id")
      */
     private $user;
 
@@ -213,6 +213,7 @@ class AgilForumSubject
     public function __construct()
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->forumSubjectPostDate = new \DateTime();
     }
 
     /**
