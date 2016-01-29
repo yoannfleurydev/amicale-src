@@ -3,6 +3,7 @@
 namespace AGIL\ProfileBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilSkill
@@ -12,31 +13,49 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilSkill
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="tagId")
+     */
+    private $tag;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilUser")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="userId")
+     */
+    private $user;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="skillId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $skillId;
 
     /**
      * @var int
      *
      * @ORM\Column(name="skillLevel", type="integer")
+     * @Assert\NotBlank(message="Le niveau /10 doit être spécifié")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 10
+     * )
      */
     private $skillLevel;
 
 
     /**
-     * Get id
+     * Get skillId
      *
      * @return integer 
      */
-    public function getId()
+    public function getSkillId()
     {
-        return $this->id;
+        return $this->skillId;
     }
 
     /**
@@ -60,5 +79,51 @@ class AgilSkill
     public function getSkillLevel()
     {
         return $this->skillLevel;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @return AgilSkill
+     */
+    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set tag
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tag
+     * @return AgilSkill
+     */
+    public function setTag(\AGIL\DefaultBundle\Entity\AgilTag $tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Get tag
+     *
+     * @return \AGIL\DefaultBundle\Entity\AgilTag 
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 }

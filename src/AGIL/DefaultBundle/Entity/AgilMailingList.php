@@ -2,6 +2,7 @@
 namespace AGIL\DefaultBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * AgilMailingList
  *
@@ -18,6 +19,7 @@ class AgilMailingList
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $mailingListId;
+    
     /**
      * @var string
      *

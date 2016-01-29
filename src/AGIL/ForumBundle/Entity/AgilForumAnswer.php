@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilForumAnswer
@@ -12,19 +13,31 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilForumAnswer
 {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\ForumBundle\Entity\AgilForumSubject")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="forumSubjectId")
+     */
+    private $subject;
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="forumAnswerId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $forumAnswerId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="forumAnswerText", type="text")
+     * @Assert\NotBlank(message="La réponse ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $forumAnswerText;
 
@@ -37,13 +50,13 @@ class AgilForumAnswer
 
 
     /**
-     * Get id
+     * Get forumAnswerId
      *
      * @return integer 
      */
-    public function getId()
+    public function getForumAnswerId()
     {
-        return $this->id;
+        return $this->forumAnswerId;
     }
 
     /**
@@ -90,5 +103,28 @@ class AgilForumAnswer
     public function getForumAnswerPostDate()
     {
         return $this->forumAnswerPostDate;
+    }
+
+    /**
+     * Set subject
+     *
+     * @param \AGIL\ForumBundle\Entity\AgilForumSubject $subject
+     * @return AgilForumAnswer
+     */
+    public function setSubject(\AGIL\ForumBundle\Entity\AgilForumSubject $subject)
+    {
+        $this->subject = $subject;
+
+        return $this;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return \AGIL\ForumBundle\Entity\AgilForumSubject 
+     */
+    public function getSubject()
+    {
+        return $this->subject;
     }
 }

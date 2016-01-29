@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilForumCategory
@@ -12,19 +13,27 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AgilForumCategory
 {
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="forumCategoryId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $forumCategoryId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="forumCategoryName", type="string", length=100, unique=true)
+     * @Assert\NotBlank(message="Le nom d'une catégorie ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $forumCategoryName;
 
@@ -32,18 +41,25 @@ class AgilForumCategory
      * @var string
      *
      * @ORM\Column(name="forumCategoryText", type="string", length=255)
+     * @Assert\NotBlank(message="La description ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $forumCategoryText;
 
 
     /**
-     * Get id
+     * Get forumCategoryId
      *
      * @return integer 
      */
-    public function getId()
+    public function getForumCategoryId()
     {
-        return $this->id;
+        return $this->forumCategoryId;
     }
 
     /**

@@ -13,26 +13,58 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AgilOffer
 {
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
+     * @ORM\JoinTable(name="agil_offer_tags",
+     *      joinColumns={@ORM\JoinColumn(name="offerId", referencedColumnName="offerId")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="tagId")}
+     *      )
+     */
+    private $tags;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\DefaultBundle\Entity\AgilUser")
+     * @ORM\JoinColumn(nullable=true,referencedColumnName="userId")
+     */
+    private $user;
+
+
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="offerId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $offerId;
+
 
     /**
      * @var string
      *
      * @ORM\Column(name="offerTitle", type="string", length=255)
+     * @Assert\NotBlank(message="L'offre doit contenir un titre")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $offerTitle;
+
 
     /**
      * @var string
      *
      * @ORM\Column(name="offerText", type="text")
+     * @Assert\NotBlank(message="L'offre doit contenir une description")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $offerText;
 
@@ -48,6 +80,12 @@ class AgilOffer
      * @var string
      *
      * @ORM\Column(name="offerAuthor", type="string", length=100, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 100,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $offerAuthor;
 
@@ -69,18 +107,24 @@ class AgilOffer
      * @var string
      *
      * @ORM\Column(name="offerPdfUrl", type="string", length=255, nullable=true, unique=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 255,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
      */
     private $offerPdfUrl;
 
 
     /**
-     * Get id
+     * Get offerId
      *
      * @return integer 
      */
-    public function getId()
+    public function getOfferId()
     {
-        return $this->id;
+        return $this->offerId;
     }
 
     /**
@@ -242,5 +286,71 @@ class AgilOffer
     public function getOfferPdfUrl()
     {
         return $this->offerPdfUrl;
+    }
+
+   
+
+    /**
+     * Set user
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @return AgilOffer
+     */
+    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     * @return AgilOffer
+     */
+    public function addTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     */
+    public function removeTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

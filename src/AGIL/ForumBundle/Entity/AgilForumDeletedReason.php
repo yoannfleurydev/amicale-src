@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AgilForumDeletedReason
@@ -15,28 +16,33 @@ class AgilForumDeletedReason
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="forumDeletedReasonId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $forumDeletedReasonId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="forumDeletedReasonText", type="text")
+     * @Assert\NotBlank(message="Le texte ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     * )
      */
     private $forumDeletedReasonText;
 
 
     /**
-     * Get id
+     * Get forumDeletedReasonId
      *
      * @return integer 
      */
-    public function getId()
+    public function getForumDeletedReasonId()
     {
-        return $this->id;
+        return $this->forumDeletedReasonId;
     }
 
     /**
