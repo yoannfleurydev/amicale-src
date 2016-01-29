@@ -8,6 +8,7 @@ use AGIL\ProfileBundle\Entity\AgilSkill;
 use InvalidArgumentException;
 use Proxies\__CG__\AGIL\DefaultBundle\Entity\AgilTag;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class TagController extends Controller {
 
@@ -20,13 +21,19 @@ class TagController extends Controller {
 	 * @return string Ensemble de résultat au format JSON
 	 * Récupère une liste de tags dont le préfixe est $char et la renvoie au format JSON
 	 */
-	public function searchAction($char) {
+	public function searchAction(Request $request) {
+
+		// On récupère la valeur envoyée par la requête
+		$prefix = $request->get('prefix');
+
+		// Récupération du tableau de AgilTag
 		$tagsList = $this
 			->getDoctrine()
 			->getManager()
 			->getRepository('AGILDefaultBundle:AgilTag')
-			->getStartedTagsList($char);
+			->getTagsList($prefix);
 
+		// Retourne le tableau encodé en JSON
 		return json_encode($tagsList);
 	}
 
