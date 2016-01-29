@@ -127,4 +127,12 @@ class AgilForumAnswer
     {
         return $this->subject;
     }
+
+    /**
+     * AgilForumAnswer constructor.
+     */
+    public function __construct()
+    {
+        $this->forumAnswerPostDate = new \Datetime();
+    }
 }

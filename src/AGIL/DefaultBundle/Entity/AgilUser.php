@@ -112,6 +112,7 @@ class AgilUser extends BaseUser
     {
         parent::__construct();
         $this->mailingLists = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userSignupDate = new \DateTime();
     }
 
     /**

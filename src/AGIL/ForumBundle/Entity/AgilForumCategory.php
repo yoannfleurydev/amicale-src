@@ -37,6 +37,21 @@ class AgilForumCategory
      */
     private $forumCategoryName;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="forumCategoryIcon", type="string", length=30)
+     * @Assert\NotBlank(message="Une catégorie doit comporter un icone")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
+     */
+    private $forumCategoryIcon;
+
     /**
      * @var string
      *
@@ -106,5 +121,28 @@ class AgilForumCategory
     public function getForumCategoryText()
     {
         return $this->forumCategoryText;
+    }
+
+    /**
+     * Set forumCategoryIcon
+     *
+     * @param string $forumCategoryIcon
+     * @return AgilForumCategory
+     */
+    public function setForumCategoryIcon($forumCategoryIcon)
+    {
+        $this->forumCategoryIcon = $forumCategoryIcon;
+
+        return $this;
+    }
+
+    /**
+     * Get forumCategoryIcon
+     *
+     * @return string 
+     */
+    public function getForumCategoryIcon()
+    {
+        return $this->forumCategoryIcon;
     }
 }
