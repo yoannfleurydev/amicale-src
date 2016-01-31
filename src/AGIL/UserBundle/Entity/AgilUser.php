@@ -1,38 +1,31 @@
 <?php
-
-namespace AGIL\DefaultBundle\Entity;
-
+namespace AGIL\UserBundle\Entity;
+use AGIL\DefaultBundle\Entity\AgilMailingList;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * AgilUser
  *
  * @ORM\Table(name="agil_user")
- * @ORM\Entity(repositoryClass="AGIL\DefaultBundle\Repository\AgilUserRepository")
+ * @ORM\Entity(repositoryClass="AGIL\UserBundle\Repository\AgilUserRepository")
  */
 class AgilUser extends BaseUser
 {
-
     /**
      * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilMailingList")
      * @ORM\JoinTable(name="agil_users_mailing_list",
-     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="userId")},
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="mailingListId", referencedColumnName="mailingListId")}
      *      )
      */
-    private $mailingLists;
-
-
+    protected $mailingLists;
     /**
-     * @ORM\Column(name="userId", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $userId;
-
-
+    protected $id;
     /**
      * @var string
      *
@@ -45,7 +38,6 @@ class AgilUser extends BaseUser
      * )
      */
     protected $userLastName;
-
     /**
      * @var string
      *
@@ -58,25 +50,18 @@ class AgilUser extends BaseUser
      * )
      */
     protected $userFirstName;
-
-
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="userSignupDate", type="datetime")
      */
     protected $userSignupDate;
-
-
-
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="userBirthdayDate", type="datetime", nullable=true)
      */
     protected $userBirthdayDate;
-
-
     /**
      * @var string
      *
@@ -89,8 +74,6 @@ class AgilUser extends BaseUser
      * )
      */
     protected $userCVUrl;
-
-
     /**
      * @var string
      *
@@ -103,8 +86,6 @@ class AgilUser extends BaseUser
      * )
      */
     protected $userProfilePictureUrl;
-
-
     /**
      * Constructor
      */
@@ -112,8 +93,8 @@ class AgilUser extends BaseUser
     {
         parent::__construct();
         $this->mailingLists = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userSignupDate = new \Datetime();
     }
-
     /**
      * Add mailingLists
      *
@@ -123,10 +104,8 @@ class AgilUser extends BaseUser
     public function addMailingList(\AGIL\DefaultBundle\Entity\AgilMailingList $mailingLists)
     {
         $this->mailingLists[] = $mailingLists;
-
         return $this;
     }
-
     /**
      * Remove mailingLists
      *
@@ -136,28 +115,24 @@ class AgilUser extends BaseUser
     {
         $this->mailingLists->removeElement($mailingLists);
     }
-
     /**
      * Get mailingLists
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMailingLists()
     {
         return $this->mailingLists;
     }
-
     /**
      * Get userId
      *
-     * @return integer 
+     * @return integer
      */
     public function getUserId()
     {
         return $this->userId;
     }
-
-    
 
     /**
      * Set userLastName
@@ -168,20 +143,17 @@ class AgilUser extends BaseUser
     public function setUserLastName($userLastName)
     {
         $this->userLastName = $userLastName;
-
         return $this;
     }
-
     /**
      * Get userLastName
      *
-     * @return string 
+     * @return string
      */
     public function getUserLastName()
     {
         return $this->userLastName;
     }
-
     /**
      * Set userFirstName
      *
@@ -191,20 +163,17 @@ class AgilUser extends BaseUser
     public function setUserFirstName($userFirstName)
     {
         $this->userFirstName = $userFirstName;
-
         return $this;
     }
-
     /**
      * Get userFirstName
      *
-     * @return string 
+     * @return string
      */
     public function getUserFirstName()
     {
         return $this->userFirstName;
     }
-
     /**
      * Set userSignupDate
      *
@@ -214,20 +183,17 @@ class AgilUser extends BaseUser
     public function setUserSignupDate($userSignupDate)
     {
         $this->userSignupDate = $userSignupDate;
-
         return $this;
     }
-
     /**
      * Get userSignupDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUserSignupDate()
     {
         return $this->userSignupDate;
     }
-
     /**
      * Set userBirthdayDate
      *
@@ -237,20 +203,17 @@ class AgilUser extends BaseUser
     public function setUserBirthdayDate($userBirthdayDate)
     {
         $this->userBirthdayDate = $userBirthdayDate;
-
         return $this;
     }
-
     /**
      * Get userBirthdayDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUserBirthdayDate()
     {
         return $this->userBirthdayDate;
     }
-
     /**
      * Set userCVUrl
      *
@@ -260,20 +223,17 @@ class AgilUser extends BaseUser
     public function setUserCVUrl($userCVUrl)
     {
         $this->userCVUrl = $userCVUrl;
-
         return $this;
     }
-
     /**
      * Get userCVUrl
      *
-     * @return string 
+     * @return string
      */
     public function getUserCVUrl()
     {
         return $this->userCVUrl;
     }
-
     /**
      * Set userProfilePictureUrl
      *
@@ -283,14 +243,12 @@ class AgilUser extends BaseUser
     public function setUserProfilePictureUrl($userProfilePictureUrl)
     {
         $this->userProfilePictureUrl = $userProfilePictureUrl;
-
         return $this;
     }
-
     /**
      * Get userProfilePictureUrl
      *
-     * @return string 
+     * @return string
      */
     public function getUserProfilePictureUrl()
     {

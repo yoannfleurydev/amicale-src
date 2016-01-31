@@ -1,0 +1,34 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <form action="{{ path('agil_admin_user_add') }}" method="post" {{ form_enctype(form) }}>
+
+        {{ form_errors(form) }}
+
+        <div class="form-group">
+            {{ form_row(form.email) }}
+        </div>
+
+        {#
+        {% if is_granted("ROLE_SUPER_ADMIN") %}
+        <div class="form-group">
+            {{ form_row(form.role) }}
+        </div>
+        {% endif %}
+        #}
+
+        <div class="form-group">
+            {{ form_row(form.invite) }}
+        </div>
+
+        {{ form_rest(form) }}
+
+        {% for flash_message in app.session.flashbag.get('notice') %}
+            <div class="flash-notice">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+    </form>
+
+{% endblock %}

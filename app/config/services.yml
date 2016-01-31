@@ -7,3 +7,23 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    fos_user.doctrine_registry:
+            alias: doctrine
+
+    app.form.registration:
+        class: AGIL\UserBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: agil_user_registration }
+
+    app.form.registration:
+            class: AGIL\UserBundle\Form\ResettingFormType
+            tags:
+                - { name: form.type, alias: agil_user_resetting }
+
+    fos_user.mailer.twig_swift:
+        class: AGIL\UserBundle\Mailer\TwigSwiftMailer
+        arguments:
+            - @mailer
+            - @router
+            - @twig
+            - { template: { confirmation: %fos_user.registration.confirmation.template%, resetting: %fos_user.resetting.email.template% }, from_email: { confirmation: %fos_user.registration.confirmation.from_email%, resetting: %fos_user.resetting.email.from_email% } }
