@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * AgilUser
  *
  * @ORM\Table(name="agil_user")
- * @ORM\Entity(repositoryClass="AGIL\UserBundle\Entity\AgilUserRepository")
+ * @ORM\Entity(repositoryClass="AGIL\UserBundle\Repository\AgilUserRepository")
  */
 class AgilUser extends BaseUser
 {

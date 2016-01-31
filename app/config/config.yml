@@ -31,7 +31,7 @@ framework:
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
-    #default_locale:  "%locale%"
+    default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
@@ -81,7 +81,26 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class:   AGIL\UserBundle\Entity\AgilUser
+    change_password:
+            form:
+                type:               FOS\UserBundle\Form\Type\ChangePasswordFormType # or 'fos_user_change_password' on Symfony < 2.8
+                name:               fos_user_change_password_form
+                validation_groups:  [ChangePassword, Default]
     registration:
         form:
             type: AGIL\UserBundle\Form\RegistrationType
+    resetting:
+            token_ttl: 86400
+            email:
+                from_email: # Use this node only if you don't want the global email address for the resetting email
+                    address:        ...
+                    sender_name:    ...
+                template:   AGILUserBundle:Resetting:email.txt.twig
+            form:
+                type:               AGIL\UserBundle\Form\ResettingFormType
+    from_email:
+                address:        noreply@project.com
+                sender_name:    Amicale
+    service:
+        mailer:   fos_user.mailer.twig_swift
 

@@ -9,3 +9,29 @@ agil_admin_user:
         page:  1
     requirements:
             page: \d+
+
+agil_admin_user_up:
+    path:     /admin/user/up/{id}
+    defaults:
+        _controller: AGILAdminBundle:User:adminUserUp
+    requirements:
+            id: \d+
+
+agil_admin_user_down:
+    path:     /admin/user/down/{id}
+    defaults:
+        _controller: AGILAdminBundle:User:adminUserDown
+    requirements:
+            id: \d+
+
+agil_admin_user_delete:
+    path:     /admin/user/delete/{id}
+    defaults:
+        _controller: AGILAdminBundle:User:adminUserDelete
+    requirements:
+            page: \d+
+
+agil_admin_user_add:
+    path:     /admin/user/add
+    defaults:
+        _controller: AGILAdminBundle:User:adminUserAdd
