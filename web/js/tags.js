@@ -36,6 +36,10 @@ function getPrefixedTags(prefix) {
     return response;
 }
 
+/**
+ * Fonction permettant la suppression d'un tag
+ * @param value le nom du tag à supprimer
+ */
 function removeTag(value) {
     var remove_xhr = new XMLHttpRequest();
     remove_xhr.open('POST', 'remove');
