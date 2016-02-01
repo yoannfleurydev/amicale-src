@@ -210,10 +210,14 @@ class AgilForumSubject
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($user,$category,$title,$desc)
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->forumSubjectPostDate = new \DateTime();
+        $this->user = $user;
+        $this->category = $category;
+        $this->forumSubjectTitle = $title;
+        $this->forumSubjectDescription = $desc;
     }
 
     /**

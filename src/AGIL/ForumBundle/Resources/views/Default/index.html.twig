@@ -1,1 +1,37 @@
-Hello World!
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+
+    {% for c in categoryList %}
+
+        {% set key = c.forumCategoryId %}
+
+        <h1>&lsaquo;{{ c.forumCategoryIcon }}&rsaquo; {{ key }} -
+            <a href="{{ path('agil_forum_subjects_list',{'idCategory' : c.forumCategoryId } ) }}">{{ c.forumCategoryName }}</a>
+        </h1>
+        <p>{{ c.forumCategoryText }}</p>
+        <h4>Les derniers sujets</h4>
+
+
+        {% if subjectsPerCategories[key]|length == 0 %}
+
+            <p>Cette catégorie ne contient pas de sujets</p>
+
+        {% else %}
+
+            {% for s in subjectsPerCategories[key] %}
+
+                <h6>{{ s.forumSubjectTitle }}</h6>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <br>
+
+
+    {% endfor %}
+
+{% endblock %}
