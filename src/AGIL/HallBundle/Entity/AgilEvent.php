@@ -22,6 +22,16 @@ class AgilEvent
 
 
     /**
+     * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
+     * @ORM\JoinTable(name="agil_event_tags",
+     *      joinColumns={@ORM\JoinColumn(name="eventId", referencedColumnName="eventId")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="tagId")}
+     *      )
+     */
+    private $tags;
+
+
+    /**
      * @var int
      *
      * @ORM\Column(name="eventId", type="integer")
@@ -195,5 +205,46 @@ class AgilEvent
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventPostDate = new \DateTime();
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     * @return AgilEvent
+     */
+    public function addTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     */
+    public function removeTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

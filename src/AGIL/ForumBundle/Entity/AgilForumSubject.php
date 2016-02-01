@@ -213,6 +213,7 @@ class AgilForumSubject
     public function __construct()
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->forumSubjectPostDate = new \DateTime();
     }
 
     /**

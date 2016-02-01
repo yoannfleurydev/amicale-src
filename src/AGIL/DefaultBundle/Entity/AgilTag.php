@@ -45,6 +45,38 @@ class AgilTag
 
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="tagColor", type="string", length=30)
+     * @Assert\NotBlank(message="La couleur d'un tag doit être spécifiée")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "La taille minimale est de {{ limit }} caractères",
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
+     * )
+     */
+    private $tagColor;
+
+    /**
+     * AgilTag constructor.
+     * @param $name
+     * @param $color
+     * @param $skillCategory
+     */
+    public function __construct($name,$color,$skillCategory){
+        $this->tagName = $name;
+        $this->tagColor = $color;
+
+        if($skillCategory != NULL){
+            $this->skillCategory = $skillCategory;
+        }
+    }
+
+
+
+
+    /**
      * Get tagId
      *
      * @return integer 
@@ -98,5 +130,28 @@ class AgilTag
     public function getSkillCategory()
     {
         return $this->skillCategory;
+    }
+
+    /**
+     * Set tagColor
+     *
+     * @param string $tagColor
+     * @return AgilTag
+     */
+    public function setTagColor($tagColor)
+    {
+        $this->tagColor = $tagColor;
+
+        return $this;
+    }
+
+    /**
+     * Get tagColor
+     *
+     * @return string 
+     */
+    public function getTagColor()
+    {
+        return $this->tagColor;
     }
 }

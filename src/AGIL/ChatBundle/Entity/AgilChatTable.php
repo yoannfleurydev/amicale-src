@@ -20,6 +20,16 @@ class AgilChatTable
      */
     private $user;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
+     * @ORM\JoinTable(name="agil_chat_table_tags",
+     *      joinColumns={@ORM\JoinColumn(name="chatTableId", referencedColumnName="chatTableId")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="tagId")}
+     *      )
+     */
+    private $tags;
+
     /**
      * @var int
      *
@@ -134,5 +144,45 @@ class AgilChatTable
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     * @return AgilChatTable
+     */
+    public function addTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
+     */
+    public function removeTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

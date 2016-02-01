@@ -319,6 +319,9 @@ class AgilOffer
     public function __construct()
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $date = new \DateTime();
+        $this->offerPostDate = $date;
+        $this->offerExpirationDate = $date->add(new \DateInterval("P3M"));
     }
 
     /**
@@ -352,5 +355,14 @@ class AgilOffer
     public function getTags()
     {
         return $this->tags;
+    }
+
+
+    /**
+     * Fonction qui test si une offre est expirée ou non
+     * @return bool
+     */
+    public function isExpired(){
+        return ($this->offerExpirationDate > $this->offerPostDate);
     }
 }

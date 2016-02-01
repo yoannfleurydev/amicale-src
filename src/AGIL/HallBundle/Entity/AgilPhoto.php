@@ -201,4 +201,13 @@ class AgilPhoto
     {
         return $this->event;
     }
+
+
+    /**
+     * AgilPhoto constructor.
+     */
+    public function __construct()
+    {
+        $this->photoUploadDate = new \Datetime();
+    }
 }
