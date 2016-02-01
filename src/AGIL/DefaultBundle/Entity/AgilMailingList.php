@@ -1,7 +1,5 @@
 <?php
-
 namespace AGIL\DefaultBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,7 +19,7 @@ class AgilMailingList
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $mailingListId;
-
+    
     /**
      * @var string
      *
@@ -34,18 +32,15 @@ class AgilMailingList
      * )
      */
     private $mailingListName;
-
-
     /**
      * Get mailingListId
      *
-     * @return integer 
+     * @return integer
      */
     public function getMailingListId()
     {
         return $this->mailingListId;
     }
-
     /**
      * Set mailingListName
      *
@@ -55,14 +50,12 @@ class AgilMailingList
     public function setMailingListName($mailingListName)
     {
         $this->mailingListName = $mailingListName;
-
         return $this;
     }
-
     /**
      * Get mailingListName
      *
-     * @return string 
+     * @return string
      */
     public function getMailingListName()
     {

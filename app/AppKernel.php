@@ -24,7 +24,8 @@ class AppKernel extends Kernel
             new AGIL\HallBundle\AGILHallBundle(),
             new AGIL\AdminBundle\AGILAdminBundle(),
             new AGIL\ProfileBundle\AGILProfileBundle(),
-            new FOS\UserBundle\FOSUserBundle()
+            new FOS\UserBundle\FOSUserBundle(),
+            new AGIL\UserBundle\AGILUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
