@@ -13,7 +13,7 @@ class TagController extends Controller {
 	}
 
 	/**
-	 * @param $char String Le préfixe
+	 * @param Request $request Le préfixe
 	 * @return string Ensemble de résultat au format JSON
 	 * Récupère une liste de tags dont le préfixe est $char et la renvoie au format JSON
 	 */
@@ -38,6 +38,11 @@ class TagController extends Controller {
 		return new Response(json_encode($jsonTagsList));
 	}
 
+	/**
+	 * @param Request $request Le nom du tag
+	 * @return Response Pour notifier la fin de l'execution
+	 * Récupère un tag dans la base de données pour le supprimer
+	 */
 	public function removeAction(Request $request) {
 		$tagName = $request->get('tagValue');
 
