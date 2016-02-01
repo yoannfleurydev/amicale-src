@@ -1,0 +1,92 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <!-- Partie administration -->
+
+    <!-- Partie Ajout d'une nouvelle catégorie-->
+    <div class="row panel">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                        <span class="panel-title-content">
+                           Modifier une catégorie
+                        </span>
+            </h2>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form action="#">
+                <!-- Nom de la catégorie -->
+                <div class="form-group" id="form_add_cat_nom">
+                    <input type="text" maxlength="100" class="form-control" id="input_form_add_cat"
+                           placeholder="Nom de la catégorie">
+                </div>
+                <!-- Description de la catégorie -->
+                <div class="form-group" id="form_add_cat_des">
+            <textarea maxlength="255" type="text" class="form-control" id="input_form_add_cat_des"
+                      placeholder="Description de la catégorie"></textarea>
+                </div>
+                <!-- Alert en cas de champ vide -->
+                <div class="form-group" id="form_add_cat_img ">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label><h4>Sélectionnez une icone : </h4></label>
+                        </div>
+                        <div class="col-lg-offset-6">
+                            <table class="table selectImage">
+                                <tr>
+                                    <td><a href="#">
+                                        <span id="1"
+                                              class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-adjust"></span>
+                                    </a>
+                                    </td>
+                                    <td><a href="#"><span id="2"
+                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-arrow-right"></span></a>
+                                    </td>
+                                    <td><a href="#"><span id="3"
+                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-download"></span></a>
+                                    </td>
+                                    <td><a href="#"><span id="4"
+                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-book"></span></a>
+                                    </td>
+                                    <td><a href="#"><span id="5"
+                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-facetime-video "></span></a>
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                    <span id="6"
+                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-bold ">
+                                    </span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <input id="nom_icon" type="hidden" value="">
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <span id="helpInput" class="help-Input hidden text-warning">Les champs ne peuvent être vides</span>
+                </div>
+                <button type="submit" id="btn-add-cat" class="btn btn-default disabled">Modifier</button>
+            </form>
+            <br/>
+        </div>
+    </div>
+    <!-- Panel qui s'affiche pour la confirmation de suppression -->
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="container">
+                    <h5>Etes vous sûr ?</h5>
+                    <div class="form-group">
+                        <button class="btn btn-danger">Annuler</button>
+                        <button class="btn btn-success">Confirmer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

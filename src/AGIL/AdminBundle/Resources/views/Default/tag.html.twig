@@ -1,0 +1,52 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                            <span class="panel-title-content">
+                                Gestion des tags
+                            </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="tag">Entrer un tag :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">#</div>
+                                <input class="form-control" type="text" name="tag" id="tag">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                            <span class="panel-title-content">
+                                Résultat
+                            </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <h4><span class="label label-default">PHP
+                            <button><span class="glyphicon glyphicon-remove"></span></button></span>
+                        <span class="label label-default">JAVA
+                            <button><span class="glyphicon glyphicon-remove"></span></button></span>
+                        <span class="label label-default">AJAX
+                            <button><span class="glyphicon glyphicon-remove"></span></button></span>
+                        <span class="label label-default">FLEX
+                            <button><span class="glyphicon glyphicon-remove"></span></button></span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

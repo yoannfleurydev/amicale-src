@@ -1,0 +1,91 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <!-- Le forum Si on est connecté -->
+
+    <div class="row panel">
+        <div class="col-md-12">
+
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                        <span class="panel-title-content">
+                          La categorie consultée
+                        </span>
+                </h2>
+            </div>
+
+            <table class="table table-striped panel">
+                <!-- On rows -->
+                <th></th>
+                <th> Sujet</th>
+                <th> Auteur</th>
+                <th> Nb message</th>
+                <th> Date</th>
+
+                <tr>
+                    <td class="vert-align text-center"><span class="glyphicon glyphicon-minus icon-medium"></span> </td>
+                    <td class="vert-align">
+                        <a href="#"><h5>convallis, ante lectus convallis est, vitae sodales</h5></a>
+                        <span class="text-left"><em>Description aiiight</em></span>
+                    </td>
+                    <td class="vert-align"><a href="#">Bruno</a></td>
+                    <td class="vert-align">7</td>
+                    <td class="vert-align">October 6th, 2016<br/>il y a 24min</td>
+                </tr>
+
+                <tr>
+                    <td class="vert-align text-center"><span class="glyphicon glyphicon-minus icon-medium"></span> </td>
+                    <td class="vert-align">
+                        <a href="#"><h5>convallis, ante lectus convallis est, vitae sodales</h5></a>
+                        <span class="text-left"><em>Description aiiight</em></span>
+                    </td>
+                    <td class="vert-align"><a href="#">Bruno</a></td>
+                    <td class="vert-align">7</td>
+                    <td class="vert-align">October 6th, 2016<br/>il y a 24min</td>
+                </tr>
+
+                <tr>
+                    <td class="vert-align text-center"><span class="glyphicon glyphicon glyphicon-ok icon-medium icon-succes"></span> </td>
+                    <td class="vert-align">
+                        <a href="#"><h5>convallis, ante lectus convallis est, vitae sodales</h5></a>
+                        <span class="text-left"><em>Description aiiight</em></span>
+                    </td>
+                    <td class="vert-align"><a href="#">Bruno</a></td>
+                    <td class="vert-align">7</td>
+                    <td class="vert-align">October 6th, 2016<br/>il y a 24min</td>
+                </tr>
+
+                <tr>
+                    <td class="vert-align text-center"><span class="glyphicon glyphicon-minus icon-medium"></span> </td>
+                    <td class="vert-align">
+                        <a href="#"><h5>convallis, ante lectus convallis est, vitae sodales</h5></a>
+                        <span class="text-left"><em>Description aiiight</em></span>
+                    </td>
+                    <td class="vert-align"><a href="#">Bruno</a></td>
+                    <td class="vert-align">7</td>
+                    <td class="vert-align">October 6th, 2016<br/>il y a 24min</td>
+                </tr>
+
+            </table>
+        </div>
+        <nav class="text-center">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
