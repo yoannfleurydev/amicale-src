@@ -95,8 +95,19 @@ body {
   background-color: #FFF;
 }
 
+/* line 92, ../sass/_amicale.scss */
+.label button {
+  border: none;
+  background-color: #334960;
+}
+
+/* line 97, ../sass/_amicale.scss */
+.label button:hover {
+  color: #D55400;
+}
+
 /* Sidebar */
-/* line 93, ../sass/_amicale.scss */
+/* line 102, ../sass/_amicale.scss */
 .sidebar {
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
@@ -116,24 +127,24 @@ body {
   overflow-y: auto;
 }
 
-/* line 112, ../sass/_amicale.scss */
+/* line 121, ../sass/_amicale.scss */
 .sidebar, .sidebar a {
   color: #FFF;
 }
 
-/* line 113, ../sass/_amicale.scss */
+/* line 122, ../sass/_amicale.scss */
 .sidebar a:hover {
   color: #FFF;
 }
 
-/* line 115, ../sass/_amicale.scss */
+/* line 124, ../sass/_amicale.scss */
 .nav-items {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 121, ../sass/_amicale.scss */
+/* line 130, ../sass/_amicale.scss */
 .bar {
   transition-duration: 0.5s;
   transition-timing-function: ease-in-out;
@@ -145,20 +156,20 @@ body {
   background-color: #666;
 }
 
-/* line 132, ../sass/_amicale.scss */
+/* line 141, ../sass/_amicale.scss */
 textarea {
   resize: vertical;
   /* user can resize vertically, but width is fixed */
 }
 
 /* Show Sidebar */
-/* line 137, ../sass/_amicale.scss */
+/* line 146, ../sass/_amicale.scss */
 .show-sidebar .sidebar {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-/* line 143, ../sass/_amicale.scss */
+/* line 152, ../sass/_amicale.scss */
 .rotate_up {
   -ms-transform: translate(-5px, 0.5px) rotate(-45deg);
   /* IE 9 */
@@ -167,7 +178,7 @@ textarea {
   transform: translate(-5px, 0.5px) rotate(-45deg);
 }
 
-/* line 149, ../sass/_amicale.scss */
+/* line 158, ../sass/_amicale.scss */
 .rotate_bottom {
   -ms-transform: translate(-5px, -0.5px) rotate(45deg);
   /* IE 9 */
@@ -176,7 +187,7 @@ textarea {
   transform: translate(-5px, -0.5px) rotate(45deg);
 }
 
-/* line 155, ../sass/_amicale.scss */
+/* line 164, ../sass/_amicale.scss */
 .animate-middle {
   -ms-transform: translate(-2px, 0px);
   /* IE 9 */
@@ -185,7 +196,7 @@ textarea {
   transform: translate(-2px, 0px);
 }
 
-/* line 161, ../sass/_amicale.scss */
+/* line 170, ../sass/_amicale.scss */
 .footer {
   position: absolute;
   bottom: 0;
@@ -196,12 +207,12 @@ textarea {
   border-top: 8px solid #D55400;
 }
 
-/* line 171, ../sass/_amicale.scss */
+/* line 180, ../sass/_amicale.scss */
 .footer * {
   color: #FFFFFF;
 }
 
-/* line 175, ../sass/_amicale.scss */
+/* line 184, ../sass/_amicale.scss */
 h2.panel-title {
   width: 100%;
   text-align: center;
@@ -210,29 +221,29 @@ h2.panel-title {
   margin: 10px 0 20px;
 }
 
-/* line 183, ../sass/_amicale.scss */
+/* line 192, ../sass/_amicale.scss */
 span.panel-title-content {
   background: #fff;
   padding: 0 10px;
 }
 
-/* line 187, ../sass/_amicale.scss */
+/* line 196, ../sass/_amicale.scss */
 .navbar-header {
   width: 100%;
 }
 
-/* line 191, ../sass/_amicale.scss */
+/* line 200, ../sass/_amicale.scss */
 .navbar-header li {
   list-style: none !important;
 }
 
-/* line 196, ../sass/_amicale.scss */
+/* line 205, ../sass/_amicale.scss */
 .navbar-header > a {
   color: #666 !important;
   list-style: none !important;
 }
 
-/* line 201, ../sass/_amicale.scss */
+/* line 210, ../sass/_amicale.scss */
 .navbar-mobile {
   float: left;
   padding: 20.5px 15px;
@@ -242,7 +253,7 @@ span.panel-title-content {
   color: #666;
 }
 
-/* line 210, ../sass/_amicale.scss */
+/* line 219, ../sass/_amicale.scss */
 .navbar-dropdown-mobile {
   float: left;
   padding: 6.5px 10px;
@@ -252,15 +263,163 @@ span.panel-title-content {
   color: #666;
 }
 
-/* line 219, ../sass/_amicale.scss */
+/* line 228, ../sass/_amicale.scss */
 .right {
   float: right;
 }
 
-/* line 223, ../sass/_amicale.scss */
+/* line 232, ../sass/_amicale.scss */
 .navbar-mobile:hover, .navbar-header a:hover {
   color: #212121;
   text-decoration: none;
+}
+
+/* line 238, ../sass/_amicale.scss */
+* {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* line 38, ../sass/_stylea.scss */
+.img-preview {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* line 41, ../sass/_stylea.scss */
+.animate_up {
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+  transition-duration: 0.5s;
+}
+
+/* line 46, ../sass/_stylea.scss */
+.animate_bot {
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  transition-duration: 0.5s;
+}
+
+/* line 61, ../sass/_stylea.scss */
+.forum_message_function {
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 66, ../sass/_stylea.scss */
+.description_categorie {
+  padding: 10px;
+}
+
+/* line 70, ../sass/_stylea.scss */
+.pad-10 {
+  padding: 20px;
+}
+
+/* line 75, ../sass/_stylea.scss */
+.text-blue {
+  color: #2d6ca2;
+}
+
+/* line 80, ../sass/_stylea.scss */
+.forum_categorie .description_categorie {
+  background-color: #e7e7e7;
+}
+
+/* line 85, ../sass/_stylea.scss */
+.table tbody > tr > td.vert-align {
+  vertical-align: middle;
+}
+
+/* line 89, ../sass/_stylea.scss */
+.icon-bigger {
+  font-size: 30px;
+}
+
+/* line 92, ../sass/_stylea.scss */
+.icon-medium {
+  font-size: 20px;
+}
+
+/* line 95, ../sass/_stylea.scss */
+.icon-succes {
+  color: #76c851;
+}
+
+/* line 98, ../sass/_stylea.scss */
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+/* line 103, ../sass/_stylea.scss */
+.table.td-center tbody > tr > td {
+  vertical-align: middle;
+}
+
+/* line 107, ../sass/_stylea.scss */
+.pad-top-3 {
+  background-color: red;
+}
+
+/* line 112, ../sass/_stylea.scss */
+.parent {
+  display: flex;
+  flex-direction: row;
+}
+
+/* line 117, ../sass/_stylea.scss */
+.child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line 123, ../sass/_stylea.scss */
+.no-pad-top {
+  padding-top: 0;
+}
+
+/* line 124, ../sass/_stylea.scss */
+.no-pad-bot {
+  padding-top: 0;
+}
+
+/* line 127, ../sass/_stylea.scss */
+.icon-add-cat {
+  padding: 4px;
+}
+
+/* line 130, ../sass/_stylea.scss */
+.white {
+  color: white;
+}
+
+/* line 133, ../sass/_stylea.scss */
+.selected {
+  background-color: #2d4d8d;
+  padding: 4px;
+  box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.27);
+}
+
+/*  Style du défilé d'image */
+/* line 140, ../sass/_stylea.scss */
+#owl-demo .item {
+  margin: 3px;
+}
+
+/* line 143, ../sass/_stylea.scss */
+#owl-demo .item img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
