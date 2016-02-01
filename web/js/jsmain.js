@@ -1,0 +1,174 @@
+$('.collapse').collapse()
+
+$('#myCollapsible').collapse({
+    toggle: false
+})
+$('#form_select').hide();
+$('#form_add_ss_categorie').hide();
+
+$('input[name=ssCat]').change(
+    function () {
+        if ($(this).is(':checked')) {
+            $('#form_select').show();
+            $('#form_add_categorie').hide();
+            $('#form_add_ss_categorie').show();
+
+        } else {
+            $('#form_select').hide();
+            $('#form_add_categorie').show();
+            $('#form_add_ss_categorie').hide();
+
+        }
+    });
+
+// Gestion de la rotation de l'icone d'une catégorie
+
+var bool_icon_clicked = false;
+$('#icon_defil_cat').click(function () {
+    if (bool_icon_clicked == false) {
+        bool_icon_clicked = true;
+        $('#icon_rotate').addClass("animate_up");
+        $('#icon_rotate').removeClass("animate_bot");
+    } else {
+        bool_icon_clicked = false;
+        $('#icon_rotate').addClass("animate_bot");
+        $('#icon_rotate').removeClass("animate_up");
+    }
+});
+
+$('#btn-add-cat').click(function () {
+    verifFormulaireAjoutCategorie();
+});
+// Appel la fonction VerifFormulaireAjoutCategorie
+$('#input_form_add_cat').on('input', function () {
+    verifFormulaireAjoutCategorie();
+});
+$('#input_form_add_cat').blur(function () {
+    verifFormulaireAjoutCategorie();
+});
+
+// Appel la fonction VerifFormulaireAjoutCategorie
+$('#input_form_add_cat_des').on('input', function () {
+    verifFormulaireAjoutCategorie();
+});
+$('#input_form_add_cat_des').blur(function () {
+    verifFormulaireAjoutCategorie();
+});
+
+// Vérifie le contenu des champs, s'ils sont vides ou non
+function verifFormulaireAjoutCategorie() {
+    if ($('#input_form_add_cat').val() == '') {
+
+        $('#form_add_cat_nom').addClass("has-warning");
+        $('#btn-add-cat').addClass("disabled");
+        $('#helpInput').removeClass("hidden");
+    } else {
+        if ($('#input_form_add_cat_des').val() == '') {
+            $('#helpInput').removeClass("hidden");
+            $('#form_add_cat_des').addClass("has-warning");
+        } else {
+            $('#helpInput').addClass("hidden");
+
+            $('#form_add_cat_des').removeClass("has-warning");
+            $('#btn-add-cat').removeClass("disabled");
+        }
+        $('#form_add_cat_nom').removeClass("has-warning");
+    }
+}
+
+$('.icon-add-cat').click(function () {
+    getGlyph();
+    var nmId = this.id;
+    $('.icon-add-cat').removeClass("active");
+    $('#' + nmId).addClass("active");
+});
+
+function getGlyph() {
+}
+
+// Gestion Nouveau sujet Forum
+$('#inputNamePost').blur(function () {
+    verifFormAddPost();
+});
+$('#inputNamePost').on('input', function () {
+    verifFormAddPost();
+});
+
+$('#inputDescPost').blur(function () {
+    verifFormAddPost();
+});
+$('#inputDescPost').on('input', function () {
+    verifFormAddPost();
+});
+
+$('#inputCategPost').blur(function () {
+    verifFormAddPost();
+});
+$('#inputCategPost').on('input', function () {
+    verifFormAddPost();
+});
+
+$('#inputTagsPost').blur(function () {
+    verifFormAddPost();
+});
+$('#inputTagsPost').on('input', function () {
+    verifFormAddPost();
+});
+
+
+$('#inputContentPost').blur(function () {
+    verifFormAddPost();
+});
+$('#inputContentPost').on('input', function () {
+    verifFormAddPost();
+});
+
+function verifFormAddPost() {
+
+    if ($('#inputNamePost').val() == '') {
+        $('#formAddNamePost').addClass("has-warning");
+        $('#btn-add-post').addClass("disabled");
+        //$('#helpInput').removeClass("hidden");
+    } else {
+        $('#formAddNamePost').removeClass("has-warning");
+        if ($('#inputDescPost').val() == '') {
+            $('#formAddDescPost').addClass("has-warning");
+            $('#btn-add-post').addClass("disabled");
+        } else {
+            $('#formAddDescPost').removeClass("has-warning");
+            if ($('#inputCategPost').val() == '') {
+                $('#formAddCategPost').addClass("has-warning");
+                $('#btn-add-post').addClass("disabled");
+            } else {
+                $('#formAddCategPost').removeClass("has-warning");
+                if ($('#inputTagsPost').val() == '') {
+                    $('#formAddTagsPost').addClass("has-warning");
+                    $('#btn-add-post').addClass("disabled");
+                } else {
+                    $('#formAddTagsPost').removeClass("has-warning");
+                    if ($('#inputTagsPost').val() == '') {
+                        $('#formAddContentPost').addClass("has-warning");
+                        $('#btn-add-post').addClass("disabled");
+                    } else {
+                        $('#formAddContentPost').remove("has-warning");
+                        $('#formAddNamePost').remove("has-warning");
+                        $('#btn-add-post').removeClass("disabled");
+                    }
+                }
+            }
+        }
+    }
+}
+
+$(document).ready(function() {
+
+    $("#owl-demo").owlCarousel({
+
+        autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+        items : 4,
+        itemsDesktop : [1199,3],
+        itemsDesktopSmall : [979,3]
+
+    });
+    });
