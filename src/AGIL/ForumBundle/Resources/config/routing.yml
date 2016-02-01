@@ -1,5 +1,5 @@
 agil_forum_homepage:
-    path:     /forum
+    path:     /
     defaults: { _controller: AGILForumBundle:Default:index }
 
 

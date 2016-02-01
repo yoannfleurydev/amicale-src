@@ -187,10 +187,10 @@ class AgilEvent
     /**
      * Set user
      *
-     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @param \AGIL\UserBundle\Entity\AgilUser $user
      * @return AgilEvent
      */
-    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    public function setUser(\AGIL\UserBundle\Entity\AgilUser $user)
     {
         $this->user = $user;
 
@@ -200,7 +200,7 @@ class AgilEvent
     /**
      * Get user
      *
-     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     * @return \AGIL\UserBundle\Entity\AgilUser
      */
     public function getUser()
     {

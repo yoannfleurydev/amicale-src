@@ -293,10 +293,10 @@ class AgilOffer
     /**
      * Set user
      *
-     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @param \AGIL\UserBundle\Entity\AgilUser $user
      * @return AgilOffer
      */
-    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user = null)
+    public function setUser(\AGIL\UserBundle\Entity\AgilUser $user = null)
     {
         $this->user = $user;
 
@@ -306,7 +306,7 @@ class AgilOffer
     /**
      * Get user
      *
-     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     * @return \AGIL\UserBundle\Entity\AgilUser
      */
     public function getUser()
     {

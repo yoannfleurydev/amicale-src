@@ -1,13 +1,13 @@
 <?php
 
-namespace AGIL\DefaultBundle\DataFixtures\ORM;
+namespace AGIL\UserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use AGIL\DefaultBundle\Entity\AgilUser;
+use AGIL\UserBundle\Entity\AgilUser;
 
 class LoadUsersData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
