@@ -6,9 +6,10 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use AGIL\DefaultBundle\Entity\AgilUser;
 
-class LoadUsersData implements FixtureInterface, ContainerAwareInterface
+class LoadUsersData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
 
     /**
@@ -30,6 +31,7 @@ class LoadUsersData implements FixtureInterface, ContainerAwareInterface
     {
 
         /* Quentin -> A COMPLETER QUAND FOSUSERBUNDLE SERA CORRECTEMENT IMPORTE ET LA PARTIE UTILISATEUR TERMINEE
+        */
 
         // ############ CREATION D'UN SUPER-ADMINISTRATEUR DE TEST ############
         $userSuperAdmin = new AgilUser();
@@ -38,19 +40,20 @@ class LoadUsersData implements FixtureInterface, ContainerAwareInterface
         $userSuperAdmin->setEMail('superadmin@superadmin.fr');
 
         // Encodage du mot de passe
-        $encoder = $this->container->get('security.password_encoder');
-        $encoded = $encoder->encodePassword($userSuperAdmin, 'superAdmin');
-        $userSuperAdmin->setPassword($encoded);
+        //$encoder = $this->container->get('security.password_encoder');
+        //$encoded = $encoder->encodePassword($userSuperAdmin, 'superAdmin');
+        //$userSuperAdmin->setPassword($encoded);
+        $userSuperAdmin->setPassword('superAdmin');
 
         $userLists[] = $userSuperAdmin;
-
+        $this->addReference('superAdmin', $userLists[count($userLists)-1]);
 
         foreach($userLists as $users){
             $manager->persist($users);
         }
         $manager->flush();
 
-        */
+
     }
 
     /**

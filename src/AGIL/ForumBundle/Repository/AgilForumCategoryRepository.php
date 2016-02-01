@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class AgilForumCategoryRepository extends EntityRepository
 {
+
+    /**
+     * Redéfinition de la méthode findAll de base, afin de trier
+     * les résultats par ordre alphabétique croissant.
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->findBy(array(), array('forumCategoryName' => 'ASC'));
+    }
+
 }
