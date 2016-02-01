@@ -1,3 +1,36 @@
+(function() {
+    var input = document.getElementById('tags_input');
+    var tagsListContainer = document.querySelector('tags_container');
+    var ptags;
+
+    var getPreTags = function() {
+        clearNodes(tagsListContainer);
+        ptags = getPrefixedTags(input.value);
+        var len = ptags.length;
+        for (var i=0; i<len; i++) {
+            var currentTagElement = document.createElement('label');
+            currentTagElement.innerHTML = ptags[i];
+            // TODO Changer la valeur de id (S'il y en a une)
+            currentTagElement.id = 'an_id';
+            // TODO Changer la valeur de classes
+            currentTagElement.className = 'some classes';
+            tagsListContainer.appendChild(currentTagElement);
+        }
+    };
+
+    input.addEventListener('input', getPreTags, false);
+}());
+
+/**
+ * Supprime tous les fils d'un élément HTML
+ * @param node Le noeud à vider
+ */
+function clearNodes(node) {
+    while (node.childElementCount > 0) {
+        node.removeChild(node.firstElementChild);
+    }
+}
+
 /**
  * Fonction d'obtention de l'ensemble des tags ayant pour préfixe une valeur donnée
  * @param prefix Le préfixe pour lequel on veut la liste de tags
