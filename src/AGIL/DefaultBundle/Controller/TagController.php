@@ -27,8 +27,7 @@ class TagController extends Controller {
 			->getDoctrine()
 			->getManager()
 			->getRepository('AGILDefaultBundle:AgilTag')
-			// TODO changer 'a' pour $prefix
-			->getTagsList('a');
+			->getTagsList($prefix);
 
 		$jsonTagsList = Array();
 		foreach ($tagsList as $tag) {
@@ -37,5 +36,20 @@ class TagController extends Controller {
 
 		// Retourne le tableau encodé en JSON
 		return new Response(json_encode($jsonTagsList));
+	}
+
+	public function removeAction(Request $request) {
+		$tagName = $request->get('tagValue');
+
+		$em = $this->getDoctrine()->getManager();
+
+		$tag = $em->getRepository('AGILDefaultBundle:AgilTag')
+			// On peut utiliser le OneBy car chaque tag est unique
+				->findOneBy(array('tagName' => $tagName));
+
+		$em->remove($tag);
+		$em->flush();
+
+		return new Response();
 	}
 }
