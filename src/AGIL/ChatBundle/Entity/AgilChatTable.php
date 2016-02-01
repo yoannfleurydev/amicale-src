@@ -126,10 +126,10 @@ class AgilChatTable
     /**
      * Set user
      *
-     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @param \AGIL\UserBundle\Entity\AgilUser $user
      * @return AgilChatTable
      */
-    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    public function setUser(\AGIL\UserBundle\Entity\AgilUser $user)
     {
         $this->user = $user;
 

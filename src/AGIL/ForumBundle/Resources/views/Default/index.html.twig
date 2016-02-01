@@ -3,35 +3,96 @@
 
 {% block body %}
 
-    {% for c in categoryList %}
+    <h4>Forum </h4>
+<div class="container">
+    {% for category in categoryList %}
 
-        {% set key = c.forumCategoryId %}
-
-        <h1>&lsaquo;{{ c.forumCategoryIcon }}&rsaquo; {{ key }} -
-            <a href="{{ path('agil_forum_subjects_list',{'idCategory' : c.forumCategoryId } ) }}">{{ c.forumCategoryName }}</a>
-        </h1>
-        <p>{{ c.forumCategoryText }}</p>
-        <h4>Les derniers sujets</h4>
+        {% set key = category.forumCategoryId %}
 
 
-        {% if subjectsPerCategories[key]|length == 0 %}
+        <div class="row">
 
-            <p>Cette catégorie ne contient pas de sujets</p>
+            <div class="panel-group forum_categorie" id="accordion{{ category.forumCategoryId }}" role="tablist" aria-multiselectable="true">
 
-        {% else %}
+                <div class="panel panel-default">
+                    <!-- Lien pour dérouler -->
+                    <div class="panel-heading no-pad-top no-pad-bot">
+                        <div class="row parent">
+                            <div class="col-xs-10 col-xm-11 col-md-11 col-lg-11">
 
-            {% for s in subjectsPerCategories[key] %}
+                                <h4>
+                                <span class="glyphicon {{ category.forumCategoryIcon }}" aria-hidden="true"></span>
+                                    <a href="{{ path('agil_forum_subjects_list',{'idCategory' : category.forumCategoryId } ) }}">{{ category.forumCategoryName }}</a>
+                                </h4>
 
-                <h6>{{ s.forumSubjectTitle }}</h6>
+                                <em class="hidden-sm hidden-xs">
+                                    <h5 class="text-justify">{{ category.forumCategoryText }}</h5>
+                                </em>
+                            </div>
 
-            {% endfor %}
+                            <div class="col-xs-2 col-xm-1 col-md-1 col-lg-1 text-right child">
+                                <a id="icon_defil_cat" role="button" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapse{{ category.forumCategoryId }}" aria-expanded="true"
+                                   aria-controls="collapse{{ category.forumCategoryId }}">
+                                    <h3>
+                                        <span id="icon_rotate" class="glyphicon glyphicon glyphicon-chevron-down"
+                                              aria-hidden="true"></span>
+                                    </h3>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-        {% endif %}
+
+                    <div id="collapse{{ category.forumCategoryId }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 
 
-        <br>
+                        {% if subjectsPerCategories[key]|length == 0 %}
 
+                            <div class="container">
+                                <em><h6>Cette catégorie ne contient pas de sujets</h6></em>
+                            </div>
+
+                        {% else %}
+
+                            <div class="container">
+                                <em><h6>Les derniers sujets</h6></em>
+                            </div>
+
+                            <table class="table table-hover">
+
+                            {% for subject in subjectsPerCategories[key] %}
+
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-8 col-xm-10 col-md-10 col-lg-10">
+                                                <h5><a href="#">{{ subject.forumSubjectTitle }}</a></h5>
+                                                <h6>{{ subject.forumSubjectDescription }}</h6>
+                                            </div>
+                                            <div class="col-xs-4 col-xm-2 col-md-2 col-lg-2">
+                                                <h5>
+                                                    <small> Créé par</small>
+                                                    <a href="#">{{ subject.user.username }}</a></h5>
+                                                <h6><em> Il y a 45 min</em></h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </table>
+
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     {% endfor %}
+</div>
 
 {% endblock %}
