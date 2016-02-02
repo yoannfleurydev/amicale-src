@@ -10,4 +10,16 @@ class DefaultController extends Controller
     {
         return $this->render('AGILProfileBundle:Default:index.html.twig');
     }
+
+    public function showProfileAction($id)
+    {
+
+    }
+
+    public function editAction()
+    {
+
+    }
+
+
 }
