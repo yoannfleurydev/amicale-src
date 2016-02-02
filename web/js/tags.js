@@ -1,35 +1,62 @@
 (function() {
+    // Le champ dans lequel on tape les tags
     var input = document.getElementById('tags_input');
+    // La div où se trouve la liste des tags
     var tagsListContainer = document.querySelector('tags_container');
-    var ptags;
+    // le tableau de tags éligibles
+    var prefixedTags;
+    // booléen servant à savoir si on fait une requête AJAX ou pas
+    var requestedAJAX = true;
 
-    var getPreTags = function() {
-        clearNodes(tagsListContainer);
-        ptags = getPrefixedTags(input.value);
-        var len = ptags.length;
-        for (var i=0; i<len; i++) {
-            var currentTagElement = document.createElement('label');
-            currentTagElement.innerHTML = ptags[i];
-            // TODO Changer la valeur de id (S'il y en a une)
-            currentTagElement.id = 'an_id';
-            // TODO Changer la valeur de classes
-            currentTagElement.className = 'some classes';
-            tagsListContainer.appendChild(currentTagElement);
+    /* On ajoute une méthode au conteneur pour le vider facilement */
+    tagsListContainer.prototype.emptyTags = function() {
+        // Tant qu'il y a encore au moins un enfant on le supprime
+        while (this.childElementCount > 0) {
+            this.removeChild(this.firstElementChild);
         }
     };
 
+    /* On ajoute une méthode au conteneur pour le remplir plus facilement */
+    tagsListContainer.prototype.fillWithTags = function(ptags) {
+        var len = ptags.length;
+        /* Pour l'ensemble des tags trouvés, on créé un élément avec les valeurs adaptées */
+        for (var i=0; i<len; i++) {
+            var currentTagElement = document.createElement('span');
+            currentTagElement.innerHTML = ptags[i];
+            currentTagElement.className = 'label label-default';
+            // On ajoute le nouvel élément au conteneur des tags
+            this.appendChild(currentTagElement);
+        }
+    };
+
+    /*
+    #####################################################################################################
+     */
+    var callback = function() {
+        // Si on veut faire une requête ajax
+        if (requestedAJAX) {
+            tagsListContainer.emptyTags();
+            prefixedTags = getPrefixedTags(input.value);
+            requestedAJAX = false;
+        } else {
+            var len = prefixedTags.length;
+            // Pour chacun des tags déjà trouvés, on cherche s'il commence par la valeur dans l'entrée
+            for (var i=0; i<len; i++) {
+                // S'il n'existe pas on le supprime de la liste
+                if (!prefixedTags[i].startsWith(input.value)) {
+                    prefixedTags.splice(i, 1);
+                }
+            }
+            tagsListContainer.emptyTags();
+        }
+        tagsListContainer.fillWithTags(prefixedTags);
+    };
+    /*
+    #######################################################################################################
+     */
+
     input.addEventListener('input', getPreTags, false);
 }());
-
-/**
- * Supprime tous les fils d'un élément HTML
- * @param node Le noeud à vider
- */
-function clearNodes(node) {
-    while (node.childElementCount > 0) {
-        node.removeChild(node.firstElementChild);
-    }
-}
 
 /**
  * Fonction d'obtention de l'ensemble des tags ayant pour préfixe une valeur donnée
