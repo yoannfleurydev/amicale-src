@@ -2,14 +2,14 @@
     // Le champ dans lequel on tape les tags
     var input = document.getElementById('tags_input');
     // La div où se trouve la liste des tags
-    var tagsListContainer = document.querySelector('tags_container');
+    var tagsContainer = document.querySelector('tags_container');
     // le tableau de tags éligibles
     var prefixedTags;
     // booléen servant à savoir si on fait une requête AJAX ou pas
     var requestedAJAX = true;
 
     /* On ajoute une méthode au conteneur pour le vider facilement */
-    tagsListContainer.prototype.emptyTags = function() {
+    tagsContainer.prototype.emptyTags = function() {
         // Tant qu'il y a encore au moins un enfant on le supprime
         while (this.childElementCount > 0) {
             this.removeChild(this.firstElementChild);
@@ -17,7 +17,7 @@
     };
 
     /* On ajoute une méthode au conteneur pour le remplir plus facilement */
-    tagsListContainer.prototype.fillWithTags = function(ptags) {
+    tagsContainer.prototype.fillWithTags = function(ptags) {
         var len = ptags.length;
         /* Pour l'ensemble des tags trouvés, on créé un élément avec les valeurs adaptées */
         for (var i=0; i<len; i++) {
@@ -35,7 +35,7 @@
     var callback = function() {
         // Si on veut faire une requête ajax
         if (requestedAJAX) {
-            tagsListContainer.emptyTags();
+            tagsContainer.emptyTags();
             prefixedTags = getPrefixedTags(input.value);
             requestedAJAX = false;
         } else {
@@ -47,9 +47,9 @@
                     prefixedTags.splice(i, 1);
                 }
             }
-            tagsListContainer.emptyTags();
+            tagsContainer.emptyTags();
         }
-        tagsListContainer.fillWithTags(prefixedTags);
+        tagsContainer.fillWithTags(prefixedTags);
     };
     /*
     #######################################################################################################
