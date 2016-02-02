@@ -55,7 +55,7 @@
     #######################################################################################################
      */
 
-    input.addEventListener('input', getPreTags, false);
+    input.addEventListener('input', callback, false);
 }());
 
 /**
