@@ -9,6 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 class TagController extends Controller {
 
 	public function testFuncAction() {
+
+		$this->getDoctrine()
+			->getManager()
+			->getRepository('AGILDefaultBundle:AgilTag')
+			->insertTag('pouet');
+
 		return $this->render('AGILDefaultBundle:Default:tags.html.twig');
 	}
 
@@ -18,9 +24,8 @@ class TagController extends Controller {
 	 * Récupère une liste de tags dont le préfixe est $char et la renvoie au format JSON
 	 */
 	public function searchAction(Request $request) {
-
 		// On récupère la valeur envoyée par la requête
-		$prefix = $request->get('prefix');
+		$prefix = $request->request->get('prefix');
 
 		// Récupération du tableau de AgilTag
 		$tagsList = $this
@@ -44,17 +49,19 @@ class TagController extends Controller {
 	 * Récupère un tag dans la base de données pour le supprimer
 	 */
 	public function removeAction(Request $request) {
-		$tagName = $request->get('tagValue');
+		$tagName = $request->request->get('tagName');
 
 		$em = $this->getDoctrine()->getManager();
 
 		$tag = $em->getRepository('AGILDefaultBundle:AgilTag')
 			// On peut utiliser le OneBy car chaque tag est unique
-				->findOneBy(array('tagName' => $tagName));
+				// méthode magique
+				->findOneByTagName($tagName);
 
-		$em->remove($tag);
-		$em->flush();
-
-		return new Response();
+		if (null !== $tag) {
+			$em->remove($tag);
+			$em->flush();
+			return new Response();
+		}
 	}
 }
