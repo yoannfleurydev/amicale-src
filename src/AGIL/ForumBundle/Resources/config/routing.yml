@@ -15,3 +15,10 @@ agil_forum_subject_answers:
     requirements:
         idCategory: \d+
         idSubject: \d+
+
+agil_forum_subject_add:
+    path:   /categories/{idCategory}/newPost
+    defaults:
+         _controller: AGILForumBundle:Subjects:subjectsAdd
+    requirements:
+            idCategory: \d+

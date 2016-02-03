@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <form action="{{ path('agil_forum_subject_add', {'idCategory': idCategory}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form.forumSubjectTitle) }}
+        {{ form_row(form.forumSubjectTitle) }}
+
+        {{ form_errors(form.forumSubjectDescription) }}
+        {{ form_row(form.forumSubjectDescription) }}
+
+    {#{{ form_errors(form.tags) }}
+        {{ form_row(form.tags) }} #}
+
+        {{ form_row(form.Ajouter) }}
+
+        {{ form_rest(form) }}
+    </form>
+
+{% endblock %}
