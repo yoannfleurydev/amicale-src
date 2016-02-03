@@ -2,7 +2,10 @@
 
 namespace AGIL\DefaultBundle\Repository;
 
+use AGIL\DefaultBundle\Entity\AgilTag;
+use AGIL\ProfileBundle\Entity\AgilSkill;
 use Doctrine\ORM\EntityRepository;
+use InvalidArgumentException;
 
 /**
  * AgilTagRepository
@@ -23,5 +26,25 @@ class AgilTagRepository extends EntityRepository
 		// On l'execute et on retourne le résultat
 		/* /!\ C'est une liste d'objet de type AgilTag /!\ */
 		return $request->getQuery()->getResult();
+	}
+
+	/**
+	 * @param $tagName String Nom du tag à ajouter
+	 * @param AgilSkill $skillCat (Optionnel) La catégorie à accrocher
+	 * Permet d'insérer des tags dans la base de données
+	 */
+	function insertTag($tagName, AgilSkill $skillCat = null) {
+		if (!$tagName) {
+			throw new InvalidArgumentException('Un tag doit posséder au moins une lettre');
+		}
+
+		if (null === $this->findOneByTagName($tagName)) {
+			$tag = new AgilTag();
+			$tag->setTagName($tagName);
+			$tag->setSkillCategory((null === $skillCat)? null : $skillCat);
+
+			$this->getEntityManager()->persist($tag);
+			$this->getEntityManager()->flush();
+		}
 	}
 }
