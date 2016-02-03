@@ -40,7 +40,8 @@ $(function () {
 
     $('#tags_container').on('click', '.tag', function() {
         // TODO mettre les tags dans l'input
-        $('#tags_input').text($('#tags_input').text + ' ' + $(this).text());
+        //$('#tags_input').text($('#tags_input').text + ' ' + $(this).text());
+        console.log($(this).text());
     });
 });
 
