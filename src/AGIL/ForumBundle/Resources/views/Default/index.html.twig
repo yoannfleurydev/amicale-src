@@ -5,6 +5,9 @@
 
     <h4>Forum </h4>
 <div class="container">
+    <div class="row">
+        <div class="col-lg-offset-1 col-lg-10">
+
     {% for category in categoryList %}
 
         {% set key = category.forumCategoryId %}
@@ -20,13 +23,13 @@
                         <div class="row parent">
                             <div class="col-xs-10 col-xm-11 col-md-11 col-lg-11">
 
-                                <h4>
+                                <h5>
                                 <span class="glyphicon {{ category.forumCategoryIcon }}" aria-hidden="true"></span>
                                     <a href="{{ path('agil_forum_subjects_list',{'idCategory' : category.forumCategoryId } ) }}">{{ category.forumCategoryName }}</a>
-                                </h4>
+                                </h5>
 
                                 <em class="hidden-sm hidden-xs">
-                                    <h5 class="text-justify">{{ category.forumCategoryText }}</h5>
+                                    <small>{{ category.forumCategoryText }}</small>
                                 </em>
                             </div>
 
@@ -34,10 +37,10 @@
                                 <a id="icon_defil_cat" role="button" data-toggle="collapse" data-parent="#accordion"
                                    href="#collapse{{ category.forumCategoryId }}" aria-expanded="true"
                                    aria-controls="collapse{{ category.forumCategoryId }}">
-                                    <h3>
+                                    <h4>
                                         <span id="icon_rotate" class="glyphicon glyphicon glyphicon-chevron-down"
                                               aria-hidden="true"></span>
-                                    </h3>
+                                    </h4>
                                 </a>
                             </div>
                         </div>
@@ -94,5 +97,7 @@
 
     {% endfor %}
 </div>
+    </div>
+    </div>
 
 {% endblock %}
