@@ -14,7 +14,7 @@ class CategoriesController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function subjectsAction($idCategory)
+    public function subjectsAction($idCategory,$page)
     {
 
         $manager = $this->getDoctrine()->getManager();
@@ -27,16 +27,23 @@ class CategoriesController extends Controller
             throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
         }
 
-        $subjectRepository = $manager ->getRepository('AGILForumBundle:AgilForumSubject');
+        $subjectRepository = $manager->getRepository('AGILForumBundle:AgilForumSubject');
 
-        // Récupération des sujets pour la catégorie courante
-        //$subjects = $subjectRepository->findBy(array('category' => $category));
-        // REMPLACER LE FINDBY PAR UNE REQUETE DU REPOSITORY EN QUERY BUILDER
-        // AFIN DE GERER LA PAGINATION
+        // Récupération des sujets pour la catégorie courante en fonction des dernières réponses
 
-        $subjects = $subjectRepository->getLastSubjectsByAnswer($category);
+        $maxSubjects = 2;
+        $subject_count = $manager->getRepository('AGILForumBundle:AgilForumSubject')->getCountSubjects($idCategory);
+
+        $pagination = array(
+            'page' => $page,
+            'route' => 'agil_forum_subjects_list',
+            'pages_count' => ceil($subject_count / $maxSubjects),
+            'route_params' => array()
+        );
+
+        $subjects = $subjectRepository->getLastSubjectsByAnswer($page,$maxSubjects,$category);
 
         return $this->render('AGILForumBundle:Categories:subjects.html.twig',
-            array('category' => $category,'subjects' => $subjects));
+            array('category' => $category,'subjects' => $subjects,'pagination' => $pagination));
     }
 }

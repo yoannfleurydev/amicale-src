@@ -13,6 +13,7 @@
     <h4>Liste des sujets</h4>
 
 
+    <!-- subjects|length -->
     {% if subjects|length == 0 %}
 
         <p>Cette catégorie ne contient pas de sujets</p>
@@ -32,6 +33,9 @@
 
     <br>
 
+    <nav class="text-center">
+        {% include 'AGILForumBundle:Default:pagination.html.twig' %}
+    </nav>
 
 
 {% endblock %}
