@@ -18,12 +18,8 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('count(agil_user.id)');
-        $qb->from('AGILUserBundle:AgilUser','agil_user');
-
         $maxUsers = 25;
-        $users_count = $qb->getQuery()->getSingleScalarResult();
+        $users_count = $em->getRepository('AGILUserBundle:AgilUser')->getCountUsers();
 
         $pagination = array(
             'page' => $page,
@@ -40,7 +36,10 @@ class UserController extends Controller
             'users' => $users,
             'pagination' => $pagination,
             'moderators' => $moderators,
-            'admins' => $admins
+            'admins' => $admins,
+            'nbMembers' => $users_count,
+            'nbModerators' => count($moderators),
+            'nbAdmins' => count($admins)
         ));
     }
 
