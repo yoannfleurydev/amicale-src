@@ -1,6 +1,12 @@
 {% extends "AGILUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
+    {# Error login form #}
+    {% if error %}
+        <div class="alert alert-danger">
+            <strong>{% trans %}Erreur de connexion {% endtrans %}!</strong> Mauvaise combinaison d'email/mot de passe
+        </div>
+    {% endif %}
 
     <form action="{{ path("fos_user_security_check") }}" method="post">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
