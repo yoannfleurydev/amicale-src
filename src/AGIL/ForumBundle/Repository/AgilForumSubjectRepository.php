@@ -3,7 +3,7 @@
 namespace AGIL\ForumBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
+use AGIL\ForumBundle\Entity\AgilForumAnswer;
 /**
  * AgilForumSubjectRepository
  *
@@ -12,4 +12,34 @@ use Doctrine\ORM\EntityRepository;
  */
 class AgilForumSubjectRepository extends EntityRepository
 {
+
+    public function getLastSubjectsByAnswer($idCategory){
+
+        $datesMax = $this->_em->createQueryBuilder();
+        $query = $this->_em->createQueryBuilder();
+
+
+        $datesMax->select('MAX(answ.forumAnswerPostDate)')
+              ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','answ')
+              ->groupBy('answ.subject')
+        ;
+
+        $query->select('ans.forumAnswerPostDate','sub.forumSubjectTitle','sub.forumSubjectId')
+            ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','ans')
+            ->leftJoin('ans.subject','sub')
+            ->where('sub.category = ?1')
+            ->andWhere($query->expr()->In('ans.forumAnswerPostDate', $datesMax->getDQL()))
+            ->orderBy('ans.forumAnswerPostDate','desc')
+        ;
+
+        $query->setParameter(1,$idCategory);
+
+
+        $res = $query->getQuery();
+
+        return $res->getResult();
+    }
+
+
+
 }

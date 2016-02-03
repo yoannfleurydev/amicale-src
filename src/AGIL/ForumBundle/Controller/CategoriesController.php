@@ -30,10 +30,11 @@ class CategoriesController extends Controller
         $subjectRepository = $manager ->getRepository('AGILForumBundle:AgilForumSubject');
 
         // Récupération des sujets pour la catégorie courante
-        $subjects = $subjectRepository->findBy(array('category' => $category));
+        //$subjects = $subjectRepository->findBy(array('category' => $category));
         // REMPLACER LE FINDBY PAR UNE REQUETE DU REPOSITORY EN QUERY BUILDER
         // AFIN DE GERER LA PAGINATION
 
+        $subjects = $subjectRepository->getLastSubjectsByAnswer($category);
 
         return $this->render('AGILForumBundle:Categories:subjects.html.twig',
             array('category' => $category,'subjects' => $subjects));

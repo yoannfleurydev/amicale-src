@@ -22,6 +22,7 @@
         {% for s in subjects %}
 
             <h6><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId} ) }}">{{ s.forumSubjectTitle }}</a></h6>
+            <p>Dernière réponse le : {{ s.forumAnswerPostDate|date('d-m-Y H:i:s') }}</p>
 
             <br><h6>--------------------------------</h6>
         {% endfor %}
