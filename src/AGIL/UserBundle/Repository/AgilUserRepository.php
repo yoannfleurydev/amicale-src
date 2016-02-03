@@ -75,8 +75,8 @@ class AgilUserRepository extends EntityRepository
             ->orderBy('agil_user.username', 'ASC')
         ;
 
-        $qb->getQuery()->setFirstResult(($page-1) * $maxperpage)
-            ->setMaxResults($maxperpage);
+        $qb->setFirstResult(($page-1) * $maxperpage)
+            ->setMaxResults($maxperpage)->getQuery();
 
         return new Paginator($qb);
     }

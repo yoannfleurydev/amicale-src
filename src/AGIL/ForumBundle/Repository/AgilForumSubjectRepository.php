@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * AgilForumSubjectRepository
@@ -12,4 +13,52 @@ use Doctrine\ORM\EntityRepository;
  */
 class AgilForumSubjectRepository extends EntityRepository
 {
+
+    public function getLastSubjectsByAnswer($page=1, $maxperpage=2,$idCategory){
+
+        $datesMax = $this->_em->createQueryBuilder();
+        $query = $this->_em->createQueryBuilder();
+
+
+        $datesMax->select('MAX(answ.forumAnswerPostDate)')
+              ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','answ')
+              ->groupBy('answ.subject')
+        ;
+
+        $query->select('sub.forumSubjectId','sub.forumSubjectTitle','ans.forumAnswerPostDate','ans.forumAnswerId','ans')
+            ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','ans')
+            ->leftJoin('ans.subject','sub')
+            ->where('sub.category = ?1')
+            ->andWhere($query->expr()->In('ans.forumAnswerPostDate', $datesMax->getDQL()))
+            ->orderBy('ans.forumAnswerPostDate','desc')
+        ;
+
+        $query->setParameter(1,$idCategory);
+
+
+        $query->setFirstResult(($page-1) * $maxperpage)
+            ->setMaxResults($maxperpage)->getQuery();
+
+        return new Paginator($query);
+
+    }
+
+
+    public function getCountSubjects($idCategory){
+
+        $query = $this->_em->createQueryBuilder();
+
+        $query->select('COUNT(sub.forumSubjectId) as cnt')
+            ->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+            ->where('sub.category = ?1')
+        ;
+
+        $query->setParameter(1,$idCategory);
+
+        return $query->getQuery()->getSingleScalarResult();
+
+    }
+
+
+
 }

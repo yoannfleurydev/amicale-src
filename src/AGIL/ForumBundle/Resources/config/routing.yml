@@ -4,13 +4,17 @@ agil_forum_homepage:
 
 
 agil_forum_subjects_list:
-    path:     /categories/{idCategory}
-    defaults: { _controller: AGILForumBundle:Categories:subjects }
+    path:     /categories/{idCategory}/page/{page}
+    defaults:
+        _controller: AGILForumBundle:Categories:subjects
+        page:  1
     requirements:
         idCategory: \d+
+        page : \d+
+
 
 agil_forum_subject_answers:
-    path:     /categories/{idCategory}/{idSubject}
+    path:     /categories/{idCategory}/subject/{idSubject}
     defaults: { _controller: AGILForumBundle:Answers:answers }
     requirements:
         idCategory: \d+
