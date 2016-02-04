@@ -29,7 +29,7 @@ class LoadForumAnswerData extends AbstractFixture implements OrderedFixtureInter
 
         $answers[] = new AgilForumAnswer($subject2,$userSuperAdmin,"Bonjour. Je propose de se faire une session de cours
          de révision pour le 3 Février. Est ce que cela tente des gens ? Que souhaitez-vous réviser en priorité ?");
-        $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-01'));
+        $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-01 01:23:12'));
 
         $answers[] = new AgilForumAnswer($subject2,$userSuperAdmin,"Moi ça m'intéresse ! J'ai rien compris aux Bon-Suff et Dern-Occ ...");
         $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-02 11:12:01'));
