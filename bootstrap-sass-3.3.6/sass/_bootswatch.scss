@@ -485,6 +485,10 @@ input[type="checkbox"],
     background-color: $brand-success;
   }
 
+  &-notice {
+    background-color: $brand-info;
+  }
+
   &-info {
     background-color: $brand-info;
   }

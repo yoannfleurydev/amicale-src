@@ -17,10 +17,9 @@ $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 
 $brand-primary:         #D55400 !default;
 $brand-success:         #4CAF50 !default;
-$brand-info:            #9C27B0 !default;
+$brand-info:            #334960 !default;
 $brand-warning:         #ff9800 !default;
 $brand-danger:          #e51c23 !default;
-
 
 //== Scaffolding
 //
@@ -566,7 +565,7 @@ $popover-arrow-outer-fallback-color:  darken($popover-fallback-border-color, 20%
 //##
 
 //** Default label background color
-$label-default-bg:            #334960 !default;
+$label-default-bg:            $gray-light !default;
 //** Primary label background color
 $label-primary-bg:            $brand-primary !default;
 //** Success label background color
@@ -714,12 +713,12 @@ $panel-inner-border:          #ddd !default;
 $panel-footer-bg:             #f5f5f5 !default;
 
 $panel-default-text:          $gray-dark !default;
-$panel-default-border:        #ddd !default;
-$panel-default-heading-bg:    #FFF !default;
+$panel-default-border:        #fff !default;
+$panel-default-heading-bg:    #fff !default;
 
 $panel-primary-text:          #fff !default;
 $panel-primary-border:        $brand-primary !default;
-$panel-primary-heading-bg:    #FFF !default;
+$panel-primary-heading-bg:    $brand-primary !default;
 
 $panel-success-text:          #fff !default;
 $panel-success-border:        $state-success-border !default;

@@ -33,7 +33,7 @@
                         <img class="img-circle img-responsive" src="{{ asset("images/placeholder/nephi.png") }}" width="50px"></a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <a href="{{ path('login') }}">
+                            <a href="{{ path('fos_user_security_login') }}">
                                 <i class="material-icons">account_circle</i> Profil
                             </a>
                         </li>
@@ -97,6 +97,20 @@
                 </ul>
             </nav>
         </aside>
+        {% for type, messages in app.session.flashBag.all %}
+            {% for message in messages %}
+                <div class="row">
+                    <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+                        <div class="alert alert-dismissible alert-{{ type }}" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            {{ message|trans({}, 'FOSUserBundle') }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
     {% block body %}{% endblock %}
     </div>
     <footer class="footer">

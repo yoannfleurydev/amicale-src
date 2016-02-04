@@ -58,7 +58,7 @@ body {
 /* line 59, ../sass/_amicale.scss */
 .nav-link {
   display: block;
-  padding: 10px 50px;
+  padding: 10px 30px;
   text-decoration: none;
   color: #FFF;
   transition: background-color 0.3s ease;
@@ -406,7 +406,7 @@ span.panel-title-content {
   box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.27);
 }
 
-/*  Style du défilé d'image */
+/*  Style du defile d'image */
 /* line 136, ../sass/_stylea.scss */
 #owl-demo .item {
   margin: 3px;
@@ -2142,12 +2142,12 @@ a.text-success:hover {
 
 /* line 5, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_text-emphasis.scss */
 .text-info {
-  color: #9C27B0;
+  color: #334960;
 }
 
 /* line 8, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_text-emphasis.scss */
 a.text-info:hover {
-  color: #771e86;
+  color: #21303f;
 }
 
 /* line 5, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_text-emphasis.scss */
@@ -4578,13 +4578,13 @@ select[multiple].input-lg,
 /* line 68, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_buttons.scss */
 .btn-info {
   color: #fff;
-  background-color: #9C27B0;
+  background-color: #334960;
   border-color: transparent;
 }
 /* line 11, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
   color: #fff;
-  background-color: #771e86;
+  background-color: #21303f;
   border-color: transparent;
 }
 /* line 20, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
@@ -4593,12 +4593,12 @@ select[multiple].input-lg,
 }
 /* line 28, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-info.disabled, .btn-info.disabled:hover, .btn-info.disabled:focus, .btn-info.disabled:active, .btn-info.disabled.active, .btn-info[disabled], .btn-info[disabled]:hover, .btn-info[disabled]:focus, .btn-info[disabled]:active, .btn-info[disabled].active, fieldset[disabled] .btn-info, fieldset[disabled] .btn-info:hover, fieldset[disabled] .btn-info:focus, fieldset[disabled] .btn-info:active, fieldset[disabled] .btn-info.active {
-  background-color: #9C27B0;
+  background-color: #334960;
   border-color: transparent;
 }
 /* line 38, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_buttons.scss */
 .btn-info .badge {
-  color: #9C27B0;
+  color: #334960;
   background-color: #fff;
 }
 
@@ -6312,11 +6312,11 @@ a.label:hover, a.label:focus {
 
 /* line 44, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_labels.scss */
 .label-default {
-  background-color: #334960;
+  background-color: #bbb;
 }
 /* line 7, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_labels.scss */
 .label-default[href]:hover, .label-default[href]:focus {
-  background-color: #21303f;
+  background-color: #a2a2a2;
 }
 
 /* line 48, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_labels.scss */
@@ -6339,11 +6339,11 @@ a.label:hover, a.label:focus {
 
 /* line 56, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_labels.scss */
 .label-info {
-  background-color: #9C27B0;
+  background-color: #334960;
 }
 /* line 7, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_labels.scss */
 .label-info[href]:hover, .label-info[href]:focus {
-  background-color: #771e86;
+  background-color: #21303f;
 }
 
 /* line 60, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_labels.scss */
@@ -6553,7 +6553,7 @@ a.thumbnail.active {
 .alert-info {
   background-color: #e1bee7;
   border-color: #cba4dd;
-  color: #9C27B0;
+  color: #334960;
 }
 /* line 8, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_alerts.scss */
 .alert-info hr {
@@ -6561,7 +6561,7 @@ a.thumbnail.active {
 }
 /* line 11, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_alerts.scss */
 .alert-info .alert-link {
-  color: #771e86;
+  color: #21303f;
 }
 
 /* line 63, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_alerts.scss */
@@ -6681,7 +6681,7 @@ a.thumbnail.active {
 
 /* line 95, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_progress-bars.scss */
 .progress-bar-info {
-  background-color: #9C27B0;
+  background-color: #334960;
 }
 /* line 7, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_progress-bar.scss */
 .progress-striped .progress-bar-info {
@@ -6869,13 +6869,13 @@ a.list-group-item-success.active, a.list-group-item-success.active:hover, a.list
 
 /* line 4, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_list-group.scss */
 .list-group-item-info {
-  color: #9C27B0;
+  color: #334960;
   background-color: #e1bee7;
 }
 
 /* line 11, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_list-group.scss */
 a.list-group-item-info {
-  color: #9C27B0;
+  color: #334960;
 }
 /* line 14, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_list-group.scss */
 a.list-group-item-info .list-group-item-heading {
@@ -6883,14 +6883,14 @@ a.list-group-item-info .list-group-item-heading {
 }
 /* line 18, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_list-group.scss */
 a.list-group-item-info:hover, a.list-group-item-info:focus {
-  color: #9C27B0;
+  color: #334960;
   background-color: #d8abe0;
 }
 /* line 23, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_list-group.scss */
 a.list-group-item-info.active, a.list-group-item-info.active:hover, a.list-group-item-info.active:focus {
   color: #fff;
-  background-color: #9C27B0;
-  border-color: #9C27B0;
+  background-color: #334960;
+  border-color: #334960;
 }
 
 /* line 4, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_list-group.scss */
@@ -7213,26 +7213,26 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 
 /* line 226, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
 .panel-default {
-  border-color: #ddd;
+  border-color: #fff;
 }
 /* line 6, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-default > .panel-heading {
   color: #212121;
-  background-color: #FFF;
-  border-color: #ddd;
+  background-color: #fff;
+  border-color: #fff;
 }
 /* line 11, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #ddd;
+  border-top-color: #fff;
 }
 /* line 14, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-default > .panel-heading .badge {
-  color: #FFF;
+  color: #fff;
   background-color: #212121;
 }
 /* line 20, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-default > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #ddd;
+  border-bottom-color: #fff;
 }
 
 /* line 229, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_panels.scss */
@@ -7242,7 +7242,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 /* line 6, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-heading {
   color: #fff;
-  background-color: #FFF;
+  background-color: #D55400;
   border-color: #D55400;
 }
 /* line 11, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7251,7 +7251,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 /* line 14, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-primary > .panel-heading .badge {
-  color: #FFF;
+  color: #D55400;
   background-color: #fff;
 }
 /* line 20, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7290,7 +7290,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 /* line 6, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-info > .panel-heading {
   color: #fff;
-  background-color: #9C27B0;
+  background-color: #334960;
   border-color: #cba4dd;
 }
 /* line 11, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -7299,7 +7299,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 /* line 14, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
 .panel-info > .panel-heading .badge {
-  color: #9C27B0;
+  color: #334960;
   background-color: #fff;
 }
 /* line 20, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/mixins/_panels.scss */
@@ -8570,17 +8570,17 @@ button.close {
 }
 /* line 42, ../sass/_bootswatch.scss */
 .btn-info:focus {
-  background-color: #9C27B0;
+  background-color: #334960;
 }
 /* line 46, ../sass/_bootswatch.scss */
 .btn-info:hover, .btn-info:active:hover {
-  background-color: #862197;
+  background-color: #283a4c;
 }
 /* line 51, ../sass/_bootswatch.scss */
 .btn-info:active {
-  background-color: #701c7e;
-  background-image: -webkit-radial-gradient(circle, #701c7e 10%, #9C27B0 11%);
-  background-image: radial-gradient(circle, #701c7e 10%, #9c27b0 11%);
+  background-color: #1e2b38;
+  background-image: -webkit-radial-gradient(circle, #1e2b38 10%, #334960 11%);
+  background-image: radial-gradient(circle, #1e2b38 10%, #334960 11%);
   background-repeat: no-repeat;
   background-size: 1000%;
   -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -9276,34 +9276,38 @@ input[type="checkbox"]:disabled:checked:after,
   background-color: #4CAF50;
 }
 /* line 488, ../sass/_bootswatch.scss */
-.alert-info {
-  background-color: #9C27B0;
+.alert-notice {
+  background-color: #334960;
 }
 /* line 492, ../sass/_bootswatch.scss */
+.alert-info {
+  background-color: #334960;
+}
+/* line 496, ../sass/_bootswatch.scss */
 .alert-warning {
   background-color: #ff9800;
 }
-/* line 496, ../sass/_bootswatch.scss */
+/* line 500, ../sass/_bootswatch.scss */
 .alert-danger {
   background-color: #e51c23;
 }
-/* line 500, ../sass/_bootswatch.scss */
+/* line 504, ../sass/_bootswatch.scss */
 .alert a:not(.close),
 .alert .alert-link {
   color: #fff;
   font-weight: bold;
 }
-/* line 506, ../sass/_bootswatch.scss */
+/* line 510, ../sass/_bootswatch.scss */
 .alert .close {
   color: #fff;
 }
 
-/* line 511, ../sass/_bootswatch.scss */
+/* line 515, ../sass/_bootswatch.scss */
 .badge {
   padding: 4px 6px 4px;
 }
 
-/* line 515, ../sass/_bootswatch.scss */
+/* line 519, ../sass/_bootswatch.scss */
 .progress {
   position: relative;
   z-index: 1;
@@ -9312,16 +9316,16 @@ input[type="checkbox"]:disabled:checked:after,
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-/* line 523, ../sass/_bootswatch.scss */
+/* line 527, ../sass/_bootswatch.scss */
 .progress-bar {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-/* line 526, ../sass/_bootswatch.scss */
+/* line 530, ../sass/_bootswatch.scss */
 .progress-bar:last-child {
   border-radius: 0 3px 3px 0;
 }
-/* line 531, ../sass/_bootswatch.scss */
+/* line 535, ../sass/_bootswatch.scss */
 .progress-bar:last-child:before {
   display: block;
   content: "";
@@ -9333,24 +9337,24 @@ input[type="checkbox"]:disabled:checked:after,
   z-index: -1;
   background-color: #ffb789;
 }
-/* line 544, ../sass/_bootswatch.scss */
+/* line 548, ../sass/_bootswatch.scss */
 .progress-bar-success:last-child.progress-bar:before {
   background-color: #c7e7c8;
 }
-/* line 548, ../sass/_bootswatch.scss */
+/* line 552, ../sass/_bootswatch.scss */
 .progress-bar-info:last-child.progress-bar:before {
-  background-color: #edc9f3;
+  background-color: #a8bcd1;
 }
-/* line 551, ../sass/_bootswatch.scss */
+/* line 555, ../sass/_bootswatch.scss */
 .progress-bar-warning:last-child.progress-bar:before {
   background-color: #ffe0b3;
 }
-/* line 555, ../sass/_bootswatch.scss */
+/* line 559, ../sass/_bootswatch.scss */
 .progress-bar-danger:last-child.progress-bar:before {
   background-color: #f28e92;
 }
 
-/* line 565, ../sass/_bootswatch.scss */
+/* line 569, ../sass/_bootswatch.scss */
 .close {
   font-size: 34px;
   font-weight: 300;
@@ -9360,51 +9364,51 @@ input[type="checkbox"]:disabled:checked:after,
   -o-transition: all 0.2s;
   transition: all 0.2s;
 }
-/* line 572, ../sass/_bootswatch.scss */
+/* line 576, ../sass/_bootswatch.scss */
 .close:hover {
   opacity: 1;
 }
 
-/* line 579, ../sass/_bootswatch.scss */
+/* line 583, ../sass/_bootswatch.scss */
 .list-group-item {
   padding: 15px;
 }
-/* line 583, ../sass/_bootswatch.scss */
+/* line 587, ../sass/_bootswatch.scss */
 .list-group-item-text {
   color: #bbb;
 }
 
-/* line 588, ../sass/_bootswatch.scss */
+/* line 592, ../sass/_bootswatch.scss */
 .well {
   border-radius: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 593, ../sass/_bootswatch.scss */
+/* line 597, ../sass/_bootswatch.scss */
 .panel {
   border: none;
   border-radius: 2px;
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
-/* line 598, ../sass/_bootswatch.scss */
+/* line 602, ../sass/_bootswatch.scss */
 .panel-heading {
   border-bottom: none;
 }
-/* line 602, ../sass/_bootswatch.scss */
+/* line 606, ../sass/_bootswatch.scss */
 .panel-footer {
   border-top: none;
 }
 
-/* line 607, ../sass/_bootswatch.scss */
+/* line 611, ../sass/_bootswatch.scss */
 .popover {
   border: none;
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* line 614, ../sass/_bootswatch.scss */
+/* line 618, ../sass/_bootswatch.scss */
 .carousel-caption h1, .carousel-caption h2, .carousel-caption h3, .carousel-caption h4, .carousel-caption h5, .carousel-caption h6 {
   color: inherit;
 }
