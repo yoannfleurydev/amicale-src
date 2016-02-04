@@ -252,4 +252,14 @@ class AgilForumSubject
     {
         return $this->tags;
     }
+
+    /**
+     * Set tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function setTags($collection)
+    {
+        $this->tags = $collection;
+    }
 }

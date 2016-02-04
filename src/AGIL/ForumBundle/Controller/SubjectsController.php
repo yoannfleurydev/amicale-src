@@ -2,6 +2,8 @@
 
 namespace AGIL\ForumBundle\Controller;
 
+use AGIL\ForumBundle\Entity\AgilForumAnswer;
+use AGIL\ForumBundle\Form\FirstAnswerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,18 +18,23 @@ class SubjectsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        //$user,$category,$title,$desc
         $user = $this->getUser();
 
         $category = $em->getRepository("AGILForumBundle:AgilForumCategory")->find($idCategory);
 
         $subject = new AgilForumSubject($user,$category,null,null);
-        $form = $this->createForm(new SubjectType(), $subject);
+        $subject->setTags(array());
+        $firstPost = new AgilForumAnswer(null, $user, null);
+        $firstPost->setSubject($subject);
+
+        $form = $this->createForm(new FirstAnswerType(), $firstPost);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $em->persist($firstPost);
             $em->persist($subject);
             $em->flush($subject);
+            $em->flush($firstPost);
 
             return $this->redirect( $this->generateUrl('agil_forum_subjects_list', array('idCategory' => $idCategory)) );
         }

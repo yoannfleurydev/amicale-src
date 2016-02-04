@@ -26,20 +26,30 @@ class SubjectType extends AbstractType
             )
         ));
 
-        /*$builder->add('tags', 'text', array(
+        $builder->add('tags', 'text', array(
             'label' => false,
+            'required' => false,
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Tags associés',
             )
-        ));*/
+        ));
+
+        /*$builder->add('firstPost', 'textarea', array(
+            'label' => false,
+            'required' => true,
+            'attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Premier message de ton sujet',
+            )
+        ));
 
         $builder->add('Ajouter', 'submit', array(
             'label' => false,
             'attr' => array(
                 'class' => 'form-control',
             )
-        ));
+        ));*/
     }
 
     public function getName()
