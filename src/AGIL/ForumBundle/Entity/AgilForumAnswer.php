@@ -20,6 +20,13 @@ class AgilForumAnswer
      */
     private $subject;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AGIL\UserBundle\Entity\AgilUser")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="id")
+     */
+    private $user;
+
     /**
      * @var int
      *
@@ -131,8 +138,35 @@ class AgilForumAnswer
     /**
      * AgilForumAnswer constructor.
      */
-    public function __construct()
+    public function __construct($subject,$user,$text)
     {
+        $this->subject = $subject;
+        $this->user = $user;
+        $this->forumAnswerText = $text;
         $this->forumAnswerPostDate = new \Datetime();
+    }
+
+
+    /**
+     * Set user
+     *
+     * @param \AGIL\UserBundle\Entity\AgilUser $user
+     * @return AgilForumAnswer
+     */
+    public function setUser(\AGIL\UserBundle\Entity\AgilUser $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AGIL\UserBundle\Entity\AgilUser
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

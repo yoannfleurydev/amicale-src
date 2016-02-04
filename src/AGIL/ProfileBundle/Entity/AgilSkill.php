@@ -84,10 +84,10 @@ class AgilSkill
     /**
      * Set user
      *
-     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @param \AGIL\UserBundle\Entity\AgilUser $user
      * @return AgilSkill
      */
-    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    public function setUser(\AGIL\UserBundle\Entity\AgilUser $user)
     {
         $this->user = $user;
 
@@ -97,7 +97,7 @@ class AgilSkill
     /**
      * Get user
      *
-     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     * @return \AGIL\UserBundle\Entity\AgilUser
      */
     public function getUser()
     {

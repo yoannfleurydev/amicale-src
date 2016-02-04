@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+
+    <h1 style="color:red;">
+        <a href="{{ path('agil_forum_homepage') }}">Accueil Forum</a> /
+    </h1>
+
+    <h2>{{ category.forumCategoryName }}</h2>
+    <p>{{ category.forumCategoryText }}</p>
+
+    <h4>Liste des sujets</h4>
+
+
+    <!-- subjects|length -->
+    {% if subjects|length == 0 %}
+
+        <p>Cette catégorie ne contient pas de sujets</p>
+
+    {% else %}
+
+        {% for s in subjects %}
+
+            <h6><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId} ) }}">{{ s.forumSubjectTitle }}</a></h6>
+            <p>Dernière réponse le : {{ s.forumAnswerPostDate|date('d-m-Y H:i:s') }}</p>
+
+            <br><h6>--------------------------------</h6>
+        {% endfor %}
+
+    {% endif %}
+
+
+    <br>
+
+    <nav class="text-center">
+        {% include 'AGILForumBundle:Default:pagination.html.twig' %}
+    </nav>
+
+
+{% endblock %}

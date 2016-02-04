@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+
+    <h1 style="color:red;">
+        <a href="{{ path('agil_forum_homepage') }}">Accueil Forum</a> /
+        <a href="{{ path('agil_forum_subjects_list',{'idCategory' : category.forumCategoryId}) }}">{{ category.forumCategoryName }}</a>
+    </h1>
+
+    <h2>{{ subject.forumSubjectTitle }}</h2>
+    <p>{{ subject.forumSubjectDescription }}</p>
+
+
+
+
+    {% for a in answers %}
+        <h6>{{ a.forumAnswerText }}</h6>
+    {% endfor %}
+
+
+
+    <br>
+
+
+
+{% endblock %}

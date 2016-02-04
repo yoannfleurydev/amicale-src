@@ -32,6 +32,26 @@ class AgilUserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getCountUsers($page=1, $maxperpage=25)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('count(agil_user.id)')
+            ->from('AGILUserBundle:AgilUser','agil_user')
+            ->where('
+            agil_user.roles NOT LIKE :roles AND
+            agil_user.roles NOT LIKE :roles2 AND
+            agil_user.roles NOT LIKE :roles3
+            ')
+            ->setParameter('roles', '%"ROLE_SUPER_ADMIN"%')
+            ->setParameter('roles2', '%"ROLE_MODERATOR"%')
+            ->setParameter('roles3', '%"ROLE_ADMIN"%')
+        ;
+
+        $users_count = $qb->getQuery()->getSingleScalarResult();
+
+        return $users_count;
+    }
+
     /**
      * Get the paginated list of published articles
      *
@@ -55,8 +75,8 @@ class AgilUserRepository extends EntityRepository
             ->orderBy('agil_user.username', 'ASC')
         ;
 
-        $qb->getQuery()->setFirstResult(($page-1) * $maxperpage)
-            ->setMaxResults($maxperpage);
+        $qb->setFirstResult(($page-1) * $maxperpage)
+            ->setMaxResults($maxperpage)->getQuery();
 
         return new Paginator($qb);
     }

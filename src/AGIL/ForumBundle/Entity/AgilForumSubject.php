@@ -162,10 +162,10 @@ class AgilForumSubject
     /**
      * Set user
      *
-     * @param \AGIL\DefaultBundle\Entity\AgilUser $user
+     * @param \AGIL\UserBundle\Entity\AgilUser $user
      * @return AgilForumSubject
      */
-    public function setUser(\AGIL\DefaultBundle\Entity\AgilUser $user)
+    public function setUser(\AGIL\UserBundle\Entity\AgilUser $user)
     {
         $this->user = $user;
 
@@ -175,7 +175,7 @@ class AgilForumSubject
     /**
      * Get user
      *
-     * @return \AGIL\DefaultBundle\Entity\AgilUser 
+     * @return \AGIL\UserBundle\Entity\AgilUser
      */
     public function getUser()
     {
@@ -210,10 +210,14 @@ class AgilForumSubject
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($user,$category,$title,$desc)
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->forumSubjectPostDate = new \DateTime();
+        $this->user = $user;
+        $this->category = $category;
+        $this->forumSubjectTitle = $title;
+        $this->forumSubjectDescription = $desc;
     }
 
     /**

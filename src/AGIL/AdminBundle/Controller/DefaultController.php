@@ -8,6 +8,15 @@ class DefaultController extends Controller
 {
     public function adminAction()
     {
-        return $this->render('AGILAdminBundle:Default:admin.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('count(user.id)');
+        $qb->from('AGILUserBundle:AgilUser','user');
+        $count = $qb->getQuery()->getSingleScalarResult();
+
+        return $this->render('AGILAdminBundle:Default:admin.html.twig',
+            array('nbUsers' => $count)
+        );
     }
 }

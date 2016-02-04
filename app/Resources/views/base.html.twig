@@ -24,7 +24,9 @@
                 <a href="#"><img class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ" width="95px"></a>
                 <a href="#" class="navbar-mobile">AGIL</a>
                 <!--Si non connecté-->
-                <!--<a class="navbar-mobile right" href="#"><span class="glyphicon glyphicon-log-in"></span></a>-->
+                {% if not is_granted("ROLE_USER") %}
+                <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}"><span class="glyphicon glyphicon-log-in"></span></a>
+                {% else %}
                 <!--Si connecté-->
                 <li class="dropdown navbar-dropdown-mobile right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -40,10 +42,11 @@
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
+                            <a href="{{ path("fos_user_security_logout") }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
                         </li>
                     </ul>
                 </li>
+                {% endif %}
                 <a href="#" class="navbar-mobile right"><span class="material-icons">search</span></a>
             </div>
         </div><!-- /.container-fluid -->
@@ -61,10 +64,17 @@
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
                         </a></li>
+                    {% if is_granted("ROLE_USER") %}
+                    <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link">
+                            <span class="glyphicon glyphicon-picture"></span>
+                            Forum
+                        </a></li>
+                    {% endif %}
                     <li><a href="#" class="nav-link">
                             <span class="glyphicon glyphicon-picture"></span>
                             Hall
                         </a></li>
+                    {% if is_granted("ROLE_USER") %}
                     <li><a href="#" class="nav-link">
                             <span class="glyphicon glyphicon-comment"></span>
                             Salon
@@ -72,6 +82,12 @@
                     <li><a href="#" class="nav-link">
                             <span class="glyphicon glyphicon-calendar"></span>
                             Agenda</a></li>
+                    {% endif %}
+                    {% if is_granted("ROLE_ADMIN") %}
+                    <li><a href="{{ path('agil_admin_homepage') }}" class="nav-link">
+                            <span class="glyphicon glyphicon-wrench"></span>
+                            Administration</a></li>
+                    {% endif %}
                 </ul>
                 <div class="sidebar-separator"></div>
                 <ul class="nav-items">
@@ -96,5 +112,7 @@
         </div>
     </footer>
     <script src="{{ asset('js/menu.js') }}"></script>
+    <script src="{{ asset('js/jsmain.js') }}"></script>
+
 </body>
 </html>
