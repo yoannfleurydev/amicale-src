@@ -24,7 +24,15 @@ class DefaultController extends Controller
 
     public function showProfileAction($id)
     {
-        
+        $userRepository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('AGILDefaultBundle:AgilUser');
+
+        $user = $userRepository->find($id);
+
+        return $this->render('AGILProfileBundle:Default:showProfile.html.twig', array(
+            'user' => $user,
+        ));
     }
 
     public function editAction(Request $request)

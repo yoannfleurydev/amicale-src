@@ -1,0 +1,85 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <p>
+                        <img src="{{ asset("images/placeholder/nephi.png") }}" >
+                    </p>
+                    <p>
+                        <a href="#">Changer ma photo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Informations générales
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <p>Adresse mail : {{ user.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <p>Pseudo : {{ user.username }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <p>CV : <a href="#">{{ user.cvUrl }}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Compétences
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <span class="label label-primary">PHP</span>
+                    <span class="label label-warning">JAVA</span>
+                    <span class="label label-danger">SYMFONY</span>
+                    <span class="label label-info">PHPSTORM</span>
+                    (Ajouter, modifier ou supprimer)
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

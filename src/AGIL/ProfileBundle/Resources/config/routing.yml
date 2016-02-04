@@ -5,9 +5,9 @@ agil_profile:
 
 agil_profile_id:
     path:     /profile/{id}
-    defaults: { _controller: AGILProfileBundle:Default:showProfil }
+    defaults: { _controller: AGILProfileBundle:Default:showProfile }
     requirements:
-        id:   \d*
+        id:   \d+
     methods:   [GET]
 
 agil_profile_edit:
