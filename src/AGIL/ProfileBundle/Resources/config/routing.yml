@@ -11,6 +11,6 @@ agil_profile_id:
     methods:   [GET]
 
 agil_profile_edit:
-    path:     /profile
+    path:     /profile/edit
     defaults: { _controller: AGILProfileBundle:Default:edit }
-    methods:   [POST]
+    methods:   [GET]
