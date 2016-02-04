@@ -16,7 +16,7 @@
         <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3>Jean Neige</h3>
+                    <h3>{{ user.firstName }} {{ user.lastName }}</h3>
                 </div>
             </div>
         </div>
@@ -28,10 +28,10 @@
                     <h2 class="panel-title">
 
                         {#Testing form#}
-                        {{ form_start(form) }}
-                        {{ form_widget(form) }}
-                        {{ form_end(form) }}
-                        
+                        {#{{ form_start(form) }}#}
+                        {#{{ form_widget(form) }}#}
+                        {#{{ form_end(form) }}#}
+
                         <span class="panel-title-content">
                             Informations générales
                         </span>
@@ -42,7 +42,7 @@
                         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <p>Adresse mail : jeanneige@lycos.fr</p>
+                                    <p>Adresse mail : {{ user.email }}</p>
                                     <form method="POST" action="#">
                                         <div class="form-group">
                                             <label for="email">Modifier l'adresse email :</label>
@@ -59,7 +59,7 @@
                         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <p>Pseudo : jndu76</p>
+                                    <p>Pseudo : {{ user.username }}</p>
                                     <form method="POST" action="#">
                                         <div class="form-group">
                                             <label for="pseudo">Modifier le pseudo :</label>
@@ -78,7 +78,7 @@
                         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <p>CV : <a href="#">lien du cv</a></p>
+                                    <p>CV : <a href="#">{{ user.cvUrl }}</a></p>
                                     <form method="POST" action="#">
                                         <div class="form-group">
                                             <label for="cv">Modifier le cv :</label>
