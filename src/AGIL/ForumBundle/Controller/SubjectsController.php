@@ -16,6 +16,14 @@ use AGIL\ForumBundle\Entity\AgilForumSubject;
 class SubjectsController extends Controller
 {
 
+
+    /**
+     * Vincent : Description à rédiger
+     *
+     * @param $idCategory
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function subjectAddAction($idCategory, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -78,6 +86,63 @@ class SubjectsController extends Controller
             'idSubject' => $idSubject
         ));
     }
+
+    /**
+     * Cette fonction permet de mettre un sujet de forum "Résolu"
+     *
+     * @param $idCategory
+     * @param $idSubject
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function subjectResolvedAction($idCategory,$idSubject)
+    {
+        // Manager & Repositories
+        $manager = $this->getDoctrine()->getManager();
+        $categoryRepository = $manager->getRepository('AGILForumBundle:AgilForumCategory');
+        $subjectRepository = $manager->getRepository('AGILForumBundle:AgilForumSubject');
+
+        // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
+        $category = $categoryRepository->find($idCategory);
+        if ($category === null) {
+            throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
+        }
+
+        // Récupération de l'objet Subject par rapport à l'ID spécifié dans l'URL
+        $subject = $subjectRepository->find($idSubject);
+        if ($subject === null) {
+            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'existe pas.");
+        }
+
+        // On vérifie que le Subject appartient bien à cette Category
+        if ($subject->getCategory() != $category) {
+            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+        }
+
+        // Si le sujet n'est pas déjà Résolu
+        if(!$subject->getForumSubjectIsResolved()){
+
+            // Si le sujet appartient bien à la personne connecté
+            if($subject->getUser() == $this->get('security.context')->getToken()->getUser()){
+
+                $subject->setForumSubjectIsResolved(true);
+
+                // Modification du sujet dans la BDD
+                $manager->persist($subject);
+                $manager->flush();
+
+                return $this->redirectToRoute('agil_forum_subject_answers', array('idCategory' => $idCategory, 'idSubject' => $idSubject));
+
+
+            }else{
+                throw new NotFoundHttpException("Vous essayez passer en résolu un sujet de forum qui n'est pas le votre");
+            }
+
+        }else{
+            throw new NotFoundHttpException("Le sujet de forum est déjà résolu");
+        }
+
+    }
+
 
     /*private function createDeleteForm($idCategory, $idSubject)
     {

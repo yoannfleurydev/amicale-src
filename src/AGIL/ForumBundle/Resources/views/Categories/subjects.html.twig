@@ -55,16 +55,10 @@
                             <td class="vert-align">{{ countAnswers[s.forumSubjectId] }}</td>
                             <td class="vert-align">Créé le {{ s.forumAnswerPostDate|date('j M Y') }}<br/>Actif il y a {{ relativeDate[s.forumSubjectId] }}</td>
 
-                            {% if is_granted('ROLE_MODERATOR') %}
-                                <td>X</td>
+                            {% if ((is_granted('ROLE_MODERATOR')) or (app.user.username == s.username)) %}
+                                <td><a href="{{ path('agil_forum_subject_delete',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId})}}">X</a></td>
                             {% else %}
-
-                                {% if app.user.username == s.username %}
-                                    <td>X</td>
-                                {% else %}
-                                    <td></td>
-                                {% endif %}
-
+                                <td></td>
                             {% endif %}
                         </tr>
 

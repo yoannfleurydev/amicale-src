@@ -20,7 +20,7 @@
             {% else %}
 
                 {% if app.user.username == subject.user.username %}
-                    <button class="btn btn-default">Mettre comme résolu</button>
+                    <a href="{{ path('agil_forum_subject_to_resolve',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId}) }}" class="btn btn-default">Mettre comme résolu</a>
                 {% endif %}
                 <br/><br/>
             {% endif %}
