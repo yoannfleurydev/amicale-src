@@ -23,6 +23,23 @@ agil_forum_subject_answers:
 agil_forum_subject_add:
     path:   /categories/{idCategory}/newPost
     defaults:
-         _controller: AGILForumBundle:Subjects:subjectsAdd
+         _controller: AGILForumBundle:Subjects:subjectAdd
     requirements:
             idCategory: \d+
+
+agil_forum_subject_delete:
+    path:   /categories/{idCategory}/delete/{idSubject}
+    defaults:
+         _controller: AGILForumBundle:Subjects:subjectDelete
+    requirements:
+            idCategory: \d+
+            idSubject: \d+
+
+agil_forum_answers_edit:
+    path:   /categories/{idCategory}/subject/{idSubject}/edit/{idAnswer}
+    defaults:
+         _controller: AGILForumBundle:Answers:answersEdit
+    requirements:
+            idCategory: \d+
+            idSubject: \d+
+            idAnswer: \d+

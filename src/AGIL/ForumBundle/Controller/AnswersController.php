@@ -4,6 +4,11 @@ namespace AGIL\ForumBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use AGIL\ForumBundle\Form\SubjectType;
+use AGIL\ForumBundle\Form\FirstAnswerType;
+use AGIL\ForumBundle\Form\AnswerType;
 
 class AnswersController extends Controller
 {
@@ -41,5 +46,46 @@ class AnswersController extends Controller
 
         return $this->render('AGILForumBundle:Answers:answers.html.twig',
             array('category' => $category,'subject' => $subject,'answers' => $answers));
+    }
+
+    public function answersEditAction($idCategory, $idSubject, $idAnswer, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $subject = $em->getRepository("AGILForumBundle:AgilForumSubject")->find($idSubject);
+        $answer = $em->getRepository("AGILForumBundle:AgilForumAnswer")->find($idAnswer);
+
+        if ($answer->getUser() != $user) {
+            $this->addFlash('notice', 'Permission refusée : vous n\'êtes pas l\'autheur du sujet');
+
+            return $this->redirect( $this->generateUrl('agil_forum_subjects_list',
+                array('idCategory' => $idCategory)) );
+        }
+        if ($answer->getSubject() != $subject) {
+            $this->addFlash('notice', 'Permission refusée : ce message n\'existe pas dans ce sujet');
+
+            return $this->redirect( $this->generateUrl('agil_forum_subjects_list',
+                array('idCategory' => $idCategory)) );
+        }
+
+        $form = $this->createForm(new AnswerType(), $answer);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em->persist($answer);
+            $em->flush($answer);
+
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers',
+                array('idCategory' => $idCategory, 'idSubject' => $idSubject)) );
+        }
+
+        return $this->render('AGILForumBundle:Answers:answers_edit.html.twig', array(
+            'form' => $form->createView(),
+            'subject' => $subject,
+            'idCategory' => $idCategory,
+            'idSubject' => $idSubject,
+            'idAnswer' => $idAnswer
+        ));
     }
 }
