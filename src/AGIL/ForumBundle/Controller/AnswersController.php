@@ -43,9 +43,50 @@ class AnswersController extends Controller
         $answerRepository = $manager ->getRepository('AGILForumBundle:AgilForumAnswer');
         $answers = $answerRepository->findBy(array('subject' => $subject));
 
+        // Pour chaque réponse, on récupère la date relative
+        $relativeDatePerAnswer = null;
+        foreach($answers as $ans){
+            $relativeDatePerAnswer[$ans->getForumAnswerId()] = $this->time_elapsed_string($ans->getForumAnswerPostDate());
+        }
 
         return $this->render('AGILForumBundle:Answers:answers.html.twig',
-            array('category' => $category,'subject' => $subject,'answers' => $answers));
+            array('category' => $category,'subject' => $subject,
+                'answers' => $answers, 'relativeDate' => $relativeDatePerAnswer));
+    }
+
+    /**
+     * Permet d'avoir la date relative
+     *
+     * @param $datetime
+     * @return string
+     */
+    function time_elapsed_string($datetime) {
+
+        $etime = time() - $datetime->getTimestamp();
+
+        if ($etime < 1) {
+            return '0 seconds';
+        }
+
+        $a = array( 12 * 30 * 24 * 60 * 60  =>  'année',
+            30 * 24 * 60 * 60       =>  'mois',
+            24 * 60 * 60            =>  'jour',
+            60 * 60                 =>  'heure',
+            60                      =>  'minute',
+            1                       =>  'seconde'
+        );
+
+        foreach ($a as $secs => $str) {
+            $d = $etime / $secs;
+            if ($d >= 1) {
+                $r = round($d);
+                $s = $r . ' ' . $str;
+                if($str != 'mois')
+                    return $s . ($r > 1 ? 's' : '');
+                else
+                    return $s;
+            }
+        }
     }
 
     public function answersEditAction($idCategory, $idSubject, $idAnswer, Request $request)
