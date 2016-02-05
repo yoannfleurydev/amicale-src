@@ -1,5 +1,621 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+/* line 20, ../sass/_colors.scss */
+.purple {
+  background-color: #d645de;
+}
+
+/* line 22, ../sass/_colors.scss */
+.purple-darker-1 {
+  background-color: #d12fda;
+}
+
+/* line 22, ../sass/_colors.scss */
+.purple-darker-2 {
+  background-color: #c324cc;
+}
+
+/* line 22, ../sass/_colors.scss */
+.purple-darker-3 {
+  background-color: #ae20b6;
+}
+
+/* line 22, ../sass/_colors.scss */
+.purple-darker-4 {
+  background-color: #9a1ca1;
+}
+
+/* line 22, ../sass/_colors.scss */
+.purple-darker-5 {
+  background-color: #85198b;
+}
+
+/* line 27, ../sass/_colors.scss */
+.purple-lighter-1 {
+  background-color: #dd63e3;
+}
+
+/* line 27, ../sass/_colors.scss */
+.purple-lighter-2 {
+  background-color: #e382e9;
+}
+
+/* line 27, ../sass/_colors.scss */
+.purple-lighter-3 {
+  background-color: #eaa0ee;
+}
+
+/* line 27, ../sass/_colors.scss */
+.purple-lighter-4 {
+  background-color: #f1bef4;
+}
+
+/* line 27, ../sass/_colors.scss */
+.purple-lighter-5 {
+  background-color: #f7ddf9;
+}
+
+/* line 20, ../sass/_colors.scss */
+.red {
+  background-color: #c0392b;
+}
+
+/* line 22, ../sass/_colors.scss */
+.red-darker-1 {
+  background-color: #ab3326;
+}
+
+/* line 22, ../sass/_colors.scss */
+.red-darker-2 {
+  background-color: #962d22;
+}
+
+/* line 22, ../sass/_colors.scss */
+.red-darker-3 {
+  background-color: #81261d;
+}
+
+/* line 22, ../sass/_colors.scss */
+.red-darker-4 {
+  background-color: #6d2018;
+}
+
+/* line 22, ../sass/_colors.scss */
+.red-darker-5 {
+  background-color: #581a14;
+}
+
+/* line 27, ../sass/_colors.scss */
+.red-lighter-1 {
+  background-color: #d34a3b;
+}
+
+/* line 27, ../sass/_colors.scss */
+.red-lighter-2 {
+  background-color: #da6559;
+}
+
+/* line 27, ../sass/_colors.scss */
+.red-lighter-3 {
+  background-color: #e08076;
+}
+
+/* line 27, ../sass/_colors.scss */
+.red-lighter-4 {
+  background-color: #e79b93;
+}
+
+/* line 27, ../sass/_colors.scss */
+.red-lighter-5 {
+  background-color: #edb6b0;
+}
+
+/* line 20, ../sass/_colors.scss */
+.green {
+  background-color: #2ecc71;
+}
+
+/* line 22, ../sass/_colors.scss */
+.green-darker-1 {
+  background-color: #29b765;
+}
+
+/* line 22, ../sass/_colors.scss */
+.green-darker-2 {
+  background-color: #25a25a;
+}
+
+/* line 22, ../sass/_colors.scss */
+.green-darker-3 {
+  background-color: #208e4e;
+}
+
+/* line 22, ../sass/_colors.scss */
+.green-darker-4 {
+  background-color: #1b7943;
+}
+
+/* line 22, ../sass/_colors.scss */
+.green-darker-5 {
+  background-color: #176437;
+}
+
+/* line 27, ../sass/_colors.scss */
+.green-lighter-1 {
+  background-color: #48d684;
+}
+
+/* line 27, ../sass/_colors.scss */
+.green-lighter-2 {
+  background-color: #65dc98;
+}
+
+/* line 27, ../sass/_colors.scss */
+.green-lighter-3 {
+  background-color: #82e3ab;
+}
+
+/* line 27, ../sass/_colors.scss */
+.green-lighter-4 {
+  background-color: #9fe9bf;
+}
+
+/* line 27, ../sass/_colors.scss */
+.green-lighter-5 {
+  background-color: #bcf0d2;
+}
+
+/* line 20, ../sass/_colors.scss */
+.blue {
+  background-color: #3498db;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-darker-1 {
+  background-color: #258cd1;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-darker-2 {
+  background-color: #217dbb;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-darker-3 {
+  background-color: #1d6fa5;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-darker-4 {
+  background-color: #196090;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-darker-5 {
+  background-color: #16527a;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-lighter-1 {
+  background-color: #52a7e0;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-lighter-2 {
+  background-color: #71b7e6;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-lighter-3 {
+  background-color: #8fc6eb;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-lighter-4 {
+  background-color: #add6f1;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-lighter-5 {
+  background-color: #cce5f6;
+}
+
+/* line 20, ../sass/_colors.scss */
+.yellow {
+  background-color: #f1c40f;
+}
+
+/* line 22, ../sass/_colors.scss */
+.yellow-darker-1 {
+  background-color: #dab10d;
+}
+
+/* line 22, ../sass/_colors.scss */
+.yellow-darker-2 {
+  background-color: #c29d0b;
+}
+
+/* line 22, ../sass/_colors.scss */
+.yellow-darker-3 {
+  background-color: #aa8a0a;
+}
+
+/* line 22, ../sass/_colors.scss */
+.yellow-darker-4 {
+  background-color: #927608;
+}
+
+/* line 22, ../sass/_colors.scss */
+.yellow-darker-5 {
+  background-color: #796307;
+}
+
+/* line 27, ../sass/_colors.scss */
+.yellow-lighter-1 {
+  background-color: #f3cc31;
+}
+
+/* line 27, ../sass/_colors.scss */
+.yellow-lighter-2 {
+  background-color: #f5d552;
+}
+
+/* line 27, ../sass/_colors.scss */
+.yellow-lighter-3 {
+  background-color: #f7dd74;
+}
+
+/* line 27, ../sass/_colors.scss */
+.yellow-lighter-4 {
+  background-color: #f9e596;
+}
+
+/* line 27, ../sass/_colors.scss */
+.yellow-lighter-5 {
+  background-color: #fbedb8;
+}
+
+/* line 20, ../sass/_colors.scss */
+.orange {
+  background-color: #e67e22;
+}
+
+/* line 22, ../sass/_colors.scss */
+.orange-darker-1 {
+  background-color: #d67118;
+}
+
+/* line 22, ../sass/_colors.scss */
+.orange-darker-2 {
+  background-color: #bf6516;
+}
+
+/* line 22, ../sass/_colors.scss */
+.orange-darker-3 {
+  background-color: #a85913;
+}
+
+/* line 22, ../sass/_colors.scss */
+.orange-darker-4 {
+  background-color: #924d10;
+}
+
+/* line 22, ../sass/_colors.scss */
+.orange-darker-5 {
+  background-color: #7b410e;
+}
+
+/* line 27, ../sass/_colors.scss */
+.orange-lighter-1 {
+  background-color: #ea9142;
+}
+
+/* line 27, ../sass/_colors.scss */
+.orange-lighter-2 {
+  background-color: #eda362;
+}
+
+/* line 27, ../sass/_colors.scss */
+.orange-lighter-3 {
+  background-color: #f1b682;
+}
+
+/* line 27, ../sass/_colors.scss */
+.orange-lighter-4 {
+  background-color: #f5c9a2;
+}
+
+/* line 27, ../sass/_colors.scss */
+.orange-lighter-5 {
+  background-color: #f8dcc2;
+}
+
+/* line 20, ../sass/_colors.scss */
+.black {
+  background-color: #000000;
+}
+
+/* line 22, ../sass/_colors.scss */
+.black-darker-1 {
+  background-color: black;
+}
+
+/* line 22, ../sass/_colors.scss */
+.black-darker-2 {
+  background-color: black;
+}
+
+/* line 22, ../sass/_colors.scss */
+.black-darker-3 {
+  background-color: black;
+}
+
+/* line 22, ../sass/_colors.scss */
+.black-darker-4 {
+  background-color: black;
+}
+
+/* line 22, ../sass/_colors.scss */
+.black-darker-5 {
+  background-color: black;
+}
+
+/* line 27, ../sass/_colors.scss */
+.black-lighter-1 {
+  background-color: #121212;
+}
+
+/* line 27, ../sass/_colors.scss */
+.black-lighter-2 {
+  background-color: #242424;
+}
+
+/* line 27, ../sass/_colors.scss */
+.black-lighter-3 {
+  background-color: #363636;
+}
+
+/* line 27, ../sass/_colors.scss */
+.black-lighter-4 {
+  background-color: #474747;
+}
+
+/* line 27, ../sass/_colors.scss */
+.black-lighter-5 {
+  background-color: #595959;
+}
+
+/* line 20, ../sass/_colors.scss */
+.grey {
+  background-color: #95a5a6;
+}
+
+/* line 22, ../sass/_colors.scss */
+.grey-darker-1 {
+  background-color: #87999a;
+}
+
+/* line 22, ../sass/_colors.scss */
+.grey-darker-2 {
+  background-color: #798d8f;
+}
+
+/* line 22, ../sass/_colors.scss */
+.grey-darker-3 {
+  background-color: #6d8082;
+}
+
+/* line 22, ../sass/_colors.scss */
+.grey-darker-4 {
+  background-color: #617374;
+}
+
+/* line 22, ../sass/_colors.scss */
+.grey-darker-5 {
+  background-color: #566566;
+}
+
+/* line 27, ../sass/_colors.scss */
+.grey-lighter-1 {
+  background-color: #a8b5b6;
+}
+
+/* line 27, ../sass/_colors.scss */
+.grey-lighter-2 {
+  background-color: #bcc6c7;
+}
+
+/* line 27, ../sass/_colors.scss */
+.grey-lighter-3 {
+  background-color: #cfd6d7;
+}
+
+/* line 27, ../sass/_colors.scss */
+.grey-lighter-4 {
+  background-color: #e3e7e7;
+}
+
+/* line 27, ../sass/_colors.scss */
+.grey-lighter-5 {
+  background-color: #f6f7f7;
+}
+
+/* line 20, ../sass/_colors.scss */
+.cyan {
+  background-color: #23cfda;
+}
+
+/* line 22, ../sass/_colors.scss */
+.cyan-darker-1 {
+  background-color: #1fbac4;
+}
+
+/* line 22, ../sass/_colors.scss */
+.cyan-darker-2 {
+  background-color: #1ca5ae;
+}
+
+/* line 22, ../sass/_colors.scss */
+.cyan-darker-3 {
+  background-color: #189098;
+}
+
+/* line 22, ../sass/_colors.scss */
+.cyan-darker-4 {
+  background-color: #157c82;
+}
+
+/* line 22, ../sass/_colors.scss */
+.cyan-darker-5 {
+  background-color: #11676c;
+}
+
+/* line 27, ../sass/_colors.scss */
+.cyan-lighter-1 {
+  background-color: #40d7e0;
+}
+
+/* line 27, ../sass/_colors.scss */
+.cyan-lighter-2 {
+  background-color: #5fdde5;
+}
+
+/* line 27, ../sass/_colors.scss */
+.cyan-lighter-3 {
+  background-color: #7ee4ea;
+}
+
+/* line 27, ../sass/_colors.scss */
+.cyan-lighter-4 {
+  background-color: #9deaef;
+}
+
+/* line 27, ../sass/_colors.scss */
+.cyan-lighter-5 {
+  background-color: #bbf1f4;
+}
+
+/* line 20, ../sass/_colors.scss */
+.blue-grey {
+  background-color: #34495e;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-grey-darker-1 {
+  background-color: #2b3c4e;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-grey-darker-2 {
+  background-color: #222f3d;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-grey-darker-3 {
+  background-color: #19232d;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-grey-darker-4 {
+  background-color: #10161c;
+}
+
+/* line 22, ../sass/_colors.scss */
+.blue-grey-darker-5 {
+  background-color: #07090c;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-grey-lighter-1 {
+  background-color: #415b75;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-grey-lighter-2 {
+  background-color: #4d6d8c;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-grey-lighter-3 {
+  background-color: #5a7fa3;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-grey-lighter-4 {
+  background-color: #7190b0;
+}
+
+/* line 27, ../sass/_colors.scss */
+.blue-grey-lighter-5 {
+  background-color: #88a2bd;
+}
+
+/* line 20, ../sass/_colors.scss */
+.default {
+  background-color: #34495e;
+}
+
+/* line 22, ../sass/_colors.scss */
+.default-darker-1 {
+  background-color: #2b3c4e;
+}
+
+/* line 22, ../sass/_colors.scss */
+.default-darker-2 {
+  background-color: #222f3d;
+}
+
+/* line 22, ../sass/_colors.scss */
+.default-darker-3 {
+  background-color: #19232d;
+}
+
+/* line 22, ../sass/_colors.scss */
+.default-darker-4 {
+  background-color: #10161c;
+}
+
+/* line 22, ../sass/_colors.scss */
+.default-darker-5 {
+  background-color: #07090c;
+}
+
+/* line 27, ../sass/_colors.scss */
+.default-lighter-1 {
+  background-color: #415b75;
+}
+
+/* line 27, ../sass/_colors.scss */
+.default-lighter-2 {
+  background-color: #4d6d8c;
+}
+
+/* line 27, ../sass/_colors.scss */
+.default-lighter-3 {
+  background-color: #5a7fa3;
+}
+
+/* line 27, ../sass/_colors.scss */
+.default-lighter-4 {
+  background-color: #7190b0;
+}
+
+/* line 27, ../sass/_colors.scss */
+.default-lighter-5 {
+  background-color: #88a2bd;
+}
+
+/* line 38, ../sass/_colors.scss */
+.text-white {
+  padding: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 2px 2px 4px black;
+  font-style: normal;
+  font-weight: normal;
+  font-family: inherit;
+}
+
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
@@ -6643,7 +7259,7 @@ a.thumbnail.active {
 .progress-bar-striped {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
   background-size: 40px 40px;
 }
 
@@ -6676,7 +7292,7 @@ a.thumbnail.active {
 .progress-striped .progress-bar-success {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 /* line 95, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_progress-bars.scss */
@@ -6687,7 +7303,7 @@ a.thumbnail.active {
 .progress-striped .progress-bar-info {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 /* line 99, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_progress-bars.scss */
@@ -6698,7 +7314,7 @@ a.thumbnail.active {
 .progress-striped .progress-bar-warning {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 /* line 103, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_progress-bars.scss */
@@ -6709,7 +7325,7 @@ a.thumbnail.active {
 .progress-striped .progress-bar-danger {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
 
 /* line 10, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_media.scss */
