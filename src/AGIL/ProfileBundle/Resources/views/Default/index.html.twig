@@ -13,25 +13,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
-            <div class="panel panel-default">
-                <div class="panel-body text-center">
-                    <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+        {% if user.userFirstName is not null or user.userLastName is not null %}
+            <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <h3>{{ user.userFirstName }} {{ user.userLastName }}</h3>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
-
-                        {#Testing form#}
-                        {#{{ form_start(form) }}#}
-                        {#{{ form_widget(form) }}#}
-                        {#{{ form_end(form) }}#}
-
                         <span class="panel-title-content">
                             Informations générales
                         </span>
@@ -43,16 +39,6 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <p>Adresse mail : {{ user.email }}</p>
-                                    <form method="POST" action="#">
-                                        <div class="form-group">
-                                            <label for="email">Modifier l'adresse email :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><span class="material-icons">email</span></div>
-                                                <input type="email" class="form-control" name="email" id="email">
-                                            </div>
-                                        </div>
-                                        <input type="submit" class="btn btn-primary" value="Validez">
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -60,16 +46,6 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <p>Pseudo : {{ user.username }}</p>
-                                    <form method="POST" action="#">
-                                        <div class="form-group">
-                                            <label for="pseudo">Modifier le pseudo :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                                <input class="form-control" type="text" name="pseudo" id="pseudo">
-                                            </div>
-                                        </div>
-                                        <input type="submit" class="btn btn-primary" value="Validez">
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -78,17 +54,7 @@
                         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <p>CV : <a href="#">{{ user.cvUrl }}</a></p>
-                                    <form method="POST" action="#">
-                                        <div class="form-group">
-                                            <label for="cv">Modifier le cv :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><span class="glyphicon glyphicon-file"></span></div>
-                                                <input class="form-control" type="text" name="cv" id="cv" placeholder="lien vers cv">
-                                            </div>
-                                        </div>
-                                        <input type="submit" class="btn btn-primary" value="Validez">
-                                    </form>
+                                    <p>CV : <a href="{{ user.userCvUrl }}">{{ user.userCvUrl }}</a></p>
                                 </div>
                             </div>
                         </div>

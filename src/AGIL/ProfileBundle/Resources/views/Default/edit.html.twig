@@ -1,0 +1,139 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <p>
+                        <img src="{{ asset("images/placeholder/nephi.png") }}" >
+                    </p>
+                    <p>
+                        <a href="#">Changer ma photo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% if user.userFirstName is not null or user.userLastName is not null %}
+            <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <h3>{{ user.userFirstName }} {{ user.userLastName }}</h3>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Informations générales
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form method="POST" action="#">
+                                        <div class="form-group">
+                                            <label for="email">Modifier l'adresse email :</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="material-icons">email</span></div>
+                                                <input type="email" class="form-control" name="email" id="email" value="{{ user.email }}">
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Validez">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form method="POST" action="#">
+                                        <div class="form-group">
+                                            <label for="pseudo">Modifier le pseudo :</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                                <input class="form-control" type="text" name="pseudo" id="pseudo" value="{{ user.username }}">
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Validez">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form method="POST" action="#">
+                                        <div class="form-group">
+                                            <label for="cv">Modifier le CV :</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-file"></span></div>
+                                                <input class="form-control" type="text" name="cv" id="cv" placeholder="Lien vers CV" value="{{ user.userCvUrl }}">
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Validez">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form method="POST" action="#">
+                                        <div class="form-group">
+                                            <label for="password">Modifier le mot de passe :</label>
+                                            <div class="input-group">
+                                                <label for="password" class="input-group-addon">
+                                                    <i class="material-icons">vpn_key</i>
+                                                </label>
+                                                <input class="form-control" type="text" name="password" id="password" placeholder="Nouveau mot de passe">
+                                            </div>
+                                            <div class="input-group">
+                                                <label for="password_verification" class="input-group-addon">
+                                                    <i class="material-icons">vpn_key</i>
+                                                </label>
+                                                <input class="form-control" type="text" name="password_verification" id="password_verification" placeholder="Vérification mot de passe">
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-primary" value="Validez">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Compétences
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <span class="label label-primary">PHP</span>
+                    <span class="label label-warning">JAVA</span>
+                    <span class="label label-danger">SYMFONY</span>
+                    <span class="label label-info">PHPSTORM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
