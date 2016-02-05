@@ -34,22 +34,6 @@ class SubjectType extends AbstractType
                 'placeholder' => 'Tags associés',
             )
         ));
-
-        /*$builder->add('firstPost', 'textarea', array(
-            'label' => false,
-            'required' => true,
-            'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Premier message de ton sujet',
-            )
-        ));
-
-        $builder->add('Ajouter', 'submit', array(
-            'label' => false,
-            'attr' => array(
-                'class' => 'form-control',
-            )
-        ));*/
     }
 
     public function getName()
