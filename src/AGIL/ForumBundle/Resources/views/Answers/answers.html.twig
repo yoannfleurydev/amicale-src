@@ -15,11 +15,15 @@
             <h3>{{ subject.forumSubjectTitle }}</h3>
             <h5>{{ subject.forumSubjectDescription }}</h5>
 
-            <!-- Si n'est pas encore résolu -->
-            <button class="btn btn-default">Mettre comme résolu</button>
-            <!-- Quand le sujet est résolu -->
-            <div class="alert alert-success" role="alert">Ce sujet est résolu</div>
+            {% if subject.forumSubjectIsResolved %}
+                <div class="alert alert-success" role="alert">Ce sujet est résolu</div>
+            {% else %}
 
+                {% if app.user.username == subject.user.username %}
+                    <button class="btn btn-default">Mettre comme résolu</button>
+                {% endif %}
+                <br/><br/>
+            {% endif %}
 
             {% for a in answers %}
 
@@ -29,7 +33,7 @@
                         <div class="row">
                             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                                 <span class="text-left h3">
-                                    <a href="#">{{ a.user.username }}</a>
+                                    <a href="#">{{ a.username }}</a>
                                 </span>
                             </div>
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-right">
@@ -46,14 +50,24 @@
 
                                 <div class="user_info text-center">
 
-                                    <strong>[{{ a.user.roles[0] }}]</strong>
+                                    <strong>
+                                        {% if a.roles|length == 0 %}
+                                            MEMBRE
+                                        {% else %}
+                                            {% if a.roles[0] == "ROLE_SUPER_ADMIN" %}
+                                                SUPER ADMINISTRATEUR
+                                            {% elseif a.roles[0] == "ROLE_ADMIN" %}
+                                                ADMINISTRATEUR
+                                            {% elseif a.roles[0] == "ROLE_MODERATOR" %}
+                                                ANIMATEUR-MODERATEUR
+                                            {% endif %}
+                                        {% endif %}
+                                    </strong>
                                     <div class="text-center">
 
-                                        <span class="label label-default">#PHP</span>
-                                        <span class="label label-default">C++</span>
-                                        <span class="label label-success">Assembleur</span>
-                                        <span class="label label-danger">Html/css</span>
-                                        <span class="label label-default tag-blue">Html/css</span>
+                                        {% for skill in userTagsSkills[a.id] %}
+                                            <span class="label label-default">{{ skill.tag.tagName }}</span>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
@@ -73,10 +87,13 @@
                             <div class="col-sm-2 col-md-2 col-lg-2">
                             </div>
                             <div class="col-sm-10 col-md-10 col-lg-10 text-right">
-                                <!-- Quand on est administrateur -->
-                                <a class="btn btn-danger" href="#" role="button">Signaler</a>
-                                <!-- Edition du message quand on est le propriétaire -->
-                                <a class="btn btn-default" href="#" role="button">Edit</a>
+
+                                {% if is_granted('ROLE_MODERATOR') %}
+                                    <a class="btn btn-danger" href="#" role="button">Supprimer</a>
+                                {% endif %}
+                                {% if app.user.username == a.username %}
+                                    <a class="btn btn-default" href="#" role="button">Editer</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -86,24 +103,9 @@
         </div>
 
         <nav class="text-center">
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
+            {% include 'AGILForumBundle:Answers:pagination.html.twig' %}
         </nav>
+
     </div>
 
 

@@ -14,11 +14,14 @@ agil_forum_subjects_list:
 
 
 agil_forum_subject_answers:
-    path:     /categories/{idCategory}/subject/{idSubject}
-    defaults: { _controller: AGILForumBundle:Answers:answers }
+    path:     /categories/{idCategory}/subject/{idSubject}/page/{page}
+    defaults:
+        _controller: AGILForumBundle:Answers:answers
+        page:  1
     requirements:
         idCategory: \d+
         idSubject: \d+
+        page : \d+
 
 agil_forum_subject_add:
     path:   /categories/{idCategory}/newPost

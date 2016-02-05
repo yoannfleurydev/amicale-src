@@ -26,13 +26,23 @@ class LoadForumAnswerData extends AbstractFixture implements OrderedFixtureInter
         $subject8 = $this->getReference('subject8');
 
         $userSuperAdmin = $this->getReference('superAdmin');
+        $userMember = $this->getReference('userMember');
 
         $answers[] = new AgilForumAnswer($subject2,$userSuperAdmin,"Bonjour. Je propose de se faire une session de cours
          de révision pour le 3 Février. Est ce que cela tente des gens ? Que souhaitez-vous réviser en priorité ?");
         $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-01 01:23:12'));
 
-        $answers[] = new AgilForumAnswer($subject2,$userSuperAdmin,"Moi ça m'intéresse ! J'ai rien compris aux Bon-Suff et Dern-Occ ...");
+        $answers[] = new AgilForumAnswer($subject2,$userMember,"Moi ça m'intéresse ! J'ai rien compris aux Bon-Suff et Dern-Occ ...");
         $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-02 11:12:01'));
+
+        $answers[] = new AgilForumAnswer($subject2,$userSuperAdmin,"Super ! Quand sera tu dispo ?");
+        $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-02 11:15:45'));
+
+        $answers[] = new AgilForumAnswer($subject2,$userMember,"La semaine prochaine, en fonction de mon emploi du temps ou pourrait faire ça");
+        $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-02 12:35:45'));
+
+        $answers[] = new AgilForumAnswer($subject2,$userSuperAdmin,"Okay, je vais poster un message sur Facebook ");
+        $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-02 13:00:12'));
 
         $answers[] = new AgilForumAnswer($subject1,$userSuperAdmin,"Quelqu'un pige le cours de Compilation ?");
         $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-02 11:11:11'));
@@ -43,7 +53,7 @@ class LoadForumAnswerData extends AbstractFixture implements OrderedFixtureInter
         $answers[] = new AgilForumAnswer($subject4,$userSuperAdmin,"Quelqu'un sait comment installer Oracle sur Windows ?");
         $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-03 09:11:41'));
 
-        $answers[] = new AgilForumAnswer($subject5,$userSuperAdmin,"Je ne comprend pas ce que signifie la dernière procédure à faire pour le projet de BDD ?");
+        $answers[] = new AgilForumAnswer($subject5,$userMember,"Je ne comprend pas ce que signifie la dernière procédure à faire pour le projet de BDD ?");
         $answers[count($answers)-1]->setForumAnswerPostDate(new \DateTime('2016-02-03 09:11:41'));
 
         $answers[] = new AgilForumAnswer($subject6,$userSuperAdmin,"Quelqu'un a pigé les méthodes agiles ?");

@@ -16,31 +16,27 @@ class CategoriesController extends Controller
      */
     public function subjectsAction($idCategory,$page)
     {
-
+        // Manager & Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager ->getRepository('AGILForumBundle:AgilForumCategory');
+        $subjectRepository = $manager->getRepository('AGILForumBundle:AgilForumSubject');
+
 
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $category = $categoryRepository->find($idCategory);
-
         if ($category === null) {
             throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
         }
 
 
-        $subjectRepository = $manager->getRepository('AGILForumBundle:AgilForumSubject');
-
         // Gestion de la pagination
         $maxSubjects = 15;
-        $subject_count = $manager->getRepository('AGILForumBundle:AgilForumSubject')->getCountSubjects($idCategory);
-
+        $subject_count = $subjectRepository->getCountSubjects($idCategory);
         // On vérifie que le nombre de pages spécifié dans l'URL n'est pas absurde
         if(($subject_count == 0 && $page != 1) ||
             ($subject_count != 0 && $page > ceil($subject_count / $maxSubjects) || $page <= 0)  ){
             throw new NotFoundHttpException("Erreur dans le numéro de page");
         }
-
-
         $pagination = array(
             'page' => $page,
             'route' => 'agil_forum_subjects_list',
@@ -48,22 +44,26 @@ class CategoriesController extends Controller
             'route_params' => array()
         );
 
+
         // Récupération des sujets pour la catégorie courante en fonction des dernières réponses
         $subjects = $subjectRepository->getLastSubjectsByAnswer($page,$maxSubjects,$category);
 
 
-        // Pour chaque sujet, on récupère le nombre de réponses et la date relative du dernier message
+        // Pour chaque sujet, on récupère le nombre de réponses, la date relative du dernier message et les tags
         $countAnswersPerSubject = null;
         $relativeDatePerSubject = null;
-
+        $tagsPerSubject         = null;
         foreach($subjects as $sub){
             $countAnswersPerSubject[$sub['forumSubjectId']] = $subjectRepository->getCountAnswersInSubject($sub['forumSubjectId']);
             $relativeDatePerSubject[$sub['forumSubjectId']] = $this->time_elapsed_string($sub['forumAnswerPostDate']);
+            $subject = $subjectRepository->find($sub['forumSubjectId']);
+            $tagsPerSubject[$sub['forumSubjectId']] = $subject->getTags();
         }
 
         return $this->render('AGILForumBundle:Categories:subjects.html.twig',
             array('category' => $category,'subjects' => $subjects,'pagination' => $pagination,
-            'countAnswers' => $countAnswersPerSubject, 'relativeDate' => $relativeDatePerSubject));
+                'countAnswers' => $countAnswersPerSubject, 'relativeDate' => $relativeDatePerSubject,
+                'tagsPerSubject' => $tagsPerSubject));
     }
 
 

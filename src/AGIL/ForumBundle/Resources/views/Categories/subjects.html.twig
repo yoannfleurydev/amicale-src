@@ -28,21 +28,44 @@
                     <th> Auteur</th>
                     <th> Nb messages</th>
                     <th> Date</th>
+                    <th> X </th>
 
 
                     {% for s in subjects %}
 
                         <tr>
-                            <td class="vert-align text-center"><span class="glyphicon glyphicon-minus icon-medium"></span> </td>
+                            <td class="vert-align text-center">
+                                {% if s.forumSubjectIsResolved %}
+                                    <span class="glyphicon glyphicon-ok icon-medium icon-succes"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-minus icon-medium"></span>
+                                {% endif %}
+                            </td>
                             <td class="vert-align">
                                 <a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId} ) }}">
                                     <h6>{{ s.forumSubjectTitle }}</h6>
                                 </a>
                                 <span class="text-left"><em>{{ s.forumSubjectDescription }}</em></span>
+                                <br/>
+                                {% for tag in tagsPerSubject[s.forumSubjectId] %}
+                                    <span class="label label-default">{{ tag.tagName }}</span>
+                                {% endfor %}
                             </td>
                             <td class="vert-align"><a href="#">{{ s.username }}</a></td>
                             <td class="vert-align">{{ countAnswers[s.forumSubjectId] }}</td>
                             <td class="vert-align">Créé le {{ s.forumAnswerPostDate|date('j M Y') }}<br/>Actif il y a {{ relativeDate[s.forumSubjectId] }}</td>
+
+                            {% if is_granted('ROLE_MODERATOR') %}
+                                <td>X</td>
+                            {% else %}
+
+                                {% if app.user.username == s.username %}
+                                    <td>X</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                            {% endif %}
                         </tr>
 
                     {% endfor %}
@@ -51,7 +74,7 @@
             </div>
 
             <nav class="text-center">
-                {% include 'AGILForumBundle:Default:pagination.html.twig' %}
+                {% include 'AGILForumBundle:Categories:pagination.html.twig' %}
             </nav>
 
         {% else %}

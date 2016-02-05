@@ -33,9 +33,9 @@ class AgilForumSubjectRepository extends EntityRepository
               ->groupBy('answ.subject')
         ;
 
-        $query->select('sub.forumSubjectId','sub.forumSubjectTitle',
-            'sub.forumSubjectDescription','ans.forumAnswerPostDate'
-            ,'ans.forumAnswerId','ans','us.username')
+        $query->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectIsResolved',
+            'sub.forumSubjectDescription','ans.forumAnswerPostDate','ans.forumAnswerId',
+            'ans','us.username')
             ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','ans')
             ->leftJoin('ans.subject','sub')
             ->leftJoin('sub.user','us')
