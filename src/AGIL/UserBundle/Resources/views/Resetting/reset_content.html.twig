@@ -1,8 +1,25 @@
 {% trans_default_domain 'FOSUserBundle' %}
-
-{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+<div class="row">
+    <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-lg-offset-3 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <span class="panel-title-content">
+                        Changer de mot de passe
+                    </span>
+                </h2>
+            </div>
+            <div class="panel-body">
+                {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+                    <div class="form-group">
+                        {{ form_widget(form }}
+                    </div>
+                    <div class="text-center">
+                        <input class="btn btn-primary" type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+                        <input class="btn btn-default" type="submit" value="Effacer" />
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
-{{ form_end(form) }}
+</div>

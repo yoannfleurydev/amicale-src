@@ -1,0 +1,37 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6 col-sm-offset-3 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Ajouter une liste de membres
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <!-- with input that accepts one file -->
+                            <div class="fileUpload btn btn-primary">
+                                <span>Choisir un fichier</span>
+                                <input type="file" class="upload" name="upload" id="upload"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fileChoose">Nom du fichier :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="material-icons">attach_file</span></div>
+                                <input class="form-control" type="text" class="fileChoose" name="fileChoose" id="fileChoose" disabled/>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <input class="btn btn-primary" type="submit" value="Valider">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

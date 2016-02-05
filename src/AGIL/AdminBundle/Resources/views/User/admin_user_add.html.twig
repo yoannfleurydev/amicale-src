@@ -17,7 +17,11 @@
                         {{ form_errors(form) }}
 
                         <div class="form-group">
-                            {{ form_row(form.email) }}
+                            <label for="username">Email :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="material-icons">email</i></div>
+                                {{ form_row(form.email) }}
+                            </div>
                         </div>
 
                         {#
