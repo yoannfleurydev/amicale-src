@@ -129,15 +129,42 @@ class AnswersController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $subject = $em->getRepository("AGILForumBundle:AgilForumSubject")->find($idSubject);
-        $answer = $em->getRepository("AGILForumBundle:AgilForumAnswer")->find($idAnswer);
+        $categoryRepository = $em->getRepository('AGILForumBundle:AgilForumCategory');
+        $subjectRepository = $em->getRepository("AGILForumBundle:AgilForumSubject");
+        $answerRepository = $em->getRepository("AGILForumBundle:AgilForumAnswer");
 
+        // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
+        $category = $categoryRepository->find($idCategory);
+        if ($category === null) {
+            throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
+        }
+
+        // Récupération de l'objet Subject par rapport à l'ID spécifié dans l'URL
+        $subject = $subjectRepository->find($idSubject);
+        if ($subject === null) {
+            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'existe pas.");
+        }
+
+        // On vérifie que le Subject appartient bien à cette Category
+        if ($subject->getCategory() != $category) {
+            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+        }
+
+        // Récupération de l'objet Answer par rapport à l'ID spécifié dans l'URL
+        $answer = $answerRepository->find($idAnswer);
+        if ($subject === null) {
+            throw new NotFoundHttpException("La réponse d'id ".$idAnswer." n'existe pas.");
+        }
+
+        // On vérifie que la réponse est bien celle du user connecté
         if ($answer->getUser() != $user) {
-            $this->addFlash('notice', 'Permission refusée : vous n\'êtes pas l\'autheur du sujet');
+            $this->addFlash('notice', 'Permission refusée : vous n\'êtes pas l\'auteur du sujet');
 
             return $this->redirect( $this->generateUrl('agil_forum_subjects_list',
                 array('idCategory' => $idCategory)) );
         }
+
+        // On vérifie que la réponse appartient bien au sujet
         if ($answer->getSubject() != $subject) {
             $this->addFlash('notice', 'Permission refusée : ce message n\'existe pas dans ce sujet');
 

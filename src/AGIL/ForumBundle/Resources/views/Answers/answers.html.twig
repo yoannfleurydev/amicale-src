@@ -92,7 +92,7 @@
                                     <a class="btn btn-danger" href="#" role="button">Supprimer</a>
                                 {% endif %}
                                 {% if app.user.username == a.username %}
-                                    <a class="btn btn-default" href="#" role="button">Editer</a>
+                                    <a class="btn btn-default" href="{{ path('agil_forum_answers_edit',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId,'idAnswer' : a.forumAnswerId}) }}" role="button">Editer</a>
                                 {% endif %}
                             </div>
                         </div>
