@@ -63,12 +63,17 @@
                     <li><a href="#" class="nav-link">
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
-                        </a></li>
                     {% if is_granted("ROLE_USER") %}
-                    <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link">
+                        
+                        {% if forumClassActive is defined %}
+                            <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link nav-link-active">
+                        {% else %}
+                            <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link">
+                        {% endif %}
                             <span class="glyphicon glyphicon-th-list"></span>
-                            Forum
-                        </a></li>
+                                Forum
+                            </a>
+                        </li>
                     {% endif %}
                     <li><a href="#" class="nav-link">
                             <span class="glyphicon glyphicon-picture"></span>

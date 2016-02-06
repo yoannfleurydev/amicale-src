@@ -21,22 +21,26 @@ class AnswersController extends Controller
      */
     public function answersAction($idCategory,$idSubject,$page)
     {
+        // Manager & Repositories
         $manager = $this->getDoctrine()->getManager();
+        $categoryRepository = $manager->getRepository('AGILForumBundle:AgilForumCategory');
+        $subjectRepository = $manager->getRepository('AGILForumBundle:AgilForumSubject');
 
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
-        $categoryRepository = $manager ->getRepository('AGILForumBundle:AgilForumCategory');
         $category = $categoryRepository->find($idCategory);
-
         if ($category === null) {
             throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
         }
 
         // Récupération de l'objet Subject par rapport à l'ID spécifié dans l'URL
-        $subjectRepository = $manager ->getRepository('AGILForumBundle:AgilForumSubject');
         $subject = $subjectRepository->find($idSubject);
-
         if ($subject === null) {
             throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'existe pas.");
+        }
+
+        // On vérifie que le Subject appartient bien à cette Category
+        if ($subject->getCategory() != $category) {
+            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
         }
 
 
