@@ -2,15 +2,16 @@
 
 namespace AGIL\ProfileBundle\Controller;
 
-use AGIL\UserBundle\Entity\AgilUser;
+use AGIL\ProfileBundle\Form\ProfileEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller {
     public function indexAction() {
-        // Vérifier si l'utilisateur est connecté
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+//        // Vérifier si l'utilisateur est connecté
+//        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+//            throw $this->createAccessDeniedException();
+//        }
 
         $user = $this->getUser();
 
@@ -25,27 +26,50 @@ class DefaultController extends Controller {
         return $this->render('AGILProfileBundle:Default:index.html.twig', array('user' => $user,));
     }
 
-    public function editAction() {
-        /*
-        // EntityManager
-        $em = $this->getDoctrine()->getManager();
+    public function editAction(Request $request) {
 
+        // EntityManager
+        $userManager = $this->get('fos_user.user_manager');
+
+        /*
         // Récupération de l'objet AgilUser dont l'id est $id
         $agilUser = $this->$em->getgetRepository('AGILDefaultBundle:AgilUser')->find($id)
         ;
 
         if (null === $agilUser) {
             throw new NotFoundHttpException("L'utilisateur n'existe pas.");
-        }*/
-
-        // Vérifier si l'utilisateur est connecté
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
         }
+        */
 
         $user = $this->getUser();
 
-        return $this->render('AGILProfileBundle:Default:edit.html.twig', array('user' => $user,));
+        $form = $this->createForm(new ProfileEditType(), NULL);
+        $form->get('username')->setData($user->getUsername());
+        $form->get('email')->setData($user->getEmail());
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            $user->setUsername($form->get('username')->getData());
+            $user->setEmail($form->get('email')->getData());
+            if ($form->get('password')->getData() != null and $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($user);
+                $pass = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
+                $user->setPassword($pass);
+            }
+            if ($form->get('username')->getData() == null or $form->get('password')->getData() == null
+            or $form->get('email')->getData() == null or $form->get('password')->getData() != $form->get('passwordConfirm')->getData()) {
+                $this->addFlash('notice','Erreur ! Champs vides ou mal remplies !');
+                return $this->render('AGILProfileBundle:Default:edit.html.twig', array('user' => $user
+                , 'form' => $form->createView()));
+            } else {
+                $userManager->updateUser($user);
+                return $this->redirect($this->generateUrl('agil_profile'));
+            }
+        }
+        return $this->render('AGILProfileBundle:Default:edit.html.twig', array('user' => $user
+        , 'form' => $form->createView()));
 
         /*$form = $this->createForm("agilUser")
             ->add('firstName', TextType::class)

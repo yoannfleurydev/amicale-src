@@ -38,50 +38,52 @@
                         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form method="POST" action="#">
+                                    <form action="{{ path('agil_profile_edit') }}" method="post" {{ form_enctype(form) }}>
+
+                                        {#email field#}
                                         <div class="form-group">
                                             <label for="email">Modifier l'adresse email :</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="material-icons">email</span></div>
-                                                <input type="email" class="form-control" name="email" id="email" value="{{ user.email }}">
+                                                {{ form_row(form.email) }}
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-primary" value="Validez">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <form method="POST" action="#">
+
+                                        {#username field#}
                                         <div class="form-group">
                                             <label for="pseudo">Modifier le pseudo :</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                                <input class="form-control" type="text" name="pseudo" id="pseudo" value="{{ user.username }}">
+                                                {{ form_row(form.username) }}
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-primary" value="Validez">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <form method="POST" action="#">
+
+                                        {#CV field#}
                                         <div class="form-group">
                                             <label for="cv">Modifier le CV :</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="glyphicon glyphicon-file"></span></div>
-                                                <input class="form-control" type="text" name="cv" id="cv" placeholder="Lien vers CV" value="{{ user.userCvUrl }}">
+                                                {{ form_row(form.CV) }}
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-primary" value="Validez">
-                                    </form>
+
+                                        {#Password field#}
+                                            <div class="form-group">
+                                                <label for="password">Modifier le mot de passe :</label>
+                                                <div class="input-group">
+                                                    <label for="password" class="input-group-addon">
+                                                        <i class="material-icons">vpn_key</i>
+                                                    </label>
+                                                    {{ form_row(form.password) }}
+                                                </div>
+                                                <div class="input-group">
+                                                    <label for="password_verification" class="input-group-addon">
+                                                        <i class="material-icons">vpn_key</i>
+                                                    </label>
+                                                    {{ form_row(form.passwordConfirm) }}
+                                                </div>
+                                            </div>
+                                        {{ form_row(form.Modifier) }}
                                 </div>
                             </div>
                         </div>
@@ -90,24 +92,7 @@
                         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form method="POST" action="#">
-                                        <div class="form-group">
-                                            <label for="password">Modifier le mot de passe :</label>
-                                            <div class="input-group">
-                                                <label for="password" class="input-group-addon">
-                                                    <i class="material-icons">vpn_key</i>
-                                                </label>
-                                                <input class="form-control" type="text" name="password" id="password" placeholder="Nouveau mot de passe">
-                                            </div>
-                                            <div class="input-group">
-                                                <label for="password_verification" class="input-group-addon">
-                                                    <i class="material-icons">vpn_key</i>
-                                                </label>
-                                                <input class="form-control" type="text" name="password_verification" id="password_verification" placeholder="Vérification mot de passe">
-                                            </div>
-                                        </div>
-                                        <input type="submit" class="btn btn-primary" value="Validez">
-                                    </form>
+
                                 </div>
                             </div>
                         </div>
