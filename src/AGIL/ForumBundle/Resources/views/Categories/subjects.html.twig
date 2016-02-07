@@ -11,77 +11,86 @@
     <div class="row panel">
 
 
-        <div class="col-md-12">
+    <div class="col-md-12">
 
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                    <span class="panel-title-content">{{ category.forumCategoryName }}</span>
-                </h2>
-            </div>
+    <div class="panel-heading">
+        <h2 class="panel-title">
+            <span class="panel-title-content">{{ category.forumCategoryName }}</span>
+        </h2>
+    </div>
 
-        {% if subjects|length != 0 %}
-
-                <table class="table table-striped panel">
-                    <!-- On rows -->
+    {% if subjects|length != 0 %}
+        <table class="table-responsibe">
+            <table class="table panel" id="table-subjects">
+                <!-- On rows -->
+                <tr class="primary-blue text-white">
                     <th></th>
                     <th> Sujet</th>
                     <th> Auteur</th>
-                    <th> Nb messages</th>
+                    <th class="hidden-xs"> Nb messages</th>
                     <th> Date</th>
-                    <th> X </th>
+                    <th><span class="glyphicon glyphicon-trash"></span></th>
+                </tr>
 
 
-                    {% for s in subjects %}
+                {% for s in subjects %}
 
-                        <tr>
-                            <td class="vert-align text-center">
-                                {% if s.forumSubjectIsResolved %}
-                                    <span class="glyphicon glyphicon-ok icon-medium icon-succes"></span>
-                                {% else %}
-                                    <span class="glyphicon glyphicon-minus icon-medium"></span>
-                                {% endif %}
-                            </td>
-                            <td class="vert-align">
-                                <a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId} ) }}">
-                                    <h6>{{ s.forumSubjectTitle }}</h6>
-                                </a>
-                                <span class="text-left"><em>{{ s.forumSubjectDescription }}</em></span>
-                                <br/>
+                    <tr>
+                        <td class="vert-align text-center">
+                            {% if s.forumSubjectIsResolved %}
+                                <span class="glyphicon glyphicon-ok icon-medium icon-succes"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-minus icon-medium"></span>
+                            {% endif %}
+                        </td>
+                        <td class="vert-align">
+                            <a  href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId} ) }}">
+                                <h6 class="no-margin-top-bot text-orange">{{ s.forumSubjectTitle }}</h6>
+                            </a>
+                            <span class="text-left hidden-xs text-justify"><em>{{ s.forumSubjectDescription }}</em></span>
+                            <div class="">
                                 {% for tag in tagsPerSubject[s.forumSubjectId] %}
                                     <span class="label label-default">{{ tag.tagName }}</span>
                                 {% endfor %}
-                            </td>
-                            <td class="vert-align"><a href="#">{{ s.username }}</a></td>
-                            <td class="vert-align">{{ countAnswers[s.forumSubjectId] }}</td>
-                            <td class="vert-align">Créé le {{ s.forumAnswerPostDate|date('j M Y') }}<br/>Actif il y a {{ relativeDate[s.forumSubjectId] }}</td>
+                            </div>
+                        </td>
+                        <td class="vert-align"><a href="#">{{ s.username }}</a></td>
+                        <td class="vert-align hidden-xs">{{ countAnswers[s.forumSubjectId] }}</td>
+                        <td class="vert-align"><div class="hidden-xs hidden-sm">Créé le {{ s.forumAnswerPostDate|date('j M Y') }}</div>Actif il y a <span
+                                    class="text-primary-blue"><strong>{{ relativeDate[s.forumSubjectId] }}</strong></span>
+                        </td>
 
-                            {% if ((is_granted('ROLE_MODERATOR')) or (app.user.username == s.username)) %}
-                                <td><a href="{{ path('agil_forum_subject_delete',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId})}}">X</a></td>
-                            {% else %}
-                                <td></td>
-                            {% endif %}
-                        </tr>
+                        {% if ((is_granted('ROLE_MODERATOR')) or (app.user.username == s.username)) %}
+                            <td class="vert-align"><a
+                                        href="{{ path('agil_forum_subject_delete',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId}) }}">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
 
-                    {% endfor %}
+                {% endfor %}
 
-                </table>
-            </div>
+            </table>
+        </table>
+        </div>
 
-            <nav class="text-center">
-                {% include 'AGILForumBundle:Categories:pagination.html.twig' %}
-            </nav>
+        <nav class="text-center">
+            {% include 'AGILForumBundle:Categories:pagination.html.twig' %}
+        </nav>
 
-        {% else %}
+    {% else %}
 
-            </div>
-            <br/>
-            <h6 class="text-center">
-                Cette catégorie ne contient actuellement aucun sujet.
-                Vous pouvez en créer un à partir du bouton "Nouveau sujet".
-            </h6>
-            <br/>
+        </div>
+        <br/>
+        <h6 class="text-center">
+            Cette catégorie ne contient actuellement aucun sujet.
+            Vous pouvez en créer un à partir du bouton "Nouveau sujet".
+        </h6>
+        <br/>
 
-        {% endif %}
+    {% endif %}
 
     </div>
 

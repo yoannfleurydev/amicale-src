@@ -32,18 +32,6 @@ $colors : (
         }
     }
 }
-// On crée 5 classes .darker-1 à 5
-
-
-// On crée 5 classes .lighter-1 à 5
-
-// pour les test
 .text-white{
-    padding: 20px;
-    color:#ffffff;
-    text-align: center;
-    @include text-shadow(2px 2px 4px black);
-    font-style: normal;
-    font-weight: normal;
-    font-family: inherit;
+    color:white;
 }
