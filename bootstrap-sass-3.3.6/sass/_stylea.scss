@@ -41,8 +41,6 @@
 }
 .animate_up {
   @include rotate(180);
-  //
-
 }
 .rotate-icon{
   @include transition(0.5);
@@ -146,5 +144,3 @@ $pad: 10px;
   margin-top: 0;
   margin-bottom: 0;
 }
-
-
