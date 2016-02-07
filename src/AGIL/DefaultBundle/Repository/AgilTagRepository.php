@@ -30,18 +30,19 @@ class AgilTagRepository extends EntityRepository
 
 	/**
 	 * @param $tagName String Nom du tag à ajouter
-	 * @param AgilSkill $skillCat (Optionnel) La catégorie à accrocher
+	 * @param $color String (Optionnel) Couleur associée
+	 * @param $skillCat AgilSkill (Optionnel) La catégorie à accrocher
 	 * Permet d'insérer des tags dans la base de données
 	 */
-	function insertTag($tagName, AgilSkill $skillCat = null) {
+	function insertTag($tagName, $color = '', AgilSkill $skillCat = null) {
 		if (!$tagName) {
 			throw new InvalidArgumentException('Un tag doit posséder au moins une lettre');
 		}
 
 		if (null === $this->findOneByTagName($tagName)) {
-			$tag = new AgilTag();
-			$tag->setTagName($tagName);
-			$tag->setSkillCategory((null === $skillCat)? null : $skillCat);
+			$tag = new AgilTag($tagName, '', null);
+			$tag->setSkillCategory((null == $skillCat)? null : $skillCat);
+			$tag->setTagColor(($color)? $color : '');
 
 			$this->getEntityManager()->persist($tag);
 			$this->getEntityManager()->flush();
