@@ -75,6 +75,26 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# TinyMCEBundle
+stfalcon_tinymce:
+    include_jquery: true
+    tinymce_jquery: true
+    selector: ".tinymce"
+    # Get current language from the parameters.ini
+    language: %locale%
+    theme:
+        # Simple theme: same as default theme
+        simple: ~
+        # Advanced theme with almost all enabled plugins
+        advanced:
+             plugins:
+                 - "advlist autolink lists link image charmap preview hr anchor pagebreak"
+                 - "searchreplace wordcount visualblocks visualchars fullscreen"
+                 - "insertdatetime media save"
+                 - "emoticons paste textcolor"
+             toolbar1: "bold italic underline strikethrough blockquote forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media emoticons preview"
+             image_advtab: false
+
 
 # FOSUserBundle
 fos_user:

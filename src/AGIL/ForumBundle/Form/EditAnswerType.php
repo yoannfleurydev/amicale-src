@@ -5,7 +5,7 @@ namespace AGIL\ForumBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AnswerType extends AbstractType
+class EditAnswerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -13,7 +13,9 @@ class AnswerType extends AbstractType
         $builder->add('forumAnswerText', 'textarea', array(
             'label' => false,
             'attr' => array(
-                'class' => 'form-control',
+                'class' => 'tinymce form-control',
+                'data-theme' => 'advanced',
+                'name' => 'forumAnswerText'
             )
         ));
 
@@ -27,6 +29,6 @@ class AnswerType extends AbstractType
 
     public function getName()
     {
-        return 'forum_edit_first_post';
+        return 'forum_edit_answer';
     }
 }

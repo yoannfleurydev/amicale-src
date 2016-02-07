@@ -2,13 +2,13 @@
 
 namespace AGIL\ForumBundle\Controller;
 
+use AGIL\ForumBundle\Entity\AgilForumAnswer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AGIL\ForumBundle\Form\SubjectType;
-use AGIL\ForumBundle\Form\FirstAnswerType;
-use AGIL\ForumBundle\Form\AnswerType;
+use AGIL\ForumBundle\Form\EditAnswerType;
+use AGIL\ForumBundle\Form\AddAnswerType;
 
 class AnswersController extends Controller
 {
@@ -16,15 +16,17 @@ class AnswersController extends Controller
     /**
      * Partie Contrôleur de la page d'un sujet, qui affiche
      * la liste des réponses par ordre décroissants des dates
+     * et qui permet d'ajouter une réponse en dessous
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function answersAction($idCategory,$idSubject,$page)
+    public function answersAction($idCategory,$idSubject,$page, Request $request)
     {
         // Manager & Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager->getRepository('AGILForumBundle:AgilForumCategory');
         $subjectRepository = $manager->getRepository('AGILForumBundle:AgilForumSubject');
+        $user = $this->getUser();
 
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $category = $categoryRepository->find($idCategory);
@@ -84,9 +86,25 @@ class AnswersController extends Controller
             $userTagsSkills[$id] = $userRepository->findBy(array('user' => $id),array('skillLevel' => 'desc'),5);
         }
 
+
+        // Formulaire d'ajout de réponse
+        $answer = new AgilForumAnswer($subject,$user,null);
+
+        $form = $this->createForm(new AddAnswerType(), $answer);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $manager->persist($answer);
+            $manager->flush($answer);
+
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers',
+                array('idCategory' => $idCategory, 'idSubject' => $idSubject, 'page' => ceil($answers_count / $maxAnswers))) );
+        }
+
         return $this->render('AGILForumBundle:Answers:answers.html.twig',
             array('category' => $category,'subject' => $subject,'pagination' => $pagination,
-                'answers' => $answers, 'relativeDate' => $relativeDatePerAnswer, 'userTagsSkills' => $userTagsSkills));
+                'answers' => $answers, 'relativeDate' => $relativeDatePerAnswer,
+                'form' => $form->createView(),'userTagsSkills' => $userTagsSkills));
     }
 
     /**
@@ -124,6 +142,15 @@ class AnswersController extends Controller
         }
     }
 
+    /**
+     * Cette méthode permet d'éditer une réponse dans le forum
+     *
+     * @param $idCategory
+     * @param $idSubject
+     * @param $idAnswer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function answersEditAction($idCategory, $idSubject, $idAnswer, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -172,7 +199,8 @@ class AnswersController extends Controller
                 array('idCategory' => $idCategory)) );
         }
 
-        $form = $this->createForm(new AnswerType(), $answer);
+
+        $form = $this->createForm(new EditAnswerType(), $answer);
 
         $form->handleRequest($request);
         if ($form->isValid()) {

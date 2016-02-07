@@ -2,11 +2,10 @@
 
 namespace AGIL\ForumBundle\Form;
 
-use AGIL\ForumBundle\Form\SubjectType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FirstAnswerType extends AbstractType
+class AddAnswerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -14,12 +13,11 @@ class FirstAnswerType extends AbstractType
         $builder->add('forumAnswerText', 'textarea', array(
             'label' => false,
             'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Première réponse du post',
+                'class' => 'tinymce form-control',
+                'data-theme' => 'advanced',
+                'name' => 'forumAnswerText'
             )
         ));
-
-        $builder->add('subject', new SubjectType(), array ('data_class'   =>  'AGIL\ForumBundle\Entity\AgilForumSubject',));
 
         $builder->add('Ajouter', 'submit', array(
             'label' => false,
@@ -31,6 +29,6 @@ class FirstAnswerType extends AbstractType
 
     public function getName()
     {
-        return 'forum_add_first_answer';
+        return 'forum_add_answer';
     }
 }
