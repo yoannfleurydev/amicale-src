@@ -72,8 +72,8 @@ class SubjectsController extends Controller
         $form = $this->createForm(new DeleteSubjectType(), null);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $em->persist($subject);
             $em->remove($subject);
+            $em->flush();
 
             return $this->redirect( $this->generateUrl('agil_forum_subjects_list',
                 array('idCategory' => $idCategory)) );
