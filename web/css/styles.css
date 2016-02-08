@@ -376,35 +376,40 @@ a {
   background-color: red;
 }
 
-/* line 110, ../sass/_stylea.scss */
+/* line 108, ../sass/_stylea.scss */
+.textarea-reponse-subject {
+  background-color: blue;
+}
+
+/* line 112, ../sass/_stylea.scss */
 .parent {
   display: flex;
   flex-direction: row;
 }
 
-/* line 115, ../sass/_stylea.scss */
+/* line 117, ../sass/_stylea.scss */
 .child {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* line 121, ../sass/_stylea.scss */
+/* line 123, ../sass/_stylea.scss */
 .no-pad-top {
   padding-top: 0;
 }
 
-/* line 122, ../sass/_stylea.scss */
+/* line 124, ../sass/_stylea.scss */
 .no-pad-bot {
   padding-top: 0;
 }
 
-/* line 125, ../sass/_stylea.scss */
+/* line 127, ../sass/_stylea.scss */
 .icon-add-cat {
   padding: 4px;
 }
 
-/* line 129, ../sass/_stylea.scss */
+/* line 131, ../sass/_stylea.scss */
 .selected {
   background-color: #2d4d8d;
   padding: 4px;
@@ -412,22 +417,30 @@ a {
 }
 
 /*  Style du défilé d'image */
-/* line 136, ../sass/_stylea.scss */
+/* line 138, ../sass/_stylea.scss */
 #owl-demo .item {
   margin: 3px;
 }
 
-/* line 139, ../sass/_stylea.scss */
+/* line 141, ../sass/_stylea.scss */
 #owl-demo .item img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* line 145, ../sass/_stylea.scss */
+/* line 147, ../sass/_stylea.scss */
 .no-margin-top-bot {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+/* line 155, ../sass/_stylea.scss */
+.forum-subjects img {
+  display: block;
+  width: 100% \9;
+  max-width: 100%;
+  height: auto;
 }
 
 /* line 22, ../sass/_colors.scss */

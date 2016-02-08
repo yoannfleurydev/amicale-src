@@ -4,12 +4,13 @@
 
 {% block body %}
 
-    <ol class="breadcrumb">
-        <li class="active">Accueil Forum</li>
-    </ol>
 
     <div class="container">
         <div class="row">
+            <ol class="breadcrumb">
+                <li class="active">Accueil Forum</li>
+            </ol>
+
             <div class="col-lg-offset-1 col-lg-10">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -47,15 +48,12 @@
 
                                     {% if subjectsPerCategories[key]|length == 0 %}
 
-                                        <div class="container">
+
                                             <em><h6>Cette catégorie ne contient pas de sujets</h6></em>
-                                        </div>
 
                                     {% else %}
 
-                                        <div class="container">
-                                            <em><h5>Les derniers sujets</h5></em>
-                                        </div>
+                                            <em><h6>Les derniers sujets</h6></em>
 
                                         <table class="table table-hover">
 
@@ -65,8 +63,8 @@
                                                     <td>
                                                         <div class="row">
                                                             <div class="col-xs-8 col-xm-9 col-md-9 col-lg-9">
-                                                                <h6><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : subject.forumSubjectId} ) }}">{{ subject.forumSubjectTitle }}</a></h6>
-                                                                <h6>{{ subject.forumSubjectDescription }}</h6>
+                                                                <h6 class="no-margin-top-bot"><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : subject.forumSubjectId} ) }}">{{ subject.forumSubjectTitle }}</a></h6>
+                                                                <div>{{ subject.forumSubjectDescription }}</div>
                                                                 {% for tag in subject.tags %}
                                                                     <span class="label label-default">{{ tag.tagName }}</span>
                                                                 {% endfor %}

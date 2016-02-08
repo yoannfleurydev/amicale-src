@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+        <div class="col-sm-12 col-xs-6 col-md-6 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -10,7 +10,7 @@
 								<i class="glyphicon glyphicon-user"></i> Gestion utilisateur
 						</span>
                     </h2>
-                    <p> Nombre d'utilisateurs total : <strong>{{ nbUsers }}</strong> </p>
+                    <p> Nombre d'utilisateurs total : <strong class="text-primary-blue"> {{ nbUsers }}</strong></p>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
@@ -22,7 +22,7 @@
         </div>
 
 
-        <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+        <div class="col-sm-12 col-xs-6 col-md-6 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -30,7 +30,7 @@
 						  <i class="glyphicon glyphicon-th-list"> </i> Gestion Forum
 						</span>
                     </h2>
-                    <p> Nombre de sujets mis en ligne: <strong>324</strong> </p>
+                    <p> Nombre de sujets mis en ligne: <strong class="text-primary-blue">324</strong></p>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+        <div class="col-sm-12 col-xs-6 col-md-6 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -49,7 +49,7 @@
 						  <i class="glyphicon glyphicon-home"> </i> Gestion Hall
 						</span>
                     </h2>
-                    <p> Nombre d'événement mis en ligne: <strong>324</strong> </p>
+                    <p> Nombre d'événement mis en ligne: <strong class="text-primary-blue">324</strong></p>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
@@ -59,9 +59,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+        <div class="col-sm-12 col-xs-6 col-md-6 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -69,7 +67,7 @@
 							<i class="glyphicon glyphicon-briefcase"> </i> Gestion des Offres
 						</span>
                     </h2>
-                    <p> Nombre d'offres mises en ligne: <strong>324</strong> </p>
+                    <p> Nombre d'offres mises en ligne: <strong class="text-primary-blue">324</strong></p>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
@@ -80,6 +78,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 {% endblock %}
