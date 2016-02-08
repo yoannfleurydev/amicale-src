@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new AGIL\ProfileBundle\AGILProfileBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new AGIL\UserBundle\AGILUserBundle(),
+            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

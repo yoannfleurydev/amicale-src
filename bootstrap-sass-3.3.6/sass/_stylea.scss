@@ -41,8 +41,6 @@
 }
 .animate_up {
   @include rotate(180);
-  //
-
 }
 .rotate-icon{
   @include transition(0.5);
@@ -50,8 +48,12 @@
   transition-timing-function: ease-in-out;
 }
 // ----------------------------------------------------
-
-
+a {
+  color: #D55400;
+}
+#table-subjects tr td:nth-child(2){
+  width:55%;
+}
 $pad: 10px;
 
 .forum_message_function {
@@ -102,7 +104,9 @@ $pad: 10px;
 
 .pad-top-3{
   background-color: red;
-
+}
+.textarea-reponse-subject{
+  background-color: blue;
 }
 
 .parent {
@@ -123,9 +127,7 @@ $pad: 10px;
 .icon-add-cat{
   padding: 4px;
 }
-.white{
-  color:white;
-}
+
 .selected{
   background-color: #2d4d8d;
   padding: 4px;
@@ -147,4 +149,12 @@ $pad: 10px;
   margin-bottom: 0;
 }
 
-
+// Pour le forum
+.forum-subjects{
+  img{
+    display: block;
+    width: 100% \9;
+    max-width: 100%;
+    height: auto;
+  }
+}
