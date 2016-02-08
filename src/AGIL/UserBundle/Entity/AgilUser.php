@@ -78,12 +78,9 @@ class AgilUser extends BaseUser
      * @var string
      *
      * @ORM\Column(name="userProfilePictureUrl", type="string", length=255, nullable=true)
-     * @Assert\Length(
-     *      min = 0,
-     *      max = 255,
-     *      minMessage = "La taille minimale est de {{ limit }} caractères",
-     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
-     * )
+     *
+     * @Assert\NotBlank(message="Format incorrecte")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/bmp" })
      */
     protected $userProfilePictureUrl;
     /**
@@ -131,7 +128,7 @@ class AgilUser extends BaseUser
      */
     public function getUserId()
     {
-        return $this->userId;
+        return $this->id;
     }
 
     /**

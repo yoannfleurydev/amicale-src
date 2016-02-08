@@ -4,23 +4,19 @@ namespace AGIL\ProfileBundle\Controller;
 
 use AGIL\ProfileBundle\Form\ProfileEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
     public function indexAction() {
-//        // Vérifier si l'utilisateur est connecté
-//        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-//            throw $this->createAccessDeniedException();
-//        }
-
         $user = $this->getUser();
 
-        return $this->render('AGILProfileBundle:Default:index.html.twig', array('user' => $user,));
+        return $this->render('AGILProfileBundle:Default:index.html.twig', array('user' => $user));
     }
 
     public function showAction($id) {
         $userRepository = $this->getDoctrine()->getManager()->getRepository('AGILUserBundle:AgilUser');
-
         $user = $userRepository->find($id);
 
         return $this->render('AGILProfileBundle:Default:index.html.twig', array('user' => $user,));
@@ -28,78 +24,69 @@ class DefaultController extends Controller {
 
     public function editAction(Request $request) {
 
-        // EntityManager
         $userManager = $this->get('fos_user.user_manager');
-
-        /*
-        // Récupération de l'objet AgilUser dont l'id est $id
-        $agilUser = $this->$em->getgetRepository('AGILDefaultBundle:AgilUser')->find($id)
-        ;
-
-        if (null === $agilUser) {
-            throw new NotFoundHttpException("L'utilisateur n'existe pas.");
-        }
-        */
-
         $user = $this->getUser();
 
-        $form = $this->createForm(new ProfileEditType(), NULL);
+        // Création d'un formulaire lié à aucune entité
+        $form = $this->createForm(new ProfileEditType(), null); // <=> $form = $this->get('form.factory')->create(new ProfileEditType(), null);
+
+        // pré remplissage des champs
         $form->get('username')->setData($user->getUsername());
         $form->get('email')->setData($user->getEmail());
-
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
+            $profilePicture = $form->get('userProfilePictureUrl')->getData();
+//            var_dump($profilePicture);
+
+            // Générer le nom du fichier image
+            $fileName = 'profile' . $user->getUserId() . "." . $profilePicture->guessExtension();
+
+            // Upload de l'image
+            $dir = $this->container->getParameter('kernel.root_dir').'/../web/img/profile';
+
+            // insérer ici une codition pour vérifier le format des fichiers
+            $profilePicture->move($dir, $fileName);
+            $user->setUserProfilePictureUrl($fileName);
             $user->setUsername($form->get('username')->getData());
             $user->setEmail($form->get('email')->getData());
-            if ($form->get('password')->getData() != null and $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
+
+            if ($form->get('password')->getData() != null && $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
                 $pass = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
                 $user->setPassword($pass);
             }
-            if ($form->get('username')->getData() == null or $form->get('password')->getData() == null
-            or $form->get('email')->getData() == null or $form->get('password')->getData() != $form->get('passwordConfirm')->getData()) {
-                $this->addFlash('notice','Erreur ! Champs vides ou mal remplies !');
-                return $this->render('AGILProfileBundle:Default:edit.html.twig', array('user' => $user
-                , 'form' => $form->createView()));
+
+            if ($form->get('username')->getData() == null || $form->get('password')->getData() == null || $form->get('email')->getData() == null || $form->get('password')->getData() != $form->get('passwordConfirm')->getData()) {
+                $this->addFlash('notice', 'Erreur ! Champs vides ou mal remplies !');
+                return $this->render('AGILProfileBundle:Default:edit.html.twig',array(
+                    'user' => $user,
+                    'form' => $form->createView()));
             } else {
                 $userManager->updateUser($user);
                 return $this->redirect($this->generateUrl('agil_profile'));
             }
         }
-        return $this->render('AGILProfileBundle:Default:edit.html.twig', array('user' => $user
-        , 'form' => $form->createView()));
 
-        /*$form = $this->createForm("agilUser")
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('username', TextType::class)
-            ->add('email', TextType::class)
-            ->add('cvUrl', TextType::class)
-            ->add('profilePictureUrl', TextType::class)
-            ->getForm();*/
-
-        /*
-                // Création du formulaire
-                $form = $this->get('form.factory')->createBuilder('form', $agilUser)
-                    ->add('firstName',          'text')
-                    ->add('lastName',           'text')
-                    ->add('username',           'text')
-                    ->add('email',              'text')
-                    ->add('birthdayDate',       'date')
-                    ->add('cvUrl',              'url', array('required' => 'false'))
-                    ->add('profilePictureUrl',  'url', array('required' => 'false'))
-                    ->getForm()
-                ;
-
-                if ($form->handleRequest($request)->isValid()) {
-                    $em->flush();
-                    $request->getSession()->getFlashBag()->add('notice', 'Profil modifié avec succès.');
-
-                    return $this->redirect($this->generateUrl('agil_profile'));
-                }*/
-
+        return $this->render('AGILProfileBundle:Default:edit.html.twig', array(
+            'user' => $user,
+            'form' => $form->createView()));
     }
+
+    /**
+     * Vérifie si une image de profil est valide
+     *
+     * @param UploadedFile $picture
+     * @return bool
+     */
+//    private function isValidProfilePicture(UploadedFile $picture) {
+//        $allowedExtensions = array('jpeg', 'png'); // Format à ajouter si besoin...
+//        if (!in_array($picture->guessExtension(), $allowedExtensions)) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
 }

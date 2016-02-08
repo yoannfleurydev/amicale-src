@@ -4,12 +4,7 @@
         <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <p>
-                        <img src="{{ asset("images/placeholder/nephi.png") }}" >
-                    </p>
-                    <p>
-                        <a href="#">Changer ma photo</a>
-                    </p>
+                    <img class="img-responsive" src="{{ asset("img/profile/") ~ user.userProfilePictureUrl }}" >
                 </div>
             </div>
         </div>
@@ -35,12 +30,12 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-offset-2 col-lg-8">
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <form action="{{ path('agil_profile_edit') }}" method="post" {{ form_enctype(form) }}>
 
-                                        {#email field#}
+                                        {# email field #}
                                         <div class="form-group">
                                             <label for="email">Modifier l'adresse email :</label>
                                             <div class="input-group">
@@ -49,7 +44,7 @@
                                             </div>
                                         </div>
 
-                                        {#username field#}
+                                        {# username field #}
                                         <div class="form-group">
                                             <label for="pseudo">Modifier le pseudo :</label>
                                             <div class="input-group">
@@ -58,16 +53,39 @@
                                             </div>
                                         </div>
 
-                                        {#CV field#}
+                                        {# cv field #}
+                                        {#<div class="form-group">#}
+                                            {#<label for="cv">Modifier le cv :</label>#}
+                                            {#<div class="input-group">#}
+                                                {#<div class="input-group-addon"><span class="glyphicon glyphicon-file"></span></div>#}
+                                                {#<input class="form-control" type="text" name="cv" id="cv" placeholder="lien vers cv">#}
+                                            {#</div>#}
+                                        {#</div>#}
                                         <div class="form-group">
-                                            <label for="cv">Modifier le CV :</label>
+                                            <label for="pseudo">Modifier le CV :</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon"><span class="glyphicon glyphicon-file"></span></div>
                                                 {{ form_row(form.CV) }}
                                             </div>
                                         </div>
 
-                                        {#Password field#}
+                                        {# profile picture #}
+                                        <div class="form-group">
+                                            <label for="pseudo">Modifier la photo de profil :</label>
+                                            <div class="input-group">
+                                                {{ form_row(form.userProfilePictureUrl) }}
+                                            </div>
+                                        </div>
+
+                                        {#CV field#}
+                                        {#<div class="form-group">#}
+                                            {#<label for="cv">Modifier le CV :</label>#}
+                                            {#<div class="input-group">#}
+                                                {#<div class="input-group-addon"><span class="glyphicon glyphicon-file"></span></div>#}
+                                                {#{{ form_row(form.CV) }}#}
+                                            {#</div>#}
+                                        {#</div>#}
+
+                                        {# PW + PW confirmation field #}
                                             <div class="form-group">
                                                 <label for="password">Modifier le mot de passe :</label>
                                                 <div class="input-group">
@@ -83,16 +101,12 @@
                                                     {{ form_row(form.passwordConfirm) }}
                                                 </div>
                                             </div>
-                                        {{ form_row(form.Modifier) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
 
+                                        {# update button #}
+                                        {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
+
+                                        {{ form_rest(form) }}
+                                    </form>
                                 </div>
                             </div>
                         </div>

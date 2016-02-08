@@ -3,8 +3,9 @@
 namespace AGIL\ProfileBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\Validator\Constraints\File;
 class ProfileEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -17,7 +18,6 @@ class ProfileEditType extends AbstractType
                 'class' => 'form-control',
                 'placeholder' => 'Email',
             )
-
         ));
 
         $builder->add('username', 'text', array(
@@ -29,7 +29,27 @@ class ProfileEditType extends AbstractType
             )
         ));
 
-        $builder->add('CV', 'button', array(
+        $builder->add('userProfilePictureUrl', 'file', array(
+            'label' => false,
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'maxSize' => '20M',
+                    'mimeTypes' => [
+                        "image/jpeg",
+                        "image/png",
+                        "image/bmp"
+                    ],
+                ])
+            ]
+            //            'attr' => array(
+            //                'class' => 'form-control',
+            //                'placeholder' => 'Pseudo',
+            //            )
+        ));
+
+
+        $builder->add('CV', 'button', array( // 'file' au lieu de 'button' ?
             'label' => false,
             'attr' => array(
                 'class' => 'form-control')
