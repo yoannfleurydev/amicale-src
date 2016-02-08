@@ -4,7 +4,10 @@
 	{# TODO changer en conséquence #}
 	{% if error %}
         <div class="alert alert-danger">
-            <strong>{% trans %}Erreur de connexion{% endtrans %} !</strong> Mauvaise combinaison d'email/mot de passe
+            <strong>Erreur de connexion !</strong> Mauvaise combinaison d'email/mot de passe
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     {% endif %}
 

@@ -56,7 +56,15 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
 
         $this->addReference('userMember', $userMember);
 
+        $userManager = $this->container->get('fos_user.user_manager');
+        $userSuperAdmin = $userManager->createUser();
+        $userSuperAdmin->setUsername('amicale');
+        $userSuperAdmin->setEMail('amicale@amicale.fr');
+        $userSuperAdmin->setPlainPassword('amicale');
+        $userSuperAdmin->setEnabled(true);
+        $userSuperAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
 
+        $userManager->updateUser($userSuperAdmin, true);
     }
 
     /**
