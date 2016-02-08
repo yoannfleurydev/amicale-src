@@ -41,6 +41,6 @@ $(document).scroll(function() {
     hideSidebar();
 });
 
-$("input, textearea").focusin(function() {
+$("input, textarea").focusin(function() {
     hideSidebar();
 });
