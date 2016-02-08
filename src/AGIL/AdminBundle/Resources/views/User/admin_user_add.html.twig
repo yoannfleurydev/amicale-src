@@ -1,67 +1,47 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    <div class="list-group">
-        <a href="{{ path("agil_admin_user") }}" class="list-group-item">Liste Utilisateur</a>
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-lg-offset-3 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Ajouter un membre
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <form action="{{ path('agil_admin_user_add') }}" method="post" {{ form_enctype(form) }}>
+
+                        {{ form_errors(form) }}
+
+                        <div class="form-group">
+                            <label for="username">Email :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="material-icons">email</i></div>
+                                {{ form_row(form.email) }}
+                            </div>
+                        </div>
+
+                        {#
+                        {% if is_granted("ROLE_SUPER_ADMIN") %}
+                        <div class="form-group">
+                            {{ form_row(form.role) }}
+                        </div>
+                        {% endif %}
+                        #}
+
+                        <div class="text-center">
+                            {{ form_row(form.invite) }}
+                        </div>
+
+                        {{ form_rest(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <form action="{{ path('agil_admin_user_add') }}" method="post" {{ form_enctype(form) }}>
-        {% for flash_message in app.session.flashbag.get('notice') %}
-            <div class="flash-notice">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-
-        {{ form_errors(form) }}
-
-        <div class="form-group">
-            {{ form_row(form.email) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_row(form.firstName) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_row(form.name) }}
-        </div>
-
-        {% if is_granted("ROLE_SUPER_ADMIN") %}
-        <div class="form-group">
-            {{ form_errors(form.role) }}
-            {{ form_widget(form.role) }}
-        </div>
-        {% endif %}
-
-        <div class="form-group">
-            {{ form_row(form.Inviter) }}
-        </div>
-
-        {{ form_rest(form) }}
-
-    </form>
-
-    <form action="{{ path('agil_admin_user_add') }}" method="post" {{ form_enctype(formCSV) }}>
-        {% for flash_message in app.session.flashbag.get('notice') %}
-            <div class="flash-notice">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-
-        {{ form_errors(formCSV) }}
-
-        <div class="form-group">
-            {{ form_row(formCSV.file) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_row(formCSV.Inviter) }}
-        </div>
-
-        {{ form_rest(formCSV) }}
-
-    </form>
-
     {% for flash_message in app.session.flashbag.get('notice-csv') %}
         <div class="flash-notice">
             {{ flash_message }}

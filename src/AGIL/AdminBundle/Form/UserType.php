@@ -61,7 +61,7 @@ class UserType extends AbstractType
         $builder->add('Inviter', 'submit', array(
             'label' => false,
             'attr' => array(
-                'class' => 'form-control',
+                'class' => 'btn btn-primary',
             )
         ));
     }

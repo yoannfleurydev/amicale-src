@@ -23,26 +23,28 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <table class="table">
-                            <tr>
-                                <th>Nom</th>
-                                <th>Mail</th>
-                                <th>Inscrit le</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            {% for user in users %}
-                            <tr>
-                                <td>{{ user.username }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
-                                <td><a href="{{ path('agil_admin_user_up', {'id': user.id}) }}" class="btn btn-default"
-                                       data-toggle="tooltip" data-placement="top" title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
-                                <td><a href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" class="btn btn-default"
-                                       data-toggle="tooltip" data-placement="top" title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
-                            </tr>
-                            {% endfor %}
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Mail</th>
+                                    <th>Inscrit le</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
+                                    <td><a href="{{ path('agil_admin_user_up', {'id': user.id}) }}" class="btn btn-default"
+                                           data-toggle="tooltip" data-placement="top" title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
+                                    <td><a href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" class="btn btn-default"
+                                           data-toggle="tooltip" data-placement="top" title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
 
                         <nav class="text-center">
                             {% include 'AGILAdminBundle:Default:pagination.html.twig' %}
@@ -63,29 +65,31 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <table class="table">
-                            <tr>
-                                <th>Nom</th>
-                                <th>Mail</th>
-                                <th>Inscrit le</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            {% for moderator in moderators %}
+                        <div class="table-responsive">
+                            <table class="table">
                                 <tr>
-                                    <td>{{ moderator.username }}</td>
-                                    <td>{{ moderator.email }}</td>
-                                    <td>{{ moderator.userSignupDate|date("m/d/Y") }}</td>
-                                    <td><a href="{{ path('agil_admin_user_up', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                           title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
-                                    <td><a href="{{ path('agil_admin_user_down', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                           title="Destituer"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                    <td><a href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                           title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                    <th>Nom</th>
+                                    <th>Mail</th>
+                                    <th>Inscrit le</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
-                            {% endfor %}
-                        </table>
+                                {% for moderator in moderators %}
+                                    <tr>
+                                        <td>{{ moderator.username }}</td>
+                                        <td>{{ moderator.email }}</td>
+                                        <td>{{ moderator.userSignupDate|date("m/d/Y") }}</td>
+                                        <td><a href="{{ path('agil_admin_user_up', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                               title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
+                                        <td><a href="{{ path('agil_admin_user_down', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                               title="Destituer"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
+                                        <td><a href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                               title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,26 +109,28 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <table class="table">
-                            <tr>
-                                <th>Nom</th>
-                                <th>Mail</th>
-                                <th>Inscrit le</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            {% for admin in admins %}
+                        <div class="table-responsive">
+                            <table class="table">
                                 <tr>
-                                    <td>{{ admin.username }}</td>
-                                    <td>{{ admin.email }}</td>
-                                    <td>{{ admin.userSignupDate|date("m/d/Y") }}</td>
-                                    <td><a href="{{ path('agil_admin_user_down', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                           title="Destituer"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                    <td><a href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                           title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                    <th>Nom</th>
+                                    <th>Mail</th>
+                                    <th>Inscrit le</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
-                            {% endfor %}
-                        </table>
+                                {% for admin in admins %}
+                                    <tr>
+                                        <td>{{ admin.username }}</td>
+                                        <td>{{ admin.email }}</td>
+                                        <td>{{ admin.userSignupDate|date("m/d/Y") }}</td>
+                                        <td><a href="{{ path('agil_admin_user_down', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                               title="Destituer"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
+                                        <td><a href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                               title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

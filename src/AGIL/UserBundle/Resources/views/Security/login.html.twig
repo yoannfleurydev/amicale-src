@@ -3,11 +3,11 @@
 {% block fos_user_content %}
 	{# TODO changer en conséquence #}
 	{% if error %}
-        <div class="alert alert-danger">
-            <strong>Erreur de connexion !</strong> Mauvaise combinaison d'email/mot de passe
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-lg-offset-3 col-lg-6">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>{% trans %}Erreur de connexion{% endtrans %} !</strong> Mauvaise combinaison d'email/mot de passe
+            </div>
         </div>
     {% endif %}
 
@@ -21,7 +21,6 @@
                         </span>
                     </h2>
                 </div>
-				
                 <div class="panel-body">
                     <form action="{{ path("fos_user_security_check") }}" method="POST">
 						<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
