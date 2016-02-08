@@ -40,3 +40,7 @@ container.addEventListener('click', function(e){
 $(document).scroll(function() {
     hideSidebar();
 });
+
+$("input, textearea").focusin(function() {
+    hideSidebar();
+});

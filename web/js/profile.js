@@ -1,8 +1,8 @@
 /**
- * Created by valentin on 2/5/16.
+ * Created by valentin on 2/8/16.
  */
 
-$("#upload").change(function() {
+$("#profil_edit_form_userProfilePictureUrl").change(function() {
     // will log a FileList object, view gifs below
     $("#button_name").text(this.files[0].name);
 });
