@@ -51,8 +51,8 @@
 a {
   color: #D55400;
 }
-#table-subjects tr td:nth-child(1){
-  width:30%;
+#table-subjects tr td:nth-child(2){
+  width:55%;
 }
 $pad: 10px;
 
@@ -104,7 +104,9 @@ $pad: 10px;
 
 .pad-top-3{
   background-color: red;
-
+}
+.textarea-reponse-subject{
+  background-color: blue;
 }
 
 .parent {
@@ -145,4 +147,14 @@ $pad: 10px;
 .no-margin-top-bot{
   margin-top: 0;
   margin-bottom: 0;
+}
+
+// Pour le forum
+.forum-subjects{
+  img{
+    display: block;
+    width: 100% \9;
+    max-width: 100%;
+    height: auto;
+  }
 }

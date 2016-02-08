@@ -5,13 +5,17 @@
 
     <ol class="breadcrumb">
         <li><a href="{{ path('agil_forum_homepage') }}">Accueil Forum</a></li>
-        <li><a href="{{ path('agil_forum_subjects_list',{'idCategory' : category.forumCategoryId}) }}">{{ category.forumCategoryName }}</a></li>
+        <li>
+            <a href="{{ path('agil_forum_subjects_list',{'idCategory' : category.forumCategoryId}) }}">{{ category.forumCategoryName }}</a>
+        </li>
         <li class="active">{{ subject.forumSubjectTitle }}</li>
     </ol>
 
 
-    <div class="row">
+    <div class="row forum-subjects">
+
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+
             <h3>{{ subject.forumSubjectTitle }}</h3>
             <h5>{{ subject.forumSubjectDescription }}</h5>
 
@@ -20,141 +24,144 @@
             {% else %}
 
                 {% if app.user.username == subject.user.username %}
-                    <a href="{{ path('agil_forum_subject_to_resolve',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId}) }}" class="btn btn-default">Mettre comme résolu</a>
+                    <a href="{{ path('agil_forum_subject_to_resolve',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId}) }}"
+                       class="btn btn-default">Mettre comme résolu</a>
                 {% endif %}
                 <br/><br/>
             {% endif %}
 
             {% for a in answers %}
 
-                <!-- Un message -->
-                <div class="panel forum_message">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                <span class="text-left h3">
+            <!-- Un message -->
+            <div class="panel forum_message">
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class=" col-xs-2 col-sm-3 col-md-2 col-lg-2 hidden-xs ">
+                            <div class="text-center">
+                                <h4>
                                     <a href="#">{{ a.username }}</a>
-                                </span>
+                                </h4>
                             </div>
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-right">
-                                <span class="text-right"><em class="blue">Il y a {{ relativeDate[a.forumAnswerId] }} ({{ a.forumAnswerPostDate|date('j M Y - H:i:s') }})</em></span>
+
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <img class="center-block img-circle img-responsive"
+                                     src="http://lorempicsum.com/simpsons/140/140/5"/>
+                            </div>
+
+                            <div class="user_info text-center">
+                                <strong>
+                                    {% if a.roles|length == 0 %}
+                                        MEMBRE
+                                    {% else %}
+                                        {% if a.roles[0] == "ROLE_SUPER_ADMIN" %}
+                                            SUPER ADMINISTRATEUR
+                                        {% elseif a.roles[0] == "ROLE_ADMIN" %}
+                                            ADMINISTRATEUR
+                                        {% elseif a.roles[0] == "ROLE_MODERATOR" %}
+                                            ANIMATEUR-MODERATEUR
+                                        {% endif %}
+                                    {% endif %}
+                                </strong>
+                                <div class="text-center">
+                                    {% for skill in userTagsSkills[a.id] %}
+                                        <span class="label label-default">{{ skill.tag.tagName }}</span>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
-                                <div class="embed-responsive embed-responsive-4by3">
-                                    <img class="center-block img-circle img-responsive" src="http://lorempicsum.com/simpsons/140/140/5"/>
-                                </div>
+                        <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+                            <div class="container-fluid">
+                                <div class="row">
 
-                                <div class="user_info text-center">
+                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        <!-- affiché sur petit écran -->
+                                        <div class="text-left hidden-lg hidden-md hidden-sm ">
+                                            <h4 class="no-margin-top-bot">
+                                                <a href="#">{{ a.username }}</a>
+                                            </h4>
+                                        </div>
+                                        <em>Il y a {{ relativeDate[a.forumAnswerId] }}
+                                            ({{ a.forumAnswerPostDate|date('j M Y - H:i:s') }})</em>
+                                    </div>
 
-                                    <strong>
-                                        {% if a.roles|length == 0 %}
-                                            MEMBRE
-                                        {% else %}
-                                            {% if a.roles[0] == "ROLE_SUPER_ADMIN" %}
-                                                SUPER ADMINISTRATEUR
-                                            {% elseif a.roles[0] == "ROLE_ADMIN" %}
-                                                ADMINISTRATEUR
-                                            {% elseif a.roles[0] == "ROLE_MODERATOR" %}
-                                                ANIMATEUR-MODERATEUR
-                                            {% endif %}
+                                    <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                        {% if is_granted('ROLE_MODERATOR') %}
+                                            <a class="btn btn-default" href="#" role="button"><span
+                                                        class="glyphicon glyphicon-edit"></span></a>
+                                            <a class="btn btn-danger" href="#" role="button"><span
+                                                        class="glyphicon glyphicon-trash"></span></a>
                                         {% endif %}
-                                    </strong>
-                                    <div class="text-center">
-
-                                        {% for skill in userTagsSkills[a.id] %}
-                                            <span class="label label-default">{{ skill.tag.tagName }}</span>
-                                        {% endfor %}
+                                        {% if app.user.username == a.username %}
+                                            <a class="btn btn-danger"  href="{{ path('agil_forum_answers_edit',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId,'idAnswer' : a.forumAnswerId}) }}"
+                                               role="button"><span class="glyphicon glyphicon-trash"></span></a>
+                                        {% endif %}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-10 col-md-10 col-lg-10">
-                                <br/>
 
-                                <!-- Contenu du message -->
-                                <p>{{ a.forumAnswerText|raw }}</p>
-
+                                <hr>
+                                <div class="row">
+                                    <p>{{ a.forumAnswerText|raw }}</p>
+                                </div>
 
                             </div>
 
                         </div>
-                    </div>
-                    <div class="forum_message_function">
-                        <div class="row">
-                            <div class="col-sm-2 col-md-2 col-lg-2">
-                            </div>
-                            <div class="col-sm-10 col-md-10 col-lg-10 text-right">
+                        <!-- Contenu du message -->
 
-                                {% if is_granted('ROLE_MODERATOR') %}
-                                    <a class="btn btn-danger" href="#" role="button">Supprimer</a>
-                                {% endif %}
-                                {% if app.user.username == a.username %}
-                                    <a class="btn btn-default" href="{{ path('agil_forum_answers_edit',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId,'idAnswer' : a.forumAnswerId}) }}" role="button">Editer</a>
-                                {% endif %}
-                            </div>
-                        </div>
                     </div>
+
                 </div>
-
+            </div>
             {% endfor %}
         </div>
 
-        <nav class="text-center">
-            {% include 'AGILForumBundle:Answers:pagination.html.twig' %}
-        </nav>
 
     </div>
 
+    <nav class="text-center">
+        {% include 'AGILForumBundle:Answers:pagination.html.twig' %}
+    </nav>
 
-    <!-- Partie pour répondre au sujet -->
-    <div class="panel-body">
-
-        <!-- Formulaire de d'ajout de réponse pour le sujet -->
-
-        <form action="{{ path('agil_forum_subject_answers', {'idCategory': category.forumCategoryId, 'idSubject': subject.forumSubjectId}) }}" method="post" {{ form_enctype(form) }}>
-
-            <div class="form-group" id="formAddContentPost">
-                <label for="inputContentPost" class="col-sm-2 control-label"><strong>Post</strong></label>
-                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                    {{ form_errors(form.forumAnswerText) }}
-                    {{ form_row(form.forumAnswerText) }}
-
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="panel">
+                <div class="panel-heading text-center">
+                    <h4>Répondre</h4>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    {{ form_row(form.Ajouter) }}
-                </div>
+                    <!-- Partie pour répondre au sujet -->
+                    <div class="panel-body">
+
+                        <!-- Formulaire de d'ajout de réponse pour le sujet -->
+
+                        <form action="{{ path('agil_forum_subject_answers', {'idCategory': category.forumCategoryId, 'idSubject': subject.forumSubjectId}) }}"
+                              method="post" {{ form_enctype(form) }}>
+
+                                    {{ form_errors(form.forumAnswerText) }}
+                                    {{ form_row(form.forumAnswerText) }}
+
+
+                            <br/>
+                            <div class="text-left">
+                                    {{ form_row(form.Ajouter) }}
+                                </div>
+                            {{ tinymce_init() }}
+
+
+                                {{ form_rest(form) }}
+
+
+                        </form>
+                    </div>
+
             </div>
-            {{ tinymce_init() }}
-            {{ form_rest(form) }}
-        </form>
+        </div>
     </div>
 
 
+    <!-- Partie pour répondre au post-->
 
-    <div class="reponse">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <textarea class="form-control" rows="3" id="inputEmail3"></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-default">Preview</button>
-                <button type="submit" class="btn btn-default">Envoyer</button>
-            </div>
-        </form>
-    </div>
-
-
-
-
-
-
-    <br>
 
 
 
