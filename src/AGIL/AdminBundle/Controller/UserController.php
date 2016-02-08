@@ -135,7 +135,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new UserType(), null);
-        $formCSV = $this->createForm(new UsersCSVType(), null);
+        $formCSV = $this->createForm(new UsersCSVType());
 
         $factory = $this->get('security.encoder_factory');
 
@@ -204,27 +204,77 @@ class UserController extends Controller
     }
 
     function addUserByCSVFile($form, $em, $factory) {
-        $file = $form->getData()['attachment'];
-        $name = $file->getPathname();
+        $nbRegisters = 0;
+        $file = $form['file']->getData();
+
+        //$name = $file->getPathname();
+        //echo $name;
         /*$dir = __DIR__.'/../../../../web/uploads';
 
         $file->move($dir, $name) ;*/
-        echo $name;
-
-        /*$row = 1;
-            if (($handle = fopen($file, "r")) !== FALSE) {
-                while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                    $num = count($data);
-                    echo "<p> $num champs à la ligne $row: <br /></p>\n";
-                    $row++;
-                    for ($c = 0; $c < $num; $c++) {
-                        echo $data[$c] . "<br />\n";
-                    }
+        $attr_user = array();
+        $row = 1;
+        if (($handle = fopen($file, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $num = count($data);
+                //echo "<p> $num champs à la ligne $row: <br /></p>\n";
+                $row++;
+                $attr_user[$row-1] = array();
+                for ($c = 0; $c < $num; $c++) {
+                    //echo $data[$c] . "<br />\n";
+                    $attr_user[$row-1][$c] = $data[$c];
                 }
-                fclose($handle);
             }
-            */
-        $this->addFlash('notice', 'Tous les utilisateurs ont été enregistrés.');
+            fclose($handle);
+        }
+        //var_dump($attr_user);
+        foreach($attr_user as $value) {
+            $firstName = $value[0];
+            $lastName = $value[1];
+            $email = $value[2];
+            $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
+
+            if ($user == null) {
+                $userManager = $this->get('fos_user.user_manager');
+                $user = $userManager->createUser();
+                $lastName = $lastName;
+                $firstName = $firstName;
+                if (strlen($lastName)>=5 and strlen($firstName)>=3) {
+                    $lastNameTmp = strtolower($lastName);
+                    $firstNameTmp = strtolower($firstName);
+                    $username = $lastNameTmp[0] . $lastNameTmp[1] . $lastNameTmp[2] .
+                        $lastNameTmp[3] . $lastNameTmp[4] . $firstNameTmp[0] . $firstNameTmp[1] . $firstNameTmp[2];
+                } else {
+                    $username = strtolower($firstName).'.'.strtolower($lastName);
+                }
+
+                $password = $this->generate_password();
+                $encoder = $factory->getEncoder($user);
+                $user->setUsername($username);
+                $pass = $encoder->encodePassword($password, $user->getSalt());
+                $user->setUserFirstName($firstName);
+                $user->setUserLastName($lastName);
+                $user->setEmail($email);
+                $user->setPassword($pass);
+                $user->setEnabled(1);
+
+                $userManager->updateUser($user);
+                $nbRegisters++;
+
+                $subject = "Amicale GIL[Inscription]";
+                $message = "<p>Bonjour $username,</p>";
+                $message .= "<p>vous avez été invité sur le site <a href=\"amicale.dev\">Amicale GIL</a>.</p>";
+                $message .= "<p>Pour vous connecter :</p>";
+                $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
+                $message .= "<p>Cordialement</p>";
+
+                $this->sendMail($subject, $message, $email);
+            } else {
+                $this->addFlash('notice-csv', 'L\'utilisateur avec l\'email '. $email .' est déjà enregistré.');
+            }
+        }
+
+        $this->addFlash('notice-csv', $nbRegisters . ' utilisateurs ont été enregistrés.');
     }
     /**
      * mot de passe aleatoire
@@ -263,7 +313,7 @@ class UserController extends Controller
 
         if(mail($to, $subject, $message, $headers))
         {
-            $this->addFlash('notice', 'Email envoyée.');
+            // mail envoyé
         }
         else
         {

@@ -41,7 +41,7 @@
 
     </form>
 
-    <form action="{{ path('agil_admin_user_add') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('agil_admin_user_add') }}" method="post" {{ form_enctype(formCSV) }}>
         {% for flash_message in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
                 {{ flash_message }}
@@ -51,7 +51,7 @@
         {{ form_errors(formCSV) }}
 
         <div class="form-group">
-            {{ form_row(formCSV.attachment) }}
+            {{ form_row(formCSV.file) }}
         </div>
 
         <div class="form-group">
@@ -62,4 +62,9 @@
 
     </form>
 
+    {% for flash_message in app.session.flashbag.get('notice-csv') %}
+        <div class="flash-notice">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
 {% endblock %}
