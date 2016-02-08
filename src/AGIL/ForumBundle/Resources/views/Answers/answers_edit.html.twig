@@ -7,7 +7,7 @@
             <div class="panel-heading">
                 <h2 class="panel-title">
                     <span class="panel-title-content">
-                        Modification du post
+                        Modification d'une réponse
                     </span>
                 </h2>
             </div>
@@ -18,43 +18,48 @@
                 <form action="{{ path('agil_forum_answers_edit', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}" method="post" {{ form_enctype(form) }}>
 
                     <div class="form-group" id="formAddNamePost">
-                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Sujet</label>
+                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Sujet</strong></label>
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                             <p>{{ subject.forumSubjectTitle }}</p>
                         </div>
                     </div>
                     <div class="form-group" id="formAddDescPost">
-                        <label for="inputDescPost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Description</label>
+                        <label for="inputDescPost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Description</strong></label>
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                             <p>{{ subject.forumSubjectDescription }}</p>
                         </div>
                     </div>
 
                     <div class="form-group" id="formAddContentPost">
-                        <label for="inputContentPost" class="col-sm-2 control-label">Post</label>
+                        <label for="inputContentPost" class="col-sm-2 control-label"><strong>Post</strong></label>
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                             {{ form_errors(form.forumAnswerText) }}
                             {{ form_row(form.forumAnswerText) }}
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">  </label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <pre class="preview"> <em><h4>PREVIEW ZONE</h4></em></pre>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Preview</button>
                             {{ form_row(form.Modifier) }}
                             <a href="{{ path('agil_forum_subjects_list', {'idCategory': idCategory}) }}">
                                 <button class="btn btn-default">Annuler</button>
                             </a>
                         </div>
                     </div>
-
+                    {{ tinymce_init({
+                        selector: 'forumAnswerText',
+                        menu: {
+                            file: {title: 'File', items: 'newdocument'},
+                            edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+                            insert: {title: 'Insert', items: 'link media | template hr'},
+                            view: {title: 'View', items: 'visualaid'},
+                            format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+                            table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+                            tools: {title: 'Tools', items: 'spellchecker code'}
+                        }
+                        })
+                    }}
                     {{ form_rest(form) }}
                 </form>
             </div>

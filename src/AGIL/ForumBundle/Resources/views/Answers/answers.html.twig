@@ -44,7 +44,8 @@
                             <div class="embed-responsive embed-responsive-4by3">
                                 <img class="center-block img-circle img-responsive"
                                      src="http://lorempicsum.com/simpsons/140/140/5"/>
-                            </div><hr>
+                            </div>
+                            <hr>
 
                             <div class="user_info text-center">
                                 <strong>
@@ -72,7 +73,7 @@
                                 <div class="row">
 
                                     <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
-                                       <!-- affiché sur petit écran -->
+                                        <!-- affiché sur petit écran -->
                                         <div class="text-left hidden-lg hidden-md hidden-sm ">
                                             <h4 class="no-margin-top-bot">
                                                 <a href="#">{{ a.username }}</a>
@@ -95,10 +96,12 @@
                                         {% endif %}
                                     </div>
                                 </div>
+
                                 <hr>
                                 <div class="row">
                                     <p>{{ a.forumAnswerText }}</p>
                                 </div>
+
                             </div>
 
                         </div>
@@ -118,6 +121,7 @@
         {% include 'AGILForumBundle:Answers:pagination.html.twig' %}
     </nav>
 
+    <<<<<<< HEAD
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <div class="panel">
@@ -127,12 +131,66 @@
                 <div class="panel-body">
                     <form class="form">
                         <div class="form-group">
-                            <textarea class="form-control textarea-reponse-subject" ></textarea>
+                            <textarea class="form-control textarea-reponse-subject"></textarea>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-default">Envoyer</button>
                         </div>
                     </form>
+                    =======
+                    <!-- Partie pour répondre au sujet -->
+                    <div class="panel-body">
+
+                        <!-- Formulaire de d'ajout de réponse pour le sujet -->
+
+                        <form action="{{ path('agil_forum_subject_answers', {'idCategory': category.forumCategoryId, 'idSubject': subject.forumSubjectId}) }}"
+                              method="post" {{ form_enctype(form) }}>
+
+                            <div class="form-group" id="formAddContentPost">
+                                <label for="inputContentPost"
+                                       class="col-sm-2 control-label"><strong>Post</strong></label>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    {{ form_errors(form.forumAnswerText) }}
+                                    {{ form_row(form.forumAnswerText) }}
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    {{ form_row(form.Ajouter) }}
+                                </div>
+                            </div>
+                            {{ tinymce_init({
+                                selector: 'forumAnswerText',
+                                menu: {
+                                    file: {title: 'File', items: 'newdocument'},
+                                    edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+                                    insert: {title: 'Insert', items: 'link media | template hr'},
+                                    view: {title: 'View', items: 'visualaid'},
+                                    format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+                                    table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+                                    tools: {title: 'Tools', items: 'spellchecker code'}
+                                }
+                            }) }}
+                            {{ form_rest(form) }}
+                        </form>
+                    </div>
+
+
+                    <div class="reponse">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="3" id="inputEmail3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">Preview</button>
+                                <button type="submit" class="btn btn-default">Envoyer</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    >>>>>>> 2c522061f9a39a370c6a67fabc6562a49e146fcc
 
                 </div>
 
