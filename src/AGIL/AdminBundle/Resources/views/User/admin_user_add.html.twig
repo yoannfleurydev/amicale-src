@@ -17,10 +17,30 @@
                         {{ form_errors(form) }}
 
                         <div class="form-group">
-                            <label for="username">Email :</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="material-icons">email</i></div>
+                            <div class="form-group">
+                                <label for="username">Email :</label>
                                 {{ form_row(form.email) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="firstName">Prénom :</label>
+                                {{ form_row(form.firstName) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="name">Nom :</label>
+                                {{ form_row(form.name) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="role">Roles :</label>
+                                {{ form_row(form.role) }}
                             </div>
                         </div>
 
@@ -33,7 +53,7 @@
                         #}
 
                         <div class="text-center">
-                            {{ form_row(form.invite) }}
+                            {{ form_row(form.Inviter) }}
                         </div>
 
                         {{ form_rest(form) }}
