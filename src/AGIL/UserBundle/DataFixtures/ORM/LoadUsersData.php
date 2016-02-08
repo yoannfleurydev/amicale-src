@@ -2,15 +2,13 @@
 
 namespace AGIL\UserBundle\DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use AGIL\UserBundle\Entity\AgilUser;
 
-class LoadUsersData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
-{
+class LoadUsersData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface {
 
     /**
      * @var ContainerInterface
@@ -18,8 +16,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
     private $container;
 
 
-    public function setContainer(ContainerInterface $container = null)
-    {
+    public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
     }
 
@@ -27,9 +24,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
      * Cette méthode charge dans la BDD des objets Users
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
-    {
-
+    public function load(ObjectManager $manager) {
         // ############ CREATION D'UN SUPER-ADMINISTRATEUR DE TEST ############
         $userManager = $this->container->get('fos_user.user_manager');
         $userSuperAdmin = $userManager->createUser();
@@ -41,7 +36,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
 
         $userManager->updateUser($userSuperAdmin, true);
 
-        $this->addReference('superAdmin', $userSuperAdmin);
+        $this->setReference('superAdmin', $userSuperAdmin);
 
         // ############ CREATION D'UN MEMBRE DE TEST ############
         $userManager = $this->container->get('fos_user.user_manager');
@@ -54,25 +49,26 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
 
         $userManager->updateUser($userMember, true);
 
-        $this->addReference('userMember', $userMember);
+        $this->setReference('userMember', $userMember);
 
         $userManager = $this->container->get('fos_user.user_manager');
         $userSuperAdmin = $userManager->createUser();
         $userSuperAdmin->setUsername('amicale');
-        $userSuperAdmin->setEMail('amicale@amicale.fr');
+        $userSuperAdmin->setEMail('amicale@amicale.dev');
         $userSuperAdmin->setPlainPassword('amicale');
         $userSuperAdmin->setEnabled(true);
         $userSuperAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
 
         $userManager->updateUser($userSuperAdmin, true);
+
+        $this->setReference('amicale', $userSuperAdmin);
     }
 
     /**
      * Ordre d'exécution des fixtures
      * @return int
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return 3;
     }
 }

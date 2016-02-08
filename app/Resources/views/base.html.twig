@@ -31,15 +31,15 @@
                 <!--Si connecté-->
                 <li class="dropdown navbar-dropdown-mobile right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img class="img-circle img-responsive" src="{{ asset("images/placeholder/nephi.png") }}" width="50px"></a>
+                        <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ user.userProfilePictureUrl }}" width="50px"></a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <a href="{{ path('fos_user_security_login') }}">
+                            <a href="{{ path('agil_profile') }}">
                                 <i class="material-icons">account_circle</i> Profil
                             </a>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-cog"></span> Paramètre de profil</a>
+                            <a href="{{ path('agil_profile_edit') }}"><span class="glyphicon glyphicon-cog"></span> Paramètre de profil</a>
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
