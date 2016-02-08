@@ -50,19 +50,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">  </label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <pre class="preview"> <em><h4>PREVIEW ZONE</h4></em></pre>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Preview</button>
                             {{ form_row(form.Ajouter) }}
                         </div>
                     </div>
 
+                    {{ tinymce_init() }}
                     {{ form_rest(form) }}
                 </form>
             </div>
