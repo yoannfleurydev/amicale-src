@@ -55,17 +55,20 @@ class DefaultController extends Controller
             $profilePicture = $form->get('userProfilePictureUrl')->getData();
 //            var_dump($profilePicture);
 
-            // Générer le nom du fichier image
-            $fileName = 'profile' . $user->getUserId() . "." . $profilePicture->guessExtension();
+            if ($profilePicture != null) {
+                // Générer le nom du fichier image
+                $fileName = 'profile' . $user->getUserId() . "." . $profilePicture->guessExtension();
 
-            // Upload de l'image
-            $dir = $this->container->getParameter('kernel.root_dir').'/../web/img/profile';
+                // Upload de l'image
+                $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/profile';
 
-            // insérer ici une codition pour vérifier le format des fichiers
-            $profilePicture->move($dir, $fileName);
-            $user->setUserProfilePictureUrl($fileName);
-            $user->setUsername($form->get('username')->getData());
-            $user->setEmail($form->get('email')->getData());
+                // insérer ici une codition pour vérifier le format des fichiers
+                $profilePicture->move($dir, $fileName);
+                $user->setUserProfilePictureUrl($fileName);
+                $user->setUsername($form->get('username')->getData());
+                $user->setEmail($form->get('email')->getData());
+                $userManager->updateUser($user);
+            }
 
             if ($form->get('password')->getData() != null && $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
                 $factory = $this->get('security.encoder_factory');
