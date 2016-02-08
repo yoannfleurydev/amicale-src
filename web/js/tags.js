@@ -43,7 +43,7 @@ $(function () {
             ).done(function (json) {
                 prefixedTags = JSON.parse(json);
                 for (d of prefixedTags) {
-                    // TODO Changer pour faire créer un élément HTML à chauqe fois
+                    // TODO Changer pour faire créer un élément HTML à chaque fois
                     // Si l'élément n'a pas déjà été sélectionné
                     if (selectedTags.indexOf(d) === -1) {
                         $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + d + "</button>");
@@ -54,6 +54,7 @@ $(function () {
                     searchInArray();
                 }
             }).error(function (msg) {
+                // TODO Remove in prod
                 console.log('ERROR : ' + msg);
             });
         }
@@ -74,9 +75,9 @@ $(function () {
       */
     $('#tags_container').on('click', '.tag', function() {
         // l'endroit où on tape les tags
-        var inputTags = $('#tags_input');
+        var tags_input = $('#tags_input');
         // La longueur de la chaine sans le tag que l'on est entrain d'écrire
-        var indexEnd = inputTags.val().length - currentTag.length;
+        var indexEnd = tags_input.val().length - currentTag.length;
 
         // la chaine que l'on met dans l'input où sont affichés les tags sélectionnés
         var toSetUp;
@@ -85,7 +86,7 @@ $(function () {
             toSetUp = $(this).text();
         } else if (indexEnd > 0) {
             // WARNING Rajoute un espace lorsqu'on retape après avoir cliqué sur un tag
-            toSetUp = inputTags.val().substring(0, indexEnd) + ' ' + $(this).text();
+            toSetUp = tags_input.val().substring(0, indexEnd) + ' ' + $(this).text();
         }
 
         // On efface le tag cliqué
@@ -93,9 +94,9 @@ $(function () {
         // On dit de refaire une requête AJAX
         ajaxDone = false;
         // On met le tag actuel
-        inputTags.val(toSetUp + " ");
+        tags_input.val(toSetUp + " ");
         // On redonne le focus à l'input pour taper les tags
-        inputTags.focus();
+        tags_input.focus();
     });
 });
 
