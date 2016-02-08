@@ -15,7 +15,6 @@ $(document).ready(function () {
                 }
             ).done(function (msg) {
                 $('.admin_feedback').text(msg);
-                console.log('DONE : ' + msg);
                 tag.fadeOut();
 
             }).error(function (msg) {

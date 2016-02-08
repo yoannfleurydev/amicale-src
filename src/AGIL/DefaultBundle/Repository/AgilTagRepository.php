@@ -18,7 +18,7 @@ class AgilTagRepository extends EntityRepository
 	/**
 	 * @param $firstLetter String Le premier caractère du tag
 	 * @return String Un texte en JSON avec la liste des tags correspondants
-	 * Sert à trouver les tags dont la première lettre est $w
+	 * Sert à trouver les tags dont la première lettre est $firstLetter
 	 */
 	function getTagsList($firstLetter) {
 		// On créé la requête
