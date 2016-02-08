@@ -38,7 +38,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
   .btn-#{$class} {
     background-size: 200%;
     background-position: 50%;
-
+    background-color: $bg;
     &:focus {
       background-color: $bg;
     }
@@ -57,6 +57,29 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
   }
 }
 
+@mixin btn-light($class,$bg){
+  .btn-light-#{$class} {
+    background-size: 200%;
+    background-position: 50%;
+    background-color: $bg;
+    &:focus {
+      background-color: $bg;
+    }
+
+    &:hover,
+    &:active:hover {
+      background-color: lighten($bg, 6%);
+    }
+
+    &:active {
+      background-color: darken($bg, 12%);
+      @include gradient-radial(darken($bg, 12%) 10%, $bg 11%);
+      background-size: 1000%;
+      @include box-shadow(2px 2px 4px rgba(0,0,0,.4));
+    }
+  }
+}
+
 @include btn(default,$btn-default-bg);
 @include btn(primary,$btn-primary-bg);
 @include btn(success,$btn-success-bg);
@@ -64,6 +87,8 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
 @include btn(warning,$btn-warning-bg);
 @include btn(danger,$btn-danger-bg);
 @include btn(link,#fff);
+@include btn(primary-blue,$label-default-bg);
+@include btn-light(primary-blue,$label-default-bg);
 
 .btn {
   text-transform: uppercase;
