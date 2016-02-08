@@ -38,6 +38,4 @@ security:
         - { path: ^/offer/add, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/chat, roles: ROLE_USER }
         - { path: ^/forum, roles: ROLE_USER }
-       # - { path: ^/admin, roles: ROLE_MODERATOR }
         - { path: ^/admin, roles: ROLE_ADMIN }
-       # - { path: ^/admin/user_admin, roles: ROLE_SUPER_ADMIN }

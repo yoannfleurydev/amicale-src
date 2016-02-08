@@ -65,17 +65,25 @@ class TwigSwiftMailer implements MailerInterface
             ->setFrom($fromEmail)
             ->setTo($toEmail);*/
 
-        $headers = 'amicale@univ-rouen.fr' . "\r\n" .
-            'Reply-To: '. 'amicale@univ-rouen.fr' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-        $message = $textBody;
+        $headers = 'From: amicale.gil@etu.univ-rouen.fr' . "\r\n";
+        $headers .= "Reply-To: amicale.gil@etu.univ-rouen.fr\n";
+        $headers .= "Content-Type: text/html; charset=\"utf-8\"";
 
-        /*if (!empty($htmlBody)) {
-            $message->setBody($htmlBody, 'text/html')
-                ->addPart($textBody, 'text/plain');
-        } else {
-            $message->setBody($textBody);
-        }*/
+        $message = "
+        <html>
+            <head></head>
+            <body>";
+        $message .= $textBody;
+        $message .= "
+            </body>
+        </html>";
+
+            /*if (!empty($htmlBody)) {
+                $message->setBody($htmlBody, 'text/html')
+                    ->addPart($textBody, 'text/plain');
+            } else {
+                $message->setBody($textBody);
+            }*/
         //$this->mailer->send($message);
         mail($toEmail, $subject, $message, $headers);
     }

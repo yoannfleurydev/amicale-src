@@ -18,7 +18,7 @@
             <span class="panel-title-content">{{ category.forumCategoryName }}</span>
         </h2>
     </div>
-    <div><a href="#" class="btn btn-default">Nouveau Sujet</a></div></br>
+    <div><a href="{{ path('agil_forum_subject_add',{'idCategory' : category.forumCategoryId} ) }}" class="btn btn-default">Nouveau Sujet</a></div></br>
     {% if subjects|length != 0 %}
         <table class="table panel" id="table-subjects">
             <!-- On rows -->
