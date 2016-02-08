@@ -20,10 +20,24 @@ class DefaultController extends Controller {
 
     public function showAction($id) {
         $userRepository = $this->getDoctrine()->getManager()->getRepository('AGILUserBundle:AgilUser');
+        $profileSkillsCategoryRepository =
+            $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilProfileSkillsCategory');
+        $tagRepository  = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
+        $skillRepository = $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilSkill');
 
         $user = $userRepository->find($id);
+        $profileSkillsCategories = $profileSkillsCategoryRepository->findAll();
+        $tags = $tagRepository->findAll();
+        $skills = $skillRepository->findBy(array('user' => $user));
 
-        return $this->render('AGILProfileBundle:Default:index.html.twig', array('user' => $user,));
+        return $this->render('AGILProfileBundle:Default:index.html.twig',
+            array(
+                'user' => $user,
+                'profileSkillsCategories' => $profileSkillsCategories,
+                'tags' => $tags,
+                'skills' => $skills
+            )
+        );
     }
 
     public function editAction(Request $request) {
