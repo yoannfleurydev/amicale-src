@@ -18,7 +18,7 @@ class SubjectsController extends Controller
 
 
     /**
-     * Vincent : Description à rédiger
+     * Cette fonction permet d'ajouter un nouveau sujet dans le forum
      *
      * @param $idCategory
      * @param Request $request
@@ -46,7 +46,7 @@ class SubjectsController extends Controller
             $em->flush($subject);
             $em->flush($firstPost);
 
-            return $this->redirect( $this->generateUrl('agil_forum_subjects_list', array('idCategory' => $idCategory)) );
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array('idCategory' => $idCategory, 'idSubject' => $subject->getForumSubjectId())) );
         }
 
         return $this->render('AGILForumBundle:Subjects:subjects_add.html.twig', array(
@@ -69,7 +69,7 @@ class SubjectsController extends Controller
                 array('idCategory' => $idCategory)) );
         }
 
-        $form = $this->createForm(new DeleteSubjectType, null);
+        $form = $this->createForm(new DeleteSubjectType(), null);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($subject);

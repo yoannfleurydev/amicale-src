@@ -94,6 +94,7 @@ stfalcon_tinymce:
                  - "emoticons paste textcolor"
              toolbar1: "bold italic underline strikethrough blockquote forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media emoticons preview"
              image_advtab: false
+             menubar: "file edit insert view"
 
 
 # FOSUserBundle

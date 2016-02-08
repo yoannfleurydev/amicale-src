@@ -14,8 +14,8 @@ class FirstAnswerType extends AbstractType
         $builder->add('forumAnswerText', 'textarea', array(
             'label' => false,
             'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Première réponse du post',
+                'class' => 'form-control tinymce',
+                'data-theme' => 'advanced',
             )
         ));
 

@@ -13,6 +13,8 @@ use AGIL\ForumBundle\Form\AddAnswerType;
 class AnswersController extends Controller
 {
 
+
+
     /**
      * Partie Contrôleur de la page d'un sujet, qui affiche
      * la liste des réponses par ordre décroissants des dates
@@ -202,13 +204,20 @@ class AnswersController extends Controller
 
         $form = $this->createForm(new EditAnswerType(), $answer);
 
+
+        // On récupère les réponses pour rédiriger l'utilisateur sur la bonne page
+        $answers = $answerRepository->findBy(array('subject' => $subject),array('forumAnswerPostDate' => 'asc'));
+        $maxAnswers = 10;
+        $index = array_search($answer, $answers);
+
+
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($answer);
             $em->flush($answer);
 
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers',
-                array('idCategory' => $idCategory, 'idSubject' => $idSubject)) );
+                array('idCategory' => $idCategory, 'idSubject' => $idSubject, 'page' => ceil(($index+1) / $maxAnswers))) );
         }
 
         return $this->render('AGILForumBundle:Answers:answers_edit.html.twig', array(
