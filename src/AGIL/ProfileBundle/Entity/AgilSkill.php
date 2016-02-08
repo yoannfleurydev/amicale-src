@@ -49,6 +49,19 @@ class AgilSkill
 
 
     /**
+     * AgilSkill constructor.
+     * @param $tag
+     * @param $user
+     * @param $skillLevel
+     */
+    public function __construct($tag,$user,$skillLevel){
+        $this->tag = $tag;
+        $this->user = $user;
+        $this->skillLevel = $skillLevel;
+    }
+
+
+    /**
      * Get skillId
      *
      * @return integer 

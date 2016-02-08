@@ -14,7 +14,15 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class AgilForumSubjectRepository extends EntityRepository
 {
 
-    public function getLastSubjectsByAnswer($page=1, $maxperpage=2,$idCategory){
+    /**
+     * Retourne les derniers sujets de forum par ordre de dernière réponse
+     *
+     * @param int $page
+     * @param int $maxperpage
+     * @param $idCategory
+     * @return Paginator
+     */
+    public function getLastSubjectsByAnswer($page=1, $maxperpage=15,$idCategory){
 
         $datesMax = $this->_em->createQueryBuilder();
         $query = $this->_em->createQueryBuilder();
@@ -25,9 +33,12 @@ class AgilForumSubjectRepository extends EntityRepository
               ->groupBy('answ.subject')
         ;
 
-        $query->select('sub.forumSubjectId','sub.forumSubjectTitle','ans.forumAnswerPostDate','ans.forumAnswerId','ans')
+        $query->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectIsResolved',
+            'sub.forumSubjectDescription','ans.forumAnswerPostDate','ans.forumAnswerId',
+            'ans','us.username')
             ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','ans')
             ->leftJoin('ans.subject','sub')
+            ->leftJoin('sub.user','us')
             ->where('sub.category = ?1')
             ->andWhere($query->expr()->In('ans.forumAnswerPostDate', $datesMax->getDQL()))
             ->orderBy('ans.forumAnswerPostDate','desc')
@@ -35,15 +46,19 @@ class AgilForumSubjectRepository extends EntityRepository
 
         $query->setParameter(1,$idCategory);
 
-
         $query->setFirstResult(($page-1) * $maxperpage)
             ->setMaxResults($maxperpage)->getQuery();
 
-        return new Paginator($query);
+        return new Paginator($query);;
 
     }
 
-
+    /**
+     * Permet d'obtenir le nombre de sujets dans une catégorie
+     *
+     * @param $idCategory
+     * @return mixed
+     */
     public function getCountSubjects($idCategory){
 
         $query = $this->_em->createQueryBuilder();
@@ -54,6 +69,27 @@ class AgilForumSubjectRepository extends EntityRepository
         ;
 
         $query->setParameter(1,$idCategory);
+
+        return $query->getQuery()->getSingleScalarResult();
+
+    }
+
+    /**
+     * Permet d'obtenir le nombre de réponses dans un sujet
+     *
+     * @param $idSubject
+     * @return mixed
+     */
+    public function getCountAnswersInSubject($idSubject){
+
+        $query = $this->_em->createQueryBuilder();
+
+        $query->select('COUNT(ans.forumAnswerId) as cnt')
+            ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','ans')
+            ->where('ans.subject = ?1')
+        ;
+
+        $query->setParameter(1,$idSubject);
 
         return $query->getQuery()->getSingleScalarResult();
 

@@ -81,6 +81,14 @@ class AgilForumSubject
 
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="forumSubjectIsResolved", type="boolean")
+     */
+    private $forumSubjectIsResolved;
+
+
+    /**
      * Get forumSubjectId
      *
      * @return integer 
@@ -206,11 +214,15 @@ class AgilForumSubject
     }
 
 
-
     /**
-     * Constructor
+     * AgilForumSubject constructor.
+     * @param $user
+     * @param $category
+     * @param $title
+     * @param $desc
+     * @param bool|false $isResolved
      */
-    public function __construct($user,$category,$title,$desc)
+    public function __construct($user,$category,$title,$desc,$isResolved=false)
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->forumSubjectPostDate = new \DateTime();
@@ -218,6 +230,7 @@ class AgilForumSubject
         $this->category = $category;
         $this->forumSubjectTitle = $title;
         $this->forumSubjectDescription = $desc;
+        $this->forumSubjectIsResolved = $isResolved;
     }
 
     /**
@@ -251,5 +264,38 @@ class AgilForumSubject
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function setTags($collection)
+    {
+        $this->tags = $collection;
+    }
+
+    /**
+     * Set forumSubjectIsResolved
+     *
+     * @param boolean $forumSubjectIsResolved
+     * @return AgilForumSubject
+     */
+    public function setForumSubjectIsResolved($forumSubjectIsResolved)
+    {
+        $this->forumSubjectIsResolved = $forumSubjectIsResolved;
+
+        return $this;
+    }
+
+    /**
+     * Get forumSubjectIsResolved
+     *
+     * @return boolean 
+     */
+    public function getForumSubjectIsResolved()
+    {
+        return $this->forumSubjectIsResolved;
     }
 }

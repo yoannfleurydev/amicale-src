@@ -23,9 +23,12 @@ class LoadTagsData extends AbstractFixture implements OrderedFixtureInterface
 
 
         $tags[] = new AgilTag("PHP","tag-purpleLight",$webCategory);
+        $this->addReference('tagPHP', $tags[count($tags)-1]);
         $tags[] = new AgilTag("Java","tag-redDark",$logicielCategory);
+        $this->addReference('tagJava', $tags[count($tags)-1]);
         $tags[] = new AgilTag("CSS","tag-greenDark",$webCategory);
         $tags[] = new AgilTag("Android","tag-greenLight",$mobileCategory);
+        $this->addReference('tagAndroid', $tags[count($tags)-1]);
         $tags[] = new AgilTag("C++","tag-blueDark",$logicielCategory);
         $tags[] = new AgilTag("JavaScript","tag-yellow",$webCategory);
         $tags[] = new AgilTag("HTML","tag-orangeDark",$webCategory);
@@ -33,6 +36,7 @@ class LoadTagsData extends AbstractFixture implements OrderedFixtureInterface
 
         $tags[] = new AgilTag("OCaml","tag-orangeLight",$logicielCategory);
         $tags[] = new AgilTag("JEE","tag-blueLight",$webCategory);
+        $this->addReference('tagJEE', $tags[count($tags)-1]);
         $tags[] = new AgilTag("PL/SQL","tag-redLight",$BDDCategory);
         $tags[] = new AgilTag("SQL","tag-purpleDark",$BDDCategory);
         $tags[] = new AgilTag("Cordova ","tag-greyDark",$mobileCategory);

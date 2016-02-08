@@ -1,8 +1,6 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-    <p>
-        si non connecté
-    </p>
+    {% if not is_granted("ROLE_USER") %}
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -71,9 +69,7 @@
             </div>
         </div>
     </div>
-    <p>
-        si connecté
-    </p>
+    {% else %}
     <div class="row">
         <div class="col-lg-6">
             <div class="panel panel-default">
@@ -154,34 +150,28 @@
                 <div class="panel-heading">
                     <h2 class="panel-title">
                         <span class="panel-title-content">
-                            Dernières sujets
+                            Derniers sujets de forum créés
                         </span>
                     </h2>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <p>Initiation au C++  19 Oct. 2015</p>
-                            <span class="label label-default">#C++</span>
-                            <span class="label label-default">#COURS</span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <p>Comment utiliser symfony  20 Oct. 2015</p>
-                            <span class="label label-default">#PHP</span>
-                            <span class="label label-default">#SYMFONY</span>
-                            <span class="label label-default">#WEB</span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <p>Le web pour les nuls  64 Oct. 2035</p>
-                            <span class="label label-default">#HTML5</span>
-                            <span class="label label-default">#CSS3</span>
-                            <span class="label label-default">#JAVASCRIPT</span>
-                            <span class="label label-default">#PHP</span>
-                            <span class="label label-default">#WEB</span>
-                            <span class="label label-default">#COURS</span>
-                        </a>
+
+                        {% for sub in lastSubjects %}
+
+                            <a href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}" class="list-group-item">
+                                <p>{{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</p>
+                                {% for tag in sub.tags %}
+                                    <span class="label label-default">{{ tag.tagName }}</span>
+                                {% endfor %}
+                            </a>
+
+                        {% endfor %}
+
                     </div>
-                    Les derniers sujets postés sur le forum ou bien ceux qui ont des réponses récentes.
+                    <div class="row text-center">
+                        <a class="btn btn-default btn-primary" href="{{ path('agil_forum_homepage') }}" role="button">Accéder au forum</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -226,7 +216,6 @@
             </div>
         </div>
     </div>
-    </div>
-    La liste des idées déposées pourra être accessible via l’administration.
+    {% endif %}
 
 {% endblock %}

@@ -7,13 +7,16 @@ use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
 use AGIL\UserBundle\Entity\AgilUser;
 use AGIL\AdminBundle\Form\UserType;
+use AGIL\AdminBundle\Form\UsersCSVType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends Controller
 {
+    /* retourne la liste des utilisateurs en fonction de ses droits */
     public function adminUserAction($page)
     {
         $em = $this->getDoctrine()->getManager();
@@ -43,10 +46,11 @@ class UserController extends Controller
         ));
     }
 
+    /* Augmentation des droits de l'utilisateurs */
     public function adminUserUpAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
+        $newRole = "";
 
         if (null === $user) {
             throw new NotFoundHttpException("L'utilisateur d'id ".$id." n'existe pas.");
@@ -54,101 +58,224 @@ class UserController extends Controller
             if ($user->hasRole("ROLE_MODERATOR")) {
                 $user->removeRole("ROLE_MODERATOR");
                 $user->addRole('ROLE_ADMIN');
+                $newRole = 'Administrateur';
             } else {
                 $user->addRole("ROLE_MODERATOR");
+                $newRole = 'Modérateur';
             }
-
             $em->persist($user);
             $em->flush();
+
+            $username = $user->getUsername();
+            $subject = "Amicale GIL[Augmentation de vos droits]";
+            $message = "<p>Bonjour $username,</p>";
+            $message .= "<p>vous êtes maintenant un $newRole sur le site Amicale GIL</p>";
+            $message .= "<p>Cordialement</p>";
+            $this->sendMail($subject, $message, $user->getEmail());
         }
 
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
+    /* Diminution des droits de l'utilisateur */
     public function adminUserDownAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
+        $newRole = "";
 
         if (null === $user) {
             throw new NotFoundHttpException("L'utilisateur d'id ".$id." n'existe pas.");
         } else {
             if ($user->hasRole("ROLE_MODERATOR")) {
                 $user->removeRole("ROLE_MODERATOR");
+                $newRole = "Membre";
             } else {
                 $user->removeRole("ROLE_ADMIN");
                 $user->addRole("ROLE_MODERATOR");
+                $newRole = "Modérateur";
             }
-
             $em->persist($user);
             $em->flush();
+
+            $username = $user->getUsername();
+            $subject = "Amicale GIL[Pertes de vos droits]";
+            $message = "<p>Bonjour $username,</p>";
+            $message .= "<p>vous êtes maintenant un $newRole sur le site Amicale GIL</p>";
+            $message .= "<p>Cordialement</p>";
+            $this->sendMail($subject, $message, $user->getEmail());
         }
 
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
+    /* Suppression d'utilisateur */
     public function adminUserDeleteAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
 
         if (null === $user) {
             throw new NotFoundHttpException("L'utilisateur d'id ".$id." n'existe pas.");
         } else {
-
             $em->remove($user);
             $em->flush();
+
+            $username = $user->getUsername();
+            $subject = "Amicale GIL[Bannissement]";
+            $message = "<p>Bonjour $username,</p>";
+            $message .= "<p>vous avez été banni du site Amicale GIL</p>";
+            $message .= "<p>Cordialement</p>";
+            $this->sendMail($subject, $message, $user->getEmail());
         }
 
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
+    /* Ajout d'utilisateur via formulaire */
     public function adminUserAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new UserType(), null);
+        $formCSV = $this->createForm(new UsersCSVType());
+
         $factory = $this->get('security.encoder_factory');
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
+            $formCSV->handleRequest($request);
 
-            if ($form->isValid()) {
-                $email = $form->get('email')->getData();
-                $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
-
-                if ($user == null) {
-                    $userManager = $this->get('fos_user.user_manager');
-                    $user = $userManager->createUser();
-
-                    $password = $this->generate_password();
-                    $encoder = $factory->getEncoder($user);
-                    $user->setUsername(explode("@", $email)[0]);
-                    $pass = $encoder->encodePassword($password, $user->getSalt());
-                    $user->setEmail($email);
-                    $user->setPassword($pass);
-                    $user->setEnabled(1);
-
-                    $userManager->updateUser($user);
-
-                    $subject = "Amicale GIL[Inscription]";
-                    $message = 'Bonjour,' . "\r\n" . "Identifiant : " . $email . "\r\n" . "Mot de passe : " . $password;
-                    $headers = 'From: amicale.gil@etu.univ-rouen.fr' . "\r\n" .
-                        'Reply-To: amicale.gil@etu.univ-rouen.fr' . "\r\n" .
-                        'X-Mailer: PHP/' . phpversion();
-
-                    mail($email, $subject, $message, $headers);
-
-                    $this->addFlash('notice', 'Invitation envoyée.');
-                } else {
-                    $this->addFlash('notice', 'Utilisateur déjà enregistré.');
-                }
+            if ($formCSV->isValid()) {
+                $this->addUserByCSVFile($formCSV, $em, $factory);
+            }
+            else if ($form->isValid()) {
+                $this->addUserByForm($form, $em, $factory);
             }
         }
         return $this->render('AGILAdminBundle:User:admin_user_add.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'formCSV' => $formCSV->createView()
         ));
     }
 
+    function addUserByForm($form, $em, $factory) {
+        $email = $form->get('email')->getData();
+        $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
+
+        if ($user == null) {
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->createUser();
+            $lastName = $form->get('name')->getData();
+            $firstName = $form->get('firstName')->getData();
+            $role = $form->get('role')->getData();
+            if (strlen($lastName)>=5 and strlen($firstName)>=3) {
+                $lastNameTmp = strtolower($lastName);
+                $firstNameTmp = strtolower($firstName);
+                $username = $lastNameTmp[0] . $lastNameTmp[1] . $lastNameTmp[2] .
+                    $lastNameTmp[3] . $lastNameTmp[4] . $firstNameTmp[0] . $firstNameTmp[1] . $firstNameTmp[2];
+            } else {
+                $username = strtolower($firstName).'.'.strtolower($lastName);
+            }
+
+            $password = $this->generate_password();
+            $encoder = $factory->getEncoder($user);
+            $user->setUsername($username);
+            $pass = $encoder->encodePassword($password, $user->getSalt());
+            $user->setUserFirstName($firstName);
+            $user->setUserLastName($lastName);
+            $user->setEmail($email);
+            $user->setPassword($pass);
+            if ($role != 'ROLE_USER') {
+                $user->addRole($role);
+            }
+            $user->setEnabled(1);
+
+            $userManager->updateUser($user);
+
+            $subject = "Amicale GIL[Inscription]";
+            $message = "<p>Bonjour $username,</p>";
+            $message .= "<p>vous avez été invité sur le site <a href=\"amicale.dev\">Amicale GIL</a>.</p>";
+            $message .= "<p>Pour vous connecter :</p>";
+            $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
+            $message .= "<p>Cordialement</p>";
+
+            $this->sendMail($subject, $message, $email);
+        } else {
+            $this->addFlash('notice', 'Utilisateur déjà enregistré.');
+        }
+    }
+
+    function addUserByCSVFile($form, $em, $factory) {
+        $nbRegisters = 0;
+        $file = $form['file']->getData();
+
+        //$name = $file->getPathname();
+        //echo $name;
+        /*$dir = __DIR__.'/../../../../web/uploads';
+
+        $file->move($dir, $name) ;*/
+        $attr_user = array();
+        $row = 1;
+        if (($handle = fopen($file, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $num = count($data);
+                //echo "<p> $num champs à la ligne $row: <br /></p>\n";
+                $row++;
+                $attr_user[$row-1] = array();
+                for ($c = 0; $c < $num; $c++) {
+                    //echo $data[$c] . "<br />\n";
+                    $attr_user[$row-1][$c] = $data[$c];
+                }
+            }
+            fclose($handle);
+        }
+        //var_dump($attr_user);
+        foreach($attr_user as $value) {
+            $firstName = $value[0];
+            $lastName = $value[1];
+            $email = $value[2];
+            $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
+
+            if ($user == null) {
+                $userManager = $this->get('fos_user.user_manager');
+                $user = $userManager->createUser();
+                $lastName = $lastName;
+                $firstName = $firstName;
+                if (strlen($lastName)>=5 and strlen($firstName)>=3) {
+                    $lastNameTmp = strtolower($lastName);
+                    $firstNameTmp = strtolower($firstName);
+                    $username = $lastNameTmp[0] . $lastNameTmp[1] . $lastNameTmp[2] .
+                        $lastNameTmp[3] . $lastNameTmp[4] . $firstNameTmp[0] . $firstNameTmp[1] . $firstNameTmp[2];
+                } else {
+                    $username = strtolower($firstName).'.'.strtolower($lastName);
+                }
+
+                $password = $this->generate_password();
+                $encoder = $factory->getEncoder($user);
+                $user->setUsername($username);
+                $pass = $encoder->encodePassword($password, $user->getSalt());
+                $user->setUserFirstName($firstName);
+                $user->setUserLastName($lastName);
+                $user->setEmail($email);
+                $user->setPassword($pass);
+                $user->setEnabled(1);
+
+                $userManager->updateUser($user);
+                $nbRegisters++;
+
+                $subject = "Amicale GIL[Inscription]";
+                $message = "<p>Bonjour $username,</p>";
+                $message .= "<p>vous avez été invité sur le site <a href=\"amicale.dev\">Amicale GIL</a>.</p>";
+                $message .= "<p>Pour vous connecter :</p>";
+                $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
+                $message .= "<p>Cordialement</p>";
+
+                $this->sendMail($subject, $message, $email);
+            } else {
+                $this->addFlash('notice-csv', 'L\'utilisateur avec l\'email '. $email .' est déjà enregistré.');
+            }
+        }
+
+        $this->addFlash('notice-csv', $nbRegisters . ' utilisateurs ont été enregistrés.');
+    }
     /**
      * mot de passe aleatoire
      * @param $nb_caractere
@@ -168,6 +295,31 @@ class UserController extends Controller
         }
 
         return $mot_de_passe;
+    }
+
+    /* fonction d'envoie de mail */
+    function sendMail($subject, $body, $to) {
+        $headers = 'From: amicale.gil@etu.univ-rouen.fr' . "\r\n";
+        $headers .= "Reply-To: amicale.gil@etu.univ-rouen.fr\n";
+        $headers .= "Content-Type: text/html; charset=\"utf-8\"";
+
+        $message = "
+        <html>
+            <head></head>
+            <body>
+                $body
+            </body>
+        </html>";
+
+        if(mail($to, $subject, $message, $headers))
+        {
+            // mail envoyé
+        }
+        else
+        {
+            $this->addFlash('notice', 'Erreur lors de l\'envois de l\'email.');
+        }
+
     }
 
 }

@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * AgilForumAnswerRepository
@@ -12,4 +13,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class AgilForumAnswerRepository extends EntityRepository
 {
+
+
+    public function getAnswersBySubject($page=1, $maxperpage=10,$idSubject){
+
+        $query = $this->_em->createQueryBuilder();
+
+        $query->select('ans.forumAnswerPostDate','ans.forumAnswerId',
+            'ans.forumAnswerText','ans','us.username','us.id','us.roles','us')
+            ->from('AGIL\ForumBundle\Entity\AgilForumAnswer','ans')
+            ->leftJoin('ans.user','us')
+            ->where('ans.subject = ?1')
+            ->orderBy('ans.forumAnswerPostDate','asc')
+        ;
+
+        $query->setParameter(1,$idSubject);
+
+        $query->setFirstResult(($page-1) * $maxperpage)
+            ->setMaxResults($maxperpage)->getQuery();
+
+        return new Paginator($query);;
+
+    }
+
+
 }

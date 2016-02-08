@@ -26,18 +26,12 @@ class SubjectType extends AbstractType
             )
         ));
 
-        /*$builder->add('tags', 'text', array(
+        $builder->add('tags', 'text', array(
             'label' => false,
+            'required' => false,
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Tags associés',
-            )
-        ));*/
-
-        $builder->add('Ajouter', 'submit', array(
-            'label' => false,
-            'attr' => array(
-                'class' => 'form-control',
             )
         ));
     }
