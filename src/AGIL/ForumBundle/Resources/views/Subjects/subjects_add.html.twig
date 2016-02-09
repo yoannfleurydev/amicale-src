@@ -52,6 +52,9 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             {{ form_row(form.Ajouter) }}
+                            <a href="{{ path('agil_forum_subjects_list', {'idCategory': idCategory}) }}">
+                               <button class="btn btn-default">Annuler</button>
+                            </a>
                         </div>
                     </div>
 

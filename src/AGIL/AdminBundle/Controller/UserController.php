@@ -192,14 +192,15 @@ class UserController extends Controller
 
             $subject = "Amicale GIL[Inscription]";
             $message = "<p>Bonjour $username,</p>";
-            $message .= "<p>vous avez été invité sur le site <a href=\"amicale.dev\">Amicale GIL</a>.</p>";
+            $message .= "<p>vous avez été invité sur le site <a href=\"http://amicale.dev\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
             $message .= "<p>Pour vous connecter :</p>";
             $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
             $message .= "<p>Cordialement</p>";
 
             $this->sendMail($subject, $message, $email);
+            $this->addFlash('success', 'Utilisateur enregistré.');
         } else {
-            $this->addFlash('notice', 'Utilisateur déjà enregistré.');
+            $this->addFlash('warning', 'Utilisateur déjà enregistré.');
         }
     }
 
@@ -247,6 +248,9 @@ class UserController extends Controller
                 } else {
                     $username = strtolower($firstName).'.'.strtolower($lastName);
                 }
+                if ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
+                    $username .= '1';
+                }
 
                 $password = $this->generate_password();
                 $encoder = $factory->getEncoder($user);
@@ -263,18 +267,18 @@ class UserController extends Controller
 
                 $subject = "Amicale GIL[Inscription]";
                 $message = "<p>Bonjour $username,</p>";
-                $message .= "<p>vous avez été invité sur le site <a href=\"amicale.dev\">Amicale GIL</a>.</p>";
+                $message .= "<p>vous avez été invité sur le site <a href=\"http://amicale.dev\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
                 $message .= "<p>Pour vous connecter :</p>";
                 $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
                 $message .= "<p>Cordialement</p>";
 
                 $this->sendMail($subject, $message, $email);
             } else {
-                $this->addFlash('notice-csv', 'L\'utilisateur avec l\'email '. $email .' est déjà enregistré.');
+                $this->addFlash('warning', 'L\'utilisateur avec l\'email '. $email .' est déjà enregistré.');
             }
         }
 
-        $this->addFlash('notice-csv', $nbRegisters . ' utilisateurs ont été enregistrés.');
+        $this->addFlash('success', $nbRegisters . ' utilisateurs ont été enregistrés.');
     }
     /**
      * mot de passe aleatoire
@@ -313,11 +317,10 @@ class UserController extends Controller
 
         if(mail($to, $subject, $message, $headers))
         {
-            // mail envoyé
         }
         else
         {
-            $this->addFlash('notice', 'Erreur lors de l\'envois de l\'email.');
+            $this->addFlash('warning', 'Erreur lors de l\'envois de l\'email.');
         }
 
     }

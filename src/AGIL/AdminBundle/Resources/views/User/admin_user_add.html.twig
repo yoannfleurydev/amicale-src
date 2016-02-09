@@ -1,8 +1,11 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
+    <div class="list-group">
+        <a href="{{ path("agil_admin_user") }}" class="list-group-item">Liste des utilisateurs</a>
+    </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-lg-offset-3 col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -24,16 +27,30 @@
                             </div>
                         </div>
 
-                        {#
+                        <div class="form-group">
+                            <label for="username">Prénom :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="material-icons">email</i></div>
+                                {{ form_row(form.firstName) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">Nom :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="material-icons">email</i></div>
+                                {{ form_row(form.name) }}
+                            </div>
+                        </div>
+
                         {% if is_granted("ROLE_SUPER_ADMIN") %}
                         <div class="form-group">
                             {{ form_row(form.role) }}
                         </div>
                         {% endif %}
-                        #}
 
                         <div class="text-center">
-                            {{ form_row(form.invite) }}
+                            {{ form_row(form.Inviter) }}
                         </div>
 
                         {{ form_rest(form) }}
@@ -41,10 +58,48 @@
                 </div>
             </div>
         </div>
-    </div>
-    {% for flash_message in app.session.flashbag.get('notice-csv') %}
-        <div class="flash-notice">
-            {{ flash_message }}
+
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Ajouter une liste de membres
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <form action="{{ path('agil_admin_user_add') }}" method="post" {{ form_enctype(formCSV) }}>
+                        {{ form_errors(formCSV) }}
+
+                        <div class="form-group">
+                            <!-- with input that accepts one file -->
+                            <div class="fileUpload btn btn-primary">
+                                <span>Choisir un fichier</span>
+                                {{ form_row(formCSV.file) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fileChoose">Nom du fichier :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="material-icons">attach_file</span></div>
+                                <input class="form-control" type="text" class="fileChoose" name="fileChoose" id="fileChoose" disabled/>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            {{ form_row(formCSV.Inviter) }}
+                        </div>
+                        {{ form_rest(formCSV) }}
+                    </form>
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </div>
+
+    <script>
+        $("#upload").change(function() {
+            // will log a FileList object, view gifs below
+            $("#fileChoose").val(this.files[0].name);
+        });
+    </script>
 {% endblock %}
