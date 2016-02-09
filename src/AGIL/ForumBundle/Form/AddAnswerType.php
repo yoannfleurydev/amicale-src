@@ -22,7 +22,7 @@ class AddAnswerType extends AbstractType
         $builder->add('Ajouter', 'submit', array(
             'label' => false,
             'attr' => array(
-                'class' => 'btn btn-default',
+                'class' => 'btn btn-primary',
             )
         ));
     }
