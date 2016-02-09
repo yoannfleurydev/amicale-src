@@ -76,11 +76,12 @@ class DefaultController extends Controller
             if($cv != null) {
                 // Générer le nom du fichier
                 $cvFileName = md5(uniqid()).'.'.$cv->guessExtension();
-                $dir = $this->container->getParameter('kernel.root_dir') . '../web/files/cv';
+                $dir = $this->container->getParameter('kernel.root_dir') . '/../web/files/cv';
 
                 // insérer ici une condition pour vérifier le format du fichier
                 $cv->move($dir, $cvFileName);
                 $user->setUserCVUrl($cvFileName);
+                $userManager->updateUser($user);
 
             }
 
