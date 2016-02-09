@@ -1,6 +1,4 @@
-{% extends '::base.html.twig' %}
-
-{% set forumClassActive = 1 %}
+{% extends 'AGILForumBundle::baseForumBundle.html.twig' %}
 
 {% block body %}
 
@@ -63,16 +61,16 @@
                                                     <td>
                                                         <div class="row">
                                                             <div class="col-xs-8 col-xm-9 col-md-9 col-lg-9">
-                                                                <h6 class="no-margin-top-bot"><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : subject.forumSubjectId} ) }}">{{ subject.forumSubjectTitle }}</a></h6>
+                                                                <h6 class="no-margin-top-bot"><strong><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : subject.forumSubjectId} ) }}">{{ subject.forumSubjectTitle }}</a></strong></h6>
                                                                 <div>{{ subject.forumSubjectDescription }}</div>
                                                                 {% for tag in subject.tags %}
-                                                                    <span class="label label-default">{{ tag.tagName }}</span>
+                                                                    <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
                                                                 {% endfor %}
                                                             </div>
                                                             <div class="col-xs-4 col-xm-3 col-md-3 col-lg-3 text-right">
                                                                 <h6>
                                                                     <small> Créé par</small>
-                                                                    <a href="#">{{ subject.user.username }}</a>
+                                                                    <a href="{{ path('agil_profile_id',{'id':subject.user.id}) }}">{{ subject.user.username }}</a>
                                                                 </h6>
                                                                 <small><em>Le {{ subject.forumSubjectPostDate|date('j M Y') }}</em></small>
                                                             </div>

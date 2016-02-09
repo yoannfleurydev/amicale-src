@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "AGILDefaultBundle::baseDefaultBundle.html.twig" %}
 {% block body %}
     {% if not is_granted("ROLE_USER") %}
     <div class="row">
@@ -162,7 +162,7 @@
                             <a href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}" class="list-group-item">
                                 <p>{{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</p>
                                 {% for tag in sub.tags %}
-                                    <span class="label label-default">{{ tag.tagName }}</span>
+                                    <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
                                 {% endfor %}
                             </a>
 
