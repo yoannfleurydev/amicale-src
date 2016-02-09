@@ -4,7 +4,11 @@
         <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <img class="img-responsive" src="{{ asset("img/profile/") ~ user.userProfilePictureUrl }}">
+                    {% if user.userProfilePictureUrl is not null %}
+                        <img class="img-responsive" src="{{ asset("img/profile/") ~ user.userProfilePictureUrl }}">
+                    {% else %}
+                        <img class="img-responsive" src="{{ asset("img/profile/default.png") }}">
+                    {% endif %}
                 </div>
             </div>
         </div>

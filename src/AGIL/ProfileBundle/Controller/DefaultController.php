@@ -41,6 +41,7 @@ class DefaultController extends Controller
     public function editAction(Request $request) {
 
         $userManager = $this->get('fos_user.user_manager');
+
         $user = $this->getUser();
 
         // Création d'un formulaire lié à aucune entité
@@ -49,25 +50,38 @@ class DefaultController extends Controller
         // pré remplissage des champs
         $form->get('username')->setData($user->getUsername());
         $form->get('email')->setData($user->getEmail());
+        $form->get('userCVUrlVisibility')->setData($user->getUserCVUrlVisibility());
+
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            $profilePicture = $form->get('userProfilePictureUrl')->getData();
-//            var_dump($profilePicture);
 
+            $user->setUsername($form->get('username')->getData());
+            $user->setEmail($form->get('email')->getData());
+
+            $profilePicture = $form->get('userProfilePictureUrl')->getData();
             if ($profilePicture != null) {
                 // Générer le nom du fichier image
-                $fileName = 'profile' . $user->getUserId() . "." . $profilePicture->guessExtension();
-
-                // Upload de l'image
+                $profilePicFileName = 'profile' . $user->getUserId() . '.' . $profilePicture->guessExtension();
                 $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/profile';
 
-                // insérer ici une codition pour vérifier le format des fichiers
-                $profilePicture->move($dir, $fileName);
-                $user->setUserProfilePictureUrl($fileName);
-                $user->setUsername($form->get('username')->getData());
-                $user->setEmail($form->get('email')->getData());
+                // insérer ici une condition pour vérifier le format du fichier
+                $profilePicture->move($dir, $profilePicFileName);
+                $user->setUserProfilePictureUrl($profilePicFileName);
                 $userManager->updateUser($user);
+            }
+
+            $cv = $form->get('userCVUrl')->getData();
+
+            if($cv != null) {
+                // Générer le nom du fichier
+                $cvFileName = md5(uniqid()).'.'.$cv->guessExtension();
+                $dir = $this->container->getParameter('kernel.root_dir') . '../web/files/cv';
+
+                // insérer ici une condition pour vérifier le format du fichier
+                $cv->move($dir, $cvFileName);
+                $user->setUserCVUrl($cvFileName);
+
             }
 
             if ($form->get('password')->getData() != null && $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
@@ -77,7 +91,11 @@ class DefaultController extends Controller
                 $user->setPassword($pass);
             }
 
-            if ($form->get('username')->getData() == null || $form->get('password')->getData() == null || $form->get('email')->getData() == null || $form->get('password')->getData() != $form->get('passwordConfirm')->getData()) {
+            if (($form->get('password')->getData() != null && $form->get('passwordConfirm')->getData() == null) || ($form->get('passwordConfirm')->getData() != null && $form->get('password')->getData() == null) || ($form->get('passwordConfirm')->getData() != $form->get('password')->getData())) {
+                $this->addFlash('notice', 'Erreur ! Les mots de passe ne correspondent pas !');
+            }
+
+            if ($form->get('username')->getData() == null || $form->get('email')->getData() == null || $form->get('password')->getData() != $form->get('passwordConfirm')->getData()) {
                 $this->addFlash('notice', 'Erreur ! Champs vides ou mal remplies !');
                 return $this->render('AGILProfileBundle:Default:edit.html.twig',array(
                     'user' => $user,

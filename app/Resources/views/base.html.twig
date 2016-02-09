@@ -31,7 +31,12 @@
                 <!--Si connecté-->
                 <li class="dropdown navbar-dropdown-mobile right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50px"></a>
+                        {% if app.user.userProfilePictureUrl is not null %}
+                            <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50px"></a>
+                        {% else %}
+                            <img class="img-circle img-responsive" src="{{ asset("img/profile/default.png") }}" width="50px"></a>
+                        {% endif %}
+
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
                             <a href="{{ path('agil_profile') }}">

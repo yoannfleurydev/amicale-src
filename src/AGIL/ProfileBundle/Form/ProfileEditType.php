@@ -49,10 +49,29 @@ class ProfileEditType extends AbstractType
         ));
 
 
-        $builder->add('CV', 'button', array( // 'file' au lieu de 'button' ?
+        $builder->add('userCVUrl', 'file', array(
             'label' => false,
-            'attr' => array(
-                'class' => 'form-control')
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'maxSize' => '20M',
+                    'mimeTypes' => [
+                        "application/pdf",
+                    ],
+                ])
+            ]
+//            'attr' => array(
+//                'class' => 'form-control'
+//            )
+        ));
+
+        $builder->add('userCVUrlVisibility', 'checkbox', array(
+            'label' => false,
+            'required' => false,
+//            'attr' => array(
+//                'class' => 'form-control',
+//                'placeholder' => 'mot de passe'
+//            )
         ));
 
         $builder->add('password', 'password', array(
@@ -63,6 +82,7 @@ class ProfileEditType extends AbstractType
                 'placeholder' => 'mot de passe'
             )
         ));
+
 
         $builder->add('passwordConfirm', 'password', array(
             'label' => false,
