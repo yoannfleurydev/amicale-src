@@ -2,8 +2,6 @@
 
 {% block body %}
 
-    <!-- Partie administration -->
-
     <div class="row panel">
 
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -14,49 +12,49 @@
                         </span>
                 </h2>
             </div>
-            <div class="panel panel-default">
-                <!-- les différentes catégories existantes -->
-                <table class="table table-striped td-center">
-                    <!-- une ligne -->
-                    <tr>
-                        <td class="text-center">
-                            <span class="glyphicon glyphicon-globe text-center icon-bigger"></span>
-                        </td>
-                        <td><a href="#"><h4>Cours</h4></a></td>
-                        <td class="hidden-sm hidden-xs"><a href="#">451 posts</a></td>
-                        <td>
-                            <a href="#">
-                                <button type="button" class="btn btn-default">Editer</button>
-                            </a>
-                        </td>
-                        <td><a href="#">
-                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                    data-target=".bs-example-modal-sm">Supprimer
-                            </button>
-                        </a></td>
-                    </tr>
 
-                    <tr>
-                        <td class="text-center"><span
-                                class="glyphicon glyphicon-globe text-center icon-bigger"></span></td>
-                        <td><a href="#"><h4>Cours sdf sdf sdf sdfsd f</h4></a></td>
-                        <td class="hidden-sm hidden-xs"><a href="#">451 posts</a></td>
-                        <td>
-                            <a href="#">
-                                <button type="button" class="btn btn-default">Editer</button>
-                            </a>
-                        </td>
-                        <td><a href="#">
-                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                    data-target=".bs-example-modal-sm">Supprimer
-                            </button>
-                        </a></td>
-                    </tr>
+                {% if categories|length == 0 %}
 
+                    <h6 class="text-center">Le forum ne contient actuellement aucune catégorie.</h6>
+                    <br/>
 
-                </table>
+                {% else %}
 
-            </div>
+                    <div class="panel panel-default">
+
+                        <!-- les différentes catégories existantes -->
+                        <table class="table table-striped td-center">
+
+                        {% for c in categories %}
+
+                            <tr>
+                                <td class="text-center">
+                                    <span class="glyphicon {{ c.forumCategoryIcon }} text-center icon-medium"></span>
+                                </td>
+                                <td><a href="#"><h5>{{ c.forumCategoryName }}</h5></a></td>
+                                <td class="hidden-sm hidden-xs">451 posts</td>
+                                <td>
+                                    <a href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
+                                        <button type="button" class="btn btn-default">Editer</button>
+                                    </a>
+                                </td>
+                                <!-- MODIFIER L'ALERTE JAVASCRIPT -->
+                                <td><a href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
+                                       onclick="return confirm('Etes vous sur de vouloir supprimer la catégorie ?')">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                data-target=".bs-example-modal-sm">Supprimer
+                                        </button>
+                                    </a></td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </table>
+
+                    </div>
+
+                {% endif %}
+
         </div>
 
     </div>
@@ -134,6 +132,7 @@
             <br/>
         </div>
     </div>
+
     <!-- Panel qui s'affiche pour la confirmation de suppression -->
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm">
