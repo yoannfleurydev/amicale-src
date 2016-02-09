@@ -147,8 +147,9 @@
 
 
                         <br/>
-                        <div class="text-left">
-                            {{ form_row(form.Ajouter) }}
+                        <div class="text-center">
+                            {{ form_widget(form.Ajouter) }}
+                            <input type="reset" class="btn btn-default" value="Effacer">
                         </div>
                         {{ tinymce_init() }}
 

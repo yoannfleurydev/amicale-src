@@ -8402,7 +8402,7 @@ a.thumbnail.active {
 
 /* line 54, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_list-group.scss */
 a.list-group-item {
-  color: #555;
+  color: #D55400;
 }
 /* line 57, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_list-group.scss */
 a.list-group-item .list-group-item-heading {
@@ -8411,7 +8411,7 @@ a.list-group-item .list-group-item-heading {
 /* line 62, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_list-group.scss */
 a.list-group-item:hover, a.list-group-item:focus {
   text-decoration: none;
-  color: #555;
+  color: #D55400;
   background-color: #f5f5f5;
 }
 
