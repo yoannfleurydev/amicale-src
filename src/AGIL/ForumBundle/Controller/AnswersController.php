@@ -3,6 +3,8 @@
 namespace AGIL\ForumBundle\Controller;
 
 use AGIL\ForumBundle\Entity\AgilForumAnswer;
+use AGIL\ForumBundle\Form\DeleteAnswerAdminType;
+use AGIL\ForumBundle\Form\DeleteAnswerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
@@ -227,5 +229,117 @@ class AnswersController extends Controller
             'idSubject' => $idSubject,
             'idAnswer' => $idAnswer
         ));
+    }
+
+    public function answersDeleteAction($idCategory, $idSubject, $idAnswer, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $subject = $em->getRepository("AGILForumBundle:AgilForumSubject")->find($idSubject);
+        $category = $em->getRepository("AGILForumBundle:AgilForumCategory")->find($idCategory);
+        $answer = $em->getRepository("AGILForumBundle:AgilForumAnswer")->find($idAnswer);
+        if ($category === null or $subject === null  or $answer === null or $subject->getCategory() != $category
+            or $answer->getSubject() != $subject) {
+            if ($category === null) {
+                $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
+            } elseif ($subject === null) {
+                $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'existe pas.");
+            } elseif ($answer === null) {
+                $this->addFlash('warning', "La réponse d'id ".$idAnswer." n'existe pas.");
+            } else if ($subject->getCategory() != $category) {
+                $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+            } else if ($answer->getSubject() != $subject) {
+                $this->addFlash('warning', "La réponse d'id ".$idAnswer." n'appartient pas au sujet d'id ".$idSubject);
+            }
+
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
+                'idCategory' => $idCategory,
+                'idSubject' => $idSubject
+            )));
+        }
+
+        $author = $answer->getUser();
+        $text = $answer->getForumAnswerText();
+
+        if (!$user->hasRole('ROLE_MODERATOR') and !$user->hasRole('ROLE_ADMIN') and !$user->hasRole('ROLE_SUPER_ADMIN')) {
+            $this->addFlash('warning', 'Permission refusée : vous n\'êtes pas l\'autheur du sujet');
+
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
+                'idCategory' => $idCategory,
+                'idSubject' => $idSubject
+            )));
+        }
+
+        $isAdmin = false;
+        if ($user->hasRole('ROLE_MODERATOR') or $user->hasRole('ROLE_ADMIN') or $user->hasRole('ROLE_SUPER_ADMIN')) {
+            $form = $this->createForm(new DeleteAnswerAdminType(), null);
+            $isAdmin = true;
+        } else {
+            $form = $this->createForm(new DeleteAnswerType(), null);
+        }
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+
+            if ($isAdmin) {
+                $reason = $form->get('reason')->getData();
+                $subjectMail = "Amicale GIL[Suppression d'une réponse d'un sujet du forum]";
+                $message = '<p>Bonjour ' . $author->getUsername() . ',</p>';
+                $message .= '<p>votre réponse "' . $text . '" au sujet ' .
+                    $subject->getForumSubjectTitle() . '" a été supprimé du forum.</p>';
+                $message .= "<p>Raison de la suppression :</p>";
+                $message .= '<p>"' . $reason . '"</p>';
+                $message .= "<p>Cordialement</p>";
+
+                $this->sendMail($subjectMail, $message, $author->getEmail());
+            }
+
+            $em->remove($answer);
+            $em->flush();
+
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
+                'idCategory' => $idCategory,
+                'idSubject' => $idSubject
+            )));
+        }
+
+        return $this->render('AGILForumBundle:Answers:answer_delete.html.twig', array(
+            'form' => $form->createView(),
+            'answer' => $answer,
+            'idCategory' => $idCategory,
+            'idSubject' => $idSubject,
+            'idAnswer' => $idAnswer,
+            'isAdmin' => $isAdmin
+        ));
+    }
+
+    /**
+     * fonction d'envoie de mail
+     * @param $subject
+     * @param $body
+     * @param $to
+     */
+    function sendMail($subject, $body, $to) {
+        $headers = 'From: amicale.gil@etu.univ-rouen.fr' . "\r\n";
+        $headers .= "Reply-To: amicale.gil@etu.univ-rouen.fr\n";
+        $headers .= "Content-Type: text/html; charset=\"utf-8\"";
+
+        $message = "
+    <html>
+        <head></head>
+        <body>
+            $body
+        </body>
+    </html>";
+
+        if(mail($to, $subject, $message, $headers))
+        {
+            $this->addFlash('success', 'Mail envoyé !');
+        }
+        else
+        {
+            $this->addFlash('warning', 'Erreur lors de l\'envois de l\'email.');
+        }
+
     }
 }

@@ -55,3 +55,12 @@ agil_forum_answers_edit:
         idCategory: \d+
         idSubject: \d+
         idAnswer: \d+
+
+agil_forum_answers_delete:
+    path:   /categories/{idCategory}/subject/{idSubject}/delete/{idAnswer}
+    defaults:
+        _controller: AGILForumBundle:Answers:answersDelete
+    requirements:
+        idCategory: \d+
+        idSubject: \d+
+        idAnswer: \d+

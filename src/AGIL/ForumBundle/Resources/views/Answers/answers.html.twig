@@ -95,8 +95,8 @@
 
                                             {% if is_granted('ROLE_MODERATOR') %}
 
-                                                <a class="btn btn-danger" href="#" role="button"><span
-                                                            class="glyphicon glyphicon-trash"></span></a>
+                                                <a class="btn btn-danger" href="{{ path('agil_forum_answers_delete',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId,'idAnswer' : a.forumAnswerId}) }}"
+                                                   role="button"><span class="glyphicon glyphicon-trash"></span></a>
 
                                             {% endif %}
 

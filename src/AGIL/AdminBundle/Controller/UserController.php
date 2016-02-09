@@ -16,7 +16,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends Controller
 {
-    /* retourne la liste des utilisateurs en fonction de ses droits */
+    /**
+     * retourne la liste des utilisateurs en fonction de ses droits
+     * @param $page
+     * @return Response
+     */
     public function adminUserAction($page)
     {
         $em = $this->getDoctrine()->getManager();
@@ -46,7 +50,11 @@ class UserController extends Controller
         ));
     }
 
-    /* Augmentation des droits de l'utilisateurs */
+    /**
+     * Augmentation des droits de l'utilisateurs
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function adminUserUpAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
@@ -76,8 +84,11 @@ class UserController extends Controller
 
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
-
-    /* Diminution des droits de l'utilisateur */
+    /**
+     * Diminution des droits de l'utilisateur
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function adminUserDownAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
@@ -108,7 +119,11 @@ class UserController extends Controller
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
-    /* Suppression d'utilisateur */
+    /**
+     * Suppression d'utilisateur
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function adminUserDeleteAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
@@ -130,7 +145,11 @@ class UserController extends Controller
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
-    /* Ajout d'utilisateur via formulaire */
+    /**
+     * Ajout d'utilisateur
+     * @param Request $request
+     * @return Response
+     */
     public function adminUserAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
@@ -156,6 +175,12 @@ class UserController extends Controller
         ));
     }
 
+    /**
+     * Ajout d'utilisateur via le formulaire de base
+     * @param $form
+     * @param $em
+     * @param $factory
+     */
     function addUserByForm($form, $em, $factory) {
         $email = $form->get('email')->getData();
         $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
@@ -204,6 +229,12 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Ajout d'utilisateur via un fichier .csv
+     * @param $form
+     * @param $em
+     * @param $factory
+     */
     function addUserByCSVFile($form, $em, $factory) {
         $nbRegisters = 0;
         $file = $form['file']->getData();
@@ -232,7 +263,7 @@ class UserController extends Controller
         foreach($attr_user as $value) {
             $firstName = $value[0];
             $lastName = $value[1];
-            $email = $value[2];
+            $email = $value[4];
             $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
 
             if ($user == null) {
@@ -301,7 +332,12 @@ class UserController extends Controller
         return $mot_de_passe;
     }
 
-    /* fonction d'envoie de mail */
+    /**
+     * fonction d'envoie de mail
+     * @param $subject
+     * @param $body
+     * @param $to
+     */
     function sendMail($subject, $body, $to) {
         $headers = 'From: amicale.gil@etu.univ-rouen.fr' . "\r\n";
         $headers .= "Reply-To: amicale.gil@etu.univ-rouen.fr\n";

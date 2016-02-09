@@ -4,6 +4,7 @@ namespace AGIL\ForumBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SubjectType extends AbstractType
 {
@@ -12,6 +13,9 @@ class SubjectType extends AbstractType
 
         $builder->add('forumSubjectTitle', 'text', array(
             'label' => false,
+            'constraints' => array(
+                new NotBlank(),
+            ),
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Titre',
@@ -20,6 +24,9 @@ class SubjectType extends AbstractType
 
         $builder->add('forumSubjectDescription', 'textarea', array(
             'label' => false,
+            'constraints' => array(
+                new NotBlank(),
+            ),
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Description',
