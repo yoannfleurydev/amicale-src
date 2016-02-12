@@ -8,7 +8,7 @@ var gulp      = require('gulp'),
     sass      = require('gulp-sass');
 
 // Variables de chemins
-var source = './bootstrap-sass-3.3.6'; // dossier de travail
+var source = './bootstrap-src'; // dossier de travail
 var destination = 'web/css/'; // dossier à livrer
 
 var preprocessor = [
