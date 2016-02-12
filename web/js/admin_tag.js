@@ -6,18 +6,19 @@ $(document).ready(function () {
      */
     $('button').on('click', function () {
             var tag = $(this);
+
             $.ajax(
                 {
                     method: "POST",
                     url: "remove",
-                    data: {tagName: tag.text()},
-                    async: false
+                    data: {tagName: tag.text()}
                 }
             ).done(function (msg) {
                 $('.admin_feedback').text(msg);
                 tag.fadeOut();
 
             }).error(function (msg) {
+                // TODO Changer ça
                 console.log('ERROR : ' + msg);
             });
         }
