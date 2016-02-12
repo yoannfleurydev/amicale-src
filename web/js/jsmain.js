@@ -182,11 +182,13 @@ $('.collapse').on('show.bs.collapse', function () {
     //$fils.removeClass("animate_down");
     $fils.addClass("animate_up");
 });
+$('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+});
 
 $('.collapse').on('hide.bs.collapse', function () {
     var $id = $(this).attr("id");
 
     var $fils = $( "a[aria-controls="+$id+"]").children();
     $fils.removeClass("animate_up");
-    //$fils.addClass("animate_down");
 });

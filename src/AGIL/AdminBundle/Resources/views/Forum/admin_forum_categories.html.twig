@@ -39,12 +39,13 @@
                                     </a>
                                 </td>
                                 <!-- MODIFIER L'ALERTE JAVASCRIPT -->
-                                <td><a href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
-                                       onclick="return confirm('Etes vous sur de vouloir supprimer la catégorie ?')">
-                                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target=".bs-example-modal-sm">Supprimer
+                                <td>
+                                        <button data-href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
+                                                data-target="#confirm-delete" type="button" class="btn btn-danger" data-toggle="modal"
+                                              >
+                                            Supprimer
                                         </button>
-                                    </a></td>
+                                  </td>
                             </tr>
 
                         {% endfor %}
@@ -134,19 +135,33 @@
     </div>
 
     <!-- Panel qui s'affiche pour la confirmation de suppression -->
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Etes vous sûr ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-success btn-ok">Confirmer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="modal fade bs-example-modal-sm" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="container">
                     <h5>Etes vous sûr ?</h5>
                     <div class="form-group">
                         <button class="btn btn-danger">Annuler</button>
-                        <button class="btn btn-success">Confirmer</button>
+                        <button class="btn btn-success btn-ok">Confirmer</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 
 {% endblock %}
