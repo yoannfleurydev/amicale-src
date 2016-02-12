@@ -14,7 +14,12 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class AgilForumAnswerRepository extends EntityRepository
 {
 
-
+    /**
+     * @param int $page
+     * @param int $maxperpage
+     * @param $idSubject
+     * @return Paginator
+     */
     public function getAnswersBySubject($page=1, $maxperpage=10,$idSubject){
 
         $query = $this->_em->createQueryBuilder();
@@ -32,9 +37,7 @@ class AgilForumAnswerRepository extends EntityRepository
         $query->setFirstResult(($page-1) * $maxperpage)
             ->setMaxResults($maxperpage)->getQuery();
 
-        return new Paginator($query);;
+        return new Paginator($query);
 
     }
-
-
 }

@@ -105,10 +105,23 @@ class AnswersController extends Controller
                 array('idCategory' => $idCategory, 'idSubject' => $idSubject, 'page' => ceil($answers_count / $maxAnswers))) );
         }
 
-        return $this->render('AGILForumBundle:Answers:answers.html.twig',
-            array('category' => $category,'subject' => $subject,'pagination' => $pagination,
-                'answers' => $answers, 'relativeDate' => $relativeDatePerAnswer,
-                'form' => $form->createView(),'userTagsSkills' => $userTagsSkills));
+        // Premier message du sujet
+        $isFirst = $manager->getRepository("AGILForumBundle:AgilForumAnswer")->findBy(
+            array('subject' => $subject),
+            array('forumAnswerPostDate' => 'ASC'),
+            1
+        );
+
+        return $this->render('AGILForumBundle:Answers:answers.html.twig', array(
+            'category' => $category,
+            'subject' => $subject,
+            'pagination' => $pagination,
+            'answers' => $answers,
+            'relativeDate' => $relativeDatePerAnswer,
+            'form' => $form->createView(),
+            'userTagsSkills' => $userTagsSkills,
+            'isFirst' => $isFirst[0]->getForumAnswerId()
+        ));
     }
 
     /**
@@ -238,17 +251,31 @@ class AnswersController extends Controller
         $subject = $em->getRepository("AGILForumBundle:AgilForumSubject")->find($idSubject);
         $category = $em->getRepository("AGILForumBundle:AgilForumCategory")->find($idCategory);
         $answer = $em->getRepository("AGILForumBundle:AgilForumAnswer")->find($idAnswer);
-        if ($category === null or $subject === null  or $answer === null or $subject->getCategory() != $category
-            or $answer->getSubject() != $subject) {
-            if ($category === null) {
+
+        $isFirst = $em->getRepository("AGILForumBundle:AgilForumAnswer")->findBy(
+            array('subject' => $subject),
+            array('forumAnswerPostDate' => 'ASC'),
+            1
+        );
+
+        if ($isFirst[0] == $answer or $category === null or $subject === null  or $answer === null
+            or $subject->getCategory() != $category or $answer->getSubject() != $subject) {
+            if ($isFirst[0] == $answer) {
+                $this->addFlash('warning', "On ne peut supprimer le premier message d'un sujet.");
+            }
+            elseif ($category === null) {
                 $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
+                return $this->redirect( $this->generateUrl('agil_forum_homepage'));
             } elseif ($subject === null) {
                 $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'existe pas.");
+                return $this->redirect( $this->generateUrl('agil_forum_subjects_list', array(
+                    'idCategory' => $idCategory
+                )));
             } elseif ($answer === null) {
                 $this->addFlash('warning', "La réponse d'id ".$idAnswer." n'existe pas.");
-            } else if ($subject->getCategory() != $category) {
+            } elseif ($subject->getCategory() != $category) {
                 $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
-            } else if ($answer->getSubject() != $subject) {
+            } elseif ($answer->getSubject() != $subject) {
                 $this->addFlash('warning', "La réponse d'id ".$idAnswer." n'appartient pas au sujet d'id ".$idSubject);
             }
 
@@ -262,7 +289,7 @@ class AnswersController extends Controller
         $text = $answer->getForumAnswerText();
 
         if (!$user->hasRole('ROLE_MODERATOR') and !$user->hasRole('ROLE_ADMIN') and !$user->hasRole('ROLE_SUPER_ADMIN')) {
-            $this->addFlash('warning', 'Permission refusée : vous n\'êtes pas l\'autheur du sujet');
+            $this->addFlash('warning', 'Permission refusée : vous n\'avez pas les droits nécessaires.');
 
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
                 'idCategory' => $idCategory,
@@ -271,7 +298,7 @@ class AnswersController extends Controller
         }
 
         $isAdmin = false;
-        if ($user->hasRole('ROLE_MODERATOR') or $user->hasRole('ROLE_ADMIN') or $user->hasRole('ROLE_SUPER_ADMIN')) {
+        if ($author != $user) {
             $form = $this->createForm(new DeleteAnswerAdminType(), null);
             $isAdmin = true;
         } else {

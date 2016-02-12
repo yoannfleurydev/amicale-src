@@ -34,9 +34,7 @@ class SubjectsController extends Controller
         $category = $em->getRepository("AGILForumBundle:AgilForumCategory")->find($idCategory);
         if ($category === null) {
             $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
-
-            return $this->redirect( $this->generateUrl('agil_forum_subjects_list',
-                array('idCategory' => $idCategory)) );
+            return $this->redirect( $this->generateUrl('agil_forum_homepage'));
         }
 
         $subject = new AgilForumSubject($user,$category,null,null);
@@ -82,9 +80,10 @@ class SubjectsController extends Controller
         if ($category === null or $subject === null or $subject->getCategory() != $category) {
             if ($category === null) {
                 $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
+                return $this->redirect( $this->generateUrl('agil_forum_homepage'));
             } elseif ($subject === null) {
                 $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'existe pas.");
-            } else if ($subject->getCategory() != $category) {
+            } elseif ($subject->getCategory() != $category) {
                 $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
             }
 
