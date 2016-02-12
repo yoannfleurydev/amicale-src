@@ -28,6 +28,11 @@ class UserController extends Controller
         $maxUsers = 25;
         $users_count = $em->getRepository('AGILUserBundle:AgilUser')->getCountUsers();
 
+        if(($users_count == 0 && $page != 1) ||
+            ($users_count != 0 && $page > ceil($users_count / $maxUsers) || $page <= 0)  ){
+            $this->addFlash('warning', 'Erreur dans le numéro de page');
+            return $this->redirect( $this->generateUrl('agil_admin_user') );
+        }
         $pagination = array(
             'page' => $page,
             'route' => 'agil_admin_user',
@@ -165,7 +170,7 @@ class UserController extends Controller
             if ($formCSV->isValid()) {
                 $this->addUserByCSVFile($formCSV, $em, $factory);
             }
-            else if ($form->isValid()) {
+            elseif ($form->isValid()) {
                 $this->addUserByForm($form, $em, $factory);
             }
         }
@@ -199,6 +204,13 @@ class UserController extends Controller
             } else {
                 $username = strtolower($firstName).'.'.strtolower($lastName);
             }
+            $cpt=0;
+            $usernameTmp = $username;
+            while ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
+                $username = $usernameTmp;
+                $username .= $cpt;
+                $cpt++;
+            }
 
             $password = $this->generate_password();
             $encoder = $factory->getEncoder($user);
@@ -208,7 +220,7 @@ class UserController extends Controller
             $user->setUserLastName($lastName);
             $user->setEmail($email);
             $user->setPassword($pass);
-            if ($role != 'ROLE_USER') {
+            if ($role != 'ROLE_USER' or $role==null) {
                 $user->addRole($role);
             }
             $user->setEnabled(1);
@@ -279,8 +291,12 @@ class UserController extends Controller
                 } else {
                     $username = strtolower($firstName).'.'.strtolower($lastName);
                 }
-                if ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
-                    $username .= '1';
+                $cpt=0;
+                $usernameTmp = $username;
+                while ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
+                    $username = $usernameTmp;
+                    $username .= $cpt;
+                    $cpt++;
                 }
 
                 $password = $this->generate_password();

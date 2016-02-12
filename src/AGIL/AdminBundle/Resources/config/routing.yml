@@ -3,7 +3,7 @@ agil_admin_homepage:
     defaults: { _controller: AGILAdminBundle:Default:admin }
 
 agil_admin_user:
-    path:     /admin/user/{page}
+    path:     /admin/user/page/{page}
     defaults:
         _controller: AGILAdminBundle:User:adminUser
         page:  1

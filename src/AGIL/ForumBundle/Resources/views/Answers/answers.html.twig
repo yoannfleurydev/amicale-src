@@ -93,7 +93,7 @@
                                                    role="button"><span class="glyphicon glyphicon-edit"></span></a>
                                             {% endif %}
 
-                                            {% if is_granted('ROLE_MODERATOR') %}
+                                            {% if is_granted('ROLE_MODERATOR') and a.forumAnswerId != isFirst %}
 
                                                 <a class="btn btn-danger" href="{{ path('agil_forum_answers_delete',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId,'idAnswer' : a.forumAnswerId}) }}"
                                                    role="button"><span class="glyphicon glyphicon-trash"></span></a>
