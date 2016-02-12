@@ -16,7 +16,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends Controller
 {
-    /* retourne la liste des utilisateurs en fonction de ses droits */
+    /**
+     * retourne la liste des utilisateurs en fonction de ses droits
+     * @param $page
+     * @return Response
+     */
     public function adminUserAction($page)
     {
         $em = $this->getDoctrine()->getManager();
@@ -24,6 +28,11 @@ class UserController extends Controller
         $maxUsers = 25;
         $users_count = $em->getRepository('AGILUserBundle:AgilUser')->getCountUsers();
 
+        if(($users_count == 0 && $page != 1) ||
+            ($users_count != 0 && $page > ceil($users_count / $maxUsers) || $page <= 0)  ){
+            $this->addFlash('warning', 'Erreur dans le numéro de page');
+            return $this->redirect( $this->generateUrl('agil_admin_user') );
+        }
         $pagination = array(
             'page' => $page,
             'route' => 'agil_admin_user',
@@ -46,7 +55,11 @@ class UserController extends Controller
         ));
     }
 
-    /* Augmentation des droits de l'utilisateurs */
+    /**
+     * Augmentation des droits de l'utilisateurs
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function adminUserUpAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
@@ -76,8 +89,11 @@ class UserController extends Controller
 
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
-
-    /* Diminution des droits de l'utilisateur */
+    /**
+     * Diminution des droits de l'utilisateur
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function adminUserDownAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
@@ -108,7 +124,11 @@ class UserController extends Controller
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
-    /* Suppression d'utilisateur */
+    /**
+     * Suppression d'utilisateur
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function adminUserDeleteAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
@@ -130,7 +150,11 @@ class UserController extends Controller
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
-    /* Ajout d'utilisateur via formulaire */
+    /**
+     * Ajout d'utilisateur
+     * @param Request $request
+     * @return Response
+     */
     public function adminUserAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
@@ -146,7 +170,7 @@ class UserController extends Controller
             if ($formCSV->isValid()) {
                 $this->addUserByCSVFile($formCSV, $em, $factory);
             }
-            else if ($form->isValid()) {
+            elseif ($form->isValid()) {
                 $this->addUserByForm($form, $em, $factory);
             }
         }
@@ -156,6 +180,12 @@ class UserController extends Controller
         ));
     }
 
+    /**
+     * Ajout d'utilisateur via le formulaire de base
+     * @param $form
+     * @param $em
+     * @param $factory
+     */
     function addUserByForm($form, $em, $factory) {
         $email = $form->get('email')->getData();
         $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
@@ -174,6 +204,13 @@ class UserController extends Controller
             } else {
                 $username = strtolower($firstName).'.'.strtolower($lastName);
             }
+            $cpt=0;
+            $usernameTmp = $username;
+            while ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
+                $username = $usernameTmp;
+                $username .= $cpt;
+                $cpt++;
+            }
 
             $password = $this->generate_password();
             $encoder = $factory->getEncoder($user);
@@ -183,7 +220,7 @@ class UserController extends Controller
             $user->setUserLastName($lastName);
             $user->setEmail($email);
             $user->setPassword($pass);
-            if ($role != 'ROLE_USER') {
+            if ($role != 'ROLE_USER' or $role==null) {
                 $user->addRole($role);
             }
             $user->setEnabled(1);
@@ -192,17 +229,24 @@ class UserController extends Controller
 
             $subject = "Amicale GIL[Inscription]";
             $message = "<p>Bonjour $username,</p>";
-            $message .= "<p>vous avez été invité sur le site <a href=\"amicale.dev\">Amicale GIL</a>.</p>";
+            $message .= "<p>vous avez été invité sur le site <a href=\"http://amicale.dev\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
             $message .= "<p>Pour vous connecter :</p>";
             $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
             $message .= "<p>Cordialement</p>";
 
             $this->sendMail($subject, $message, $email);
+            $this->addFlash('success', 'Utilisateur enregistré.');
         } else {
-            $this->addFlash('notice', 'Utilisateur déjà enregistré.');
+            $this->addFlash('warning', 'Utilisateur déjà enregistré.');
         }
     }
 
+    /**
+     * Ajout d'utilisateur via un fichier .csv
+     * @param $form
+     * @param $em
+     * @param $factory
+     */
     function addUserByCSVFile($form, $em, $factory) {
         $nbRegisters = 0;
         $file = $form['file']->getData();
@@ -231,7 +275,7 @@ class UserController extends Controller
         foreach($attr_user as $value) {
             $firstName = $value[0];
             $lastName = $value[1];
-            $email = $value[2];
+            $email = $value[4];
             $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
 
             if ($user == null) {
@@ -246,6 +290,13 @@ class UserController extends Controller
                         $lastNameTmp[3] . $lastNameTmp[4] . $firstNameTmp[0] . $firstNameTmp[1] . $firstNameTmp[2];
                 } else {
                     $username = strtolower($firstName).'.'.strtolower($lastName);
+                }
+                $cpt=0;
+                $usernameTmp = $username;
+                while ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
+                    $username = $usernameTmp;
+                    $username .= $cpt;
+                    $cpt++;
                 }
 
                 $password = $this->generate_password();
@@ -263,18 +314,18 @@ class UserController extends Controller
 
                 $subject = "Amicale GIL[Inscription]";
                 $message = "<p>Bonjour $username,</p>";
-                $message .= "<p>vous avez été invité sur le site <a href=\"amicale.dev\">Amicale GIL</a>.</p>";
+                $message .= "<p>vous avez été invité sur le site <a href=\"http://amicale.dev\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
                 $message .= "<p>Pour vous connecter :</p>";
                 $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
                 $message .= "<p>Cordialement</p>";
 
                 $this->sendMail($subject, $message, $email);
             } else {
-                $this->addFlash('notice-csv', 'L\'utilisateur avec l\'email '. $email .' est déjà enregistré.');
+                $this->addFlash('warning', 'L\'utilisateur avec l\'email '. $email .' est déjà enregistré.');
             }
         }
 
-        $this->addFlash('notice-csv', $nbRegisters . ' utilisateurs ont été enregistrés.');
+        $this->addFlash('success', $nbRegisters . ' utilisateurs ont été enregistrés.');
     }
     /**
      * mot de passe aleatoire
@@ -297,7 +348,12 @@ class UserController extends Controller
         return $mot_de_passe;
     }
 
-    /* fonction d'envoie de mail */
+    /**
+     * fonction d'envoie de mail
+     * @param $subject
+     * @param $body
+     * @param $to
+     */
     function sendMail($subject, $body, $to) {
         $headers = 'From: amicale.gil@etu.univ-rouen.fr' . "\r\n";
         $headers .= "Reply-To: amicale.gil@etu.univ-rouen.fr\n";
@@ -313,11 +369,10 @@ class UserController extends Controller
 
         if(mail($to, $subject, $message, $headers))
         {
-            // mail envoyé
         }
         else
         {
-            $this->addFlash('notice', 'Erreur lors de l\'envois de l\'email.');
+            $this->addFlash('warning', 'Erreur lors de l\'envois de l\'email.');
         }
 
     }

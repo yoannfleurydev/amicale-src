@@ -1,14 +1,9 @@
-{% extends "::base.html.twig" %}
+{% extends "AGILAdminBundle::baseAdminBundle.html.twig" %}
 
 {% block body %}
     <div class="list-group">
         <a href="{{ path("agil_admin_user_add") }}" class="list-group-item">Ajouter un utilisateur</a>
     </div>
-    {% for flash_message in app.session.flashbag.get('notice') %}
-        <div class="flash-notice">
-            {{ flash_message }}
-        </div>
-    {% endfor %}
     <h3>Administration utilisateurs</h3>
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
@@ -94,48 +89,47 @@
                 </div>
             </div>
         </div>
-    </div>
-    {% if is_granted("ROLE_SUPER_ADMIN") %}
-    <div class="row">
-        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+        {% if is_granted("ROLE_SUPER_ADMIN") %}
+            <div class="col-sm-12 col-xs-6 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
             <span class="panel-title-content">
                     <i class="glyphicon glyphicon-user"></i> Administrateurs
             </span>
-                    </h2>
-                    <p> Nombre d'administrateurs total : <strong>{{ nbAdmins }}</strong></p>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Mail</th>
-                                    <th>Inscrit le</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                {% for admin in admins %}
+                        </h2>
+                        <p> Nombre d'administrateurs total : <strong>{{ nbAdmins }}</strong></p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table">
                                     <tr>
-                                        <td>{{ admin.username }}</td>
-                                        <td>{{ admin.email }}</td>
-                                        <td>{{ admin.userSignupDate|date("m/d/Y") }}</td>
-                                        <td><a href="{{ path('agil_admin_user_down', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                               title="Destituer"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                        <td><a href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                               title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                        <th>Nom</th>
+                                        <th>Mail</th>
+                                        <th>Inscrit le</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
-                                {% endfor %}
-                            </table>
+                                    {% for admin in admins %}
+                                        <tr>
+                                            <td>{{ admin.username }}</td>
+                                            <td>{{ admin.email }}</td>
+                                            <td>{{ admin.userSignupDate|date("m/d/Y") }}</td>
+                                            <td><a href="{{ path('agil_admin_user_down', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                                   title="Destituer"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
+                                            <td><a href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                                   title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
-    {% endif %}
+
 
 {% endblock %}

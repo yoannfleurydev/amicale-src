@@ -1,6 +1,4 @@
-{% extends '::base.html.twig' %}
-
-{% set forumClassActive = 1 %}
+{% extends 'AGILForumBundle::baseForumBundle.html.twig' %}
 
 {% block body %}
 
@@ -14,83 +12,93 @@
             <div class="col-lg-offset-1 col-lg-10">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-                    {% for category in categoryList %}
+                    {% if categoryList|length == 0 %}
 
-                    {% set key = category.forumCategoryId %}
+                        <h6>Le forum ne contient actuellement aucune catégorie.</h6>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading{{ category.forumCategoryId }}">
-                                <div class="row parent">
-                                    <div class="col-xm-10 col-sm-10 col-md-10 col-lg-10 ">
-                                        <h5>
-                                            <span class="glyphicon {{ category.forumCategoryIcon }}" aria-hidden="true"></span>
-                                            <a href="{{ path('agil_forum_subjects_list',{'idCategory' : category.forumCategoryId, 'page' : 1 } ) }}">{{ category.forumCategoryName }}</a>
-                                        </h5>
-                                        <h5 class="no-margin-top-bot">
-                                            <small>
-                                                {{ category.forumCategoryText }}
-                                            </small>
-                                        </h5>
-                                    </div>
+                    {% else %}
 
-                                    <div class="col-lg-offset-1 col-xs-2 col-xm-1 col-md-1 col-lg-1 child">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ category.forumCategoryId }}"
-                                           aria-expanded="true" aria-controls="collapse{{ category.forumCategoryId }}">
+                        {% for category in categoryList %}
+
+                            {% set key = category.forumCategoryId %}
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="heading{{ category.forumCategoryId }}">
+                                    <div class="row parent">
+                                        <div class="col-xm-10 col-sm-10 col-md-10 col-lg-10 ">
+                                            <h5>
+                                                <span class="glyphicon {{ category.forumCategoryIcon }}" aria-hidden="true"></span>
+                                                <a href="{{ path('agil_forum_subjects_list',{'idCategory' : category.forumCategoryId, 'page' : 1 } ) }}">{{ category.forumCategoryName }}</a>
+                                            </h5>
+                                            <h5 class="no-margin-top-bot">
+                                                <small>
+                                                    {{ category.forumCategoryText }}
+                                                </small>
+                                            </h5>
+                                        </div>
+
+                                        <div class="col-lg-offset-1 col-xs-2 col-xm-1 col-md-1 col-lg-1 child">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ category.forumCategoryId }}"
+                                               aria-expanded="true" aria-controls="collapse{{ category.forumCategoryId }}">
                                             <span class="rotate-icon glyphicon glyphicon glyphicon-chevron-down icon-bigger"
                                                   aria-hidden="true"></span>
-                                        </a>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div id="collapse{{ category.forumCategoryId }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ category.forumCategoryId }}">
-                                <div class="panel-body">
+                                <div id="collapse{{ category.forumCategoryId }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ category.forumCategoryId }}">
+                                    <div class="panel-body">
 
-                                    {% if subjectsPerCategories[key]|length == 0 %}
+                                        {% if subjectsPerCategories[key]|length == 0 %}
 
 
                                             <em><h6>Cette catégorie ne contient pas de sujets</h6></em>
 
-                                    {% else %}
+                                        {% else %}
 
                                             <em><h6>Les derniers sujets</h6></em>
 
-                                        <table class="table table-hover">
+                                            <table class="table table-hover">
 
-                                            {% for subject in subjectsPerCategories[key] %}
+                                                {% for subject in subjectsPerCategories[key] %}
 
-                                                <tr>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-xs-8 col-xm-9 col-md-9 col-lg-9">
-                                                                <h6 class="no-margin-top-bot"><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : subject.forumSubjectId} ) }}">{{ subject.forumSubjectTitle }}</a></h6>
-                                                                <div>{{ subject.forumSubjectDescription }}</div>
-                                                                {% for tag in subject.tags %}
-                                                                    <span class="label label-default">{{ tag.tagName }}</span>
-                                                                {% endfor %}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="row">
+                                                                <div class="col-xs-8 col-xm-9 col-md-9 col-lg-9">
+                                                                    <h6 class="no-margin-top-bot"><strong><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : subject.forumSubjectId} ) }}">{{ subject.forumSubjectTitle }}</a></strong></h6>
+                                                                    <div>{{ subject.forumSubjectDescription }}</div>
+                                                                    {% for tag in subject.tags %}
+                                                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                <div class="col-xs-4 col-xm-3 col-md-3 col-lg-3 text-right">
+                                                                    <h6>
+                                                                        <small> Créé par</small>
+                                                                        <a href="{{ path('agil_profile_id',{'id':subject.user.id}) }}">{{ subject.user.username }}</a>
+                                                                    </h6>
+                                                                    <small><em>Le {{ subject.forumSubjectPostDate|date('j M Y') }}</em></small>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-xs-4 col-xm-3 col-md-3 col-lg-3 text-right">
-                                                                <h6>
-                                                                    <small> Créé par</small>
-                                                                    <a href="#">{{ subject.user.username }}</a>
-                                                                </h6>
-                                                                <small><em>Le {{ subject.forumSubjectPostDate|date('j M Y') }}</em></small>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                    </tr>
 
-                                            {% endfor %}
+                                                {% endfor %}
 
-                                        </table>
+                                            </table>
 
-                                    {% endif %}
+                                        {% endif %}
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    {% endfor %}
+                        {% endfor %}
+
+                    {% endif %}
+
+
 
                 </div>
             </div>

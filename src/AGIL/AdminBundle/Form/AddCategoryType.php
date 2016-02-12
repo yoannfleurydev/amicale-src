@@ -1,28 +1,32 @@
 <?php
 
-namespace AGIL\ForumBundle\Form;
+namespace AGIL\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class SubjectType extends AbstractType
+
+
+
+class AddCategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('forumSubjectTitle', 'text', array(
+        $builder->add('forumCategoryName', 'text', array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),
             ),
             'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Titre',
+                'placeholder' => 'Nom',
             )
         ));
 
-        $builder->add('forumSubjectDescription', 'textarea', array(
+        $builder->add('forumCategoryText', 'text', array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),
@@ -33,18 +37,21 @@ class SubjectType extends AbstractType
             )
         ));
 
-        $builder->add('tags', 'text', array(
+        $builder->add('forumCategoryIcon', HiddenType::class, array(
+            'data' => 'glyphicon-tag',
+        ));
+
+
+        $builder->add('Ajouter', 'submit', array(
             'label' => false,
-            'required' => false,
             'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Tags associés',
+                'class' => 'btn btn-primary',
             )
         ));
     }
 
     public function getName()
     {
-        return 'forum_add_subject';
+        return 'forum_add_category';
     }
 }

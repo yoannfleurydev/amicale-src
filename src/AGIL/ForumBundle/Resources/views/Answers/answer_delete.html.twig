@@ -1,32 +1,32 @@
 {% extends 'AGILForumBundle::baseForumBundle.html.twig' %}
 
 {% block body %}
-    <!-- Suppression du sujet -->
+    <!-- Suppression d'une réponse -->
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2 class="panel-title">
                             <span class="panel-title-content">
-                                Suppression du sujet
+                                Suppression de la réponse
                             </span>
                 </h2>
             </div>
             <div class="panel-body">
 
-                <!-- Formulaire de suppression du post pour le forum -->
+                <!-- Formulaire de suppression de la réponse -->
 
-                <form action="{{ path('agil_forum_subject_delete', {'idCategory': idCategory, 'idSubject': idSubject}) }}" method="post" {{ form_enctype(form) }}>
+                <form action="{{ path('agil_forum_answers_delete', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}" method="post" {{ form_enctype(form) }}>
 
                     <div class="form-group" id="formAddNamePost">
-                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Sujet</label>
+                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Réponse</label>
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <p>{{ subject.forumSubjectTitle }}</p>
+                            <p>{{ answer.forumAnswerText|raw }}</p>
                         </div>
                     </div>
 
                     <div class="form-group" id="formAddNamePost">
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <p>Voulez-vous vraiment supprimer ce sujet?</p>
+                            <p>Voulez-vous vraiment supprimer cette réponse?</p>
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@
                 </form>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <a href="{{ path('agil_forum_subjects_list', {'idCategory': idCategory}) }}">
+                        <a href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
                             <button class="btn btn-default">Annuler</button>
                         </a>
                     </div>

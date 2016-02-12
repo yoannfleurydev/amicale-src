@@ -34,14 +34,14 @@ class UsersCSVType extends AbstractType
                 ])
             ],
             'attr' => array(
-                'class' => 'form-control',
+                'class' => 'upload',
             )
         ));
 
         $builder->add('Inviter', 'submit', array(
             'label' => false,
             'attr' => array(
-                'class' => 'form-control',
+                'class' => 'btn btn-primary',
             )
         ));
     }

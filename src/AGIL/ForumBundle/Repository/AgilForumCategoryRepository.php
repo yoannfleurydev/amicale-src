@@ -23,4 +23,20 @@ class AgilForumCategoryRepository extends EntityRepository
         return $this->findBy(array(), array('forumCategoryName' => 'ASC'));
     }
 
+
+    public function getCountSubjectsInCategory($idCategory){
+
+        $query = $this->_em->createQueryBuilder();
+
+        $query->select('COUNT(sub.forumSubjectId) as cnt')
+            ->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+            ->where('sub.category = ?1')
+        ;
+
+        $query->setParameter(1,$idCategory);
+
+        return $query->getQuery()->getSingleScalarResult();
+
+    }
+
 }

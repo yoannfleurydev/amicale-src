@@ -3,7 +3,7 @@ agil_admin_homepage:
     defaults: { _controller: AGILAdminBundle:Default:admin }
 
 agil_admin_user:
-    path:     /admin/user/{page}
+    path:     /admin/user/page/{page}
     defaults:
         _controller: AGILAdminBundle:User:adminUser
         page:  1
@@ -35,3 +35,19 @@ agil_admin_user_add:
     path:     /admin/user/add
     defaults:
         _controller: AGILAdminBundle:User:adminUserAdd
+
+agil_admin_forum_categories:
+    path:     /admin/forum/categories/
+    defaults: { _controller: AGILAdminBundle:Forum:adminForumCategories }
+
+agil_admin_forum_category_edit:
+    path:     /admin/forum/categories/edit/{idCategory}
+    defaults: { _controller: AGILAdminBundle:Forum:adminForumCategoryEdit }
+    requirements:
+            idCategory: \d+
+
+agil_admin_forum_category_delete:
+    path:     /admin/forum/categories/delete/{idCategory}
+    defaults: { _controller: AGILAdminBundle:Forum:adminForumCategoryDelete }
+    requirements:
+            idCategory: \d+

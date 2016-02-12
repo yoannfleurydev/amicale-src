@@ -22,7 +22,7 @@ class AgilForumAnswer
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AGIL\UserBundle\Entity\AgilUser", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="AGIL\UserBundle\Entity\AgilUser")
      * @ORM\JoinColumn(nullable=false,referencedColumnName="id",onDelete="CASCADE")
      */
     private $user;

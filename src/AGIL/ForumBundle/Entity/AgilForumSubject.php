@@ -17,8 +17,8 @@ class AgilForumSubject
     /**
      * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
      * @ORM\JoinTable(name="agil_forum_subject_tags",
-     *      joinColumns={@ORM\JoinColumn(name="forumSubjectId", referencedColumnName="forumSubjectId")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="tagId")}
+     *      joinColumns={@ORM\JoinColumn(name="forumSubjectId", referencedColumnName="forumSubjectId", onDelete="cascade")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="tagId", onDelete="cascade")}
      *      )
      */
     private $tags;
