@@ -54,7 +54,7 @@ class AgilSkill
      * @param $user
      * @param $skillLevel
      */
-    public function __construct($tag,$user,$skillLevel){
+    public function __construct($tag,$user,$skillLevel = 0){
         $this->tag = $tag;
         $this->user = $user;
         $this->skillLevel = $skillLevel;

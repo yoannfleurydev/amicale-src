@@ -3,17 +3,21 @@
 namespace AGIL\ProfileBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
+
 class ProfileEditType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    private $data;
 
+    public function __construct(array $data) {
+        $this->data = $data;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('email', 'email', array(
             'label' => false,
-            'required' => false,
+            'required' => true,
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Email',
@@ -22,7 +26,7 @@ class ProfileEditType extends AbstractType
 
         $builder->add('username', 'text', array(
             'label' => false,
-            'required' => false,
+            'required' => true,
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Pseudo',
@@ -79,7 +83,7 @@ class ProfileEditType extends AbstractType
             'required' => false,
             'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'mot de passe'
+                'placeholder' => 'Mot de passe'
             )
         ));
 
@@ -89,17 +93,35 @@ class ProfileEditType extends AbstractType
             'required' => false,
             'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'confirmer mot de passe'
+                'placeholder' => 'Confirmer mot de passe'
             )
         ));
+
+        // Boucle pour les compétences.
+        foreach($this->data['profileSkillsCategories'] as $profileSkillsCategory) {
+            foreach($this->data['tags'] as $tag) {
+                if ($tag->getSkillCategory() == $profileSkillsCategory) {
+                    foreach($this->data['skills'] as $skill) {
+                        $builder->add('tag' . $tag->getTagId(), 'integer', array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'value' => $skill->getSkillLevel(),
+                                'min' => 0,
+                                'max' => 10
+                            )
+                        ));
+                    }
+                }
+            }
+        }
 
         $builder->add('Modifier', 'submit', array(
             'label' => false,
             'attr' => array(
-                'class' => 'form-control',
+                'class' => 'form-control'
             )
         ));
-
     }
 
     public function getName()

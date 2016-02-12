@@ -32,7 +32,3 @@ agil_offer:
 agil_forum:
     resource: "@AGILForumBundle/Resources/config/routing.yml"
     prefix:   /forum
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation

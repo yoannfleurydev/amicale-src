@@ -33,6 +33,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
         $userSuperAdmin->setPlainPassword('superAdmin');
         $userSuperAdmin->setEnabled(true);
         $userSuperAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
+        $userSuperAdmin->setUserProfilePictureUrl('default.jpg');
 
         $userManager->updateUser($userSuperAdmin, true);
 
@@ -46,6 +47,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
         $userMember->setPlainPassword('user');
         $userMember->setEnabled(true);
         $userMember->setRoles(array('ROLE_USER'));
+        $userMember->setUserProfilePictureUrl('default.jpg');
 
         $userManager->updateUser($userMember, true);
 
@@ -58,6 +60,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
         $userSuperAdmin->setPlainPassword('amicale');
         $userSuperAdmin->setEnabled(true);
         $userSuperAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
+        $userSuperAdmin->setUserProfilePictureUrl('default.jpg');
 
         $userManager->updateUser($userSuperAdmin, true);
 

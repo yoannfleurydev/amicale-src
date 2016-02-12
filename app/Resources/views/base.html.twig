@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Amicale GIL!{% endblock %}</title>
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}Amicale GIL{% endblock %}</title>
     <link href="{{ asset("css/styles.css") }}" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="{{ asset("js/bootstrap.js") }}"></script>
@@ -14,9 +13,7 @@
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <!--<button class="navbar-brand hamburger"><span class="glyphicon glyphicon-arrow-right animate"></span></button>-->
                 <button class="navbar-brand hamburger">
                     <span class="bar up animate"></span>
                     <span class="bar"></span>
@@ -31,15 +28,12 @@
                 <!--Si connecté-->
                 <li class="dropdown navbar-dropdown-mobile right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        {% if app.user.userProfilePictureUrl is not null %}
-                            <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50px"></a>
-                        {% else %}
-                            <img class="img-circle img-responsive" src="{{ asset("img/profile/default.png") }}" width="50px"></a>
-                        {% endif %}
+                            <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50px" alt="Photo de profil">
+                    </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <a href="{{ path('agil_profile') }}">
+                            <a href="{{ path('agil_profile_id', {id : app.user.id}) }}">
                                 <i class="material-icons">account_circle</i> Profil
                             </a>
                         </li>

@@ -11,5 +11,5 @@
 /bin/
 /composer.phar
 /.idea/
-web/img/profile/
+web/img/profile/profile*
 web/files/cv/
