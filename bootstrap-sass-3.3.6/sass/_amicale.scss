@@ -1,3 +1,26 @@
+.list {
+  border-radius: 3px;
+  border: 1px solid #DDD;
+}
+
+.list-element {
+  padding: 10px;
+  border-bottom: 1px solid #DDD;
+}
+
+.list-element a {
+  color :#334960 !important;
+}
+
+.list-element a:hover {
+  color :#334960 !important;
+}
+
+.list-element:last-child {
+  border-bottom: none;
+}
+
+
 .fileUpload {
   position: relative;
   overflow: hidden;
@@ -27,6 +50,35 @@
   url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
   url(../fonts/MaterialIcons-Regular.woff) format('woff'),
   url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.list-element a::after {
+  @extend .material-icons;
+  content: "link";
 }
 
 .navbar-mobile .material-icons{

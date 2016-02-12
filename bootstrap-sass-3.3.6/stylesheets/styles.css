@@ -786,6 +786,33 @@
 }
 
 /* line 1, ../sass/_amicale.scss */
+.list {
+  border-radius: 3px;
+  border: 1px solid #DDD;
+}
+
+/* line 6, ../sass/_amicale.scss */
+.list-element {
+  padding: 10px;
+  border-bottom: 1px solid #DDD;
+}
+
+/* line 11, ../sass/_amicale.scss */
+.list-element a {
+  color: #334960 !important;
+}
+
+/* line 15, ../sass/_amicale.scss */
+.list-element a:hover {
+  color: #334960 !important;
+}
+
+/* line 19, ../sass/_amicale.scss */
+.list-element:last-child {
+  border-bottom: none;
+}
+
+/* line 24, ../sass/_amicale.scss */
 .fileUpload {
   position: relative;
   overflow: hidden;
@@ -793,7 +820,7 @@
 }
 
 /* line 6, ../sass/_amicale.scss */
-/* line 8, ../sass/_amicale.scss */
+/* line 31, ../sass/_amicale.scss */
 .fileUpload input {
   position: absolute;
   top: 0;
@@ -814,13 +841,44 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(../fonts/MaterialIcons-Regular.woff2) format("woff2"), url(../fonts/MaterialIcons-Regular.woff) format("woff"), url(../fonts/MaterialIcons-Regular.ttf) format("truetype");
 }
-/* line 32, ../sass/_amicale.scss */
-.navbar-mobile .material-icons {
+/* line 55, ../sass/_amicale.scss */
+.material-icons, .list-element a::after {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+/* line 79, ../sass/_amicale.scss */
+.list-element a::after {
+  content: "link";
+}
+
+/* line 84, ../sass/_amicale.scss */
+.navbar-mobile .material-icons, .navbar-mobile .list-element a::after, .list-element .navbar-mobile a::after {
   font-size: 18px;
 }
 
-/* line 36, ../sass/_amicale.scss */
-.material-icons {
+/* line 88, ../sass/_amicale.scss */
+.material-icons, .list-element a::after {
   font-family: 'Material Icons', serif;
   font-weight: normal;
   font-style: normal;
@@ -840,19 +898,19 @@
   font-feature-settings: 'liga';
 }
 
-/* line 59, ../sass/_amicale.scss */
+/* line 111, ../sass/_amicale.scss */
 html {
   position: relative;
   min-height: 100%;
 }
 
-/* line 64, ../sass/_amicale.scss */
+/* line 116, ../sass/_amicale.scss */
 body {
   padding-top: 80px;
   padding-bottom: 140px;
 }
 
-/* line 69, ../sass/_amicale.scss */
+/* line 121, ../sass/_amicale.scss */
 .nav-title {
   display: block;
   padding: 10px 30px;
@@ -861,7 +919,7 @@ body {
   color: #FFF;
 }
 
-/* line 77, ../sass/_amicale.scss */
+/* line 129, ../sass/_amicale.scss */
 .nav-link {
   display: block;
   padding: 10px 30px;
@@ -870,18 +928,18 @@ body {
   transition: background-color 0.3s ease;
 }
 
-/* line 85, ../sass/_amicale.scss */
+/* line 137, ../sass/_amicale.scss */
 .nav-link-active {
   background-color: #D55400;
 }
 
-/* line 89, ../sass/_amicale.scss */
+/* line 141, ../sass/_amicale.scss */
 .nav-link:hover {
   background-color: #D55400;
   text-decoration: none;
 }
 
-/* line 94, ../sass/_amicale.scss */
+/* line 146, ../sass/_amicale.scss */
 .sidebar-separator {
   margin-left: 30px;
   margin-right: 30px;
@@ -891,30 +949,30 @@ body {
 }
 
 /* Animation */
-/* line 104, ../sass/_amicale.scss */
+/* line 156, ../sass/_amicale.scss */
 .nav-items:last-of-type {
   margin-bottom: 110px;
 }
 
-/* line 106, ../sass/_amicale.scss */
+/* line 158, ../sass/_amicale.scss */
 .hamburger {
   border: none;
   background-color: #FFF;
 }
 
-/* line 111, ../sass/_amicale.scss */
+/* line 163, ../sass/_amicale.scss */
 .label button {
   border: none;
   background-color: #334960;
 }
 
-/* line 116, ../sass/_amicale.scss */
+/* line 168, ../sass/_amicale.scss */
 .label button:hover {
   color: #D55400;
 }
 
 /* Sidebar */
-/* line 121, ../sass/_amicale.scss */
+/* line 173, ../sass/_amicale.scss */
 .sidebar {
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
@@ -934,24 +992,24 @@ body {
   overflow-y: auto;
 }
 
-/* line 140, ../sass/_amicale.scss */
+/* line 192, ../sass/_amicale.scss */
 .sidebar, .sidebar a {
   color: #FFF;
 }
 
-/* line 141, ../sass/_amicale.scss */
+/* line 193, ../sass/_amicale.scss */
 .sidebar a:hover {
   color: #FFF;
 }
 
-/* line 143, ../sass/_amicale.scss */
+/* line 195, ../sass/_amicale.scss */
 .nav-items {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 149, ../sass/_amicale.scss */
+/* line 201, ../sass/_amicale.scss */
 .bar {
   transition-duration: 0.5s;
   transition-timing-function: ease-in-out;
@@ -963,20 +1021,20 @@ body {
   background-color: #666;
 }
 
-/* line 160, ../sass/_amicale.scss */
+/* line 212, ../sass/_amicale.scss */
 textarea {
   resize: vertical;
   /* user can resize vertically, but width is fixed */
 }
 
 /* Show Sidebar */
-/* line 165, ../sass/_amicale.scss */
+/* line 217, ../sass/_amicale.scss */
 .show-sidebar .sidebar {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-/* line 171, ../sass/_amicale.scss */
+/* line 223, ../sass/_amicale.scss */
 .rotate_up {
   -ms-transform: translate(-5px, 0.5px) rotate(-45deg);
   /* IE 9 */
@@ -985,7 +1043,7 @@ textarea {
   transform: translate(-5px, 0.5px) rotate(-45deg);
 }
 
-/* line 177, ../sass/_amicale.scss */
+/* line 229, ../sass/_amicale.scss */
 .rotate_bottom {
   -ms-transform: translate(-5px, -0.5px) rotate(45deg);
   /* IE 9 */
@@ -994,7 +1052,7 @@ textarea {
   transform: translate(-5px, -0.5px) rotate(45deg);
 }
 
-/* line 183, ../sass/_amicale.scss */
+/* line 235, ../sass/_amicale.scss */
 .animate-middle {
   -ms-transform: translate(-2px, 0px);
   /* IE 9 */
@@ -1003,7 +1061,7 @@ textarea {
   transform: translate(-2px, 0px);
 }
 
-/* line 189, ../sass/_amicale.scss */
+/* line 241, ../sass/_amicale.scss */
 .footer {
   position: absolute;
   bottom: 0;
@@ -1014,12 +1072,12 @@ textarea {
   border-top: 8px solid #D55400;
 }
 
-/* line 199, ../sass/_amicale.scss */
+/* line 251, ../sass/_amicale.scss */
 .footer * {
   color: #FFFFFF;
 }
 
-/* line 203, ../sass/_amicale.scss */
+/* line 255, ../sass/_amicale.scss */
 h2.panel-title {
   width: 100%;
   text-align: center;
@@ -1028,29 +1086,29 @@ h2.panel-title {
   margin: 10px 0 20px;
 }
 
-/* line 211, ../sass/_amicale.scss */
+/* line 263, ../sass/_amicale.scss */
 span.panel-title-content {
   background: #fff;
   padding: 0 10px;
 }
 
-/* line 215, ../sass/_amicale.scss */
+/* line 267, ../sass/_amicale.scss */
 .navbar-header {
   width: 100%;
 }
 
-/* line 219, ../sass/_amicale.scss */
+/* line 271, ../sass/_amicale.scss */
 .navbar-header li {
   list-style: none !important;
 }
 
-/* line 224, ../sass/_amicale.scss */
+/* line 276, ../sass/_amicale.scss */
 .navbar-header > a {
   color: #666 !important;
   list-style: none !important;
 }
 
-/* line 229, ../sass/_amicale.scss */
+/* line 281, ../sass/_amicale.scss */
 .navbar-mobile {
   float: left;
   padding: 20.5px 15px;
@@ -1060,7 +1118,7 @@ span.panel-title-content {
   color: #666;
 }
 
-/* line 238, ../sass/_amicale.scss */
+/* line 290, ../sass/_amicale.scss */
 .navbar-dropdown-mobile {
   float: left;
   padding: 6.5px 10px;
@@ -1070,18 +1128,18 @@ span.panel-title-content {
   color: #666;
 }
 
-/* line 247, ../sass/_amicale.scss */
+/* line 299, ../sass/_amicale.scss */
 .right {
   float: right;
 }
 
-/* line 251, ../sass/_amicale.scss */
+/* line 303, ../sass/_amicale.scss */
 .navbar-mobile:hover, .navbar-header a:hover {
   color: #212121;
   text-decoration: none;
 }
 
-/* line 257, ../sass/_amicale.scss */
+/* line 309, ../sass/_amicale.scss */
 * {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-tap-highlight-color: transparent;
@@ -8402,7 +8460,7 @@ a.thumbnail.active {
 
 /* line 54, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_list-group.scss */
 a.list-group-item {
-  color: #D55400;
+  color: #000;
 }
 /* line 57, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_list-group.scss */
 a.list-group-item .list-group-item-heading {
@@ -8411,7 +8469,7 @@ a.list-group-item .list-group-item-heading {
 /* line 62, ../../../../compass.app/lib/ruby/compass_extensions/bootstrap-sass-3.2.0.1/assets/stylesheets/bootstrap/_list-group.scss */
 a.list-group-item:hover, a.list-group-item:focus {
   text-decoration: none;
-  color: #D55400;
+  color: #000;
   background-color: #f5f5f5;
 }
 

@@ -54,15 +54,29 @@
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="https://dpt-info-sciences.univ-rouen.fr/index.php" class="list-group-item">
-                            Site de l'université.
-                        </a>
-                        <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" class="list-group-item">
-                            Contenu pédagogique, première année.
-                        </a>
-                        <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22" class="list-group-item">
-                            Contenu pédagogique, deuxième année.
-                        </a>
+                        <div class="list">
+                            <div class="list-element">
+                                <p>
+                                    <a href="https://dpt-info-sciences.univ-rouen.fr/index.php">
+                                        Site de l'université.
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="list-element">
+                                <p>
+                                    <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" >
+                                        Contenu pédagogique, première année.
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="list-element">
+                                <p>
+                                    <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22" >
+                                        Contenu pédagogique, deuxième année.
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     Une liste de liens utiles en rapport avec le master GIL.
                 </div>
@@ -96,24 +110,24 @@
                     <!--Les dernières annonces de stage et d’emploi postées sur le site.-->
                 </div>
                 <div class="panel-body">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <p>Stagiaire en Développement Mobile H/F 19 Oct. 2015</p>
+                    <div class="list">
+                        <div class="list-element">
+                            <p><a href="#">Stagiaire en Développement Mobile H/F 19 Oct. 2015</a></p>
                             <span class="label label-default">#PHP</span>
                             <span class="label label-default">#JAVASCRIPT</span>
                             <span class="label label-default">#SQL</span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <p>CDI Chef de projet cher Zoranna 18 Oct. 2015</p>
+                        </div>
+                        <div class="list-element">
+                            <p><a href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a></p>
                             <span class="label label-default">#BUBULLES</span>
                             <span class="label label-default">#SQL</span>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <p>Conférence Codeur en Seine - Le Web d'aujourd'hui ! 12 Oct. 2015</p>
+                        </div>
+                        <div class="list-element">
+                            <p><a href="#">Conférence Codeur en Seine - Le Web d'aujourd'hui ! 12 Oct. 2015</a></p>
                             <span class="label label-default">#HTML5</span>
                             <span class="label label-default">#CSS3</span>
                             <span class="label label-default">#JAVASCRIPT</span>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,16 +145,16 @@
                 </div>
                 <div class="panel-body">
                     Les tables de discussion actives.
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <p>GP1 master 1 GIL 19 Oct. 2015</p>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <p>Projet SUDOKU 20 Oct. 2015</p>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <p>GP1 master 1 SSI 64 Oct. 2035</p>
-                        </a>
+                    <div class="list">
+                        <div class="list-element">
+                            <p><a href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
+                        </div>
+                        <div class="list-element">
+                            <p><a href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
+                        </div>
+                        <div class="list-element">
+                            <p><a href="#">Projet SUDOKU 20 Oct. 2015</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,17 +169,16 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <div class="list-group">
+                    <div class="list">
 
                         {% for sub in lastSubjects %}
-
-                            <a href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}" class="list-group-item">
-                                <p>{{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</p>
-                                {% for tag in sub.tags %}
-                                    <span class="label label-default">{{ tag.tagName }}</span>
-                                {% endfor %}
-                            </a>
-
+                            <div class="list-element">
+                                <p><a href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}" >
+                                    {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</a></p>
+                                    {% for tag in sub.tags %}
+                                        <span class="label label-default">{{ tag.tagName }}</span>
+                                    {% endfor %}
+                            </div>
                         {% endfor %}
 
                     </div>
@@ -187,9 +200,13 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <div class="list-group">
-                        <a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fidp.univ-rouen.fr%2Fidp%2FAuthn%2FRemoteUser" class="list-group-item">L'ENT</a>
-                        <a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fwebmail.univ-rouen.fr%2FSOGo%2Fso%2Findex" class="list-group-item">Webmail</a>
+                    <div class="list">
+                        <div class="list-element">
+                            <p><a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fidp.univ-rouen.fr%2Fidp%2FAuthn%2FRemoteUser" >L'ENT</a></p>
+                        </div>
+                        <div class="list-element">
+                            <p><a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fwebmail.univ-rouen.fr%2FSOGo%2Fso%2Findex"> Webmail </a></p>
+                        </div>
                     </div>
                     Les informations utiles comme les liens rapides vers les outils de l’Université.
                 </div>

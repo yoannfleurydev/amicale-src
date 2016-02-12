@@ -1,5 +1,4 @@
-@import 'compass/css3/filter'; // Import des filters css pour la luminosité
-@import "compass/css3";
+
 // Hash Map de couleurs
 $colors : (
 "purple"    : #d645de,
@@ -17,7 +16,7 @@ $colors : (
 "primary-orange" : #D55400
 );
 
-// pour chaque couleur on crée une classe .tag-couleur avec le background qui va.
+// pour chaque couleur on cree une classe .tag-couleur avec le background qui va.
 @each $nom, $bgcolor in $colors {
     .#{$nom} { background-color:$bgcolor; }
     .text-#{$nom} { color:$bgcolor;}

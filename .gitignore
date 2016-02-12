@@ -12,3 +12,4 @@
 /composer.phar
 /.idea/
 web/img/profile/
+node_modules/
