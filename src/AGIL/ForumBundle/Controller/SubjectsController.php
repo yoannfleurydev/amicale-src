@@ -10,14 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AGIL\ForumBundle\Form\SubjectType;
 use AGIL\ForumBundle\Form\DeleteSubjectType;
 use AGIL\ForumBundle\Entity\AgilForumSubject;
 
 class SubjectsController extends Controller
 {
-
-
     /**
      * Cette fonction permet d'ajouter un nouveau sujet dans le forum
      *
@@ -36,6 +33,7 @@ class SubjectsController extends Controller
             $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
             return $this->redirect( $this->generateUrl('agil_forum_homepage'));
         }
+        $tagRepository = $em->getRepository("AGILDefaultBundle:AgilTag");
 
         $subject = new AgilForumSubject($user,$category,null,null);
         $subject->setTags(array());
@@ -46,6 +44,12 @@ class SubjectsController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
+
+            // On récupère les tags qui ont été tapés, on en fait un tableau
+            $tagsArrayString = explode(" ", $subject->getTags());
+            // On remet les tags sous forme de tableau de AgilTag
+            $subject->setTags($tagRepository->findByTagName($tagsArrayString));
+
             $em->persist($firstPost);
             $em->persist($subject);
             $em->flush($subject);

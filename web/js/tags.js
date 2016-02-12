@@ -37,7 +37,11 @@ $(function () {
             $.ajax(
                 {
                     method: "POST",
-                    url: "search",
+                    // TODO Changer ici pour la prod
+                    // DEV
+                    url: "http://amicale.dev/tags/search",
+                    // PROD
+                    /* url: location.hostname + "/tags/search", */
                     data: {prefix: currentTag}
                 }
             ).done(function (json) {
@@ -76,19 +80,21 @@ $(function () {
     $('#tags_container').on('click', '.tag', function() {
         // l'endroit où on tape les tags
         var tags_input = $('#tags_input');
-        // La longueur de la chaine sans le tag que l'on est entrain d'écrire
-        var indexEnd = tags_input.val().length - currentTag.length;
-
+        // La longueur de la chaine sans le tag que l'on est entrain d'écrire moins la longueur d'un espace
+        var indexEnd = tags_input.val().length - currentTag.length - 1;
         // la chaine que l'on met dans l'input où sont affichés les tags sélectionnés
         var toSetUp;
+
         // Si c'est le premier tag
-        if (indexEnd === 0) {
+        if (indexEnd < 0) {
             toSetUp = $(this).text();
         } else if (indexEnd > 0) {
             // WARNING Rajoute un espace lorsqu'on retape après avoir cliqué sur un tag
             toSetUp = tags_input.val().substring(0, indexEnd) + ' ' + $(this).text();
         }
 
+        // On remet à 0 le tag courant, pour éviter un résidu
+        currentTag = '';
         // On efface le tag cliqué
         $(this).fadeOut();
         // On dit de refaire une requête AJAX
