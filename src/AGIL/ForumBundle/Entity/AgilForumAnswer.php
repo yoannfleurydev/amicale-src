@@ -16,14 +16,14 @@ class AgilForumAnswer
 
     /**
      * @ORM\ManyToOne(targetEntity="AGIL\ForumBundle\Entity\AgilForumSubject")
-     * @ORM\JoinColumn(nullable=false,referencedColumnName="forumSubjectId")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="forumSubjectId",onDelete="CASCADE")
      */
     private $subject;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="AGIL\UserBundle\Entity\AgilUser")
-     * @ORM\JoinColumn(nullable=false,referencedColumnName="id")
+     * @ORM\JoinColumn(nullable=false,referencedColumnName="id",onDelete="CASCADE")
      */
     private $user;
 

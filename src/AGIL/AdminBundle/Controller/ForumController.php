@@ -4,6 +4,10 @@ namespace AGIL\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
+use AGIL\AdminBundle\Form\AddCategoryType;
+use AGIL\ForumBundle\Entity\AgilForumCategory;
+
 
 
 class ForumController extends Controller
@@ -14,7 +18,7 @@ class ForumController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function adminForumCategoriesAction()
+    public function adminForumCategoriesAction(Request $request)
     {
         // Manager et Repositories
         $manager = $this->getDoctrine()->getManager();
@@ -23,8 +27,30 @@ class ForumController extends Controller
         // Récupération de toutes les catégories
         $categories = $categoryRepository->findAll();
 
+
+        // Formulaire d'ajout de catégorie
+        $category = new AgilForumCategory(null,null,null);
+
+        $form = $this->createForm(new AddCategoryType(), $category);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+
+            // Est ce qu'une catégorie du même nom existe ?
+            $categoryExist = $categoryRepository->findBy(array('forumCategoryName' => $category->getForumCategoryName()));
+            if($categoryExist == null){
+                $manager->persist($category);
+                $manager->flush($category);
+                $this->addFlash('success', "La catégorie a été créée");
+            }else{
+                $this->addFlash('warning', "Une catégorie avec ce nom existe déjà");
+            }
+
+            return $this->redirectToRoute('agil_admin_forum_categories');
+        }
+
         return $this->render('AGILAdminBundle:Forum:admin_forum_categories.html.twig',array(
-            'categories' => $categories
+            'categories' => $categories, 'form' => $form->createView()
             ));
     }
 
@@ -34,7 +60,7 @@ class ForumController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function adminForumCategoryEditAction($idCategory)
+    public function adminForumCategoryEditAction($idCategory,Request $request)
     {
         // Manager et Repositories
         $manager = $this->getDoctrine()->getManager();
@@ -43,7 +69,8 @@ class ForumController extends Controller
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $category = $categoryRepository->find($idCategory);
         if ($category === null) {
-            throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
+            $this->addFlash('warning', "La catégorie d'id " .$idCategory. " n'existe pas.");
+            return $this->redirectToRoute('agil_admin_forum_categories');
         }
 
         return $this->render('AGILAdminBundle:Forum:admin_forum_category_edit.html.twig',array(

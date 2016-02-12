@@ -24,7 +24,7 @@ class DefaultController extends Controller
 
         $subjectRepository = $manager ->getRepository('AGILForumBundle:AgilForumSubject');
 
-        $subjectsPerCategories[] = NULL;    // Propre ou pas ? A revoir (Quentin)
+        $subjectsPerCategories[] = NULL;
         foreach($categoryList as $c){
             $subjects = $subjectRepository->findBy(array('category' => $c),array('forumSubjectPostDate' => 'desc'),5);
             $subjectsPerCategories[$c->getForumCategoryId()] = $subjects;
