@@ -1,21 +1,32 @@
 /*
-Error: File to import not found or unreadable: bootstrap.
-        on line 4 of styles.scss
+Error: Invalid US-ASCII character "\xC3"
+        on line 1 of _colors.scss
+        from line 1 of styles.scss
 
-1: @import "amicale";
-2: @import "stylea";
-3: @import "variables";
-4: @import "bootstrap";
-5: @import "bootstrap-compass";
-6: @import "bootswatch";
+1: @import 'compass/css3/filter'; // Import des filters css pour la luminosité
+2: @import "compass/css3";
+3: // Hash Map de couleurs
+4: $colors : (
+5: "purple"    : #d645de,
+6: "red"       : #c0392b,
 
 Backtrace:
-styles.scss:4
-/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/import_node.rb:67:in `rescue in import'
-/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/import_node.rb:45:in `import'
-/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/import_node.rb:28:in `imported_file'
-/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/import_node.rb:37:in `css_import?'
-/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:311:in `visit_import'
+_colors.scss:1
+styles.scss:1
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/util.rb:1301:in `rescue in block in find_encoding_error'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/util.rb:1296:in `block in find_encoding_error'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/util.rb:1295:in `each'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/util.rb:1295:in `each_with_index'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/util.rb:1295:in `find_encoding_error'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/util.rb:904:in `check_sass_encoding'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/engine.rb:433:in `check_encoding!'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/engine.rb:389:in `_to_tree'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/engine.rb:309:in `to_tree'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:324:in `block in visit_import'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/stack.rb:88:in `block in with_import'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/stack.rb:115:in `with_frame'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/stack.rb:88:in `with_import'
+/var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:323:in `visit_import'
 /var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:36:in `visit'
 /var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
 /var/lib/gems/1.9.1/gems/sass-3.4.21/lib/sass/stack.rb:79:in `block in with_base'
@@ -53,4 +64,4 @@ styles.scss:4
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: File to import not found or unreadable: bootstrap.\A         on line 4 of styles.scss\A \A 1: @import \"amicale\";\A 2: @import \"stylea\";\A 3: @import \"variables\";\A 4: @import \"bootstrap\";\A 5: @import \"bootstrap-compass\";\A 6: @import \"bootswatch\";"; }
+  content: "Error: Invalid US-ASCII character \"\xC3\"\A         on line 1 of _colors.scss\A         from line 1 of styles.scss\A \A 1: @import 'compass/css3/filter'; // Import des filters css pour la luminosité\A 2: @import \"compass/css3\";\A 3: // Hash Map de couleurs\A 4: $colors : (\A 5: \"purple\"    : #d645de,\A 6: \"red\"       : #c0392b,"; }

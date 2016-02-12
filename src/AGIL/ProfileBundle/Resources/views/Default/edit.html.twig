@@ -61,13 +61,14 @@
                                             </div>
                                         </div>
 
-                                        {# profile picture #}
+                                        {# profile picture #}{# TODO : Modifier les labels, car tous sont 'pseudo' #}
                                         <div class="form-group">
                                             <label for="pseudo">Modifier la photo de profil :</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-picture"></span></div>
-                                                {{ form_row(form.userProfilePictureUrl) }}
+												<div class="fileUpload btn btn-primary">
+                                                    <span id="button_name"><i class="material-icons">file_upload</i> Choisir un fichier</span>
+                                                    {{ form_row(form.userProfilePictureUrl) }}
+                                                </div>
                                             </div>
                                         </div>
 

@@ -78,7 +78,6 @@ class AgilUser extends BaseUser
      *
      * @ORM\Column(name="userProfilePictureUrl", type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank(message="Format incorrect")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/bmp" })
      */
     protected $userProfilePictureUrl;

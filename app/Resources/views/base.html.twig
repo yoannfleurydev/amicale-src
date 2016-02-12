@@ -7,14 +7,14 @@
     <link href="{{ asset("css/styles.css") }}" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="{{ asset("js/bootstrap.js") }}"></script>
-    <script src="{{ asset("js/admin.js") }}"></script>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button class="navbar-brand hamburger">
+                <!--<button class="navbar-brand hamburger"><span class="glyphicon glyphicon-arrow-right animate"></span></button>-->
+                <button class="navbar-brand hamburger" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Menu">
                     <span class="bar up animate"></span>
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
@@ -23,10 +23,10 @@
                 <a href="#" class="navbar-mobile">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
-                <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}"><span class="glyphicon glyphicon-log-in"></span></a>
+                <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
                 {% else %}
                 <!--Si connecté-->
-                <li class="dropdown navbar-dropdown-mobile right">
+                <li class="dropdown navbar-dropdown-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Menu utilisateur">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50px" alt="Photo de profil">
                     </a>
@@ -47,7 +47,7 @@
                     </ul>
                 </li>
                 {% endif %}
-                <a href="#" class="navbar-mobile right"><span class="material-icons">search</span></a>
+                <a href="#" class="navbar-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Rechercher"><span class="material-icons">search</span></a>
             </div>
         </div><!-- /.container-fluid -->
     </nav>
@@ -119,13 +119,14 @@
             <div class="row">
                 <div class="col-lg-12 col-xs-12">
                     <p>
-                        Copyright université de rouen. Site développé par sept étudiants de l'université de rouen
-                        dans le cadre d'un projet universitaire.
+                        &copy; Université de Rouen. Site développé par 7 étudiants de l'Université de Rouen dans le cadre d'un projet universitaire.
                     </p>
                 </div>
             </div>
         </div>
     </footer>
+    <script src="{{ asset("js/admin.js") }}"></script>
+    <script src="{{ asset("js/profile.js") }}"></script>
     <script src="{{ asset('js/menu.js') }}"></script>
     <script src="{{ asset('js/jsmain.js') }}"></script>
 

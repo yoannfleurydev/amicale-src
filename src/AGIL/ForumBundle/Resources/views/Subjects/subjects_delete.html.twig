@@ -3,57 +3,32 @@
 {% block body %}
     <!-- Suppression du sujet -->
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                            <span class="panel-title-content">
-                                Suppression du sujet
-                            </span>
-                </h2>
-            </div>
-            <div class="panel-body">
+        <div class="col-xs-12 col-lg-offset-3 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                    <span class="panel-title-content">
+                        Suppression du sujet
+                    </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
 
-                <!-- Formulaire de suppression du post pour le forum -->
+                    <!-- Formulaire de suppression du post pour le forum -->
 
-                <form action="{{ path('agil_forum_subject_delete', {'idCategory': idCategory, 'idSubject': idSubject}) }}" method="post" {{ form_enctype(form) }}>
+                    <form action="{{ path('agil_forum_subject_delete', {'idCategory': idCategory, 'idSubject': idSubject}) }}" method="post" {{ form_enctype(form) }}>
+                        <label for="inputNamePost" class="control-label">Sujet : <strong>{{ subject.forumSubjectTitle }}</strong></label>
 
-                    <div class="form-group" id="formAddNamePost">
-                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Sujet</label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <p>{{ subject.forumSubjectTitle }}</p>
+                        <p>Voulez-vous vraiment supprimer ce sujet?</p>
+
+                        <div class="text-center">
+                            {{ form_widget(form.Supprimer) }}
+                            <a href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
+                                <button class="btn btn-default">Annuler</button>
+                            </a>
                         </div>
-                    </div>
-
-                    <div class="form-group" id="formAddNamePost">
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <p>Voulez-vous vraiment supprimer ce sujet?</p>
-                        </div>
-                    </div>
-
-
-                    {% if isAdmin == true %}
-                        <div class="form-group" id="formAddNamePost">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <p>Raison :</p>
-                                {{ form_row(form.reason) }}
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            {{ form_row(form.Supprimer) }}
-                        </div>
-                    </div>
-
-                    {{ form_rest(form) }}
-                </form>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <a href="{{ path('agil_forum_subjects_list', {'idCategory': idCategory}) }}">
-                            <button class="btn btn-default">Annuler</button>
-                        </a>
-                    </div>
+                        {{ form_rest(form) }}
+                    </form>
                 </div>
             </div>
         </div>

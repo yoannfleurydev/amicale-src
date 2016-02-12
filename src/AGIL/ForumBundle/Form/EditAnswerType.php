@@ -22,7 +22,7 @@ class EditAnswerType extends AbstractType
         $builder->add('Modifier', 'submit', array(
             'label' => false,
             'attr' => array(
-                'class' => 'btn btn-default',
+                'class' => 'btn btn-primary',
             )
         ));
     }
