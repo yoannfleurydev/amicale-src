@@ -22,7 +22,6 @@ class DefaultControllerTest extends WebTestCase {
 			'/tags/search',
 			array('prefix' => 'a')
 		);
-
 		$this->assertContains('Acer', $client->getResponse()->getContent());
 
 		/* Si la suppression fonctionne bien */
