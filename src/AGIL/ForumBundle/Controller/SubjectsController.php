@@ -97,7 +97,7 @@ class SubjectsController extends Controller
 
         if (!$user->hasRole('ROLE_MODERATOR') and !$user->hasRole('ROLE_ADMIN') and !$user->hasRole('ROLE_SUPER_ADMIN')
             and $author != $user) {
-            $this->addFlash('warning', 'Permission refusée : vous n\'êtes pas l\'autheur du sujet');
+            $this->addFlash('warning', 'Permission refusée : vous n\'êtes pas l\'auteur du sujet');
 
             return $this->redirect( $this->generateUrl('agil_forum_subjects_list',
                 array('idCategory' => $idCategory)) );
@@ -161,18 +161,21 @@ class SubjectsController extends Controller
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $category = $categoryRepository->find($idCategory);
         if ($category === null) {
-            throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
+            $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
+            return $this->redirectToRoute('agil_forum_homepage');
         }
 
         // Récupération de l'objet Subject par rapport à l'ID spécifié dans l'URL
         $subject = $subjectRepository->find($idSubject);
         if ($subject === null) {
-            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'existe pas.");
+            $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'existe pas.");
+            return $this->redirectToRoute('agil_forum_subjects_list', array('idCategory' => $idCategory));
         }
 
         // On vérifie que le Subject appartient bien à cette Category
         if ($subject->getCategory() != $category) {
-            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+            $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+            return $this->redirectToRoute('agil_forum_subjects_list', array('idCategory' => $idCategory));
         }
 
         // Si le sujet n'est pas déjà Résolu
@@ -187,16 +190,15 @@ class SubjectsController extends Controller
                 $manager->persist($subject);
                 $manager->flush();
 
-                return $this->redirectToRoute('agil_forum_subject_answers', array('idCategory' => $idCategory, 'idSubject' => $idSubject));
-
-
             }else{
-                throw new NotFoundHttpException("Vous essayez passer en résolu un sujet de forum qui n'est pas le votre");
+                $this->addFlash('warning', "Vous essayez passer en résolu un sujet de forum qui n'est pas le votre");
             }
 
         }else{
-            throw new NotFoundHttpException("Le sujet de forum est déjà résolu");
+            $this->addFlash('warning', "Le sujet de forum est déjà résolu");
         }
+
+        return $this->redirectToRoute('agil_forum_subject_answers', array('idCategory' => $idCategory, 'idSubject' => $idSubject));
 
     }
 
@@ -225,7 +227,7 @@ class SubjectsController extends Controller
         }
         else
         {
-            $this->addFlash('warning', 'Erreur lors de l\'envois de l\'email.');
+            $this->addFlash('warning', 'Erreur lors de l\'envoie de l\'email.');
         }
 
     }

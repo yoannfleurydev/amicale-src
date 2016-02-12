@@ -25,7 +25,8 @@ class CategoriesController extends Controller
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $category = $categoryRepository->find($idCategory);
         if ($category === null) {
-            throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
+            $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
+            return $this->redirectToRoute('agil_forum_homepage');
         }
 
 

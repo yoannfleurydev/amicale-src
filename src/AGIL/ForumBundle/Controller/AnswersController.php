@@ -35,18 +35,21 @@ class AnswersController extends Controller
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $category = $categoryRepository->find($idCategory);
         if ($category === null) {
-            throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
+            $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
+            return $this->redirectToRoute('agil_forum_homepage');
         }
 
         // Récupération de l'objet Subject par rapport à l'ID spécifié dans l'URL
         $subject = $subjectRepository->find($idSubject);
         if ($subject === null) {
-            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'existe pas.");
+            $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'existe pas.");
+            return $this->redirectToRoute('agil_forum_subjects_list', array('idCategory' => $idCategory));
         }
 
         // On vérifie que le Subject appartient bien à cette Category
         if ($subject->getCategory() != $category) {
-            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+            $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+            return $this->redirectToRoute('agil_forum_subjects_list', array('idCategory' => $idCategory));
         }
 
 
@@ -167,24 +170,34 @@ class AnswersController extends Controller
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $category = $categoryRepository->find($idCategory);
         if ($category === null) {
-            throw new NotFoundHttpException("La catégorie d'id ".$idCategory." n'existe pas.");
+            $this->addFlash('warning', "La catégorie d'id " . $idCategory . " n'existe pas.");
+            return $this->redirectToRoute('agil_forum_homepage');
         }
 
         // Récupération de l'objet Subject par rapport à l'ID spécifié dans l'URL
         $subject = $subjectRepository->find($idSubject);
         if ($subject === null) {
-            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'existe pas.");
+            $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'existe pas.");
+            return $this->redirectToRoute('agil_forum_subjects_list', array('idCategory' => $idCategory));
         }
 
         // On vérifie que le Subject appartient bien à cette Category
         if ($subject->getCategory() != $category) {
-            throw new NotFoundHttpException("Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+            $this->addFlash('warning', "Le sujet d'id ".$idSubject." n'appartient pas à la catégorie d'id ".$idCategory);
+            return $this->redirectToRoute('agil_forum_subjects_list', array('idCategory' => $idCategory));
         }
 
         // Récupération de l'objet Answer par rapport à l'ID spécifié dans l'URL
         $answer = $answerRepository->find($idAnswer);
-        if ($subject === null) {
-            throw new NotFoundHttpException("La réponse d'id ".$idAnswer." n'existe pas.");
+        if ($answer === null) {
+            $this->addFlash('warning', "La réponse d'id ".$idAnswer." n'existe pas.");
+            return $this->redirectToRoute('agil_forum_subject_answers', array('idCategory' => $idCategory, 'idSubject' => $idSubject));
+        }
+
+        // On vérifie que la réponse appartient bien au sujet
+        if ($answer->getSubject() != $subject) {
+            $this->addFlash('warning', "La réponse d'id ".$idAnswer." n'appartient pas au sujet d'id ".$idSubject);
+            return $this->redirectToRoute('agil_forum_subject_answers', array('idCategory' => $idCategory, 'idSubject' => $idSubject));
         }
 
         // On vérifie que la réponse est bien celle du user connecté
@@ -231,6 +244,16 @@ class AnswersController extends Controller
         ));
     }
 
+
+    /**
+     * Cette fonction permet de supprimer une réponse d'un sujet
+     *
+     * @param $idCategory
+     * @param $idSubject
+     * @param $idAnswer
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function answersDeleteAction($idCategory, $idSubject, $idAnswer, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
