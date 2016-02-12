@@ -5,6 +5,7 @@ namespace AGIL\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
+use AGIL\AdminBundle\Form\EditCategoryType;
 use AGIL\AdminBundle\Form\AddCategoryType;
 use AGIL\ForumBundle\Entity\AgilForumCategory;
 
@@ -27,6 +28,11 @@ class ForumController extends Controller
         // Récupération de toutes les catégories
         $categories = $categoryRepository->findAll();
 
+        // Pour chaque catégorie, on récupère le nombre de sujets
+        $nbSubjectsPerCategory[] = NULL;
+        foreach($categories as $c){
+            $nbSubjectsPerCategory[$c->getForumCategoryId()] =  $categoryRepository->getCountSubjectsInCategory($c->getForumCategoryId());
+        }
 
         // Formulaire d'ajout de catégorie
         $category = new AgilForumCategory(null,null,null);
@@ -50,7 +56,8 @@ class ForumController extends Controller
         }
 
         return $this->render('AGILAdminBundle:Forum:admin_forum_categories.html.twig',array(
-            'categories' => $categories, 'form' => $form->createView()
+            'categories' => $categories, 'form' => $form->createView(),
+            'nbSubjectsPerCategory' => $nbSubjectsPerCategory
             ));
     }
 
@@ -73,8 +80,30 @@ class ForumController extends Controller
             return $this->redirectToRoute('agil_admin_forum_categories');
         }
 
+        $categoryName = $category->getForumCategoryName();
+
+        $form = $this->createForm(new EditCategoryType(), $category);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+
+            // Est ce qu'une catégorie du même nom existe ?
+            $categoryExist = $categoryRepository->findBy(array('forumCategoryName' => $category->getForumCategoryName()));
+            if($categoryExist == null or $category->getForumCategoryName() == $categoryName){
+                $manager->persist($category);
+                $manager->flush($category);
+                $this->addFlash('success', "La catégorie a été modifiée");
+                return $this->redirectToRoute('agil_admin_forum_categories');
+            }else{
+                $this->addFlash('warning', "Une catégorie avec ce nom existe déjà");
+                return $this->redirectToRoute('agil_admin_forum_category_edit',array('idCategory' => $idCategory));
+            }
+
+        }
+
+
         return $this->render('AGILAdminBundle:Forum:admin_forum_category_edit.html.twig',array(
-            'category' => $category
+            'category' => $category, 'form' => $form->createView()
         ));
     }
 

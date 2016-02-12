@@ -12,8 +12,8 @@
                         </span>
             </h2>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             <form action="{{ path('agil_admin_forum_categories') }}" method="post" {{ form_enctype(form) }}>
 
@@ -75,71 +75,6 @@
                 {{ form_rest(form) }}
             </form>
 
-            <!--
-            <form action="#">
-
-                <div class="form-group" id="form_add_cat_nom">
-                    <input type="text" maxlength="100" class="form-control" id="input_form_add_cat"
-                           placeholder="Nom de la catégorie">
-                </div>
-
-                <div class="form-group" id="form_add_cat_des">
-                    <textarea maxlength="255" type="text" class="form-control" id="input_form_add_cat_des"
-                      placeholder="Description de la catégorie"></textarea>
-                </div>
-
-                <div class="form-group" id="form_add_cat_img ">
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label><h4>Sélectionnez une icone : </h4></label>
-                        </div>
-                        <div class="col-lg-offset-6">
-                            <table class="table selectImage">
-                                <tr>
-                                    <td><a href="#">
-                                        <span id="1"
-                                              class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-adjust"></span>
-                                        </a>
-                                    </td>
-                                    <td><a href="#"><span id="2"
-                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-arrow-right"></span></a>
-                                    </td>
-                                    <td><a href="#"><span id="3"
-                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-download"></span></a>
-                                    </td>
-                                    <td><a href="#"><span id="4"
-                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-book"></span></a>
-                                    </td>
-                                    <td><a href="#"><span id="5"
-                                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-facetime-video "></span></a>
-                                    </td>
-                                    <td>
-                                        <a href="#">
-                                    <span id="6"
-                                          class="btn btn-primary btn-lg white icon-add-cat glyphicon glyphicon-bold ">
-                                    </span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            </table>
-                        </div>
-                        <input id="nom_icon" type="hidden" value="">
-                    </div>
-
-                </div>
-
-
-                <div class="form-group">
-                    <span id="helpInput" class="help-Input hidden text-warning">Les champs ne peuvent être vides</span>
-                </div>
-                <button type="submit" id="btn-add-cat" class="btn btn-default disabled">Ajouter</button>
-            </form>
-
-            -->
-
-
             <br/>
         </div>
     </div>
@@ -175,13 +110,12 @@
                                     <span class="glyphicon {{ c.forumCategoryIcon }} text-center icon-medium"></span>
                                 </td>
                                 <td><a href="#"><h5>{{ c.forumCategoryName }}</h5></a></td>
-                                <td class="hidden-sm hidden-xs">451 posts</td>
+                                <td class="hidden-sm hidden-xs">{{ nbSubjectsPerCategory[c.forumCategoryId] }} sujet(s)</td>
                                 <td>
                                     <a href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
                                         <button type="button" class="btn btn-default">Editer</button>
                                     </a>
                                 </td>
-                                <!-- MODIFIER L'ALERTE JAVASCRIPT -->
                                 <td>
                                         <button data-href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
                                                 data-target="#confirm-delete" type="button" class="btn btn-danger" data-toggle="modal"
