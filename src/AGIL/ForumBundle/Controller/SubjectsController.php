@@ -2,6 +2,7 @@
 
 namespace AGIL\ForumBundle\Controller;
 
+use AGIL\DefaultBundle\Entity\AgilTag;
 use AGIL\ForumBundle\Entity\AgilForumAnswer;
 use AGIL\ForumBundle\Form\AnswerType;
 use AGIL\ForumBundle\Form\FirstAnswerType;
@@ -42,8 +43,21 @@ class SubjectsController extends Controller
 
             // On récupère les tags qui ont été tapés, on en fait un tableau
             $tagsArrayString = explode(" ", $subject->getTags());
+            $subject->setTags(null);
+
+            foreach($tagsArrayString as $tag){
+
+                $t = $tagRepository->findOneBy(array('tagName' => $tag));
+                if($t == null){
+                    $t = new AgilTag($tag,'tag-default',null);
+                    $em->persist($t);
+                }
+                $subject->addTag($t);
+
+            }
+
             // On remet les tags sous forme de tableau de AgilTag
-            $subject->setTags($tagRepository->findByTagName($tagsArrayString));
+            //$subject->setTags($tagRepository->findByTagName($tagsArrayString));
 
             $em->persist($firstPost);
             $em->persist($subject);
@@ -147,6 +161,29 @@ class SubjectsController extends Controller
 
     }
 
+
+    /**
+     * Permet d'insérer un tag dans la BDD
+     *
+     * @param $tagName
+     * @param string $color
+     * @param AgilSkill|null $skillCat
+     * @throws InvalidArgumentException
+     */
+    function insertTag($tagName, $color = '', AgilSkill $skillCat = null) {
+        if (!$tagName) {
+            throw new InvalidArgumentException('Un tag doit posséder au moins une lettre');
+        }
+
+        if (null === $this->findOneByTagName($tagName)) {
+            $tag = new AgilTag($tagName, '', null);
+            $tag->setSkillCategory((null == $skillCat)? null : $skillCat);
+            $tag->setTagColor(($color)? $color : '');
+
+            $this->getEntityManager()->persist($tag);
+            $this->getEntityManager()->flush();
+        }
+    }
 
     /*private function createDeleteForm($idCategory, $idSubject)
     {
