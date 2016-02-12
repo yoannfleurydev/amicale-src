@@ -13,10 +13,16 @@ class DefaultController extends Controller
         $qb = $em->createQueryBuilder();
         $qb->select('count(user.id)');
         $qb->from('AGILUserBundle:AgilUser','user');
-        $count = $qb->getQuery()->getSingleScalarResult();
+        $count_users = $qb->getQuery()->getSingleScalarResult();
 
-        return $this->render('AGILAdminBundle:Default:admin.html.twig',
-            array('nbUsers' => $count)
-        );
+        $qb2 = $em->createQueryBuilder();
+        $qb2->select('count(subject.forumSubjectId)');
+        $qb2->from('AGILForumBundle:AgilForumSubject','subject');
+        $count_subjects = $qb2->getQuery()->getSingleScalarResult();
+
+        return $this->render('AGILAdminBundle:Default:admin.html.twig', array(
+            'nbUsers' => $count_users,
+            'nbSubjects' => $count_subjects
+        ));
     }
 }
