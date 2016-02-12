@@ -192,3 +192,11 @@ $('.collapse').on('hide.bs.collapse', function () {
     var $fils = $( "a[aria-controls="+$id+"]").children();
     $fils.removeClass("animate_up");
 });
+
+$("#liste_gly_choice li").click(function () {
+    var glyph = $(this).children().children().attr('class');
+    $('#btn-cat-ch').attr('class', '');
+    $('#btn-cat-ch').addClass('glyphicon '+glyph);
+    $('#forum_add_category_forumCategoryIcon').attr("value", glyph);
+
+});
