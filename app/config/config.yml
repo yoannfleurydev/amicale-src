@@ -95,6 +95,7 @@ stfalcon_tinymce:
              toolbar1: "bold italic underline strikethrough blockquote forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media emoticons preview"
              image_advtab: false
              menubar: "file edit insert view"
+             height: 150
 
 
 # FOSUserBundle
