@@ -62,7 +62,7 @@
                     </td>
 
                     {% if ((is_granted('ROLE_MODERATOR')) or (app.user.username == s.username)) %}
-                        <td class="vert-align"><a
+                        <td class="vert-align"><a id="deleteSubjectLink" name="deleteSubjectLink"
                                     href="{{ path('agil_forum_subject_delete',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId}) }}">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a></td>

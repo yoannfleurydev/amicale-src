@@ -37,13 +37,18 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test : Créer un sujet (depuis une catégorie)
+     * Test : Créer un sujet - Répondre au sujet - Editer une réponse - Supprimer le sujet
      *
      * Pré-condition : testForumHomepage()
      */
-    public function testForumAddSubject()
+    public function testForum()
     {
+        // Accéder au forum
         $this->testForumHomepage();
+
+        /**
+         * Créer un sujet
+         */
         $crawler = $this->client->request('GET', '/forum/categories/1/page');
 
         $link = $crawler
@@ -53,7 +58,6 @@ class DefaultControllerTest extends WebTestCase
         ;
         $crawler = $this->client->click($link);
 
-        $this->assertContains('Ajouter', $this->client->getResponse()->getContent());
         $form = $crawler->selectButton('forum_add_first_answer[Ajouter]')->form();
 
         $form['forum_add_first_answer[subject][forumSubjectTitle]'] = "Vos retours sur PHP 7";
@@ -66,6 +70,57 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->client->followRedirect();
 
         $this->assertContains('Le sujet a bien été créé', $this->client->getResponse()->getContent());
+
+        /**
+         * Répondre dans le sujet
+         */
+        $form = $crawler->selectButton('forum_add_answer[Ajouter]')->form();
+        $form['forum_add_answer[forumAnswerText]'] = "Ma réponse au sujet";
+
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Ma réponse au sujet', $this->client->getResponse()->getContent());
+
+
+        /**
+         * Editer son deuxième message
+         */
+        $link = $crawler
+            ->filter('#editAnswerLink') // Cherche tous les liens contenant l'id editAnswerLink
+            ->eq(1) // Selectionne le deuxième trouvé
+            ->link()
+        ;
+        $crawler = $this->client->click($link);
+
+        $form = $crawler->selectButton('forum_edit_answer[Modifier]')->form();
+
+        $form['forum_edit_answer[forumAnswerText]'] = "J'ai modifié ma réponse au sujet";
+
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('La réponse a bien été modifiée', $this->client->getResponse()->getContent());
+
+
+        /**
+         * Supprimer le sujet créé
+         */
+        $crawler = $this->client->request('GET', '/forum/categories/1/page');
+
+        $link = $crawler
+            ->filter('#deleteSubjectLink') // Cherche tous les liens contenant l'id deleteSubjectLink
+            ->eq(0) // Selectionne le premier trouvé
+            ->link()
+        ;
+
+        $crawler = $this->client->click($link);
+
+        $form = $crawler->selectButton('forum_delete_subject[Supprimer]')->form();
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Le sujet a bien été supprimé.', $this->client->getResponse()->getContent());
 
     }
 

@@ -46,15 +46,6 @@ class SubjectsController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
 
-            // On vérifie qu'un sujet du même nom n'existe pas
-            $subjectExist = $em->getRepository("AGILForumBundle:AgilForumSubject")
-                ->findBy(array('category' => $category, 'forumSubjectTitle' => $subject->getForumSubjectTitle()));
-
-            if($subjectExist != null){
-                $this->addFlash('warning', "Un sujet avec ce nom existe déjà.");
-                return $this->redirectToRoute('agil_forum_subjects_list', array('idCategory' => $idCategory));
-            }
-
             // On récupère les tags qui ont été tapés, on en fait un tableau
             $tagsArrayString = explode(" ", $subject->getTags());
             $subject->setTags(null);
