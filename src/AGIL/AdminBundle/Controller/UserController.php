@@ -2,6 +2,7 @@
 
 namespace AGIL\AdminBundle\Controller;
 
+use AGIL\AdminBundle\Form\UserAdminType;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
@@ -157,8 +158,13 @@ class UserController extends Controller
      */
     public function adminUserAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
 
         $form = $this->createForm(new UserType(), null);
+        if ($user->hasRole("ROLE_ADMIN")) {
+            $form = $this->createForm(new UserAdminType(), null);
+        }
+
         $formCSV = $this->createForm(new UsersCSVType());
 
         $factory = $this->get('security.encoder_factory');
@@ -168,10 +174,10 @@ class UserController extends Controller
             $formCSV->handleRequest($request);
 
             if ($formCSV->isValid()) {
-                $this->addUserByCSVFile($formCSV, $em, $factory);
+                $this->addUserByCSVFile($formCSV, $em, $factory, $request);
             }
             elseif ($form->isValid()) {
-                $this->addUserByForm($form, $em, $factory);
+                $this->addUserByForm($form, $em, $factory, $request);
             }
         }
         return $this->render('AGILAdminBundle:User:admin_user_add.html.twig', array(
@@ -186,7 +192,7 @@ class UserController extends Controller
      * @param $em
      * @param $factory
      */
-    function addUserByForm($form, $em, $factory) {
+    function addUserByForm($form, $em, $factory, $request) {
         $email = $form->get('email')->getData();
         $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
 
@@ -227,9 +233,10 @@ class UserController extends Controller
 
             $userManager->updateUser($user);
 
+            $url = $request->getSchemeAndHttpHost();
             $subject = "Amicale GIL[Inscription]";
             $message = "<p>Bonjour $username,</p>";
-            $message .= "<p>vous avez été invité sur le site <a href=\"http://amicale.dev\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
+            $message .= "<p>vous avez été invité sur le site <a href=\"$url\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
             $message .= "<p>Pour vous connecter :</p>";
             $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
             $message .= "<p>Cordialement</p>";
@@ -247,7 +254,7 @@ class UserController extends Controller
      * @param $em
      * @param $factory
      */
-    function addUserByCSVFile($form, $em, $factory) {
+    function addUserByCSVFile($form, $em, $factory, $request) {
         $nbRegisters = 0;
         $file = $form['file']->getData();
 
@@ -312,9 +319,10 @@ class UserController extends Controller
                 $userManager->updateUser($user);
                 $nbRegisters++;
 
+                $url = $request->getSchemeAndHttpHost();
                 $subject = "Amicale GIL[Inscription]";
                 $message = "<p>Bonjour $username,</p>";
-                $message .= "<p>vous avez été invité sur le site <a href=\"http://amicale.dev\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
+                $message .= "<p>vous avez été invité sur le site <a href=\"$url\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
                 $message .= "<p>Pour vous connecter :</p>";
                 $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
                 $message .= "<p>Cordialement</p>";

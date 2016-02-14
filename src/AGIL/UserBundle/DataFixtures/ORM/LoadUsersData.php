@@ -39,6 +39,34 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
 
         $this->setReference('superAdmin', $userSuperAdmin);
 
+        // ############ CREATION D'UN ADMINISTRATEUR DE TEST ############
+        $userManager = $this->container->get('fos_user.user_manager');
+        $userAdmin = $userManager->createUser();
+        $userAdmin->setUsername('admin');
+        $userAdmin->setEMail('admin@amicale.dev');
+        $userAdmin->setPlainPassword('admin');
+        $userAdmin->setEnabled(true);
+        $userAdmin->setRoles(array('ROLE_ADMIN'));
+        $userAdmin->setUserProfilePictureUrl('default.jpg');
+
+        $userManager->updateUser($userAdmin, true);
+
+        $this->setReference('admin', $userAdmin);
+
+        // ############ CREATION D'UN MODERATEUR DE TEST ############
+        $userManager = $this->container->get('fos_user.user_manager');
+        $userModerator = $userManager->createUser();
+        $userModerator->setUsername('moderator');
+        $userModerator->setEMail('moderator@amicale.dev');
+        $userModerator->setPlainPassword('moderator');
+        $userModerator->setEnabled(true);
+        $userModerator->setRoles(array('ROLE_MODERATOR'));
+        $userModerator->setUserProfilePictureUrl('default.jpg');
+
+        $userManager->updateUser($userModerator, true);
+
+        $this->setReference('moderator', $userModerator);
+
         // ############ CREATION D'UN MEMBRE DE TEST ############
         $userManager = $this->container->get('fos_user.user_manager');
         $userMember = $userManager->createUser();

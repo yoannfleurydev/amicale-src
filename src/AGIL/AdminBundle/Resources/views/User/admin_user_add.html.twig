@@ -39,18 +39,10 @@
                                 {{ form_row(form.name) }}
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label for="role">Roles :</label>
-                                {{ form_row(form.role) }}
-                            </div>
-                        </div>
 
-                        {% if is_granted("ROLE_SUPER_ADMIN") %}
                         <div class="form-group">
                             {{ form_row(form.role) }}
                         </div>
-                        {% endif %}
 
                         {{ form_rest(form) }}
 
