@@ -24,7 +24,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/profile/edit');
 
-        $this->client->followRedirect();
+        $crawler = $this->client->followRedirect();
 
         $form = $crawler->selectButton('_submit')->form(array(
             '_username' => 'amicale@amicale.dev',
