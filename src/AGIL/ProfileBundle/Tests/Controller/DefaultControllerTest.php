@@ -6,15 +6,37 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndex()
+
+    private $client = null;
+
+    /**
+     * Méthode qui initialise le client de test
+     */
+    public function setUp()
     {
-        $client = static::createClient();
+        $this->client = static::createClient();
+    }
 
-        $crawler = $client->request('GET', '/profile');
+    /**
+     *
+     */
+    public function testShow()
+    {
+        $crawler = $this->client->request('GET', '/profile/edit');
 
-        $this->assertGreaterThan(
+        $this->client->followRedirect();
+
+        $form = $crawler->selectButton('Connexion')->form(array(
+            '_username' => 'amicale@amicale.dev',
+            '_password' => 'amicale'
+        ));
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+        $this->assertContains('Informations générales', $this->client->getResponse()->getContent());
+        /*$this->assertGreaterThan(
             0,
-            $crawler->filter('html')->count()
-        );
+            $crawler->filter('html:contains("Connexion")')->count()
+        );*/
     }
 }
