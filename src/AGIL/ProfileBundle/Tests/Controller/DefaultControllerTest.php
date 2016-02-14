@@ -22,7 +22,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testShow()
     {
-        $crawler = $this->client->request('GET', '/profile/edit');
+        $this->client->request('GET', '/profile/edit');
 
         $crawler = $this->client->followRedirect();
 
@@ -33,10 +33,6 @@ class DefaultControllerTest extends WebTestCase
 
         $this->client->submit($form);
         $this->client->followRedirect();
-//        $this->assertContains('Informations générales', $this->client->getResponse()->getContent());
-        /*$this->assertGreaterThan(
-            0,
-            $crawler->filter('html:contains("Connexion")')->count()
-        );*/
+        $this->assertContains('Informations générales', $this->client->getResponse()->getContent());
     }
 }
