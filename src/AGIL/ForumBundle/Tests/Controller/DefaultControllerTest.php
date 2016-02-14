@@ -41,7 +41,7 @@ class DefaultControllerTest extends WebTestCase
      *
      * Pré-condition : testForumHomepage()
      */
-    public function testForumAddSubject()
+    /*public function testForumAddSubject()
     {
         $this->testForumHomepage();
         $crawler = $this->client->request('GET', '/forum/categories/1/page');
@@ -67,7 +67,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertContains('Le sujet a bien été créé', $this->client->getResponse()->getContent());
 
-    }
+    }*/
 
 
 }

@@ -2,6 +2,7 @@
 
 namespace AGIL\AdminBundle\Controller;
 
+use AGIL\AdminBundle\Form\UserAdminType;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
@@ -157,8 +158,13 @@ class UserController extends Controller
      */
     public function adminUserAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
 
         $form = $this->createForm(new UserType(), null);
+        if ($user->hasRole("ROLE_ADMIN")) {
+            $form = $this->createForm(new UserAdminType(), null);
+        }
+
         $formCSV = $this->createForm(new UsersCSVType());
 
         $factory = $this->get('security.encoder_factory');
