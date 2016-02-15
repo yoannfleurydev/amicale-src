@@ -3,65 +3,57 @@
 {% block body %}
     <!-- Ajout d'un nouveau post -->
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                            <span class="panel-title-content">
-                              Nouveau post
-                            </span>
-                </h2>
-            </div>
-            <div class="panel-body">
+        <div class="col-xs-10 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                          Nouveau post
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
 
-                <!-- Formulaire d'ajout d'un nouveau post pour le forum -->
+                    <!-- Formulaire d'ajout d'un nouveau post pour le forum -->
 
-                <form action="{{ path('agil_forum_subject_add', {'idCategory': idCategory}) }}" method="post" {{ form_enctype(form) }}>
+                    <form action="{{ path('agil_forum_subject_add', {'idCategory': idCategory}) }}" method="post" {{ form_enctype(form) }}>
 
-                    <div class="form-group" id="formAddNamePost">
-                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Nom du sujet</label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            {{ form_errors(form.subject.forumSubjectTitle) }}
-                            {{ form_row(form.subject.forumSubjectTitle) }}
+                        <div class="form-group" id="formAddNamePost">
+                            <label for="inputNamePost" class="control-label">Nom du sujet</label>
+                                {{ form_errors(form.subject.forumSubjectTitle) }}
+                                {{ form_row(form.subject.forumSubjectTitle) }}
                         </div>
-                    </div>
-                    <div class="form-group" id="formAddDescPost">
-                        <label for="inputDescPost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Description</label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            {{ form_errors(form.subject.forumSubjectDescription) }}
-                            {{ form_row(form.subject.forumSubjectDescription) }}
+                        <div class="form-group" id="formAddDescPost">
+                            <label for="inputDescPost" class="control-label">Description</label>
+                                {{ form_errors(form.subject.forumSubjectDescription) }}
+                                {{ form_row(form.subject.forumSubjectDescription) }}
                         </div>
-                    </div>
 
 
-                    <div class="form-group" id="formAddTagsPost">
-                        <label for="inputTagsPost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Tags</label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            {{ form_errors(form.subject.tags) }}
-                            {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
+                        <div class="form-group" id="formAddTagsPost">
+                            <label for="inputTagsPost" class="control-label">Tags</label>
+                                {{ form_errors(form.subject.tags) }}
+                                {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
+                            <div id="tags_container"></div>
                         </div>
-                        <div id="tags_container"></div>
-                    </div>
 
-                    <div class="form-group" id="formAddContentPost">
-                        <label for="inputContentPost" class="col-sm-2 control-label">  </label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            {{ form_errors(form.forumAnswerText) }}
-                            {{ form_row(form.forumAnswerText) }}
+                        <div class="form-group" id="formAddContentPost">
+                            <label for="inputContentPost" class="control-label">  </label>
+                                {{ form_errors(form.forumAnswerText) }}
+                                {{ form_row(form.forumAnswerText) }}
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            {{ form_row(form.Ajouter) }}
+                        <p class="text-center">
+                            {{ form_widget(form.Ajouter) }}
                             <a href="{{ path('agil_forum_subjects_list', {'idCategory': idCategory}) }}">
                                <button class="btn btn-default">Annuler</button>
                             </a>
-                        </div>
-                    </div>
+                        </p>
 
-                    {{ tinymce_init() }}
-                    {{ form_rest(form) }}
-                </form>
+                        {{ tinymce_init() }}
+                        {{ form_rest(form) }}
+                    </form>
+                </div>
             </div>
         </div>
     </div>

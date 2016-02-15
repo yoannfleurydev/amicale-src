@@ -112,12 +112,12 @@
                                 <td><a href="#"><h5>{{ c.forumCategoryName }}</h5></a></td>
                                 <td class="hidden-sm hidden-xs">{{ nbSubjectsPerCategory[c.forumCategoryId] }} sujet(s)</td>
                                 <td>
-                                    <a href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
+                                    <a id="editCategoryLink" href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
                                         <button type="button" class="btn btn-default">Editer</button>
                                     </a>
                                 </td>
                                 <td>
-                                        <button data-href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
+                                        <button id="deleteCategoryLink" data-href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
                                                 data-target="#confirm-delete" type="button" class="btn btn-danger" data-toggle="modal"
                                               >
                                             Supprimer

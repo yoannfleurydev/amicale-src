@@ -244,6 +244,7 @@ class AnswersController extends Controller
             $em->persist($answer);
             $em->flush($answer);
 
+            $this->addFlash('success', "La réponse a bien été modifiée");
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers',
                 array('idCategory' => $idCategory, 'idSubject' => $idSubject, 'page' => ceil(($index+1) / $maxAnswers))) );
         }

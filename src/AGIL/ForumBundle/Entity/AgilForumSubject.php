@@ -49,7 +49,7 @@ class AgilForumSubject
     /**
      * @var string
      *
-     * @ORM\Column(name="forumSubjectTitle", type="string", length=255, unique=true)
+     * @ORM\Column(name="forumSubjectTitle", type="string", length=255)
      * @Assert\NotBlank(message="Le titre ne peut être vide")
      * @Assert\Length(
      *      min = 2,
