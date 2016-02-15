@@ -3,57 +3,42 @@
 {% block body %}
     <!-- Suppression d'une réponse -->
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                            <span class="panel-title-content">
-                                Suppression de la réponse
-                            </span>
-                </h2>
-            </div>
-            <div class="panel-body">
+        <div class="col-lg-offset-2 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                    <span class="panel-title-content">
+                        Suppression de la réponse
+                    </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
 
-                <!-- Formulaire de suppression de la réponse -->
+                    <!-- Formulaire de suppression de la réponse -->
 
-                <form action="{{ path('agil_forum_answers_delete', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}" method="post" {{ form_enctype(form) }}>
+                    <form action="{{ path('agil_forum_answers_delete', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}" method="post" {{ form_enctype(form) }}>
 
-                    <div class="form-group" id="formAddNamePost">
-                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Réponse</label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <p>{{ answer.forumAnswerText|raw }}</p>
+                        <div class="form-group">
+                            <p>Réponse : <bold>{{ answer.forumAnswerText|raw }}</bold></p>
                         </div>
-                    </div>
-
-                    <div class="form-group" id="formAddNamePost">
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <div class="form-group">
                             <p>Voulez-vous vraiment supprimer cette réponse?</p>
                         </div>
-                    </div>
-
-
-                    {% if isAdmin == true %}
-                        <div class="form-group" id="formAddNamePost">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <p>Raison :</p>
-                                {{ form_row(form.reason) }}
+                        {% if isAdmin == true %}
+                            <div class="form-group">
+                                <p>Raison :
+                                    {{ form_row(form.reason) }}</p>
                             </div>
-                        </div>
-                    {% endif %}
+                        {% endif %}
 
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            {{ form_row(form.Supprimer) }}
+                        <div class="text-center">
+                            {{ form_widget(form.Supprimer) }}
+                            <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
+                                Annuler
+                            </a>
                         </div>
-                    </div>
-
-                    {{ form_rest(form) }}
-                </form>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <a href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
-                            <button class="btn btn-default">Annuler</button>
-                        </a>
-                    </div>
+                        {{ form_rest(form) }}
+                    </form>
                 </div>
             </div>
         </div>

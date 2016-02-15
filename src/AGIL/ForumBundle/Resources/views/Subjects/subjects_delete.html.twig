@@ -20,11 +20,13 @@
                         <label for="inputNamePost" class="control-label">Sujet : <strong>{{ subject.forumSubjectTitle }}</strong></label>
 
                         <p>Voulez-vous vraiment supprimer ce sujet?</p>
-
+                        <div class="form-group">
+                            {{ form_widget(form.reason) }}
+                        </div>
                         <div class="text-center">
                             {{ form_widget(form.Supprimer) }}
-                            <a href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
-                                <button class="btn btn-default">Annuler</button>
+                            <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
+                                Annuler
                             </a>
                         </div>
                         {{ form_rest(form) }}

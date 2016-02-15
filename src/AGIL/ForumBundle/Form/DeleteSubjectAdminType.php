@@ -24,7 +24,7 @@ class DeleteSubjectAdminType extends AbstractType
         $builder->add('Supprimer', 'submit', array(
             'label' => false,
             'attr' => array(
-                'class' => 'btn btn-default',
+                'class' => 'btn btn-primary',
             )
         ));
     }

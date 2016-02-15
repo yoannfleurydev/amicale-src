@@ -33,11 +33,6 @@
                         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-offset-2 col-lg-8">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    {% for flash_message in app.session.flashbag.get('warning') %}
-                                        <div class="alert-warning">
-                                            {{ flash_message }}
-                                        </div>
-                                    {% endfor %}
                                     <form action="{{ path('agil_profile_edit') }}"
                                           method="post" {{ form_enctype(form) }}>
 
@@ -65,7 +60,7 @@
                                         <div class="form-group">
                                             <label for="pseudo">Modifier la photo de profil :</label>
                                             <div class="input-group">
-												<div class="fileUpload btn btn-primary">
+                                                <div class="fileUpload btn btn-primary">
                                                     <span id="button_name_picture"><i class="material-icons">file_upload</i> Choisir un fichier</span>
                                                     {{ form_row(form.userProfilePictureUrl) }}
                                                 </div>
@@ -109,8 +104,7 @@
                                                 {{ form_row(form.passwordConfirm) }}
                                             </div>
                                         </div>
-
-                                        {#{% if data is defined %}
+                                        {# {% if data is defined %}
                                             {% for profileSkillsCategory in data['profileSkillsCategories'] %}
                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="panel panel-default">
@@ -131,7 +125,7 @@
                                                                                     {{ tag.tagName }}
                                                                                 </div>
                                                                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                    {#{{ form_row(form['tag' ~ tag.tagId]) }}#}
+                                                                                    {{ form_row(form['tag' ~ tag.tagId]) }}
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -142,8 +136,7 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
-                                        {% endif %}#}
-
+                                        {% endif %} #}
                                         {# update button #}
                                         {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
 

@@ -37,7 +37,7 @@ class EditCategoryType extends AbstractType
             )
         ));
 
-        $builder->add('forumCategoryIcon', 'hidden', array(
+        $builder->add('forumCategoryIcon', HiddenType::class, array(
             'data' => 'glyphicon-tag',
         ));
 
