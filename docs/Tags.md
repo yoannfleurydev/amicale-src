@@ -65,7 +65,8 @@ Vous pouvez utiliser les deux méthodes suivantes par exemple :
 
 1. Méthode classique
 
-  ** `findBy` renvoie un tableau d'entités **
+**`findBy` renvoie un tableau d'entités**
+
 ```PHP
 $entity->setTags($tagRepository->findBy(array('tagName' => $tagsArrayString)));
 ```
