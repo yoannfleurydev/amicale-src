@@ -21,14 +21,27 @@
 
                         <p>Voulez-vous vraiment supprimer ce sujet?</p>
 
+                        {% if isAdmin == true %}
+                            <div class="form-group" id="formAddNamePost">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <p>Raison :</p>
+                                    {{ form_row(form.reason) }}
+                                </div>
+                            </div>
+                        {% endif %}
+
                         <div class="text-center">
                             {{ form_widget(form.Supprimer) }}
+                        </div>
+                        {{ form_rest(form) }}
+                    </form>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
                             <a href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
                                 <button class="btn btn-default">Annuler</button>
                             </a>
                         </div>
-                        {{ form_rest(form) }}
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
