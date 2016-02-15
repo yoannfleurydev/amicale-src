@@ -124,9 +124,11 @@ class DefaultController extends Controller
                 );
             } else {
                 $userManager->updateUser($user);
+                $this->addFlash('success', 'Profil modifié.');
                 return $this->redirect($this->generateUrl('agil_profile_id', array('id' => $user->getId())));
             }
         }
+
 
         return $this->render('AGILProfileBundle:Default:edit.html.twig', array(
             'user' => $user,
