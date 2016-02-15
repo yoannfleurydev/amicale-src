@@ -10,10 +10,7 @@ class TagController extends Controller {
 
 	public function testFuncAction() {
 
-		$this->getDoctrine()
-			->getManager()
-			->getRepository('AGILDefaultBundle:AgilTag')
-			->insertTag('pouet');
+		$this->get('agil_default.tags');
 
 		return $this->render('AGILDefaultBundle:Default:tags.html.twig');
 	}

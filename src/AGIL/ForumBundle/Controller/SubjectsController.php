@@ -48,21 +48,19 @@ class SubjectsController extends Controller
 
             // On récupère les tags qui ont été tapés, on en fait un tableau
             $tagsArrayString = explode(" ", $subject->getTags());
-            $subject->setTags(null);
 
+            // Récupération du service qui gère les tags
+            $tagsManager = $this->get('agil_default.tags');
+
+            // On vérifie tous les tags un à un
             foreach($tagsArrayString as $tag){
-
-                $t = $tagRepository->findOneBy(array('tagName' => $tag));
-                if($t == null){
-                    $t = new AgilTag($tag,'tag-default',null);
-                    $em->persist($t);
-                }
-                $subject->addTag($t);
-
+                $tagsManager->insertTag($tag);
             }
+            // On les enregistre dans la base
+            $em->flush();
 
             // On remet les tags sous forme de tableau de AgilTag
-            //$subject->setTags($tagRepository->findByTagName($tagsArrayString));
+            $subject->setTags($tagRepository->findByTagName($tagsArrayString));
 
             $em->persist($firstPost);
             $em->persist($subject);

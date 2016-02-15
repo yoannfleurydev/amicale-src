@@ -27,6 +27,4 @@ class AgilTagRepository extends EntityRepository
 		/* /!\ C'est une liste d'objet de type AgilTag /!\ */
 		return $request->getQuery()->getResult();
 	}
-
-
 }
