@@ -1,46 +1,43 @@
-/**
- * Created by valentin on 1/27/16.
- */
 
-var container = document.querySelector('.container');
-var button = document.querySelector('.animate');
-var up = document.querySelector('.up');
-var bottom = document.querySelector('.bottom');
-var main = document.querySelector('.main');
+var menu = $('nav');
+var button = $('.animate');
+var up = $('.up');
+var bottom = $('.bottom');
 
 function toggleSidebar(){
-    isShowingSidebar() ? hideSidebar() : showSidebar();
+    menu.toggleClass('show-sidebar');
+    up.toggleClass('rotate_up');
+    bottom.toggleClass('rotate_bottom');
 }
 
 function showSidebar(){
-    container.classList.add('show-sidebar');
-    up.classList.add('rotate_up');
-    bottom.classList.add('rotate_bottom');
+    menu.addClass('show-sidebar');
+    up.addClass('rotate_up');
+    bottom.addClass('rotate_bottom');
 }
 
 function hideSidebar(){
-    container.classList.remove('show-sidebar');
-    up.classList.remove('rotate_up');
-    bottom.classList.remove('rotate_bottom');
+    menu.removeClass('show-sidebar');
+    up.removeClass('rotate_up');
+    bottom.removeClass('rotate_bottom');
 }
 
-function isShowingSidebar(){
-    return container.classList.contains('show-sidebar');
-}
+var tap = ("ontouchstart" in document.documentElement);
 
-document.querySelector('.hamburger').addEventListener('click', toggleSidebar, false);
+if(!tap){
+    $('.hamburger, .sidebar').mouseenter( function () {
+        showSidebar();
+    });
 
-container.addEventListener('click', function(e){
-    if(isShowingSidebar() && main.contains(e.target)){
-        e.preventDefault();
+    $('.sidebar').mouseleave( function () {
         hideSidebar();
-    }
-}, true);
+    });
+} else {
+    $('.hamburger').click( function () {
+        toggleSidebar();
+    });
 
-$(document).scroll(function() {
-    hideSidebar();
-});
-
-$("input, textarea").focusin(function() {
-    hideSidebar();
-});
+    $('.container').click( function () {
+        hideSidebar();
+    });
+}

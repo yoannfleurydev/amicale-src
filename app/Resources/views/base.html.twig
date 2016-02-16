@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <!--<button class="navbar-brand hamburger"><span class="glyphicon glyphicon-arrow-right animate"></span></button>-->
-                <button class="navbar-brand hamburger" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Menu">
+                <button class="navbar-brand hamburger">
                     <span class="bar up animate"></span>
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
@@ -50,8 +50,6 @@
                 <a href="#" class="navbar-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Rechercher"><span class="material-icons">search</span></a>
             </div>
         </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container">
         <aside class="sidebar">
             <nav class="nav">
                 <ul class="nav-items">
@@ -63,31 +61,31 @@
                     <li><a href="#" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}">
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
-                    {% if is_granted("ROLE_USER") %}
+                            {% if is_granted("ROLE_USER") %}
 
-                            <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}">
+                    <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}">
                             <span class="glyphicon glyphicon-th-list"></span>
-                                Forum
-                            </a>
-                        </li>
+                            Forum
+                        </a>
+                    </li>
                     {% endif %}
                     <li><a href="#" class="nav-link {% if isActive == "hall" %} nav-link-active {% endif %}">
                             <span class="glyphicon glyphicon-picture"></span>
                             Hall
                         </a></li>
                     {% if is_granted("ROLE_USER") %}
-                    <li><a href="#" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
-                            <span class="glyphicon glyphicon-comment"></span>
-                            Salon
-                        </a></li>
-                    <li><a href="#" class="nav-link">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                            Agenda</a></li>
+                        <li><a href="#" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
+                                <span class="glyphicon glyphicon-comment"></span>
+                                Salon
+                            </a></li>
+                        <li><a href="#" class="nav-link">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                Agenda</a></li>
                     {% endif %}
                     {% if is_granted("ROLE_ADMIN") %}
-                    <li><a href="{{ path('agil_admin_homepage') }}" class="nav-link {% if isActive == "admin" %} nav-link-active {% endif %}">
-                            <span class="glyphicon glyphicon-wrench"></span>
-                            Administration</a></li>
+                        <li><a href="{{ path('agil_admin_homepage') }}" class="nav-link {% if isActive == "admin" %} nav-link-active {% endif %}">
+                                <span class="glyphicon glyphicon-wrench"></span>
+                                Administration</a></li>
                     {% endif %}
                 </ul>
                 <div class="sidebar-separator"></div>
@@ -98,6 +96,8 @@
                 </ul>
             </nav>
         </aside>
+    </nav>
+    <div class="container">
         {% for type, messages in app.session.flashBag.all %}
             {% for message in messages %}
                 <div class="row">

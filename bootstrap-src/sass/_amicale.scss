@@ -174,8 +174,7 @@ body {
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
   position: fixed;
-  margin-top:65px;
-  z-index: 5;
+  z-index: 100;
   top: 0;
   left: 0;
   height: 100%;
@@ -187,6 +186,7 @@ body {
   transform: translate3d(-260px, 0, 0);
   transition-property: transform;
   overflow-y:auto;
+  padding-top: 10px;
 }
 
 .sidebar, .sidebar a { color: #FFF; }
