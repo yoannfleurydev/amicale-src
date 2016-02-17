@@ -39,16 +39,24 @@
                                 {{ form_row(form.name) }}
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            {{ form_row(form.role) }}
-                        </div>
-
-                        {{ form_rest(form) }}
-
-                        <div class="text-center">
+                        <p>
+                            <div class="radio">
+                                {{ form_widget(form.role.0) }}
+                                {{ form_label(form.role.0) }}
+                            </div>
+                            <div class="radio">
+                                {{ form_widget(form.role.1) }}
+                                {{ form_label(form.role.1) }}
+                            </div>
+                            <div class="radio">
+                                {{ form_widget(form.role.2) }}
+                                {{ form_label(form.role.2) }}
+                            </div>
+                        </p>
+                        <p class="text-center">
                             {{ form_row(form.Inviter) }}
-                        </div>
+                            {{ form_rest(form) }}
+                        </p>
                     </form>
                 </div>
             </div>

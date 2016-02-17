@@ -22,6 +22,7 @@ function hideSidebar(){
     bottom.removeClass('rotate_bottom');
 }
 
+
 var tap = ("ontouchstart" in document.documentElement);
 
 if(!tap){
@@ -33,11 +34,12 @@ if(!tap){
         hideSidebar();
     });
 } else {
-    $('.hamburger').click( function () {
-        toggleSidebar();
+
+    $(".hamburger").click(function() {
+        showSidebar();
     });
 
-    $('.container').click( function () {
-        hideSidebar();
+    $(".container").click(function() {
+       hideSidebar();
     });
 }
