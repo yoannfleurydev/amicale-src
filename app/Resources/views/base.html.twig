@@ -19,8 +19,8 @@
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
                 </button>
-                <a href="#"><img class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ" width="95px"></a>
-                <a href="#" class="navbar-mobile">AGIL</a>
+                <a class="hidden-xs hidden-sm" href="#"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ"></a>
+                <a class="hidden-xs hidden-sm" href="#" id="logo-agil" class="navbar-mobile">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>

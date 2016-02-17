@@ -118,6 +118,19 @@ body {
   padding-bottom: 140px;
 }
 
+#logo-university {
+  padding: 0 !important;
+  width: 130px;
+  padding-top: 5px !important;
+}
+
+#logo-agil {
+  font-size: 25px !important;
+  padding-left: 20px;
+  padding-top: 8px;
+  float: left;
+}
+
 .nav-title {
   display: block;
   padding: 10px 30px;
@@ -140,6 +153,11 @@ body {
 
 .nav-link:hover {
   background-color: #D55400;
+  text-decoration: none;
+}
+
+.nav-link:focus {
+  color: #F88844;
   text-decoration: none;
 }
 
