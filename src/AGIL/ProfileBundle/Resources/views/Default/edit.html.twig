@@ -131,7 +131,7 @@
                                                                                     {{ tag.tagName }}
                                                                                 </div>
                                                                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                    {#{{ form_row(form['tag' ~ tag.tagId]) }}#}
+                                                                                    {#{{ form_row(form['tag' ~ tag.tagId]) }}
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -142,7 +142,7 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
-                                        {% endif %}#}
+                                        {% endif %} #}
 
                                         {# update button #}
                                         {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
