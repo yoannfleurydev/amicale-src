@@ -28,16 +28,16 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
         // ############ CREATION D'UN SUPER-ADMINISTRATEUR DE TEST ############
         $userManager = $this->container->get('fos_user.user_manager');
         $userSuperAdmin = $userManager->createUser();
-        $userSuperAdmin->setUsername('superAdmin');
-        $userSuperAdmin->setEMail('superadmin@superadmin.fr');
-        $userSuperAdmin->setPlainPassword('superAdmin');
+        $userSuperAdmin->setUsername('superadmin');
+        $userSuperAdmin->setEMail('superadmin@amicale.dev');
+        $userSuperAdmin->setPlainPassword('superadmin');
         $userSuperAdmin->setEnabled(true);
         $userSuperAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
         $userSuperAdmin->setUserProfilePictureUrl('default.jpg');
 
         $userManager->updateUser($userSuperAdmin, true);
 
-        $this->setReference('superAdmin', $userSuperAdmin);
+        $this->setReference('superadmin', $userSuperAdmin);
 
         // ############ CREATION D'UN ADMINISTRATEUR DE TEST ############
         $userManager = $this->container->get('fos_user.user_manager');
@@ -71,7 +71,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
         $userManager = $this->container->get('fos_user.user_manager');
         $userMember = $userManager->createUser();
         $userMember->setUsername('user');
-        $userMember->setEMail('user@user.fr');
+        $userMember->setEMail('user@amicale.dev');
         $userMember->setPlainPassword('user');
         $userMember->setEnabled(true);
         $userMember->setRoles(array('ROLE_USER'));
@@ -79,20 +79,20 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
 
         $userManager->updateUser($userMember, true);
 
-        $this->setReference('userMember', $userMember);
+        $this->setReference('user', $userMember);
 
         $userManager = $this->container->get('fos_user.user_manager');
-        $userSuperAdmin = $userManager->createUser();
-        $userSuperAdmin->setUsername('amicale');
-        $userSuperAdmin->setEMail('amicale@amicale.dev');
-        $userSuperAdmin->setPlainPassword('amicale');
-        $userSuperAdmin->setEnabled(true);
-        $userSuperAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
-        $userSuperAdmin->setUserProfilePictureUrl('default.jpg');
+        $amicale = $userManager->createUser();
+        $amicale->setUsername('amicale');
+        $amicale->setEMail('amicale@amicale.dev');
+        $amicale->setPlainPassword('amicale');
+        $amicale->setEnabled(true);
+        $amicale->setRoles(array('ROLE_SUPER_ADMIN'));
+        $amicale->setUserProfilePictureUrl('default.jpg');
 
-        $userManager->updateUser($userSuperAdmin, true);
+        $userManager->updateUser($amicale, true);
 
-        $this->setReference('amicale', $userSuperAdmin);
+        $this->setReference('amicale', $amicale);
     }
 
     /**

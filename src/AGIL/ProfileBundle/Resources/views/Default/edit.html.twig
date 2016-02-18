@@ -61,7 +61,12 @@
                                             <label for="pseudo">Modifier la photo de profil :</label>
                                             <div class="input-group">
                                                 <div class="fileUpload btn btn-primary">
+<<<<<<< HEAD
                                                     <span id="button_name_picture"><i class="material-icons">file_upload</i> Choisir un fichier</span>
+=======
+                                                    <span id="button_name_picture"><i
+                                                                class="material-icons">file_upload</i> Choisir un fichier</span>
+>>>>>>> feature/userBundle
                                                     {{ form_row(form.userProfilePictureUrl) }}
                                                 </div>
                                             </div>
@@ -108,7 +113,11 @@
                                                 {{ form_row(form.passwordConfirm) }}
                                             </div>
                                         </div>
-                                        {# {% if data is defined %}
+
+                                        <div>
+                                            <p>Modification des compétences du profil</p>
+                                        </div>
+                                        {% if data is defined %}
                                             {% for profileSkillsCategory in data['profileSkillsCategories'] %}
                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="panel panel-default">
@@ -140,7 +149,8 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
-                                        {% endif %} #}
+                                        {% endif %}
+
                                         {# update button #}
                                         {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
 

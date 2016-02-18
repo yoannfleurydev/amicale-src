@@ -53,6 +53,9 @@ class DefaultController extends Controller
         );
 
         // Création d'un formulaire lié à aucune entité
+        $profileEditType = new ProfileEditType($data); // TODO Remove these lines when the debug is finished
+        var_dump($profileEditType->buildForm());
+        die;
         $form = $this->createForm(new ProfileEditType($data), null);
         // <=> $form = $this->get('form.factory')->create(new ProfileEditType(), null);
 
