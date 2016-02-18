@@ -30,12 +30,9 @@
                                     {{ form_row(form.reason) }}</p>
                             </div>
                         {% endif %}
-
-                        <div class="text-center">
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
                             {{ form_widget(form.Supprimer) }}
-                            <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
-                                Annuler
-                            </a>
                         </div>
                         {{ form_rest(form) }}
                     </form>

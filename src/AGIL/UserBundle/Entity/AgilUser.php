@@ -77,8 +77,6 @@ class AgilUser extends BaseUser
      * @var string
      *
      * @ORM\Column(name="userProfilePictureUrl", type="string", length=255, nullable=true)
-     *
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png", "image/bmp" })
      */
     protected $userProfilePictureUrl;
     /**

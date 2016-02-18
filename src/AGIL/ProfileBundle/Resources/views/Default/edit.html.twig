@@ -61,12 +61,8 @@
                                             <label for="pseudo">Modifier la photo de profil :</label>
                                             <div class="input-group">
                                                 <div class="fileUpload btn btn-primary">
-<<<<<<< HEAD
-                                                    <span id="button_name_picture"><i class="material-icons">file_upload</i> Choisir un fichier</span>
-=======
                                                     <span id="button_name_picture"><i
                                                                 class="material-icons">file_upload</i> Choisir un fichier</span>
->>>>>>> feature/userBundle
                                                     {{ form_row(form.userProfilePictureUrl) }}
                                                 </div>
                                             </div>
@@ -139,7 +135,6 @@
                                                                                 </div>
                                                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                                                     {{ form_row(form['tag' ~ tag.tagId]) }}
-                                                                                </div>
                                                                             </div>
                                                                         </li>
                                                                     {% endif %}
@@ -150,7 +145,6 @@
                                                 </div>
                                             {% endfor %}
                                         {% endif %}
-
                                         {# update button #}
                                         {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
 

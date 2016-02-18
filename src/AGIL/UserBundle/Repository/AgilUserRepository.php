@@ -32,6 +32,12 @@ class AgilUserRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * retourne le nombre d'utilisateurs avec le role de membre uniquement
+     * @param int $page
+     * @param int $maxperpage
+     * @return mixed
+     */
     public function getCountUsers($page=1, $maxperpage=25)
     {
         $qb = $this->_em->createQueryBuilder()
@@ -45,6 +51,28 @@ class AgilUserRepository extends EntityRepository
             ->setParameter('roles', '%"ROLE_SUPER_ADMIN"%')
             ->setParameter('roles2', '%"ROLE_MODERATOR"%')
             ->setParameter('roles3', '%"ROLE_ADMIN"%')
+        ;
+
+        $users_count = $qb->getQuery()->getSingleScalarResult();
+
+        return $users_count;
+    }
+
+    /**
+     * retourne le nombre d'utilisateurs excepté le super_admin
+     * @param int $page
+     * @param int $maxperpage
+     * @return mixed
+     */
+    public function getCount($page=1, $maxperpage=25)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('count(agil_user.id)')
+            ->from('AGILUserBundle:AgilUser','agil_user')
+            ->where('
+            agil_user.roles NOT LIKE :roles
+            ')
+            ->setParameter('roles', '%"ROLE_SUPER_ADMIN"%')
         ;
 
         $users_count = $qb->getQuery()->getSingleScalarResult();
