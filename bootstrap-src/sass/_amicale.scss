@@ -1,3 +1,59 @@
+label.radio input[type=radio] {
+  opacity:0;
+  position:absolute
+}
+label.radio span {
+  content:"";
+  line-height:11px;
+  border:2px solid #666;
+  border-radius:50%;
+  -webkit-transition:.24s;
+  transition:.24s;
+  display:inline-block;
+  width:18px;
+  height:18px;
+  vertical-align:middle;
+  margin-right:10px;
+  margin-left:10px;
+}
+label.radio :checked+span {
+  border:2px solid #d55400;
+}
+label.radio :checked+span:before {
+  color: #d55400;
+  content: '\25CF';
+  font-size: 24px;
+  text-align: center;
+}
+
+label.checkbox input[type=checkbox] {
+  opacity: 0;
+  position: absolute;
+}
+label.checkbox span {
+  line-height: 18px;
+  content: "";
+  border: 2px solid #666;
+  border-radius: 2px;
+  -webkit-transition: .24s;
+  transition: .24s;
+  display:inline-block;
+  width: 19px;
+  height: 19px;
+  vertical-align:middle;
+  margin-right:10px;
+  margin-left:10px;
+  text-align:center;
+}
+label.checkbox :checked+span {
+  background:#d55400;
+  border: 2px solid #d55400;
+}
+
+label.checkbox :checked+span:before {
+  color: #fff;
+  content: '\2714';
+}
 .list {
   border-radius: 3px;
   border: 1px solid #DDD;

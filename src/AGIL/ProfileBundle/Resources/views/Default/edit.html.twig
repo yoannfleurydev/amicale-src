@@ -84,7 +84,11 @@
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span
                                                             class="glyphicon glyphicon-eye-open"></span></div>
-                                                {{ form_row(form.userCVUrlVisibility) }}
+
+                                                <label class="checkbox">
+                                                    {{ form_widget(form.userCVUrlVisibility) }}
+                                                    <span></span>{{ form_label(form.userCVUrlVisibility) }}
+                                                </label>
                                             </div>
                                         </div>
 

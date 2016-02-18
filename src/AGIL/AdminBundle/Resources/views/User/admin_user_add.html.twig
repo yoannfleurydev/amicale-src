@@ -40,18 +40,18 @@
                             </div>
                         </div>
                         <p>
-                            <div class="radio">
+                            <label class="radio">
                                 {{ form_widget(form.role.0) }}
-                                {{ form_label(form.role.0) }}
-                            </div>
-                            <div class="radio">
+                                <span></span>{{ form_label(form.role.0) }}
+                            </label>
+                            <label class="radio">
                                 {{ form_widget(form.role.1) }}
-                                {{ form_label(form.role.1) }}
-                            </div>
-                            <div class="radio">
+                                <span></span>{{ form_label(form.role.1) }}
+                            </label>
+                            <label class="radio">
                                 {{ form_widget(form.role.2) }}
-                                {{ form_label(form.role.2) }}
-                            </div>
+                                <span></span>{{ form_label(form.role.2) }}
+                            </label>
                         </p>
                         <p class="text-center">
                             {{ form_row(form.Inviter) }}
