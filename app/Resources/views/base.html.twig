@@ -19,8 +19,8 @@
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
                 </button>
-                <a href="#"><img class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ" width="95px"></a>
-                <a href="#" class="navbar-mobile">AGIL</a>
+                <a href="http://www.univ-rouen.fr"><img class="img-responsive navbar-mobile" src="{{ asset("img/logo.png") }}" id="logoUniv" alt="Logo de l'Université"></a>
+                <a href="{{ path("agil_default_homepage") }}" class="navbar-mobile">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>

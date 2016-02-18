@@ -25,8 +25,8 @@ class LoadForumAnswerData extends AbstractFixture implements OrderedFixtureInter
         $subject7 = $this->getReference('subject7');
         $subject8 = $this->getReference('subject8');
 
-        $userSuperAdmin = $this->getReference('superAdmin');
-        $userMember = $this->getReference('userMember');
+        $userSuperAdmin = $this->getReference('superadmin');
+        $userMember = $this->getReference('user');
 
         $answers[] = new AgilForumAnswer($subject2,$userSuperAdmin,"Bonjour. Je propose de se faire une session de cours
          de révision pour le 3 Février. Est ce que cela tente des gens ? Que souhaitez-vous réviser en priorité ?");

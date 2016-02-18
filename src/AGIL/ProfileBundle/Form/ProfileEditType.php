@@ -98,6 +98,7 @@ class ProfileEditType extends AbstractType
         ));
 
         // Boucle pour les compétences.
+        $debug = "";
         foreach($this->data['profileSkillsCategories'] as $profileSkillsCategory) {
             foreach($this->data['tags'] as $tag) {
                 if ($tag->getSkillCategory() == $profileSkillsCategory) {
@@ -111,6 +112,7 @@ class ProfileEditType extends AbstractType
                                 'max' => 10
                             )
                         ));
+                        $debug .= " " . $skill->getSkillLevel();
                     }
                 }
             }

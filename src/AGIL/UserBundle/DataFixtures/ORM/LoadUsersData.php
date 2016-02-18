@@ -28,7 +28,7 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
         // ############ CREATION D'UN SUPER-ADMINISTRATEUR DE TEST ############
         $userManager = $this->container->get('fos_user.user_manager');
         $userSuperAdmin = $userManager->createUser();
-        $userSuperAdmin->setUsername('superAdmin');
+        $userSuperAdmin->setUsername('superadmin');
         $userSuperAdmin->setEMail('superadmin@amicale.dev');
         $userSuperAdmin->setPlainPassword('superadmin');
         $userSuperAdmin->setEnabled(true);

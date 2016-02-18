@@ -16,20 +16,33 @@ class LoadSkillsData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         // On récupère les objets Fixture : User et Tags
-        $userSuperAdmin = $this->getReference('superAdmin');
-        $userMember = $this->getReference('userMember');
+        $users[] = $this->getReference('superadmin');
+        $users[] = $this->getReference('user');
+        $users[] = $this->getReference('moderator');
+        $users[] = $this->getReference('amicale');
 
-        $tagPHP = $this->getReference('tagPHP');
-        $tagJava = $this->getReference('tagJava');
-        $tagAndroid = $this->getReference('tagAndroid');
-        $tagJEE = $this->getReference('tagJEE');
+        $tags[] = $this->getReference('tagPHP');
+        $tags[] = $this->getReference('tagJava');
+        $tags[] = $this->getReference('tagAndroid');
+        $tags[] = $this->getReference('tagJEE');
+        $tags[] = $this->getReference('tagCSS');
+        $tags[] = $this->getReference('tagC++');
+        $tags[] = $this->getReference('tagJavascript');
+        $tags[] = $this->getReference('tagHTML');
+        $tags[] = $this->getReference('tagC');
+        $tags[] = $this->getReference('tagOCaml');
+        $tags[] = $this->getReference('tagPL/SQL');
+        $tags[] = $this->getReference('tagSQL');
+        $tags[] = $this->getReference('tagCordova');
+        $tags[] = $this->getReference('tagObjectiveC');
+        $tags[] = $this->getReference('tagSwift');
 
 
-        $skills[] = new AgilSkill($tagPHP,$userSuperAdmin,5);
-        $skills[] = new AgilSkill($tagAndroid,$userSuperAdmin,8);
-        $skills[] = new AgilSkill($tagJava,$userSuperAdmin,7);
-        $skills[] = new AgilSkill($tagJEE,$userSuperAdmin,8);
-
+        foreach($users as $user) {
+            foreach ($tags as $tag) {
+                $skills[] = new AgilSkill($tag, $user, 5);
+            }
+        }
 
         foreach($skills as $s){
             $manager->persist($s);

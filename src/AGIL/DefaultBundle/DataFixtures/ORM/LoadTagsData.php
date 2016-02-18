@@ -24,24 +24,49 @@ class LoadTagsData extends AbstractFixture implements OrderedFixtureInterface
 
         $tags[] = new AgilTag("PHP","purple-lighter-1",$webCategory);
         $this->addReference('tagPHP', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("Java","red-darker-2",$logicielCategory);
         $this->addReference('tagJava', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("CSS","green-darker-4",$webCategory);
+        $this->addReference('tagCSS', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("Android","green-darker-1",$mobileCategory);
         $this->addReference('tagAndroid', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("C++","blue-darker-5",$logicielCategory);
+        $this->addReference('tagC++', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("JavaScript","yellow-lighter-1",$webCategory);
+        $this->addReference('tagJavascript', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("HTML","orange-darker-2",$webCategory);
+        $this->addReference('tagHTML', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("C","black-lighter-1",$logicielCategory);
+        $this->addReference('tagC', $tags[count($tags)-1]);
 
         $tags[] = new AgilTag("OCaml","orange-lighter-1",$logicielCategory);
+        $this->addReference('tagOCaml', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("JEE","blue-lighter-1",$webCategory);
         $this->addReference('tagJEE', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("PL/SQL","red-lighter-2",$BDDCategory);
+        $this->addReference('tagPL/SQL', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("SQL","purple-darker-5",$BDDCategory);
+        $this->addReference('tagSQL', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("Cordova ","grey-darker-2",$mobileCategory);
+        $this->addReference('tagCordova', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("ObjectiveC","grey-lighter-1",$mobileCategory);
+        $this->addReference('tagObjectiveC', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("Swift","blue-lighter-3",$mobileCategory);
+        $this->addReference('tagSwift', $tags[count($tags)-1]);
+
         $tags[] = new AgilTag("C#","primary-blue",NULL);
         $tags[] = new AgilTag("Oracle","primary-blue",NULL);
         $tags[] = new AgilTag("MySQL","primary-blue",NULL);
