@@ -1,3 +1,21 @@
 agil_hall_homepage:
     path:     /hall
     defaults: { _controller: AGILHallBundle:Default:index }
+
+agil_hall_event:
+    path:     /hall/event/{id}
+    defaults: { _controller: AGILHallBundle:Event:showEvent }
+    requirements:
+        id: \d+
+
+agil_hall_event_photos:
+    path:     /hall/event/{id}/photos
+    defaults: { _controller: AGILHallBundle:Event:showPhotos }
+    requirements:
+        id: \d+
+
+agil_hall_event_videos:
+    path:     /hall/event/{id}/videos
+    defaults: { _controller: AGILHallBundle:Event:showVideos }
+    requirements:
+        id: \d+
