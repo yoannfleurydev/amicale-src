@@ -5,6 +5,7 @@ namespace AGIL\ProfileBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ProfileEditType extends AbstractType
 {
@@ -98,21 +99,22 @@ class ProfileEditType extends AbstractType
         ));
 
         // Boucle pour les compétences.
-        $debug = "";
+        // TODO Voir si avec un in_array on améliore les performances.
         foreach($this->data['profileSkillsCategories'] as $profileSkillsCategory) {
             foreach($this->data['tags'] as $tag) {
                 if ($tag->getSkillCategory() == $profileSkillsCategory) {
                     foreach($this->data['skills'] as $skill) {
-                        $builder->add('tag' . $tag->getTagId(), 'integer', array(
-                            'label' => false,
-                            'attr' => array(
-                                'class' => 'form-control',
-                                'value' => $skill->getSkillLevel(),
-                                'min' => 0,
-                                'max' => 10
-                            )
-                        ));
-                        $debug .= " " . $skill->getSkillLevel();
+                        if ($skill->getTag() == $tag) {
+                            $builder->add('tag' . $tag->getTagId(), 'integer', array(
+                                'label' => false,
+                                'attr' => array(
+                                    'class' => 'form-control',
+                                    'value' => $skill->getSkillLevel(),
+                                    'min' => 0,
+                                    'max' => 10
+                                )
+                            ));
+                        }
                     }
                 }
             }
