@@ -1,0 +1,9 @@
+{% extends "AGILHallBundle::baseHallBundle.html.twig" %}
+
+{% block body  %}
+	{% for photo in photos %}
+		{{ photo.photoTitle }}
+		<br />
+		<img src="{{ photo.photoUrl }}" alt="c jouli" />
+	{% endfor %}
+{% endblock %}
