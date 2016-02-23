@@ -3,6 +3,7 @@
 namespace AGIL\ProfileBundle\Controller;
 
 use AGIL\ProfileBundle\Form\ProfileEditType;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,14 +56,15 @@ class DefaultController extends Controller
 
         // Création d'un formulaire lié à aucune entité
         $form = $this->createForm(new ProfileEditType($data), null);
-        // <=> $form = $this->get('form.factory')->create(new ProfileEditType(), null);
 
-        // pré remplissage des champs
+        // Remplissage des champs qui ont une valeur.
         $form->get('username')->setData($user->getUsername());
         $form->get('email')->setData($user->getEmail());
         $form->get('userCVUrlVisibility')->setData($user->getUserCVUrlVisibility());
 
-        if ($request->getMethod() == 'POST') {
+
+        // S'exécute à la reception du formmulaire.
+        if ($request->getMethod() == Request::METHOD_POST) {
             $form->handleRequest($request);
 
 
@@ -113,6 +115,21 @@ class DefaultController extends Controller
                     )
                 );
             }
+
+            foreach($profileSkillsCategories as $profileSkillsCategory) {
+                foreach($tags as $tag) {
+                    if ($tag->getSkillCategory() == $profileSkillsCategory) {
+                        foreach($skills as $skill) {
+                            if ($skill->getTag() == $tag) {
+                                $skill->setSkillLevel($form->get('tag' . $tag->getTagId())->getData());
+                                $this->getDoctrine()->getManager()->persist($skill);
+                            }
+                        }
+                    }
+                }
+            }
+
+            $this->getDoctrine()->getManager()->flush();
 
             if ($form->get('username')->getData() == null || $form->get('email')->getData() == null) {
                 $this->addFlash('warning', 'Erreur ! Champs vides ou mal remplis !');
