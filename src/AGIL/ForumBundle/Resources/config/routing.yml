@@ -23,6 +23,12 @@ agil_forum_subject_answers:
         idSubject: \d+
         page : \d+
 
+
+agil_forum_subject_add_home:
+    path:   /categories/newSubject
+    defaults:
+        _controller: AGILForumBundle:Subjects:subjectAddHome
+
 agil_forum_subject_add:
     path:   /categories/{idCategory}/newSubject
     defaults:

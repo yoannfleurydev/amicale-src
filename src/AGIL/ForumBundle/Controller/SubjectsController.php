@@ -4,9 +4,10 @@ namespace AGIL\ForumBundle\Controller;
 
 use AGIL\DefaultBundle\Entity\AgilTag;
 use AGIL\ForumBundle\Entity\AgilForumAnswer;
-use AGIL\ForumBundle\Form\AnswerType;
-use AGIL\ForumBundle\Form\DeleteSubjectAdminType;
 use AGIL\ForumBundle\Form\FirstAnswerType;
+use AGIL\ForumBundle\Form\DeleteSubjectAdminType;
+use AGIL\ForumBundle\Form\FirstAnswerHomeType;
+use AGIL\ForumBundle\Form\SubjectHomeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,70 @@ use AGIL\ForumBundle\Entity\AgilForumSubject;
 
 class SubjectsController extends Controller
 {
+
+    /**
+     * Créer un nouveau sujet depuis la page d'accueil du forum
+     * (en dehors des catégories)
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function subjectAddHomeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $tagRepository = $em->getRepository("AGILDefaultBundle:AgilTag");
+
+        $subject = new AgilForumSubject($user,null,null,null);
+        $subject->setTags(array());
+        $firstPost = new AgilForumAnswer(null, $user, null);
+        $firstPost->setSubject($subject);
+
+        $form = $this->createForm(new FirstAnswerHomeType(), $firstPost);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            // On récupère les tags qui ont été tapés, on en fait un tableau
+            $tagsArrayString = explode(" ", $subject->getTags());
+
+            // Récupération du service qui gère les tags
+            $tagsManager = $this->get('agil_default.tags');
+
+            // On vérifie tous les tags un à un
+            foreach($tagsArrayString as $tag){
+                $tagsManager->insertTag($tag);
+            }
+            // On les enregistre dans la base
+            $em->flush();
+
+            // On remet les tags sous forme de tableau de AgilTag
+            $subject->setTags($tagRepository->findByTagName($tagsArrayString));
+
+            $em->persist($firstPost);
+            $em->persist($subject);
+            $em->flush($subject);
+            $em->flush($firstPost);
+
+            $this->addFlash('success', "Le sujet a bien été créé");
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
+                'idCategory' => $subject->getCategory()->getForumCategoryId(),
+                'idSubject' => $subject->getForumSubjectId()
+            )));
+
+        }
+
+
+        return $this->render('AGILForumBundle:Subjects:subjects_add_home.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+
+
     /**
      * Cette fonction permet d'ajouter un nouveau sujet dans le forum
      *

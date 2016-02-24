@@ -64,7 +64,7 @@ class AgilTag
      * @param $color
      * @param $skillCategory
      */
-    public function __construct($name,$color,$skillCategory){
+    public function __construct($name,$color="primary-blue",$skillCategory){
         $this->tagName = $name;
         $this->tagColor = $color;
 

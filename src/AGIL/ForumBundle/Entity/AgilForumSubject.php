@@ -49,11 +49,11 @@ class AgilForumSubject
     /**
      * @var string
      *
-     * @ORM\Column(name="forumSubjectTitle", type="string", length=255)
+     * @ORM\Column(name="forumSubjectTitle", type="string", length=70)
      * @Assert\NotBlank(message="Le titre ne peut être vide")
      * @Assert\Length(
      *      min = 2,
-     *      max = 255,
+     *      max = 70,
      *      minMessage = "La taille minimale est de {{ limit }} caractères",
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
@@ -70,11 +70,10 @@ class AgilForumSubject
     /**
      * @var string
      *
-     * @ORM\Column(name="forumSubjectDescription", type="text")
-     * @Assert\NotBlank(message="La description ne peut être vide")
+     * @ORM\Column(name="forumSubjectDescription", type="string",length=120,nullable=true)
      * @Assert\Length(
-     *      min = 2,
-     *      minMessage = "La taille minimale est de {{ limit }} caractères"
+     *      max = 120,
+     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
      */
     private $forumSubjectDescription;
