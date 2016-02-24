@@ -7,20 +7,21 @@
     <link href="{{ asset("css/styles.css") }}" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{{ asset("js/bootstrap.js") }}"></script>
+    {% block stylesheets %}{% endblock %}
+    {% block javascript %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <!--<button class="navbar-brand hamburger"><span class="glyphicon glyphicon-arrow-right animate"></span></button>-->
                 <button class="navbar-brand hamburger">
                     <span class="bar up animate"></span>
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
                 </button>
-                <a class="hidden-xs hidden-sm img-responsive navbar-mobile" href="http://www.univ-rouen.fr"><img id="logo-university" src="{{ asset("images/logo.png") }}" alt="logo univ"></a>
-                <a class="hidden-xs hidden-sm navbar-mobile" href="{{ path("agil_default_homepage") }}" id="logo-agil">AGIL</a>
+                <a class="hidden-xs hidden-sm" href="http://www.univ-rouen.fr"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ"></a>
+                <a class="hidden-xs hidden-sm" href="{{ path("agil_default_homepage") }}" id="logo-agil">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>

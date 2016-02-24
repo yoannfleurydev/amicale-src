@@ -3,75 +3,41 @@
 {% block body %}
 
     <div class="row">
-        <div class="col-md-12 col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
-                        <span class="panel-title-content">
-                          Liste des évenements
-                        </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <div class="jumbotron">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <div class="card-events">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                         <h5><a href="#">Nom de l'évenement</a></h5>
-                        <p><h6><em>Début de l'information sur l'évenement avec des ... </em></h6></p>
-                        <p><h6>24 dec 2016</h6></p>
-                        <p>
-                            <a class="btn btn-primary" href="#" role="button">Editer</a>
-                            <a class="btn btn-default" href="#" role="button">Supprimer</a>
-                        </p>
+                        <h6><em>Début de l'information sur l'évenement avec des ... </em></h6>
+                        <h6>24 dec 2016</h6>
                     </div>
-                    <div class="jumbotron">
-                        <h5><a href="#">Nom de l'évenement</a></h5>
-                        <p><h6><em>Début de l'information sur l'évenement avec des ... </em></h6></p>
-                        <p><h6>24 dec 2016</h6></p>
-                        <p>
-                            <a class="btn btn-primary" href="#" role="button">Editer</a>
-                            <a class="btn btn-default" href="#" role="button">Supprimer</a>
-                        </p>
-                    </div>
-                    <div class="jumbotron">
-                        <h5><a href="#">Nom de l'évenement</a></h5>
-                        <p><h6><em>Début de l'information sur l'évenement avec des ... </em></h6></p>
-                        <p><h6>24 dec 2016</h6></p>
-                        <p>
-                            <a class="btn btn-primary" href="#" role="button">Editer</a>
-                            <a class="btn btn-default" href="#" role="button">Supprimer</a>
-                        </p>
-                    </div>
-                    <div class="jumbotron">
-                        <h5><a href="#">Nom de l'évenement</a></h5>
-                        <p><h6><em>Début de l'information sur l'évenement avec des ... </em></h6></p>
-                        <p><h6>24 dec 2016</h6></p>
-                        <p>
-                            <a class="btn btn-primary" href="#" role="button">Editer</a>
-                            <a class="btn btn-default" href="#" role="button">Supprimer</a>
-                        </p>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 vcenter">
+                        <a class="btn btn-primary" href="#" role="button">Editer</a>
+                        <a class="btn btn-default" href="#" role="button">Supprimer</a>
                     </div>
                 </div>
             </div>
-            <nav class="text-center">
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </div>
+    <nav class="text-center">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
 {% endblock %}
 
