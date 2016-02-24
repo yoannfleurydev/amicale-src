@@ -2,20 +2,26 @@ agil_hall_homepage:
     path:     /hall
     defaults: { _controller: AGILHallBundle:Default:index }
 
-agil_hall_event:
-    path:     /hall/event/{id}
-    defaults: { _controller: AGILHallBundle:Event:showEvent }
+agil_hall_page:
+    path: hall/page/{idPage}
+    defaults: { _controller: AGILHallBundle:Default:renderPage, idPage: 1 }
     requirements:
-        id: \d+
+        idPage: \d+
+
+agil_hall_event:
+    path: hall/event/{idEvent}
+    defaults: { _controller: AGILHallBundle:Default:event }
+    requirements:
+        idEvent: \d+
 
 agil_hall_event_photos:
-    path:     /hall/event/{id}/photos
-    defaults: { _controller: AGILHallBundle:Event:showPhotos }
+    path: hall/event/{idEvent}/photos
+    defaults: { _controller: AGILHallBundle:Default:photosEvent }
     requirements:
-        id: \d+
+        idEvent: \d+
 
 agil_hall_event_videos:
-    path:     /hall/event/{id}/videos
-    defaults: { _controller: AGILHallBundle:Event:showVideos }
+    path: /event/{idEvent}/videos
+    defaults: { _controller: AGILHallBundle:Default:videosEvent }
     requirements:
-        id: \d+
+        idEvent: \d+
