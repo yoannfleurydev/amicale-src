@@ -18,6 +18,8 @@
 
                     {% else %}
 
+                        <div><a href="{{ path('agil_forum_subject_add_home') }}" class="btn btn-primary">Nouveau Sujet</a></div></br>
+
                         {% for category in categoryList %}
 
                             {% set key = category.forumCategoryId %}
