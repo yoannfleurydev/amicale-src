@@ -56,7 +56,7 @@
                     <td class="vert-align hidden-xs"><a href="{{ path('agil_profile_id',{'id':s.id}) }}">{{ s.username }}</a></td>
                     <td class="vert-align hidden-xs">{{ countAnswers[s.forumSubjectId] }}</td>
                     <td class="vert-align">
-                        <div class="hidden-xs hidden-sm">Créé le {{ s.forumSubjectPostDate|date('j M Y') }}</div>
+                        <div class="hidden-xs hidden-sm">Créé le {{ s.forumSubjectPostDate|localizeddate('none', 'none', null, null, 'd LLL Y') }}</div>
                         Actif il y a <span
                                 class="text-primary-blue"><strong>{{ relativeDate[s.forumSubjectId] }}</strong></span>
                     </td>

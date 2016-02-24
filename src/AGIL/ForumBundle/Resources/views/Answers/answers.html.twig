@@ -82,7 +82,8 @@
                                                 </h4>
                                             </div>
                                             <em>Il y a {{ relativeDate[a.forumAnswerId] }}
-                                                ({{ a.forumAnswerPostDate|date('j M Y - H:i:s') }})</em>
+                                                ({{ a.forumAnswerPostDate|localizeddate('none', 'none', null, null, 'd LLL Y') }}
+                                                 - {{ a.forumAnswerPostDate|localizeddate('none', 'none', null, null, 'HH:mm:ss') }})</em>
                                         </div>
 
                                         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
