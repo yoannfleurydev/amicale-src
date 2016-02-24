@@ -11,7 +11,7 @@ class DefaultController extends Controller {
 		$eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
 		$events = $eventRepo->findAll();
 
-		return $this->render('AGILHallBundle:Default:index.html.twig', array('listEvents' => $events));
+		return $this->render('AGILHallBundle:Default:index.html.twig', array('events' => $events));
 	}
 
 	/* Affichage de la page souhaitée */

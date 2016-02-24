@@ -1,5 +1,8 @@
 {% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
 {% block body  %}
-	Hello World!
+	{% for event in events %}
+        <h1>{{ event.getEventTitle }}</h1>
+        <p>{{ event.getEventText }}</p>
+    {% endfor %}
 {% endblock %}
