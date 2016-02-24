@@ -19,8 +19,8 @@
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
                 </button>
-                <a class="hidden-xs hidden-sm" href="#"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ"></a>
-                <a class="hidden-xs hidden-sm navbar-mobile" href="#" id="logo-agil">AGIL</a>
+                <a class="hidden-xs hidden-sm img-responsive navbar-mobile" href="http://www.univ-rouen.fr"><img id="logo-university" src="{{ asset("images/logo.png") }}" alt="logo univ"></a>
+                <a class="hidden-xs hidden-sm navbar-mobile" href="{{ path("agil_default_homepage") }}" id="logo-agil">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
@@ -92,8 +92,8 @@
                 <div class="sidebar-separator"></div>
                 <ul class="nav-items">
                     <li class="nav-title">Liens utiles</li>
-                    <li><a href="https://ent.univ-rouen.fr" class="nav-link">Ent</a></li>
-                    <li><a href="https://webmail.univ-rouen.fr" class="nav-link">Webmail</a></li>
+                    <li><a href="https://ent.univ-rouen.fr" class="nav-link external" target="_blank" title="Accès à l'ENT">Ent</a></li>
+                    <li><a href="https://webmail.univ-rouen.fr" class="nav-link external" target="_blank" title="Accès au Webmail">Webmail</a></li>
                 </ul>
             </nav>
         </aside>

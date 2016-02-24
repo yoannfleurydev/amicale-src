@@ -3,6 +3,8 @@
 namespace AGIL\AdminBundle\Controller;
 
 use AGIL\AdminBundle\Form\UserAdminType;
+use AGIL\ProfileBundle\Entity\AgilSkill;
+use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
@@ -232,6 +234,7 @@ class UserController extends Controller
             $user->setEnabled(1);
 
             $userManager->updateUser($user);
+            $this->loadSkills($user, $em);
 
             $url = $request->getSchemeAndHttpHost();
             $subject = "Amicale GIL[Inscription]";
@@ -317,6 +320,7 @@ class UserController extends Controller
                 $user->setEnabled(1);
 
                 $userManager->updateUser($user);
+                $this->loadSkills($user, $em);
                 $nbRegisters++;
 
                 $url = $request->getSchemeAndHttpHost();
@@ -383,6 +387,20 @@ class UserController extends Controller
             $this->addFlash('warning', 'Erreur lors de l\'envois de l\'email.');
         }
 
+    }
+
+    public function loadSkills(AgilUser $user, EntityManager $em) {
+        $profileSkillsCategoryRepository = $em->getRepository('AGILProfileBundle:AgilProfileSkillsCategory');
+        $tagRepository  = $em->getRepository('AGILDefaultBundle:AgilTag');
+        $skillRepository = $em->getRepository('AGILProfileBundle:AgilSkill');
+
+        foreach($profileSkillsCategoryRepository->findAll() as $profileSkillsCategory) {
+            foreach($tagRepository->findBy(array("skillCategory"  => $profileSkillsCategory)) as $tag) {
+                    $skill = new AgilSkill($tag, $user);
+                    $em->persist($skill);
+            }
+        }
+        $em->flush();
     }
 
 }
