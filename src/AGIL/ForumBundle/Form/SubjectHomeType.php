@@ -52,6 +52,7 @@ class SubjectHomeType extends AbstractType
 
         $builder->add('forumSubjectDescription', TextareaType::class, array(
             'label' => false,
+            'required' => false,
             'constraints' => array(
                 new Length(array('max' => 120))
             ),
