@@ -5,13 +5,17 @@ namespace AGIL\AdminBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class UserAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('email', 'email', array(
+        $builder->add('email', EmailType::class, array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),
@@ -22,7 +26,7 @@ class UserAdminType extends AbstractType
             )
         ));
 
-        $builder->add('firstName', 'text', array(
+        $builder->add('firstName', TextType::class, array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),
@@ -33,7 +37,7 @@ class UserAdminType extends AbstractType
             )
         ));
 
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),
@@ -44,7 +48,7 @@ class UserAdminType extends AbstractType
             )
         ));
 
-        $builder->add('role', 'choice', array(
+        $builder->add('role', ChoiceType::class, array(
             'label' => false,
             'choices' => array(
                 'ROLE_USER' => 'Membre',
@@ -57,7 +61,7 @@ class UserAdminType extends AbstractType
             )
         ));
 
-        $builder->add('Inviter', 'submit', array(
+        $builder->add('Inviter', SubmitType::class, array(
             'label' => false,
             'attr' => array(
                 'class' => 'btn btn-primary',
@@ -65,7 +69,7 @@ class UserAdminType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'user_add_form';
     }

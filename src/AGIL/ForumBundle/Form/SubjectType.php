@@ -6,13 +6,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class SubjectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('forumSubjectTitle', 'text', array(
+        $builder->add('forumSubjectTitle', TextType::class, array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),new Length(array('min' => 2,'max' => 70))
@@ -23,7 +25,7 @@ class SubjectType extends AbstractType
             )
         ));
 
-        $builder->add('forumSubjectDescription', 'textarea', array(
+        $builder->add('forumSubjectDescription', TextareaType::class, array(
             'label' => false,
             'constraints' => array(
                 new Length(array('max' => 120))
@@ -34,7 +36,7 @@ class SubjectType extends AbstractType
             )
         ));
 
-        $builder->add('tags', 'text', array(
+        $builder->add('tags', TextType::class, array(
             'label' => false,
             'required' => false,
             'attr' => array(
@@ -44,7 +46,7 @@ class SubjectType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'forum_add_subject';
     }
