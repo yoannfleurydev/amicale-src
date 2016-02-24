@@ -13,34 +13,24 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-
                     <!-- Formulaire de suppression du post pour le forum -->
-
                     <form action="{{ path('agil_forum_subject_delete', {'idCategory': idCategory, 'idSubject': idSubject}) }}" method="post" {{ form_enctype(form) }}>
-                        <label for="inputNamePost" class="control-label">Sujet : <strong>{{ subject.forumSubjectTitle }}</strong></label>
-
-                        <p>Voulez-vous vraiment supprimer ce sujet?</p>
+                        <p class="control-label">Sujet : <strong>{{ subject.forumSubjectTitle }}</strong></p>
                         {% if isAdmin == true %}
-                            <div class="form-group" id="formAddNamePost">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <p>Raison :</p>
-                                    {{ form_row(form.reason) }}
-                                </div>
+                            <div class="form-group">
+                                <label for="forum_delete_subject_reason">Raison :</label>
+                                {{ form_row(form.reason) }}
                             </div>
                         {% endif %}
-
+                        <p>Voulez-vous vraiment supprimer ce sujet?</p>
                         <div class="text-center">
                             {{ form_widget(form.Supprimer) }}
+                            <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
+                                Annuler
+                            </a>
                         </div>
                         {{ form_rest(form) }}
                     </form>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <a href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
-                                <button class="btn btn-default">Annuler</button>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
