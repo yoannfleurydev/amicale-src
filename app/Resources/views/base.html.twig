@@ -20,7 +20,7 @@
                     <span class="bar bottom animate"></span>
                 </button>
                 <a class="hidden-xs hidden-sm" href="#"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ"></a>
-                <a class="hidden-xs hidden-sm" href="#" id="logo-agil" class="navbar-mobile">AGIL</a>
+                <a class="hidden-xs hidden-sm navbar-mobile" href="#" id="logo-agil">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
@@ -61,6 +61,7 @@
                     <li><a href="#" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}">
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
+                        </a></li>
                             {% if is_granted("ROLE_USER") %}
 
                     <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}">

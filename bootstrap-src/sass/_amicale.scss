@@ -1,7 +1,24 @@
+$orange-color : #d55400;
+$menu-color : #334960;
+$footer-color : #444;
+
+$card-events-border-radiux : 0px;
+.card-events {
+  margin-bottom : 10px;
+  padding-top : 5px;
+  padding-bottom : 5px;
+  background-color : #FFF;
+  -webkit-border-radius: $card-events-border-radiux;
+  -moz-border-radius: $card-events-border-radiux;
+  border-radius: $card-events-border-radiux;
+  box-shadow: 0px 1px 2px #888888;
+}
+
 label.radio input[type=radio] {
   opacity:0;
   position:absolute
 }
+
 label.radio span {
   content:"";
   line-height:11px;
@@ -16,14 +33,16 @@ label.radio span {
   margin-right:10px;
   margin-left:10px;
 }
+
 label.radio :checked+span {
-  border:2px solid #d55400;
+  border:2px solid $orange-color;
 }
+
 label.radio :checked+span:before {
-  color: #d55400;
-  content: '\25CF';
-  font-size: 24px;
-  text-align: center;
+  color: $orange-color;
+  content:'\25CF';
+  font-size:16px;
+  text-align:center;
 }
 
 label.checkbox input[type=checkbox] {
@@ -46,8 +65,8 @@ label.checkbox span {
   text-align:center;
 }
 label.checkbox :checked+span {
-  background:#d55400;
-  border: 2px solid #d55400;
+  background:$orange-color;
+  border: 2px solid $orange-color;
 }
 
 label.checkbox :checked+span:before {
@@ -65,11 +84,11 @@ label.checkbox :checked+span:before {
 }
 
 .list-element a {
-  color :#334960 !important;
+  color :$menu-color !important;
 }
 
 .list-element a:hover {
-  color :#334960 !important;
+  color :$menu-color !important;
 }
 
 .list-element:last-child {
@@ -83,7 +102,6 @@ label.checkbox :checked+span:before {
   margin-right: 10px;
 }
 
-/* line 6, ../sass/_amicale.scss */
 .fileUpload input {
   position: absolute;
   top: 0;
@@ -204,11 +222,11 @@ body {
 }
 
 .nav-link-active {
-  background-color:#D55400;
+  background-color:$orange-color;
 }
 
 .nav-link:hover {
-  background-color: #D55400;
+  background-color: $orange-color;
   text-decoration: none;
 }
 
@@ -236,11 +254,11 @@ body {
 
 .label button {
   border: none;
-  background-color:#334960;
+  background-color:$menu-color;
 }
 
 .label button:hover {
-  color:#D55400;
+  color:$orange-color;
 }
 
 /* Sidebar */
@@ -253,7 +271,7 @@ body {
   left: 0;
   height: 100%;
   width: 200px;
-  background: #334960;
+  background: $menu-color;
   overflow: hidden;
   box-shadow: 0px 1px 2px #888888;
   -webkit-transform: translate3d(-260px, 0, 0);
@@ -316,10 +334,10 @@ textarea {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #444;
+  background-color: $footer-color;
   color:#FFFFFF;
   margin-left:0px;
-  border-top: 8px solid #D55400;
+  border-top: 8px solid $orange-color;
 }
 
 .footer * {
@@ -329,7 +347,7 @@ textarea {
 h2.panel-title {
   width:100%;
   text-align:center;
-  border-bottom: 3px solid #D55400;
+  border-bottom: 3px solid $orange-color;
   line-height:0.1em;
   margin:10px 0 20px;
 }
