@@ -9,7 +9,6 @@ class DeleteAnswerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add('Supprimer', 'submit', array(
             'label' => false,
             'attr' => array(
