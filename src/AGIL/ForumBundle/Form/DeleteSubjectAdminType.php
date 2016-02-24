@@ -10,12 +10,22 @@ class DeleteSubjectAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('reason', 'textarea', array(
-            'label' => false,
-            'required' => true,
-            'constraints' => array(
-                new NotBlank(),
+        $builder->add('choiceReason', 'choice', array(
+            'choices'  => array(
+                'Abus de langage' => 'Abus de langage',
+                'Contenu inapproprié' => 'Contenu inapproprié',
+                'Sujet déjà existant' => 'Sujet déjà existant',
+                'Autre' => 'Autre',
             ),
+            'label' => 'Raison : ',
+            'attr' => array(
+                'class' => '',
+            )
+        ));
+
+        $builder->add('reasonOption', 'textarea', array(
+            'label' => false,
+            'required' => false,
             'attr' => array(
                 'class' => 'form-control',
             )
