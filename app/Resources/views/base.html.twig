@@ -20,7 +20,7 @@
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
                 </button>
-                <a class="hidden-xs hidden-sm" href="http://www.univ-rouen.fr"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ"></a>
+                <a class="hidden-xs hidden-sm" href="http://www.univ-rouen.fr"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("img/logo.png") }}" alt="logo univ"></a>
                 <a class="hidden-xs hidden-sm" href="{{ path("agil_default_homepage") }}" id="logo-agil">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
@@ -55,39 +55,53 @@
             <nav class="nav">
                 <ul class="nav-items">
                     <li class="nav-title">Navigation</li>
-                    <li><a href="{{ path("agil_default_homepage") }}" class="nav-link {% if isActive == "accueil" %} nav-link-active {% endif %}">
+                    <li>
+                        <a href="{{ path("agil_default_homepage") }}" class="nav-link {% if isActive == "accueil" %} nav-link-active {% endif %}" title="Accueil">
                             <span class="glyphicon glyphicon-home"></span>
                             Accueil
-                        </a></li>
-                    <li><a href="#" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
-                        </a></li>
+                        </a>
+                    </li>
                             {% if is_granted("ROLE_USER") %}
 
-                    <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}">
+                    <li>
+                        <a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}" title="Forum">
                             <span class="glyphicon glyphicon-th-list"></span>
                             Forum
                         </a>
                     </li>
                     {% endif %}
-                    <li><a href="#" class="nav-link {% if isActive == "hall" %} nav-link-active {% endif %}">
+                    <li><a href="{{ path('agil_hall_homepage') }}" class="nav-link {% if isActive == "hall" %} nav-link-active {% endif %}" title="Hall">
                             <span class="glyphicon glyphicon-picture"></span>
                             Hall
-                        </a></li>
+                        </a>
+                    </li>
                     {% if is_granted("ROLE_USER") %}
-                        <li><a href="#" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
+                        <li>
+                            <a href="#" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
                                 <span class="glyphicon glyphicon-comment"></span>
                                 Salon
-                            </a></li>
-                        <li><a href="#" class="nav-link">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link">
                                 <span class="glyphicon glyphicon-calendar"></span>
-                                Agenda</a></li>
+                                Agenda
+                            </a>
+                        </li>
                     {% endif %}
                     {% if is_granted("ROLE_ADMIN") %}
-                        <li><a href="{{ path('agil_admin_homepage') }}" class="nav-link {% if isActive == "admin" %} nav-link-active {% endif %}">
+                        <li>
+                            <a href="{{ path('agil_admin_homepage') }}" class="nav-link {% if isActive == "admin" %} nav-link-active {% endif %}">
                                 <span class="glyphicon glyphicon-wrench"></span>
-                                Administration</a></li>
+                                Administration
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
                 <div class="sidebar-separator"></div>

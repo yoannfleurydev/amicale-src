@@ -1,6 +1,10 @@
 agil_hall_homepage:
-    path:     /
-    defaults: { _controller: AGILHallBundle:Default:index }
+    path:     /page/{page}
+    defaults:
+        _controller: AGILHallBundle:Default:index
+        page:  1
+    requirements:
+        page : \d+
 
 agil_hall_page:
     path: /page/{idPage}

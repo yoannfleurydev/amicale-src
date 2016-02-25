@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class AgilEventRepository extends EntityRepository
 {
+    /**
+     * Permet d'obtenir le nombre d'événements.
+     *
+     * @return mixed
+     */
+    public function getCountEvents(){
+        $query = $this->_em->createQueryBuilder();
+        $query->select('COUNT(event.eventId) as cnt')
+            ->from('AGIL\HallBundle\Entity\AgilEvent','event');
+        ;
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
 }
