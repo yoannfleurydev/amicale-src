@@ -38,6 +38,114 @@ class LoadHallEventData extends AbstractFixture implements OrderedFixtureInterfa
         $event->setUser($superadmin);
         $events[] = $event;
 
+        $event = new AgilEvent();
+        $event->setEventTitle('Codeurs En Seine');
+        $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        $event->setEventDate(new \DateTime('2016-02-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($amicale);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Remise des diplômes');
+        $event->setEventText("La remise des diplômes à lieu tout les ans à la même date. Vous pourrez venir chercher
+        vos passeport pour le monde professionnel ce 14 juin à l'Université où un pot sera présent.");
+        $event->setEventDate(new \DateTime('2016-06-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($superadmin);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Codeurs En Seine');
+        $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        $event->setEventDate(new \DateTime('2016-02-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($amicale);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Remise des diplômes');
+        $event->setEventText("La remise des diplômes à lieu tout les ans à la même date. Vous pourrez venir chercher
+        vos passeport pour le monde professionnel ce 14 juin à l'Université où un pot sera présent.");
+        $event->setEventDate(new \DateTime('2016-06-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($superadmin);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Codeurs En Seine');
+        $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        $event->setEventDate(new \DateTime('2016-02-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($amicale);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Remise des diplômes');
+        $event->setEventText("La remise des diplômes à lieu tout les ans à la même date. Vous pourrez venir chercher
+        vos passeport pour le monde professionnel ce 14 juin à l'Université où un pot sera présent.");
+        $event->setEventDate(new \DateTime('2016-06-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($superadmin);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Codeurs En Seine');
+        $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        $event->setEventDate(new \DateTime('2016-02-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($amicale);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Remise des diplômes');
+        $event->setEventText("La remise des diplômes à lieu tout les ans à la même date. Vous pourrez venir chercher
+        vos passeport pour le monde professionnel ce 14 juin à l'Université où un pot sera présent.");
+        $event->setEventDate(new \DateTime('2016-06-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($superadmin);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Codeurs En Seine');
+        $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        $event->setEventDate(new \DateTime('2016-02-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($amicale);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Remise des diplômes');
+        $event->setEventText("La remise des diplômes à lieu tout les ans à la même date. Vous pourrez venir chercher
+        vos passeport pour le monde professionnel ce 14 juin à l'Université où un pot sera présent.");
+        $event->setEventDate(new \DateTime('2016-06-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($superadmin);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Codeurs En Seine');
+        $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        $event->setEventDate(new \DateTime('2016-02-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($amicale);
+        $events[] = $event;
+
+        $event = new AgilEvent();
+        $event->setEventTitle('Remise des diplômes');
+        $event->setEventText("La remise des diplômes à lieu tout les ans à la même date. Vous pourrez venir chercher
+        vos passeport pour le monde professionnel ce 14 juin à l'Université où un pot sera présent.");
+        $event->setEventDate(new \DateTime('2016-06-14 12:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($superadmin);
+        $events[] = $event;
+
         foreach($events as $event){
             $manager->persist($event);
         }

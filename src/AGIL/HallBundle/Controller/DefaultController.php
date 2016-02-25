@@ -6,27 +6,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller {
-    private static $MAX_EVENTS = 10;
+    const MAX_EVENTS = 10;
 
 	/* index */
 	public function indexAction($page) {
 		$em = $this->getDoctrine()->getManager();
 		$eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
-		$events = $eventRepo->findAll();
 
         $eventCount = $eventRepo->getCountEvents();
+
         // On vérifie que le nombre de pages spécifié dans l'URL n'est pas absurde
         if(($eventCount == 0 && $page != 1) ||
-            ($eventCount != 0 && $page > ceil($eventCount / DefaultController::$MAX_EVENTS) || $page <= 0)  ){
+            ($eventCount != 0 && $page > ceil($eventCount / DefaultController::MAX_EVENTS) || $page <= 0)  ){
             throw new NotFoundHttpException("Erreur dans le numéro de page");
         }
 
         $pagination = array(
             'page' => $page,
             'route' => 'agil_hall_homepage',
-            'pages_count' => ceil($eventCount / DefaultController::$MAX_EVENTS),
+            'pages_count' => ceil($eventCount / DefaultController::MAX_EVENTS),
             'route_params' => array()
         );
+
+        $events = $eventRepo->getEventsByPage($page, DefaultController::MAX_EVENTS);
 
 		return $this->render('AGILHallBundle:Default:index.html.twig', array('events' => $events, 'pagination'=>$pagination));
 	}

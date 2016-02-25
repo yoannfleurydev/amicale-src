@@ -2,7 +2,9 @@
 
 namespace AGIL\HallBundle\Repository;
 
+use AGIL\HallBundle\Controller\DefaultController;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * AgilEventRepository
@@ -24,5 +26,19 @@ class AgilEventRepository extends EntityRepository
         ;
 
         return $query->getQuery()->getSingleScalarResult();
+    }
+
+    public function getEventsByPage($page=1, $maxPerPage=DefaultController::MAX_EVENTS){
+        $query = $this->_em->createQueryBuilder();
+
+        $query->select('event')
+            ->from('AGIL\HallBundle\Entity\AgilEvent','event')
+            ->orderBy('event.eventPostDate','asc')
+        ;
+
+        $query->setFirstResult(($page-1) * $maxPerPage)
+            ->setMaxResults($maxPerPage)->getQuery();
+
+        return new Paginator($query);
     }
 }
