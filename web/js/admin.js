@@ -1,8 +1,4 @@
-/**
- * Created by valentin on 2/5/16.
- */
-
-$("#upload").change(function() {
+$("#user_add_csv_form_file").change(function() {
     // will log a FileList object, view gifs below
-    $("#button_name").text(this.files[0].name);
+    $("#button_name_cv").text(this.files[0].name);
 });

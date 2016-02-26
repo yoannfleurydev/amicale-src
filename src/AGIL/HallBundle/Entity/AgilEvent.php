@@ -270,22 +270,4 @@ class AgilEvent
     {
         return $this->tags;
     }
-
-    /**
-     * AgilEvent constructor.
-     * @param $user
-     * @param $title
-     * @param $postDate
-     * @param $dateEnd
-     * @param $text
-     */
-    public function __construct($user,$title,$postDate, $date ,$dateEnd,$text)
-    {
-        $this->user          = $user;
-        $this->eventTitle    = $title;
-        $this->eventPostDate = $postDate;
-        $this->eventDate     = $date;
-        $this->eventDateEnd  = $dateEnd;
-        $this->eventText     = $text;
-    }
 }

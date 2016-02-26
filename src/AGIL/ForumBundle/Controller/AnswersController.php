@@ -14,17 +14,19 @@ use AGIL\ForumBundle\Form\AddAnswerType;
 
 class AnswersController extends Controller
 {
-
-
-
     /**
      * Partie Contrôleur de la page d'un sujet, qui affiche
      * la liste des réponses par ordre décroissants des dates
      * et qui permet d'ajouter une réponse en dessous
      *
+     * @param $idCategory L'identifiant numérique de la catégorie
+     * @param $idSubject L"identifiant numérique du sujet
+     * @param $page Le numéro de la page.
+     * @param Request $request Objet qui permet
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function answersAction($idCategory,$idSubject,$page, Request $request)
+    public function answersAction($idCategory, $idSubject, $page, Request $request)
     {
         // Manager & Repositories
         $manager = $this->getDoctrine()->getManager();

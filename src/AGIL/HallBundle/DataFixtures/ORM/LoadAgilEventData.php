@@ -7,33 +7,44 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AGIL\ForumBundle\Entity\AgilForumAnswer;
+use Symfony\Component\Validator\Constraints\DateTime;
 
-class LoadAgilEventData extends AbstractFixture implements OrderedFixtureInterface
-{
+class LoadAgilEventData extends AbstractFixture implements OrderedFixtureInterface {
     /**
-     * Cette méthode charge dans la BDD des objets ForumAnswer
+     * Cette méthode charge dans la BDD des objets Event
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $userSuperAdmin = $this->getReference('superadmin');
-        $eventTitle     = "Chasse aux bugs sur Amicale GIL ";
-        $eventPostDate  = new \DateTime('2016-02-02 11:11:11');
-        $eventDate      = new \DateTime('2016-02-02 11:11:11');
-        $eventDateEnd   = $eventPostDate;
-        $eventText      = " Journée banalisé pour approcher les bugs du sites Amicale GIL ....";
+        // On récupère les objets Fixture : User
+        $amicale = $this->getReference('amicale');
+        $superadmin = $this->getReference('superadmin');
 
+        $event = new AgilEvent();
+        $event->setEventTitle('Codeurs En Seine');
+        $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        $event->setEventDate(new \DateTime('2016-02-14 08:00:00'));
+        $event->setEventDateEnd(new \DateTime('2016-02-15 18:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($amicale);
+        $events[] = $event;
 
-
-        $events[] = new AgilEvent($userSuperAdmin, $eventTitle, $eventPostDate,$eventDate , $eventDateEnd, $eventText);
-        $events[] = new AgilEvent($userSuperAdmin, $eventTitle, $eventPostDate,$eventDate , $eventDateEnd, $eventText);
-        $events[] = new AgilEvent($userSuperAdmin, $eventTitle, $eventPostDate,$eventDate , $eventDateEnd, $eventText);
-        $events[] = new AgilEvent($userSuperAdmin, $eventTitle, $eventPostDate,$eventDate , $eventDateEnd, $eventText);
+        $event = new AgilEvent();
+        $event->setEventTitle('Remise des diplômes');
+        $event->setEventText("La remise des diplômes à lieu tout les ans à la même date. Vous pourrez venir chercher
+        vos passeport pour le monde professionnel ce 14 juin à l'Université où un pot sera présent.");
+        $event->setEventDate(new \DateTime('2016-06-14 12:00:00'));
+        $event->setEventDateEnd(new \DateTime('2016-06-14 16:00:00'));
+        $event->setEventPostDate(new \DateTime());
+        $event->setUser($superadmin);
+        $events[] = $event;
 
         foreach($events as $event){
             $manager->persist($event);
         }
         $manager->flush();
+
     }
 
     /**
@@ -42,6 +53,6 @@ class LoadAgilEventData extends AbstractFixture implements OrderedFixtureInterfa
      */
     public function getOrder()
     {
-        return 8;
+        return 9;
     }
 }

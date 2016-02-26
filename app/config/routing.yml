@@ -15,7 +15,7 @@ agil_admin:
 
 agil_hall:
     resource: "@AGILHallBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /hall
 
 agil_chat:
     resource: "@AGILChatBundle/Resources/config/routing.yml"

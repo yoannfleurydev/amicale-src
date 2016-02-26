@@ -1,27 +1,18 @@
 {% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
 {% block body %}
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-lg-10"><h5>Nom de l'évenement !!</h5></div>
-                        <div class="col-lg-2"><h5><em class="text-blue">24 juin 2014</em></h5></div>
+                        <div class="col-lg-10"><h5>{{ event.eventTitle }}</h5></div>
+                        <div class="col-lg-2"><h5><em class="text-primary-blue">{{ event.getEventPostDate | date('j M Y') }}</em></h5></div>
 
                     </div>
                 </div>
                 <div class="panel-body">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ornare, orci quis placerat tempus,
-                    justo ipsum pellentesque arcu,
-                    vel suscipit nisi metus nec enim. Etiam sodales hendrerit semper. Nulla molestie porttitor urna
-                    vitae ultricies.
-                    In hac habitasse platea dictumst. Vestibulum vitae nunc consequat, imperdiet massa non, lobortis
-                    sapien.
-                    Fusce mattis finibus eros, tempor scelerisque elit faucibus sit amet. Sed vel libero vestibulum
-                    metus eleifend pharetra.
-
+                    {{ event.eventText }}
                 </div>
 
                 <div class="panel-body">
@@ -62,4 +53,3 @@
     </script>
 
 {% endblock %}
-

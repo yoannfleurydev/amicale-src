@@ -23,7 +23,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "stfalcon/tinymce-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "friendsofsymfony/jsrouting-bundle" : "^1.6"
+        "friendsofsymfony/jsrouting-bundle" : "^1.6",
+        "essence/essence": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

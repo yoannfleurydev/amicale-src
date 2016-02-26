@@ -1,3 +1,21 @@
-{% extends "AGILDHallBundle::baseHallBundle.html.twig" %}
+{% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
-Hello World!
+{% block body %}
+
+    {% for event in events %}
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+                <div class="card-events">
+                    <p><h5><a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">{{ event.eventTitle }}</a></h5></p>
+                    <p><h6><em>{{ event.eventText }}</em></h6></p>
+                    <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <nav class="text-center">
+        {% include 'AGILHallBundle:Default:pagination.html.twig' %}
+    </nav>
+
+{% endblock %}
