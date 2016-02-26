@@ -32,3 +32,6 @@ agil_offer:
 agil_forum:
     resource: "@AGILForumBundle/Resources/config/routing.yml"
     prefix:   /forum
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

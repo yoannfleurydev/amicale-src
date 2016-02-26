@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class AgilEventRepository extends EntityRepository
 {
+    public function getEventDataStartEnd($start, $end){
+
+        $query = $this->_em->createQueryBuilder();
+
+        $query->select('es.eventTitle','es.eventDate','es.eventPostDate','es.eventDateEnd','es.eventText')
+            ->from('AGIL\HallBundle\Entity\AgilEvent','es');
+        /*
+            ->where('es.eventDate BETWEEN :startDate and :endDate')
+            ->setParameter('startDate', $start)
+            ->setParameter('endDate', $end);
+*/
+
+        return $query->getQuery()->getResult();
+
+    }
 }
