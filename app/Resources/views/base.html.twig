@@ -7,7 +7,19 @@
     <link href="{{ asset("css/styles.css") }}" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{{ asset("js/bootstrap.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/bootstrap/popover.js") }}"></script>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <!-- import pour le calendrier -->
+    <link rel="stylesheet" href="{{ asset('bundles/hallBundle/fullcalendar.css') }}" />
+    <script type="text/javascript" src="{{ asset('bundles/hallBundle/lib/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hallBundle/main.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hallBundle/fullcalendar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/hallBundle/lang/fr.js') }}"></script>
+    <!-- -------------------------- -->
+
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">

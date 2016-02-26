@@ -126,3 +126,5 @@ fos_user:
     service:
         mailer:   fos_user.mailer.twig_swift
 
+fos_js_routing:
+    routes_to_expose: [ (.)* ]
