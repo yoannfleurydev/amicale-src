@@ -8,11 +8,16 @@ $(document).ready(function () {
      dans full calendar ligne 5580
      */
     $('#calendar').fullCalendar({
+        transmitTZD: true,
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
+        eventLimit: true,
+        selectHelper: true,
+        minTime: "05:00:00",
+        maxTime: "23:00:00",
         eventRender: function (event, element) {
             // Activier le popover de bootstrap sur les labels
             element.popover({html:true});
@@ -23,9 +28,8 @@ $(document).ready(function () {
                 url: Routing.generate('agil_hall_calendar_data'),
                 dataType: 'json',
                 data: {
-                    // our hypothetical feed requires UNIX timestamps
-                    start: start.unix(),
-                    end: end.unix()
+                    start: moment(start).format('YYYY-MM-DD'),
+                    end: moment(end).format('YYYY-MM-DD')
                 },
                 // Requête ajax
                 success: function (doc) {
@@ -37,8 +41,7 @@ $(document).ready(function () {
                             title: value.eventTitle,
                             start: value.eventDate.date,
                             end:   value.eventDateEnd.date,
-                            description : value.eventText,
-                            allDay : true
+                            description : value.eventText
                         });
                     });
                     callback(events);

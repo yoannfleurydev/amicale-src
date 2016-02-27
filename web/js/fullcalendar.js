@@ -5577,14 +5577,14 @@ DayGrid.mixin({
 			'<span class="fc-title">' +
 				(htmlEscape(event.title || '') || '&nbsp;') + // we always want one line of height
 			'</span>';
-
+		console.log(event.start);
 		// Ici on customise notre label pour accueil le popover de bootstrap
 		var endDate="";
-		if ( event.end != null){ endDate =" - "+ moment(event.end).format("ddd d MMM"); }
+		if ( event.end != null){ endDate =" - "+ moment(event.end).format("ddd D MMM"); }
 
 		var EventContentLabel = '<h5>'+event.title+'</h5>'+
 			'<p>'+event.description+'</p>'+
-			'<p>'+moment(event.start).format("ddd d MMM")+' '+endDate+'</p>'+
+			'<p>'+moment(event.start).format("ddd D MMM")+' '+endDate+'</p>'+
 			'<a href=\'test\'>plus de détails</a>';
 
 		return '<a class="' + classes.join(' ') + '"' +
@@ -9303,7 +9303,7 @@ Calendar.defaults = {
 	defaultTimedEventDuration: '02:00:00',
 	defaultAllDayEventDuration: { days: 1 },
 	forceEventDuration: false,
-	nextDayThreshold: '09:00:00', // 9am
+	nextDayThreshold: '07:00:00', // 9am
 
 	// display
 	defaultView: 'month',
