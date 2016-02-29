@@ -20,7 +20,7 @@ class Tags {
 	 * @param string $color La couleur qu'on donnera au tag
 	 * @param AgilSkill $skillCat La catégorie à associer au tag
 	 */
-	function insertTag($tagName, $color = 'tag-default', AgilSkill $skillCat = null) {
+	function insertTag($tagName, $color = 'primary-blue', AgilSkill $skillCat = null) {
 		if (!$tagName) {
 			// Si le tagName est une chaine vide on ne fait rien.
 			/*
@@ -33,12 +33,14 @@ class Tags {
 		$tagRepo = $this->em->getRepository("AGILDefaultBundle:AgilTag");
 
 		if (null === $tagRepo->findOneByTagName($tagName)) {
-			$tag = new AgilTag($tagName, $color, null);
-			$tag->setSkillCategory((null == $skillCat)? null : $skillCat);
+			$tag = new AgilTag($tagName, $color, $skillCat);
 			$this->em->persist($tag);
 		}
 	}
 
+	/**
+	 * Signifie la fin de l'insertion des tags
+	 */
 	function insertDone() {
 		$this->em->flush();
 	}
