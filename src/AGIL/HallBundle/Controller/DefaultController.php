@@ -2,9 +2,14 @@
 
 namespace AGIL\HallBundle\Controller;
 
+use AGIL\HallBundle\Entity\AgilEvent;
+use AGIL\HallBundle\Form\EventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
     /* index */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
@@ -45,5 +50,52 @@ class DefaultController extends Controller {
         $videos = $videoRepo->findByEvent($idEvent);
 
         return $this->render('AGILHallBundle:Default:videoEvent.html.twig');
+    }
+
+    public function eventAddAction(Request $request) {
+        $event = new AgilEvent();
+
+        $form = $this->createForm(new EventType(), $event);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $event->setUser($this->getUser());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($event);
+            $em->flush();
+
+            $this->addFlash('success', 'Evenement ajouté');
+//            return $this->redirect($this->generateUrl('agil_hall_event', array('id' => $event->getEventId())));
+        }
+
+        return $this->render('AGILHallBundle:Default:eventAdd.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    public function eventEditAction($idEvent, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $event = $em->getRepository('AGILHallBundle:AgilEvent')->find($idEvent);
+
+        $form = $this->createForm(new EventType(), $event);
+
+        // Remplissage des champs qui ont une valeur
+        $form->get('eventTitle')->setData($event->getEventTitle());
+        $form->get('eventText')->setData($event->getEventText());
+        $form->get('eventDate')->setData($event->getEventDate());
+
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+            $em->flush();
+        }
+
+        return $this->render('AGILHallBundle:Default:eventEdit.html.twig', array(
+            'event' => $event,
+            'form'  => $form->createView()
+        ));
     }
 }
