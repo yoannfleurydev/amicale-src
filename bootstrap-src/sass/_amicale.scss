@@ -2,6 +2,34 @@ $orange-color : #d55400;
 $menu-color : #334960;
 $footer-color : #444;
 
+.square-add-picture {
+  border:1px solid #888;
+  width:100px;
+  height:100px;
+  text-align:center;
+  font-size:50px;
+  opacity:.5;
+  line-height:95px;
+  cursor:pointer;
+  position: relative;
+}
+
+.square-add-picture input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.square-add-picture:before {
+  content:"+"
+}
+
 $card-events-border-radiux : 0px;
 .card-events {
   margin-bottom : 10px;
@@ -557,4 +585,10 @@ span.panel-title-content {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-tap-highlight-color: transparent;
   outline: none;
+}
+
+.picture-list img {
+  margin-right:10px;
+  margin-bottom:10px;
+  border:1px solid #888;
 }
