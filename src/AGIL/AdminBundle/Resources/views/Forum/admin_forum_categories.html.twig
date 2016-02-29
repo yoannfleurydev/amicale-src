@@ -1,5 +1,7 @@
 {% extends "AGILAdminBundle::baseAdminBundle.html.twig" %}
 
+{% form_theme form '::form_errors.html.twig' %}
+
 {% block body %}
 
 
@@ -23,7 +25,8 @@
                     <label for="forumCategoryName">Nom de la catégorie :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="material-icons">mode_edit</i></div>
-                        {{ form_row(form.forumCategoryName) }}
+                        {{ form_errors(form.forumCategoryName) }}
+                        {{ form_widget(form.forumCategoryName) }}
                     </div>
                 </div>
 
@@ -31,7 +34,8 @@
                     <label for="forumCategoryText">Description de la catégorie :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="material-icons">info</i></div>
-                        {{ form_row(form.forumCategoryText) }}
+                        {{ form_errors(form.forumCategoryText) }}
+                        {{ form_widget(form.forumCategoryText) }}
                     </div>
                 </div>
 
@@ -41,9 +45,10 @@
 
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span id="btn-cat-ch" class="glyphicon glyphicon-cutlery"> <span class="caret"></span></span>
+                                <span id="btn-cat-ch" class="glyphicon glyphicon-stats"> <span class="caret"></span></span>
                             </button>
                             <ul id="liste_gly_choice" class="dropdown-menu list-inline" role="menu">
+                                <li><a href="#"><span class="glyphicon glyphicon-stats"></span></a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-cloud"></span></a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-film"></span></a></li>
@@ -57,7 +62,6 @@
                                 <li><a href="#"><span class="glyphicon glyphicon-tasks"></span></a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-briefcase"></span></a></li>
                                 <li><a href="#"><span class="glyphicon glyphicon-mobile"></span></a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-stats"></span></a></li>
                             </ul>
                         </div>
 
@@ -138,7 +142,6 @@
     </div>
 
 
-
     <!-- Panel qui s'affiche pour la confirmation de suppression -->
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -153,20 +156,6 @@
             </div>
         </div>
     </div>
-
-    <!--<div class="modal fade bs-example-modal-sm" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="container">
-                    <h5>Etes vous sûr ?</h5>
-                    <div class="form-group">
-                        <button class="btn btn-danger">Annuler</button>
-                        <button class="btn btn-success btn-ok">Confirmer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
 
 
 {% endblock %}

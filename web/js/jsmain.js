@@ -198,5 +198,6 @@ $("#liste_gly_choice li").click(function () {
     $('#btn-cat-ch').attr('class', '');
     $('#btn-cat-ch').addClass('glyphicon '+glyph);
     $('#forum_add_category_forumCategoryIcon').attr("value", glyph);
+    $('#forum_edit_category_forumCategoryIcon').attr("value", glyph);
 
 });

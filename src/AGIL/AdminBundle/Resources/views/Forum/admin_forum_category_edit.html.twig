@@ -1,5 +1,7 @@
 {% extends "AGILAdminBundle::baseAdminBundle.html.twig" %}
 
+{% form_theme form '::form_errors.html.twig' %}
+
 {% block body %}
 
     <div class="row panel">
@@ -20,7 +22,8 @@
                     <label for="forumCategoryName">Nom de la catégorie :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="material-icons">mode_edit</i></div>
-                        {{ form_row(form.forumCategoryName) }}
+                        {{ form_errors(form.forumCategoryName) }}
+                        {{ form_widget(form.forumCategoryName) }}
                     </div>
                 </div>
 
@@ -28,7 +31,8 @@
                     <label for="forumCategoryText">Description de la catégorie :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="material-icons">info</i></div>
-                        {{ form_row(form.forumCategoryText) }}
+                        {{ form_errors(form.forumCategoryText) }}
+                        {{ form_widget(form.forumCategoryText) }}
                     </div>
                 </div>
 

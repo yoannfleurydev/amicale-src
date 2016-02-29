@@ -8,17 +8,16 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\ORM\EntityRepository;
 
 class EditCategoryType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $builder->add('forumCategoryName', TextType::class, array(
             'label' => false,
-            'constraints' => array(
-                new NotBlank(),
-            ),
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Nom',
@@ -27,9 +26,6 @@ class EditCategoryType extends AbstractType
 
         $builder->add('forumCategoryText', TextType::class, array(
             'label' => false,
-            'constraints' => array(
-                new NotBlank(),
-            ),
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Description',
@@ -37,7 +33,7 @@ class EditCategoryType extends AbstractType
         ));
 
         $builder->add('forumCategoryIcon', HiddenType::class, array(
-            'data' => 'glyphicon-tag',
+            'data' => 'glyphicon-stats',
         ));
 
 
