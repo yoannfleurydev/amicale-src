@@ -2,8 +2,11 @@
 
 namespace AGIL\HallBundle\Controller;
 
+use fg\Essence\Essence;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\VarDumper\VarDumper;
 
 class DefaultController extends Controller {
     const MAX_EVENTS = 10;
@@ -33,20 +36,21 @@ class DefaultController extends Controller {
 		return $this->render('AGILHallBundle:Default:index.html.twig', array('events' => $events, 'pagination'=>$pagination));
 	}
 
-	/* Affichage de la page souhaitée *//*
-    public function renderPageAction($idPage) {
-	    // TODO Faire la pagination
-	    return $this->render('AGILHallBundle:Default:index.html.twig');
-    }*/
+	/* Affichage d'un événement comme un post de blog */
+    public function eventAction($idEvent) {
+        $em = $this->getDoctrine()->getManager();
+        $eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
+        $event = $eventRepo->find($idEvent);
 
-	/* Affichage d'un événement */
-	public function eventAction($idEvent) {
-		$em = $this->getDoctrine()->getManager();
-		$eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
-		$event = $eventRepo->find($idEvent);
+        $essence = new Essence();
 
-		return $this->render('AGILHallBundle:Event:event.html.twig', array('event' => $event));
-	}
+        $eventContent = $essence->replace($event->getEventText(), function($media) {
+			return 'toto';
+		});
+
+        return $this->render('AGILHallBundle:Event:event.html.twig', array('event' => $event, 'eventContent' =>
+            $eventContent));
+    }
 
 	/* Affichage des photos d'un événement */
 	public function photosEventAction($idEvent) {

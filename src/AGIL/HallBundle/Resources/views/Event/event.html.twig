@@ -6,13 +6,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-lg-10"><h5>{{ event.eventTitle }}</h5></div>
-                        <div class="col-lg-2"><h5><em class="text-primary-blue">{{ event.getEventPostDate | date('j M Y') }}</em></h5></div>
+                        <div class="col-lg-10">
+                            <h3>{{ event.eventTitle }}</h3>
+                        </div>
+                        <div class="col-lg-2">
+                            <h5>
+                                Le <span class="text-primary-blue">{{ event.eventPostDate | date('j M Y') }}</span>
+                                par <span class="text-primary-blue">{{ event.user }}</span>
+                            </h5>
+                        </div>
 
                     </div>
                 </div>
                 <div class="panel-body">
-                    {{ event.eventText }}
+                    {{ eventContent | raw }}
                 </div>
 
                 <div class="panel-body">
