@@ -5,6 +5,7 @@ namespace AGIL\HallBundle\Repository;
 use AGIL\HallBundle\Controller\DefaultController;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * AgilEventRepository
@@ -16,17 +17,28 @@ class AgilEventRepository extends EntityRepository
 {
     public function getEventDataStartEnd($start, $end) {
 
+        $end = new \DateTime($end);
+        $end = $end->format('Y-m-d h:m:s');
+
+        $start = new \DateTime($start);
+        $start = $start->format('Y-m-d h:m:s');
+
         $query = $this->_em->createQueryBuilder();
 
         $query
-            ->select('es.eventTitle', 'es.eventDate', 'es.eventPostDate', 'es.eventDateEnd', 'es.eventText')
-            ->from('AGIL\HallBundle\Entity\AgilEvent', 'es');
-
-        /*
+            ->select('es.eventTitle',
+                'es.eventDate',
+                'es.eventPostDate',
+                'es.eventDateEnd',
+                'es.eventText',
+                'es.eventId'
+            )
+            ->from('AGIL\HallBundle\Entity\AgilEvent', 'es')
             ->where('es.eventDate BETWEEN :startDate and :endDate')
+            ->where('es.eventDateEnd BETWEEN :startDate and :endDate')
             ->setParameter('startDate', $start)
             ->setParameter('endDate', $end);
-*/
+
 
         return $query->getQuery()->getResult();
     }
