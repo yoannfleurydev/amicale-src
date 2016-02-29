@@ -335,13 +335,16 @@ class AnswersController extends Controller
         if ($form->isValid()) {
 
             if ($isAdmin) {
-                $reason = $form->get('reason')->getData();
+                $reason = $form->get('choiceReason')->getData();
+                $messageOption = $form->get('reasonOption')->getData();
                 $subjectMail = "Amicale GIL[Suppression d'une réponse d'un sujet du forum]";
                 $message = '<p>Bonjour ' . $author->getUsername() . ',</p>';
-                $message .= '<p>votre réponse "' . $text . '" au sujet ' .
+                $message .= '<p>votre réponse "' . $text . '" au sujet "' .
                     $subject->getForumSubjectTitle() . '" a été supprimé du forum.</p>';
-                $message .= "<p>Raison de la suppression :</p>";
-                $message .= '<p>"' . $reason . '"</p>';
+                $message .= "<p>Raison de la suppression : $reason</p>";
+                if (!empty($messageOption)) {
+                    $message .= "<p>Message :<br />$messageOption</p>";
+                }
                 $message .= "<p>Cordialement</p>";
 
                 $this->sendMail($subjectMail, $message, $author->getEmail());

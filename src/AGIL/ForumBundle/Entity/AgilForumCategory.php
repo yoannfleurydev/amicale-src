@@ -158,4 +158,6 @@ class AgilForumCategory
     {
         return $this->forumCategoryIcon;
     }
+
+
 }

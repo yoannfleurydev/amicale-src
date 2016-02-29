@@ -6,16 +6,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-
-
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class EditCategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('forumCategoryName', 'text', array(
+        $builder->add('forumCategoryName', TextType::class, array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),
@@ -26,7 +25,7 @@ class EditCategoryType extends AbstractType
             )
         ));
 
-        $builder->add('forumCategoryText', 'text', array(
+        $builder->add('forumCategoryText', TextType::class, array(
             'label' => false,
             'constraints' => array(
                 new NotBlank(),
@@ -42,7 +41,7 @@ class EditCategoryType extends AbstractType
         ));
 
 
-        $builder->add('Modifier', 'submit', array(
+        $builder->add('Modifier', SubmitType::class, array(
             'label' => false,
             'attr' => array(
                 'class' => 'btn btn-primary',
@@ -50,7 +49,7 @@ class EditCategoryType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'forum_edit_category';
     }

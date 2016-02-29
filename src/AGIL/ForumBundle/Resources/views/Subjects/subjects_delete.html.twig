@@ -23,8 +23,16 @@
                         {% if isAdmin == true %}
                             <div class="form-group" id="formAddNamePost">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <p>Raison :</p>
-                                    {{ form_row(form.reason) }}
+                                    {{ form_errors(form.choiceReason) }}
+                                    {{ form_label(form.choiceReason) }}
+                                    {{ form_widget(form.choiceReason) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="formAddNamePost">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <p>Message additionnel :</p>
+                                    {{ form_row(form.reasonOption) }}
                                 </div>
                             </div>
                         {% endif %}

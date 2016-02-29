@@ -7,13 +7,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UsersCSVType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('file', 'file', array(
+        $builder->add('file', FileType::class, array(
             'label' => false,
             'mapped'=>false,
             'required' => true,
@@ -38,7 +39,7 @@ class UsersCSVType extends AbstractType
             )
         ));
 
-        $builder->add('Inviter', 'submit', array(
+        $builder->add('Inviter', SubmitType::class, array(
             'label' => false,
             'attr' => array(
                 'class' => 'btn btn-primary',
@@ -46,7 +47,7 @@ class UsersCSVType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'user_add_csv_form';
     }

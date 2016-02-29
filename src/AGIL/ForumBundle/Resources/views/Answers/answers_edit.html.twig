@@ -15,7 +15,8 @@
 
                 <!-- Formulaire de modification du post pour le forum -->
 
-                <form action="{{ path('agil_forum_answers_edit', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}" method="post" {{ form_enctype(form) }}>
+                <form action="{{ path('agil_forum_answers_edit', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}"
+                      method="post" {{ form_enctype(form) }}>
 
                     <div class="form-group" id="formAddNamePost">
                         <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Sujet</strong></label>
@@ -42,8 +43,9 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             {{ form_row(form.Modifier) }}
-                            <a href="{{ path('agil_forum_subjects_list', {'idCategory': idCategory}) }}">
-                                <button class="btn btn-default">Annuler</button>
+                            <a class="btn btn-default"
+                               href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
+                                Annuler
                             </a>
                         </div>
                     </div>
@@ -58,8 +60,7 @@
                             table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
                             tools: {title: 'Tools', items: 'spellchecker code'}
                         }
-                        })
-                    }}
+                    }) }}
                     {{ form_rest(form) }}
                 </form>
             </div>

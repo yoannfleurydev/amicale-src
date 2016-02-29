@@ -18,6 +18,8 @@
 
                     {% else %}
 
+                        <div><a href="{{ path('agil_forum_subject_add_home') }}" class="btn btn-primary">Nouveau Sujet</a></div></br>
+
                         {% for category in categoryList %}
 
                             {% set key = category.forumCategoryId %}
@@ -78,7 +80,7 @@
                                                                         <small> Créé par</small>
                                                                         <a href="{{ path('agil_profile_id',{'id':subject.user.id}) }}">{{ subject.user.username }}</a>
                                                                     </h6>
-                                                                    <small><em>Le {{ subject.forumSubjectPostDate|date('j M Y') }}</em></small>
+                                                                    <small><em>Le {{ subject.forumSubjectPostDate | localizeddate('full', 'none') }}</em></small>
                                                                 </div>
                                                             </div>
                                                         </td>

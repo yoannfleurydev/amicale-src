@@ -18,37 +18,41 @@
                 <div class="panel-body">
 
                     <!-- Formulaire d'ajout d'un nouveau sujet pour le forum -->
+                    <form action="{{ path('agil_forum_subject_add_home') }}" method="post" {{ form_enctype(form) }}>
 
-                    <form action="{{ path('agil_forum_subject_add', {'idCategory': idCategory}) }}" method="post" {{ form_enctype(form) }}>
+                        <div class="form-group" id="formCategories">
+                            <label for="formCategories" class="control-label"><h5>Catégorie</h5></label><br/>
+                            {{ form_errors(form.subject.category) }}
+                            {{ form_widget(form.subject.category) }}
+                        </div>
 
                         <div class="form-group" id="formAddNamePost">
                             <label for="inputNamePost" class="control-label"><h5>Nom du sujet</h5></label>
-                                {{ form_errors(form.subject.forumSubjectTitle) }}
-                                {{ form_widget(form.subject.forumSubjectTitle) }}
+                            {{ form_errors(form.subject.forumSubjectTitle) }}
+                            {{ form_widget(form.subject.forumSubjectTitle) }}
                         </div>
                         <div class="form-group" id="formAddDescPost">
                             <label for="inputDescPost" class="control-label"><h5>Description</h5></label>
-                                {{ form_errors(form.subject.forumSubjectDescription) }}
-                                {{ form_widget(form.subject.forumSubjectDescription) }}
+                            {{ form_errors(form.subject.forumSubjectDescription) }}
+                            {{ form_widget(form.subject.forumSubjectDescription) }}
                         </div>
-
 
                         <div class="form-group" id="formAddTagsPost">
                             <label for="inputTagsPost" class="control-label"><h5>Tags</h5></label>
-                                {{ form_errors(form.subject.tags) }}
-                                {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
+                            {{ form_errors(form.subject.tags) }}
+                            {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
                             <div id="tags_container"></div>
                         </div>
 
                         <div class="form-group" id="formAddContentPost">
                             <label for="inputContentPost" class="control-label"><h5>Message</h5></label>
-                                {{ form_errors(form.forumAnswerText) }}
-                                {{ form_widget(form.forumAnswerText) }}
+                            {{ form_errors(form.forumAnswerText) }}
+                            {{ form_widget(form.forumAnswerText) }}
                         </div>
 
                         <p class="text-center">
                             {{ form_widget(form.Ajouter) }}
-                            <a class="btn btn-default" href="{{ path('agil_forum_subjects_list', {'idCategory': idCategory}) }}">Annuler</a>
+                            <a class="btn btn-default" href="{{ path('agil_forum_homepage') }}">Annuler</a>
                         </p>
 
                         {{ tinymce_init() }}
