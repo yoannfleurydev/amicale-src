@@ -1,5 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% set isActive = "accueil" %}
-
-{% block body %}{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="{{ asset("js/admin.js") }}"></script>
+{% endblock %}
+{% set isActive = "profile" %}

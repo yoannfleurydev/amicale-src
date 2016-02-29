@@ -22,8 +22,8 @@ class LoadForumSubjectData extends AbstractFixture implements OrderedFixtureInte
         $infoCategory = $this->getReference('Informatique');
         $diversCategory = $this->getReference('Divers');
 
-        $userSuperAdmin = $this->getReference('superAdmin');
-        $userMember = $this->getReference('userMember');
+        $userSuperAdmin = $this->getReference('superadmin');
+        $userMember = $this->getReference('user');
 
         $tagPHP = $this->getReference('tagPHP');
         $tagJava = $this->getReference('tagJava');

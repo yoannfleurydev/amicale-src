@@ -38,4 +38,8 @@ class Tags {
 			$this->em->persist($tag);
 		}
 	}
+
+	function insertDone() {
+		$this->em->flush();
+	}
 }

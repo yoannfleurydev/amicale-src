@@ -2,4 +2,14 @@
 
 {% set isActive = "hall" %}
 
+{% block stylesheets %}
+    <link href="{{ asset("css/owl.carousel.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/owl.theme.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ asset("js/owl.carousel.js") }}"></script>
+{% endblock %}
+
+{% block title %}Le Hall{% endblock %}
 {% block body %}{% endblock %}

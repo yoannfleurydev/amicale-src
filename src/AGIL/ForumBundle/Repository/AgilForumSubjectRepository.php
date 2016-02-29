@@ -49,8 +49,7 @@ class AgilForumSubjectRepository extends EntityRepository
         $query->setFirstResult(($page-1) * $maxperpage)
             ->setMaxResults($maxperpage)->getQuery();
 
-        return new Paginator($query);;
-
+        return new Paginator($query);
     }
 
     /**

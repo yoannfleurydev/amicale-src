@@ -33,11 +33,6 @@
                         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-offset-2 col-lg-8">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    {% for flash_message in app.session.flashbag.get('warning') %}
-                                        <div class="alert-warning">
-                                            {{ flash_message }}
-                                        </div>
-                                    {% endfor %}
                                     <form action="{{ path('agil_profile_edit') }}"
                                           method="post" {{ form_enctype(form) }}>
 
@@ -65,8 +60,9 @@
                                         <div class="form-group">
                                             <label for="pseudo">Modifier la photo de profil :</label>
                                             <div class="input-group">
-												<div class="fileUpload btn btn-primary">
-                                                    <span id="button_name_picture"><i class="material-icons">file_upload</i> Choisir un fichier</span>
+                                                <div class="fileUpload btn btn-primary">
+                                                    <span id="button_name_picture"><i
+                                                                class="material-icons">file_upload</i> Choisir un fichier</span>
                                                     {{ form_row(form.userProfilePictureUrl) }}
                                                 </div>
                                             </div>
@@ -89,7 +85,11 @@
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span
                                                             class="glyphicon glyphicon-eye-open"></span></div>
-                                                {{ form_row(form.userCVUrlVisibility) }}
+
+                                                <label class="checkbox">
+                                                    {{ form_widget(form.userCVUrlVisibility) }}
+                                                    <span></span>{{ form_label(form.userCVUrlVisibility) }}
+                                                </label>
                                             </div>
                                         </div>
 
@@ -110,7 +110,10 @@
                                             </div>
                                         </div>
 
-                                        {#{% if data is defined %}
+                                        <div>
+                                            <p>Modification des compétences du profil</p>
+                                        </div>
+                                        {% if data is defined %}
                                             {% for profileSkillsCategory in data['profileSkillsCategories'] %}
                                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="panel panel-default">
@@ -131,8 +134,7 @@
                                                                                     {{ tag.tagName }}
                                                                                 </div>
                                                                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                    {#{{ form_row(form['tag' ~ tag.tagId]) }}
-                                                                                </div>
+                                                                                    {{ form_row(form['tag' ~ tag.tagId]) }}
                                                                             </div>
                                                                         </li>
                                                                     {% endif %}
@@ -142,8 +144,7 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
-                                        {% endif %} #}
-
+                                        {% endif %}
                                         {# update button #}
                                         {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
 

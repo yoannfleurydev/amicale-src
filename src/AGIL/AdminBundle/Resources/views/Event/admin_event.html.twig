@@ -1,97 +1,43 @@
-{% extends "AGILAdminBundle::baseAdminBundle.html.twig" %}
+{% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
-<div class="container">
-    <aside class="sidebar">
-        <nav class="nav">
-            <ul class="nav-items">
-                <li class="nav-title">Navigation</li>
-                <li><a href="http://amicale.valentincrochemore.fr" class="nav-link nav-link-active">
-                    <span class="glyphicon glyphicon-home"></span>
-                    Accueil
-                </a></li>
-                <li><a href="#" class="nav-link">
-                    <span class="glyphicon glyphicon-info-sign"></span>
-                    Annonces
-                </a></li>
-                <li><a href="#" class="nav-link">
-                    <span class="glyphicon glyphicon-picture"></span>
-                    Hall
-                </a></li>
-                <li><a href="#" class="nav-link">
-                    <span class="glyphicon glyphicon-comment"></span>
-                    Salon
-                </a></li>
-                <li><a href="#" class="nav-link">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                    Agenda</a></li>
-            </ul>
-            <div class="sidebar-separator"></div>
-            <ul class="nav-items">
-                <li class="nav-title">Liens utiles</li>
-                <li><a href="#" class="nav-link">Ent</a></li>
-                <li><a href="#" class="nav-link">Webmail</a></li>
-            </ul>
-        </nav>
-    </aside>
+{% block body %}
 
-    <!-- Le forum Si on est connecté -->
-
-    <div class="row panel">
-        <div class="col-md-12">
-
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                        <span class="panel-title-content">
-                          Les evenements
-                        </span>
-                </h2>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <div class="card-events">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <h5><a href="#">Nom de l'évenement</a></h5>
+                        <h6><em>Début de l'information sur l'évenement avec des ... </em></h6>
+                        <h6>24 dec 2016</h6>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 vcenter">
+                        <a class="btn btn-primary" href="#" role="button">Editer</a>
+                        <a class="btn btn-default" href="#" role="button">Supprimer</a>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <table class="table">
-                    <tr>
-                        <td class="vert-align" >
-                            <h5><a href="#">Nom de l'évenement</a></h5>
-                            <h6><em>Début de l'information sur l'évenement avec des ... </em></h6>
-                        </td>
-
-                        <td class="vert-align" >24 dec 2016</td>
-                        <td class="vert-align"><a href="#" class="btn btn-default">Editer</a></td>
-                        <td class="vert-align"><a href="#" class="btn btn-default">Supprimer</a></td>
-                    </tr>
-
-                    <tr>
-                        <td class="vert-align" >
-                            <h5><a href="#">Nom de l'évenement</a></h5>
-                            <h6><em>Début de l'information sur l'évenement avec des ... </em></h6>
-                        </td>
-
-                        <td class="vert-align" >24 dec 2016</td>
-                        <td class="vert-align"><a href="#" class="btn btn-default">Editer</a></td>
-                        <td class="vert-align"><a href="#" class="btn btn-default">Supprimer</a></td>
-                    </tr>
-                </table>
-
-            </div>
-
         </div>
-        <nav class="text-center">
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
     </div>
-</div>
+    <nav class="text-center">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+{% endblock %}
+

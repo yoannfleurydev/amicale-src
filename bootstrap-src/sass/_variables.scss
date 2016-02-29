@@ -26,7 +26,7 @@ $brand-danger:          #e51c23 !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #fff !default;
+$body-bg:               #F5F5F5 !default;
 //** Global text color on `<body>`.
 $text-color:            $gray !default;
 
@@ -484,7 +484,7 @@ $pager-disabled-color:                 $pagination-disabled-color !default;
 //
 //##
 
-$jumbotron-padding:              30px !default;
+$jumbotron-padding:              5px !default;
 $jumbotron-color:                inherit !default;
 $jumbotron-bg:                   #f9f9f9 !default;
 $jumbotron-heading-color:        $headings-color !default;

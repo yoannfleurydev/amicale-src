@@ -260,12 +260,7 @@ select.form-control {
 .checkbox,
 .checkbox-inline {
   label {
-    padding-left: 25px;
-  }
-
-  input[type="radio"],
-  input[type="checkbox"] {
-    margin-left: -25px;
+    padding-left: 15px;
   }
 }
 
@@ -275,6 +270,7 @@ input[type="radio"],
   position: relative;
   margin-top: 6px;
   margin-right: 4px;
+  margin-left: 15px;
   vertical-align: top;
   border: none;
   background-color: transparent;

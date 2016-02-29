@@ -1,3 +1,258 @@
+$orange-color : #d55400;
+$menu-color : #334960;
+$footer-color : #444;
+
+.square-add-picture {
+  border:1px solid #888;
+  width:100px;
+  height:100px;
+  text-align:center;
+  font-size:50px;
+  opacity:.5;
+  line-height:95px;
+  cursor:pointer;
+  position: relative;
+}
+
+.square-add-picture input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.square-add-picture:before {
+  content:"+"
+}
+
+$card-events-border-radiux : 0px;
+.card-events {
+  margin-bottom : 10px;
+  padding-top : 15px;
+  padding-bottom : 15px;
+  padding-left : 15px;
+  padding-right : 0px;
+  background-color : #FFF;
+  -webkit-border-radius: $card-events-border-radiux;
+  -moz-border-radius: $card-events-border-radiux;
+  border-radius: $card-events-border-radiux;
+  box-shadow: 0px 1px 2px #888888;
+}
+
+/*
+ * 	Core Owl Carousel CSS File
+ *	v1.3.3
+ */
+
+/* clearfix */
+.owl-carousel .owl-wrapper:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+/* display none until init */
+.owl-carousel{
+  display: none;
+  position: relative;
+  width: 100%;
+  -ms-touch-action: pan-y;
+}
+.owl-carousel .owl-wrapper{
+  display: none;
+  position: relative;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+}
+.owl-carousel .owl-wrapper-outer{
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.owl-carousel .owl-wrapper-outer.autoHeight{
+  -webkit-transition: height 500ms ease-in-out;
+  -moz-transition: height 500ms ease-in-out;
+  -ms-transition: height 500ms ease-in-out;
+  -o-transition: height 500ms ease-in-out;
+  transition: height 500ms ease-in-out;
+}
+
+.owl-carousel .owl-item{
+  float: left;
+}
+.owl-controls .owl-page,
+.owl-controls .owl-buttons div{
+  cursor: pointer;
+}
+.owl-controls {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* mouse grab icon */
+.grabbing {
+  cursor:url(grabbing.png) 8 8, move;
+}
+
+/* fix */
+.owl-carousel  .owl-wrapper,
+.owl-carousel  .owl-item{
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility:    hidden;
+  -ms-backface-visibility:     hidden;
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+}
+
+/* Styling Next and Prev buttons */
+
+/*
+* 	Owl Carousel Owl Demo Theme
+*	v1.3.3
+*/
+
+.owl-theme .owl-controls{
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Clickable class fix problem with hover on touch devices */
+/* Use it for non-touch hover action */
+.owl-theme .owl-controls.clickable .owl-buttons div:hover{
+  filter: Alpha(Opacity=100);/*IE7 fix*/
+  opacity: 1;
+  text-decoration: none;
+}
+
+/* Styling Pagination*/
+
+.owl-theme .owl-controls .owl-page{
+  display: inline-block;
+  zoom: 1;
+  *display: inline;/*IE7 life-saver */
+}
+
+$border-radius-control : 3px;
+.owl-theme .owl-controls .owl-page span{
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: 5px 7px;
+  filter: Alpha(Opacity=50);/*IE7 fix*/
+  opacity: 0.5;
+  -webkit-border-radius: $border-radius-control;
+  -moz-border-radius: $border-radius-control;
+  border-radius: $border-radius-control;
+  background: $orange-color;
+}
+
+.owl-theme .owl-controls .owl-page.active span,
+.owl-theme .owl-controls.clickable .owl-page:hover span{
+  filter: Alpha(Opacity=100);/*IE7 fix*/
+  opacity: 1;
+}
+
+/* If PaginationNumbers is true */
+
+.owl-theme .owl-controls .owl-page span.owl-numbers{
+  height: auto;
+  width: auto;
+  color: #FFF;
+  padding: 2px 10px;
+  font-size: 12px;
+  -webkit-border-radius: $border-radius-control;
+  -moz-border-radius: $border-radius-control;
+  border-radius: $border-radius-control;
+}
+
+/* preloading images */
+.owl-item.loading{
+  min-height: 150px;
+  background: url(AjaxLoader.gif) no-repeat center center
+}
+
+.owl-theme .owl-controls .owl-buttons div{
+  @extend .btn;
+  @extend .btn-primary;
+  margin-right:10px;
+  margin-left:10px;
+}
+
+.owl-theme {
+  margin-bottom: 20px;
+}
+
+/* Styling radio and checkbox */
+label.radio input[type=radio] {
+  opacity:0;
+  position:absolute
+}
+
+label.radio span {
+  content:"";
+  line-height:11px;
+  border:2px solid #666;
+  border-radius:50%;
+  -webkit-transition:.24s;
+  transition:.24s;
+  display:inline-block;
+  width:18px;
+  height:18px;
+  vertical-align:middle;
+  margin-right:10px;
+  margin-left:10px;
+}
+
+label.radio :checked+span {
+  border:2px solid $orange-color;
+}
+
+label.radio :checked+span:before {
+  color: $orange-color;
+  content:'\25CF';
+  font-size:16px;
+  text-align:center;
+}
+
+label.checkbox input[type=checkbox] {
+  opacity: 0;
+  position: absolute;
+}
+label.checkbox span {
+  line-height: 18px;
+  content: "";
+  border: 2px solid #666;
+  border-radius: 2px;
+  -webkit-transition: .24s;
+  transition: .24s;
+  display:inline-block;
+  width: 19px;
+  height: 19px;
+  vertical-align:middle;
+  margin-right:10px;
+  margin-left:10px;
+  text-align:center;
+}
+label.checkbox :checked+span {
+  background:$orange-color;
+  border: 2px solid $orange-color;
+}
+
+label.checkbox :checked+span:before {
+  color: #fff;
+  content: '\2714';
+}
 .list {
   border-radius: 3px;
   border: 1px solid #DDD;
@@ -9,11 +264,11 @@
 }
 
 .list-element a {
-  color :#334960 !important;
+  color :$menu-color !important;
 }
 
 .list-element a:hover {
-  color :#334960 !important;
+  color :$menu-color !important;
 }
 
 .list-element:last-child {
@@ -27,7 +282,6 @@
   margin-right: 10px;
 }
 
-/* line 6, ../sass/_amicale.scss */
 .fileUpload input {
   position: absolute;
   top: 0;
@@ -118,6 +372,19 @@ body {
   padding-bottom: 140px;
 }
 
+#logo-university {
+  padding: 0 !important;
+  width: 130px;
+  padding-top: 5px !important;
+}
+
+#logo-agil {
+  font-size: 25px !important;
+  padding-left: 20px;
+  padding-top: 8px;
+  float: left;
+}
+
 .nav-title {
   display: block;
   padding: 10px 30px;
@@ -135,11 +402,16 @@ body {
 }
 
 .nav-link-active {
-  background-color:#D55400;
+  background-color:$orange-color;
 }
 
 .nav-link:hover {
-  background-color: #D55400;
+  background-color: $orange-color;
+  text-decoration: none;
+}
+
+.nav-link:focus {
+  color: #F88844;
   text-decoration: none;
 }
 
@@ -162,31 +434,31 @@ body {
 
 .label button {
   border: none;
-  background-color:#334960;
+  background-color:$menu-color;
 }
 
 .label button:hover {
-  color:#D55400;
+  color:$orange-color;
 }
 
 /* Sidebar */
 .sidebar {
-  transition-duration: 0.3s;
+  transition-duration: 0.6s;
   transition-timing-function: ease-in-out;
   position: fixed;
-  margin-top:65px;
-  z-index: 5;
+  z-index: 100;
   top: 0;
   left: 0;
   height: 100%;
   width: 200px;
-  background: #334960;
+  background: $menu-color;
   overflow: hidden;
   box-shadow: 0px 1px 2px #888888;
   -webkit-transform: translate3d(-260px, 0, 0);
   transform: translate3d(-260px, 0, 0);
   transition-property: transform;
   overflow-y:auto;
+  padding-top: 10px;
 }
 
 .sidebar, .sidebar a { color: #FFF; }
@@ -242,10 +514,10 @@ textarea {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #444;
+  background-color: $footer-color;
   color:#FFFFFF;
   margin-left:0px;
-  border-top: 8px solid #D55400;
+  border-top: 8px solid $orange-color;
 }
 
 .footer * {
@@ -255,7 +527,7 @@ textarea {
 h2.panel-title {
   width:100%;
   text-align:center;
-  border-bottom: 3px solid #D55400;
+  border-bottom: 3px solid $orange-color;
   line-height:0.1em;
   margin:10px 0 20px;
 }
@@ -305,6 +577,9 @@ span.panel-title-content {
   text-decoration: none;
 }
 
+#logoUniv {
+  width: 95px;
+}
 
 * {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -312,4 +587,8 @@ span.panel-title-content {
   outline: none;
 }
 
-
+.picture-list img {
+  margin-right:10px;
+  margin-bottom:10px;
+  border:1px solid #888;
+}

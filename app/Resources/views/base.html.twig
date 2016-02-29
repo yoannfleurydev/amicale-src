@@ -6,27 +6,39 @@
     <title>{% block title %}Amicale GIL{% endblock %}</title>
     <link href="{{ asset("css/styles.css") }}" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="{{ asset("js/bootstrap.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/bootstrap.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/bootstrap/popover.js") }}"></script>
+    {% block stylesheets %}{% endblock %}
+    {% block javascript %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <!-- import pour le calendrier -->
+    <link rel="stylesheet" href="{{ asset('css/fullcalendar.css') }}" />
+    <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/calendarMain.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fullcalendar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fr.js') }}"></script>
+
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <!--<button class="navbar-brand hamburger"><span class="glyphicon glyphicon-arrow-right animate"></span></button>-->
-                <button class="navbar-brand hamburger" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Menu">
+                <button class="navbar-brand hamburger">
                     <span class="bar up animate"></span>
                     <span class="bar"></span>
                     <span class="bar bottom animate"></span>
                 </button>
-                <a href="#"><img class="img-responsive navbar-mobile" src="{{ asset("images/logo.png") }}" alt="logo univ" width="95px"></a>
-                <a href="#" class="navbar-mobile">AGIL</a>
+                <a class="hidden-xs hidden-sm" href="http://www.univ-rouen.fr"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("img/logo.png") }}" alt="logo univ"></a>
+                <a class="hidden-xs hidden-sm" href="{{ path("agil_default_homepage") }}" id="logo-agil">AGIL</a>
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
                 {% else %}
                 <!--Si connecté-->
-                <li class="dropdown navbar-dropdown-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Menu utilisateur">
+                <li class="dropdown navbar-dropdown-mobile right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50px" alt="Photo de profil">
                     </a>
@@ -50,54 +62,69 @@
                 <a href="#" class="navbar-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Rechercher"><span class="material-icons">search</span></a>
             </div>
         </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container">
         <aside class="sidebar">
             <nav class="nav">
                 <ul class="nav-items">
                     <li class="nav-title">Navigation</li>
-                    <li><a href="{{ path("agil_default_homepage") }}" class="nav-link {% if isActive == "accueil" %} nav-link-active {% endif %}">
+                    <li>
+                        <a href="{{ path("agil_default_homepage") }}" class="nav-link {% if isActive == "accueil" %} nav-link-active {% endif %}" title="Accueil">
                             <span class="glyphicon glyphicon-home"></span>
                             Accueil
-                        </a></li>
-                    <li><a href="#" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
-                    {% if is_granted("ROLE_USER") %}
+                        </a>
+                    </li>
+                            {% if is_granted("ROLE_USER") %}
 
-                            <li><a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}">
+                    <li>
+                        <a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}" title="Forum">
                             <span class="glyphicon glyphicon-th-list"></span>
-                                Forum
+                            Forum
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li><a href="{{ path('agil_hall_homepage') }}" class="nav-link {% if isActive == "hall" %} nav-link-active {% endif %}" title="Hall">
+                            <span class="glyphicon glyphicon-picture"></span>
+                            Hall
+                        </a>
+                    </li>
+                    {% if is_granted("ROLE_USER") %}
+                        <li>
+                            <a href="#" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
+                                <span class="glyphicon glyphicon-comment"></span>
+                                Salon
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                Agenda
                             </a>
                         </li>
                     {% endif %}
-                    <li><a href="#" class="nav-link {% if isActive == "hall" %} nav-link-active {% endif %}">
-                            <span class="glyphicon glyphicon-picture"></span>
-                            Hall
-                        </a></li>
-                    {% if is_granted("ROLE_USER") %}
-                    <li><a href="#" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
-                            <span class="glyphicon glyphicon-comment"></span>
-                            Salon
-                        </a></li>
-                    <li><a href="#" class="nav-link">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                            Agenda</a></li>
-                    {% endif %}
                     {% if is_granted("ROLE_ADMIN") %}
-                    <li><a href="{{ path('agil_admin_homepage') }}" class="nav-link {% if isActive == "admin" %} nav-link-active {% endif %}">
-                            <span class="glyphicon glyphicon-wrench"></span>
-                            Administration</a></li>
+                        <li>
+                            <a href="{{ path('agil_admin_homepage') }}" class="nav-link {% if isActive == "admin" %} nav-link-active {% endif %}">
+                                <span class="glyphicon glyphicon-wrench"></span>
+                                Administration
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
                 <div class="sidebar-separator"></div>
                 <ul class="nav-items">
                     <li class="nav-title">Liens utiles</li>
-                    <li><a href="https://ent.univ-rouen.fr" class="nav-link">Ent</a></li>
-                    <li><a href="https://webmail.univ-rouen.fr" class="nav-link">Webmail</a></li>
+                    <li><a href="https://ent.univ-rouen.fr" class="nav-link external" target="_blank" title="Accès à l'ENT">Ent</a></li>
+                    <li><a href="https://webmail.univ-rouen.fr" class="nav-link external" target="_blank" title="Accès au Webmail">Webmail</a></li>
                 </ul>
             </nav>
         </aside>
+    </nav>
+    <div class="container">
         {% for type, messages in app.session.flashBag.all %}
             {% for message in messages %}
                 <div class="row">

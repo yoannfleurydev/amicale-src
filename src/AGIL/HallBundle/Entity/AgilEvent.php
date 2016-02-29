@@ -70,6 +70,14 @@ class AgilEvent
     private $eventDate;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="eventDateEnd", type="datetime")
+     * @Assert\NotBlank(message="La date de fin l'évènement doit être spécifiée")
+     */
+    private $eventDateEnd;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="eventText", type="text")
@@ -152,9 +160,32 @@ class AgilEvent
     }
 
     /**
-     * Get eventDate
+     * Get eventDateEnd
      *
      * @return \DateTime 
+     */
+    public function getEventDateEnd()
+    {
+        return $this->eventDateEnd;
+    }
+
+    /**
+     * Set eventDateEnd
+     *
+     * @param \DateTime $eventDateEnd
+     * @return AgilEvent
+     */
+    public function setEventDateEnd($eventDateEnd)
+    {
+        $this->eventDateEnd = $eventDateEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get eventDate
+     *
+     * @return \DateTime
      */
     public function getEventDate()
     {
@@ -206,14 +237,6 @@ class AgilEvent
     {
         return $this->user;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->eventPostDate = new \DateTime();
-    }
 
     /**
      * Add tags
@@ -241,7 +264,7 @@ class AgilEvent
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {

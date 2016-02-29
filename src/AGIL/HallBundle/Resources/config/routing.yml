@@ -1,3 +1,40 @@
 agil_hall_homepage:
-    path:     /hall
-    defaults: { _controller: AGILHallBundle:Default:index }
+    path:     /page/{page}
+    defaults:
+        _controller: AGILHallBundle:Default:index
+        page:  1
+    requirements:
+        page : \d+
+
+agil_hall_page:
+    path: /page/{idPage}
+    defaults: { _controller: AGILHallBundle:Default:renderPage, idPage: 1 }
+    requirements:
+        idPage: \d+
+
+agil_hall_event:
+    path: /event/{idEvent}
+    defaults: { _controller: AGILHallBundle:Default:event }
+    requirements:
+        idEvent: \d+
+
+agil_hall_event_photos:
+    path: /event/{idEvent}/photos
+    defaults: { _controller: AGILHallBundle:Default:photosEvent }
+    requirements:
+        idEvent: \d+
+
+agil_hall_event_videos:
+    path: /event/{idEvent}/videos
+    defaults: { _controller: AGILHallBundle:Default:videosEvent }
+    requirements:
+        idEvent: \d+
+
+agil_hall_calendar:
+        path:     /calendar/
+        defaults: { _controller: AGILHallBundle:Calendar:showCalendar }
+
+agil_hall_calendar_data:
+        path:     /calendar/data
+        defaults: { _controller: AGILHallBundle:Calendar:getCalendarData }
+        methods: [post]

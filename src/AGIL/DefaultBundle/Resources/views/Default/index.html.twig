@@ -58,7 +58,7 @@
                             <div class="list-element">
                                 <p>
                                     <a href="https://dpt-info-sciences.univ-rouen.fr/index.php">
-                                        Site de l'université.
+                                        Site du département informatique de l'Université de Rouen.
                                     </a>
                                 </p>
                             </div>
@@ -95,7 +95,8 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-                    Le calendrier avec les prochains événements.
+
+                    {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
                 </div>
             </div>
         </div>
@@ -202,13 +203,15 @@
                 <div class="panel-body">
                     <div class="list">
                         <div class="list-element">
-                            <p><a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fidp.univ-rouen.fr%2Fidp%2FAuthn%2FRemoteUser" >L'ENT</a></p>
+                            <p><a href="https://ent.normandie-univ.fr" target="_blank" class="external" title="Accéder à l'ENT">L'ENT</a></p>
                         </div>
                         <div class="list-element">
-                            <p><a href="https://cas.univ-rouen.fr/login?service=https%3A%2F%2Fwebmail.univ-rouen.fr%2FSOGo%2Fso%2Findex"> Webmail </a></p>
+                            <p><a href="http://webmail.univ-rouen.fr" target="_blank" class="external" title="Accéder au Webmail">Webmail</a></p>
                         </div>
                     </div>
-                    Les informations utiles comme les liens rapides vers les outils de l’Université.
+                    <div class="well">
+                        Liens d'accès rapide aux outils de l'Université
+                    </div>
                 </div>
             </div>
         </div>

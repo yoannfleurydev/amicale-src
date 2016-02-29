@@ -15,7 +15,7 @@ agil_admin:
 
 agil_hall:
     resource: "@AGILHallBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /hall
 
 agil_chat:
     resource: "@AGILChatBundle/Resources/config/routing.yml"
@@ -32,3 +32,6 @@ agil_offer:
 agil_forum:
     resource: "@AGILForumBundle/Resources/config/routing.yml"
     prefix:   /forum
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
