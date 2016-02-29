@@ -36,7 +36,7 @@ class DeleteAnswerAdminType extends AbstractType
         $builder->add('Supprimer', SubmitType::class, array(
             'label' => false,
             'attr' => array(
-                'class' => 'btn btn-default',
+                'class' => 'btn btn-primary',
             )
         ));
     }
