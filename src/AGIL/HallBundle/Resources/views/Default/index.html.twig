@@ -1,7 +1,6 @@
 {% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
 {% block body %}
-
     {% for event in events %}
         <div class="row">
             <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
@@ -17,5 +16,4 @@
     <nav class="text-center">
         {% include 'AGILHallBundle:Default:pagination.html.twig' %}
     </nav>
-
 {% endblock %}
