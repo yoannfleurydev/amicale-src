@@ -6,4 +6,4 @@ services:
 services:
     agil_default.tags:
         class: AGIL\DefaultBundle\TagService\Tags
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: [@doctrine.orm.entity_manager]

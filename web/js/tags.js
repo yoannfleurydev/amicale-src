@@ -45,17 +45,23 @@ $(function () {
                     data: {prefix: currentTag}
                 }
             ).done(function (json) {
-                prefixedTags = JSON.parse(json);
-                for (d of prefixedTags) {
-                    // TODO Changer pour faire créer un élément HTML à chaque fois
-                    // Si l'élément n'a pas déjà été sélectionné
-                    if (selectedTags.indexOf(d) === -1) {
-                        $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + d + "</button>");
+
+                // Si on a pas effacé la lettre depuis l'appel
+                if (currentTag.length >= 1) {
+
+                    prefixedTags = JSON.parse(json);
+                    for (d of prefixedTags) {
+                        // TODO Changer pour faire créer un élément HTML à chaque fois
+                        // Si l'élément n'a pas déjà été sélectionné
+                        if (selectedTags.indexOf(d) === -1) {
+                            $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + d + "</button>");
+                        }
                     }
-                }
-                ajaxDone = true;
-                if (currentTag.length > 1) {
-                    searchInArray();
+                    ajaxDone = true;
+                    if (currentTag.length > 1) {
+                        searchInArray();
+                    }
+
                 }
             }).error(function (msg) {
                 // TODO Remove in prod
