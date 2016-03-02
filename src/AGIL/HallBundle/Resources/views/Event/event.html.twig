@@ -8,30 +8,32 @@
                     <div class="row">
                         <div class="col-lg-10">
                             <h3>{{ event.eventTitle }}</h3>
+                            {% if event.eventDateEnd is defined %}
+                                <small>du {{ event.eventDate | date('j/m/Y') }} au {{ event.eventDateEnd | date('j/m/Y') }}</small>
+                            {% else %}
+                                <small>le {{ event.eventDate | date('j/m/Y') }}</small>
+                            {% endif %}
                         </div>
                         <div class="col-lg-2">
                             <h5>
                                 Le <span class="text-primary-blue">{{ event.eventPostDate | date('j M Y') }}</span>
-                                par <span class="text-primary-blue">{{ event.user }}</span>
+                                par <a href="{{ path('agil_profile_id', {id : event.user.id}) }}">{{ event.user }}</a>
                             </h5>
                         </div>
 
                     </div>
                 </div>
                 <div class="panel-body">
-                    {{ eventContent | raw }}
-                </div>
-
-                <div class="panel-body">
-                    <div class="col-lg-12">
-                        <div class="owl-carousel">
-                            <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
-                            <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
-                            <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
-                            <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
-                            <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
-                            <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
-                        </div>
+                    <p>
+                        {{ eventContent | raw }}
+                    </p>
+                    <div class="owl-carousel">
+                        <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
+                        <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
+                        <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
+                        <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
+                        <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
+                        <div class="item"><img class="img-responsive" src="http://lorempicsum.com/nemo/255/200/2"></div>
                     </div>
                     <div class="col-lg-6">
                         <div class="embed-responsive embed-responsive-16by9">
@@ -48,7 +50,6 @@
                         </div>
 
                     </div>
-                    <hr>
                 </div>
             </div>
         </div>

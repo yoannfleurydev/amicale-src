@@ -2,7 +2,7 @@
 
 namespace AGIL\HallBundle\Controller;
 
-use fg\Essence\Essence;
+use Essence\Essence;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -45,7 +45,17 @@ class DefaultController extends Controller {
         $essence = new Essence();
 
         $eventContent = $essence->replace($event->getEventText(), function($media) {
-			return 'toto';
+			return <<<HTML
+		<div class="well well-lg col-lg-6 col-lg-offset-3 col-md-8 col-md-2 col-sm-12">
+			<p class="text-primary-blue text-center">
+				$media->title par
+				<a href="$media->authorUrl" title="Accès à la chaine de $media->authorName">
+					$media->authorName
+				</a>
+			 </p>
+			<div class="embed-responsive embed-responsive-16by9">$media->html</div>
+		</div>
+HTML;
 		});
 
         return $this->render('AGILHallBundle:Event:event.html.twig', array('event' => $event, 'eventContent' =>
