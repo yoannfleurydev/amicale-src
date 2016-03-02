@@ -39,20 +39,20 @@ $(function () {
                     method: "POST",
                     // TODO Changer ici pour la prod
                     // DEV
+                    // url: Routing.generate('agil_tags_search'),
                     url: "http://amicale.dev/tags/search",
                     // PROD
                     /* url: location.hostname + "/tags/search", */
                     data: {prefix: currentTag}
                 }
             ).done(function (json) {
-                prefixedTags = JSON.parse(json);
-                for (d of prefixedTags) {
+                $.each(json, function(key, value) {
                     // TODO Changer pour faire créer un élément HTML à chaque fois
                     // Si l'élément n'a pas déjà été sélectionné
-                    if (selectedTags.indexOf(d) === -1) {
-                        $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + d + "</button>");
+                    if (selectedTags.indexOf(value) === -1) {
+                        $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + value + "</button>");
                     }
-                }
+                });
                 ajaxDone = true;
                 if (currentTag.length > 1) {
                     searchInArray();
