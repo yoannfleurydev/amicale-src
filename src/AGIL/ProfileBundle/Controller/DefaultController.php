@@ -5,6 +5,7 @@ namespace AGIL\ProfileBundle\Controller;
 use AGIL\ProfileBundle\Form\ProfileEditType;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\VarDumper\VarDumper;
@@ -34,7 +35,12 @@ class DefaultController extends Controller
         );
     }
 
-    // TODO Optimisation des conditions possible.
+    /**
+     * Edition du profil
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function editAction(Request $request) {
         $userManager = $this->get('fos_user.user_manager');
         $user = $this->getUser();
@@ -67,33 +73,40 @@ class DefaultController extends Controller
         if ($request->getMethod() == Request::METHOD_POST) {
             $form->handleRequest($request);
 
-
             $user->setUsername($form->get('username')->getData());
             $user->setEmail($form->get('email')->getData());
+            $user->setUserCVUrlVisibility($form->get('userCVUrlVisibility')->getData());
 
             $profilePicture = $form->get('userProfilePictureUrl')->getData();
-            if ($profilePicture != null) {
-                // Générer le nom du fichier image
-                $profilePicFileName = 'profile' . $user->getUserId() . '.' . $profilePicture->guessExtension();
-                $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/profile';
-
-                // insérer ici une condition pour vérifier le format du fichier
-                $profilePicture->move($dir, $profilePicFileName);
-                $user->setUserProfilePictureUrl($profilePicFileName);
-                $userManager->updateUser($user);
+            // Changement de la photo de profil
+            if ($profilePicture != null && $profilePicture != "") {
+                // On vérifie le format de la photo
+                if ($profilePicture->guessExtension() != "jpeg" && $profilePicture->guessExtension() != "png"
+                    && $profilePicture->guessExtension() != "gif") {
+                    $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,bmp)');
+                    return $this->redirect($this->generateUrl('agil_profile_edit', array('id' => $user->getId())));
+                } // On vérifie la taille du fichier
+                else if($profilePicture->getClientSize() > 1024000) {
+                    $this->addFlash('warning', 'Erreur ! La taille de l\'image dépasse la limite ! (limite autorisée: 1Mo)');
+                    return $this->redirect($this->generateUrl('agil_profile_edit', array('id' => $user->getId())));
+                }
+                
+                $this->editProfilPicture($profilePicture, $user);
             }
 
             $cv = $form->get('userCVUrl')->getData();
-            if($cv != null) {
-                // Générer le nom du fichier
-                $cvFileName = md5(uniqid()).'.'.$cv->guessExtension();
-                $dir = $this->container->getParameter('kernel.root_dir') . '/../web/files/cv';
+            if($cv != null || $cv != "") {
+                // On vérifie le format du CV
+                if($cv->guessExtension() != "pdf" ) {
+                    $this->addFlash('warning', 'Erreur ! Le format du CV ne convient pas ! (format autorisé: pdf)');
+                    return $this->redirect($this->generateUrl('agil_profile_edit', array('id' => $user->getId())));
+                } // On vérifie la taille du fichier
+                else if($cv->getClientSize() > 3072000) {
+                    $this->addFlash('warning', 'Erreur ! La taille du CV dépasse la limite ! (limite autorisée: 3Mo)');
+                    return $this->redirect($this->generateUrl('agil_profile_edit', array('id' => $user->getId())));
+                }
 
-                // TODO insérer ici une condition pour vérifier le format du fichier
-                $cv->move($dir, $cvFileName);
-                $user->setUserCVUrl($cvFileName);
-                $userManager->updateUser($user);
-
+                $this->editProfilCV($cv, $user);
             }
 
             if ($form->get('password')->getData() != null && $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
@@ -155,19 +168,37 @@ class DefaultController extends Controller
         ));
     }
 
-    /**
-     * Vérifie si une image de profil est valide
-     *
-     * @param UploadedFile $picture
-     * @return bool
-     */
-//    private function isValidProfilePicture(UploadedFile $picture) {
-//        $allowedExtensions = array('jpeg', 'png'); // Format à ajouter si besoin...
-//        if (!in_array($picture->guessExtension(), $allowedExtensions)) {
-//            return false;
-//        }
-//
-//        return true;
-//    }
+    public function editProfilPicture($profilePicture, $user) {
+        // Générer le nom du fichier image
+        $profilePicFileName = 'profile' . $user->getUserId() . '.' . $profilePicture->guessExtension();
+        $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/profile';
+
+        // supprime l'ancienne photo en locale
+        $imgOld = $user->getUserProfilePictureUrl();
+        $fs = new Filesystem();
+        $fs->remove(array('symlink', $dir.'/'.$imgOld));
+
+        // upload de la photo
+        $profilePicture->move($dir, $profilePicFileName);
+
+        $user->setUserProfilePictureUrl($profilePicFileName);
+    }
+
+    public function editProfilCV($cv, $user) {
+        // Générer le nom du fichier
+        $cvFileName = md5(uniqid()).'.'.$cv->guessExtension();
+        //$cvFileName = 'cv' . $user->getUserId() . '.' . $cv->guessExtension();
+        $dir = $this->container->getParameter('kernel.root_dir') . '/../web/files/cv';
+
+        // supprime l'ancien CV
+        $cvOld = $user->getUserCVUrl();
+        $fs = new Filesystem();
+        $fs->remove(array('symlink', $dir.'/'.$cvOld));
+
+        // upload du CV
+        $cv->move($dir, $cvFileName);
+
+        $user->setUserCVUrl($cvFileName);
+    }
 
 }
