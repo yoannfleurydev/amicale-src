@@ -12,14 +12,14 @@ $(function () {
         $('#tags_container').text('');
         // si on a reçu la réponse ajax
         // Pour chaque tag qu'on a récupéré, on vérifie s'il est préfixé par la valeur qui est entrée
-        for (d of prefixedTags) {
+        $.each(prefixedTags, function (key, value) {
             // startsWith est sensible à la casse
-            if (!d.toLowerCase().startsWith(currentTag.toLowerCase())) {
-                continue;
+            if (!value.toLowerCase().startsWith(currentTag.toLowerCase())) {
+                return;
             }
             // On affiche le tag dans la zone d'affichage
-            $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + d + "</button>");
-        }
+            $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + value + "</button>");
+        });
     };
 
     /* $('tags_input') est l'input dans lequel on tape les tags */
@@ -46,13 +46,16 @@ $(function () {
                     data: {prefix: currentTag}
                 }
             ).done(function (json) {
-                $.each(json, function(key, value) {
-                    // TODO Changer pour faire créer un élément HTML à chaque fois
-                    // Si l'élément n'a pas déjà été sélectionné
-                    if (selectedTags.indexOf(value) === -1) {
-                        $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + value + "</button>");
-                    }
-                });
+                prefixedTags = json;
+                if (currentTag.length >= 1) {
+                    $.each(json, function (key, value) {
+                        // TODO Changer pour faire créer un élément HTML à chaque fois
+                        // Si l'élément n'a pas déjà été sélectionné
+                        if (selectedTags.indexOf(value) === -1) {
+                            $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + value + "</button>");
+                        }
+                    });
+                }
                 ajaxDone = true;
                 if (currentTag.length > 1) {
                     searchInArray();
