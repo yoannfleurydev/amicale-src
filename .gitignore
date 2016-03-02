@@ -14,3 +14,4 @@
 web/img/profile/profile*
 web/files/cv/
 node_modules/
+/.project
