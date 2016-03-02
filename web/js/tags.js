@@ -18,7 +18,7 @@ $(function () {
                 return;
             }
             // On affiche le tag dans la zone d'affichage
-            $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + value + "</button>");
+            $('#tags_container').html($('#tags_container').html() + "<div class='tag'>" + value + "</div>");
         });
     };
 
@@ -52,7 +52,7 @@ $(function () {
                         // TODO Changer pour faire créer un élément HTML à chaque fois
                         // Si l'élément n'a pas déjà été sélectionné
                         if (selectedTags.indexOf(value) === -1) {
-                            $('#tags_container').html($('#tags_container').html() + "<button class='tag'>" + value + "</button>");
+                            $('#tags_container').html($('#tags_container').html() + "<div class='tag'>" + value + "</div>");
                         }
                     });
                 }
