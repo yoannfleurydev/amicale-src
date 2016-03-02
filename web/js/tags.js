@@ -95,7 +95,7 @@ $(function () {
         // On remet à 0 le tag courant, pour éviter un résidu
         currentTag = '';
         // On efface le tag cliqué
-        $(this).fadeOut();
+        $(this).hide();
         // On dit de refaire une requête AJAX
         ajaxDone = false;
         // On met le tag actuel
