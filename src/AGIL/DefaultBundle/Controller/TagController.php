@@ -22,27 +22,25 @@ class TagController extends Controller {
 	 * Récupère une liste de tags dont le préfixe est $char et la renvoie au format JSON
 	 */
 	public function searchAction(Request $request) {
-		if ($request->isXmlHttpRequest()) {
-			// On récupère la valeur envoyée par la requête
-			$prefix = $request->request->get('prefix');
-
-			// Récupération du tableau de AgilTag
-			$tagsList = $this
-				->getDoctrine()
-				->getManager()
-				->getRepository('AGILDefaultBundle:AgilTag')
-				->getTagsList($prefix);
-
-			$jsonTagsList = Array();
-			foreach ($tagsList as $tag) {
-				$jsonTagsList[] = $tag->getTagName();
-			}
-
-			// Retourne le tableau encodé en JSON
-			return new JsonResponse($jsonTagsList);
+		if (!$request->isXmlHttpRequest()) {
+			throw $this->createNotFoundException('Ressource indisponible');
 		}
+		// On récupère la valeur envoyée par la requête
+		$prefix = $request->request->get('prefix');
 
-		return new Response('Requête invalide');
+		// Récupération du tableau de AgilTag
+		$tagsList = $this
+			->getDoctrine()
+			->getManager()
+			->getRepository('AGILDefaultBundle:AgilTag')
+			->getTagsList($prefix);
+
+		$jsonTagsList = Array();
+		foreach ($tagsList as $tag) {
+			$jsonTagsList[] = $tag->getTagName();
+		}
+		// Retourne le tableau encodé en JSON
+		return new JsonResponse($jsonTagsList);
 	}
 
 	/**
@@ -51,22 +49,22 @@ class TagController extends Controller {
 	 * Récupère un tag dans la base de données pour le supprimer
 	 */
 	public function removeAction(Request $request) {
-		if ($request->isXmlHttpRequest()) {
-			$tagName = $request->request->get('tagName');
-
-			$em = $this->getDoctrine()->getManager();
-
-			$tag = $em->getRepository('AGILDefaultBundle:AgilTag')
-				// On peut utiliser le OneBy car chaque tag est unique
-				// méthode magique
-				->findOneByTagName($tagName);
-
-			if (null !== $tag) {
-				$em->remove($tag);
-				$em->flush();
-			}
-			return new Response();
+		if (!$request->isXmlHttpRequest()) {
+			throw $this->createNotFoundException('Ressource indisponible');
 		}
-		return new Response('Requête invalide');
+		$tagName = $request->request->get('tagName');
+
+		$em = $this->getDoctrine()->getManager();
+
+		$tag = $em->getRepository('AGILDefaultBundle:AgilTag')
+			// On peut utiliser le OneBy car chaque tag est unique
+			// méthode magique
+			->findOneByTagName($tagName);
+
+		if (null !== $tag) {
+			$em->remove($tag);
+			$em->flush();
+		}
+		return new Response();
 	}
 }
