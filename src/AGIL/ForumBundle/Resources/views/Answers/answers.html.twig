@@ -1,5 +1,6 @@
 {% extends 'AGILForumBundle::baseForumBundle.html.twig' %}
 
+{% form_theme form '::form_errors.html.twig' %}
 
 {% block body %}
 
@@ -45,7 +46,7 @@
                                 </div>
 
                                 <div class="embed-responsive embed-responsive-4by3">
-                                    <img class="center-block img-circle img-responsive"
+                                    <img class="center-block img-circle img-responsive" alt="Picture Profil {{ a.id }} "
                                          src="{{ asset("img/profile/") ~ a.userProfilePictureUrl }}"/>
                                 </div>
 
@@ -89,7 +90,7 @@
                                         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
 
                                             {% if app.user.username == a.username %}
-                                                <a id="editAnswerLink" name="editAnswerLink" class="btn btn-default"
+                                                <a name="editAnswerLink" class="btn btn-default"
                                                    href="{{ path('agil_forum_answers_edit',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId,'idAnswer' : a.forumAnswerId}) }}"
                                                    role="button"><span class="glyphicon glyphicon-edit"></span></a>
                                             {% endif %}
@@ -106,7 +107,7 @@
 
                                     <hr>
                                     <div class="row">
-                                        <p>{{ a.forumAnswerText|raw }}</p>
+                                        {{ a.forumAnswerText|raw }}
                                     </div>
 
                                 </div>
@@ -144,7 +145,7 @@
                           method="post" {{ form_enctype(form) }}>
 
                         {{ form_errors(form.forumAnswerText) }}
-                        {{ form_row(form.forumAnswerText) }}
+                        {{ form_widget(form.forumAnswerText) }}
 
 
                         <br/>

@@ -18,7 +18,7 @@
 
                     {% else %}
 
-                        <div><a href="{{ path('agil_forum_subject_add_home') }}" class="btn btn-primary">Nouveau Sujet</a></div></br>
+                        <p><a href="{{ path('agil_forum_subject_add_home') }}" class="btn btn-primary">Nouveau Sujet</a></p>
 
                         {% for category in categoryList %}
 
@@ -55,11 +55,11 @@
                                         {% if subjectsPerCategories[key]|length == 0 %}
 
 
-                                            <em><h6>Cette catégorie ne contient pas de sujets</h6></em>
+                                            <h6>Cette catégorie ne contient pas de sujets</h6>
 
                                         {% else %}
 
-                                            <em><h6>Les derniers sujets</h6></em>
+                                            <h6>Les derniers sujets</h6>
 
                                             <table class="table table-hover">
 

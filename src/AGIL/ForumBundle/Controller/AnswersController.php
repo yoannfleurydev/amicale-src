@@ -331,6 +331,8 @@ class AnswersController extends Controller
             $form = $this->createForm(new DeleteAnswerType(), null);
         }
 
+
+
         $form->handleRequest($request);
         if ($form->isValid()) {
 

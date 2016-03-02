@@ -18,8 +18,8 @@
             <span class="panel-title-content">{{ category.forumCategoryName }}</span>
         </h2>
     </div>
-    <div><a href="{{ path('agil_forum_subject_add',{'idCategory' : category.forumCategoryId} ) }}"
-            class="btn btn-primary">Nouveau Sujet</a></div></br>
+    <p><a href="{{ path('agil_forum_subject_add',{'idCategory' : category.forumCategoryId} ) }}"
+            class="btn btn-primary">Nouveau Sujet</a></p>
     {% if subjects|length != 0 %}
         <table class="table panel" id="table-subjects">
             <!-- On rows -->
@@ -64,7 +64,7 @@
                     </td>
 
                     {% if ((is_granted('ROLE_MODERATOR')) or (app.user.username == s.username)) %}
-                        <td class="vert-align"><a id="deleteSubjectLink" name="deleteSubjectLink"
+                        <td class="vert-align"><a name="deleteSubjectLink"
                                                   href="{{ path('agil_forum_subject_delete',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId}) }}">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a></td>

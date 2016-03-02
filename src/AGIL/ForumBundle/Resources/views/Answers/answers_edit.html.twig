@@ -1,5 +1,7 @@
 {% extends 'AGILForumBundle::baseForumBundle.html.twig' %}
 
+{% form_theme form '::form_errors.html.twig' %}
+
 {% block body %}
     <!-- Modification du post -->
     <div class="row">
@@ -19,30 +21,29 @@
                       method="post" {{ form_enctype(form) }}>
 
                     <div class="form-group" id="formAddNamePost">
-                        <label for="inputNamePost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Sujet</strong></label>
+                        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Sujet</strong></label>
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                             <p>{{ subject.forumSubjectTitle }}</p>
                         </div>
                     </div>
                     <div class="form-group" id="formAddDescPost">
-                        <label for="inputDescPost" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Description</strong></label>
+                        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Description</strong></label>
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                             <p>{{ subject.forumSubjectDescription }}</p>
                         </div>
                     </div>
 
                     <div class="form-group" id="formAddContentPost">
-                        <label for="inputContentPost" class="col-sm-2 control-label"><strong>Post</strong></label>
+                        <label class="col-sm-2 control-label"><strong>Réponse</strong></label>
                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                             {{ form_errors(form.forumAnswerText) }}
-                            {{ form_row(form.forumAnswerText) }}
-
+                            {{ form_widget(form.forumAnswerText) }}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            {{ form_row(form.Modifier) }}
+                            {{ form_widget(form.Modifier) }}
                             <a class="btn btn-default"
                                href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
                                 Annuler

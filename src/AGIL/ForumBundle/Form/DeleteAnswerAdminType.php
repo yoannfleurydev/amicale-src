@@ -43,6 +43,6 @@ class DeleteAnswerAdminType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'forum_delete_answer';
+        return 'forum_delete_answer_with_reason';
     }
 }
