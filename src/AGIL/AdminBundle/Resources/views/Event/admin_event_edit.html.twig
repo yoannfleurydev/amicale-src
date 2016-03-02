@@ -1,0 +1,42 @@
+{% extends "AGILHallBundle::baseHallBundle.html.twig" %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                    <span class="panel-title-content">
+                        Modification event
+                    </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="eventName">Nom de l'événement : </label>
+                            <input class="form-control" type="text" name="eventName" id="eventName">
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDesc">Description de l'événement : </label>
+                            <textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>
+                        </div>
+                        <p>
+                        <div class="picture-list" id="addedPicture"></div>
+                        <div class="square-add-picture">
+                            <input type="file" name="choosePicture" id="choosePicture" multiple="multiple">
+                        </div>
+                        </p>
+                        <p class="text-center">
+                            <input class="btn btn-default" type="reset" value="effacer">
+                            <input class="btn btn-primary" type="submit" value="valider">
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
