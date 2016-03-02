@@ -25,6 +25,7 @@ class TagController extends Controller {
 		if (!$request->isXmlHttpRequest()) {
 			throw $this->createNotFoundException('Ressource indisponible');
 		}
+
 		// On récupère la valeur envoyée par la requête
 		$prefix = $request->request->get('prefix');
 
@@ -52,6 +53,7 @@ class TagController extends Controller {
 		if (!$request->isXmlHttpRequest()) {
 			throw $this->createNotFoundException('Ressource indisponible');
 		}
+
 		$tagName = $request->request->get('tagName');
 
 		$em = $this->getDoctrine()->getManager();
@@ -65,6 +67,7 @@ class TagController extends Controller {
 			$em->remove($tag);
 			$em->flush();
 		}
+
 		return new Response();
 	}
 }
