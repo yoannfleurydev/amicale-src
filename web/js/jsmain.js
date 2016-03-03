@@ -198,7 +198,7 @@ $( document ).ready(function() {
     var glyph =  $('#btn-cat-ch').attr('class');
     $('#forum_edit_category_forumCategoryIcon').attr("value", glyph);
 });
-ck
+
 $("#liste_gly_choice li").click(function() {
     var glyph = $(this).children().children().attr('class');
 
