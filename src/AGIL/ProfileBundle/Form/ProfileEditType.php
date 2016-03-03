@@ -6,6 +6,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\VarDumper\VarDumper;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class ProfileEditType extends AbstractType
 {
@@ -16,7 +24,7 @@ class ProfileEditType extends AbstractType
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('email', 'email', array(
+        $builder->add('email', EmailType::class, array(
             'label' => false,
             'required' => true,
             'attr' => array(
@@ -25,7 +33,7 @@ class ProfileEditType extends AbstractType
             )
         ));
 
-        $builder->add('username', 'text', array(
+        $builder->add('username', TextType::class, array(
             'label' => false,
             'required' => true,
             'attr' => array(
@@ -34,19 +42,9 @@ class ProfileEditType extends AbstractType
             )
         ));
 
-        $builder->add('userProfilePictureUrl', 'file', array(
+        $builder->add('userProfilePictureUrl', FileType::class, array(
             'label' => false,
             'required' => false,
-            'constraints' => [
-                new File([
-                    'maxSize' => '20M',
-                    'mimeTypes' => [
-                        "image/jpeg",
-                        "image/png",
-                        "image/bmp"
-                    ],
-                ])
-            ]
             //            'attr' => array(
             //                'class' => 'form-control',
             //                'placeholder' => 'Pseudo',
@@ -54,23 +52,15 @@ class ProfileEditType extends AbstractType
         ));
 
 
-        $builder->add('userCVUrl', 'file', array(
+        $builder->add('userCVUrl', FileType::class, array(
             'label' => false,
             'required' => false,
-            'constraints' => [
-                new File([
-                    'maxSize' => '20M',
-                    'mimeTypes' => [
-                        "application/pdf",
-                    ],
-                ])
-            ]
 //            'attr' => array(
 //                'class' => 'form-control'
 //            )
         ));
 
-        $builder->add('userCVUrlVisibility', 'checkbox', array(
+        $builder->add('userCVUrlVisibility', CheckboxType::class, array(
             'label' => false,
             'required' => false,
 //            'attr' => array(
@@ -79,7 +69,7 @@ class ProfileEditType extends AbstractType
 //            )
         ));
 
-        $builder->add('password', 'password', array(
+        $builder->add('password', PasswordType::class, array(
             'label' => false,
             'required' => false,
             'attr' => array(
@@ -89,7 +79,7 @@ class ProfileEditType extends AbstractType
         ));
 
 
-        $builder->add('passwordConfirm', 'password', array(
+        $builder->add('passwordConfirm', PasswordType::class, array(
             'label' => false,
             'required' => false,
             'attr' => array(
@@ -105,7 +95,7 @@ class ProfileEditType extends AbstractType
                 if ($tag->getSkillCategory() == $profileSkillsCategory) {
                     foreach($this->data['skills'] as $skill) {
                         if ($skill->getTag() == $tag) {
-                            $builder->add('tag' . $tag->getTagId(), 'integer', array(
+                            $builder->add('tag' . $tag->getTagId(), IntegerType::class, array(
                                 'label' => false,
                                 'attr' => array(
                                     'class' => 'form-control',
@@ -120,7 +110,7 @@ class ProfileEditType extends AbstractType
             }
         }
 
-        $builder->add('Modifier', 'submit', array(
+        $builder->add('Modifier', SubmitType::class, array(
             'label' => false,
             'attr' => array(
                 'class' => 'form-control'
@@ -128,7 +118,7 @@ class ProfileEditType extends AbstractType
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'profil_edit_form';
     }

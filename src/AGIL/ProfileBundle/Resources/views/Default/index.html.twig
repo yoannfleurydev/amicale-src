@@ -35,7 +35,9 @@
                 <div class="panel-body">
                     <p>Adresse mail : {{ user.email }}</p>
                     <p>Pseudo : {{ user.username }}</p>
-                    <p>CV : <a href="{{ user.userCvUrl }}">{{ user.userCvUrl }}</a></p>
+                    {% if user.userCVUrlVisibility %}
+                    <p>CV : <a href="{{ asset("files/cv/") ~ user.userCvUrl }}" target="_blank">{{ user.userCvUrl }}</a></p>
+                    {% endif %}
                 </div>
             </div>
         </div>
