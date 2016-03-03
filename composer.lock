@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1008c492b377dc6ac7557792af72380f",
+    "hash": "2264ebda79785c9a0958f80d7bde316d",
     "content-hash": "628898e1c75f9f245008ab540b615ad2",
     "packages": [
         {
@@ -718,20 +718,19 @@
         },
         {
             "name": "essence/essence",
-            "version": "1.4.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/essence/essence.git",
-                "reference": "28629005ce22dac63fab6a79faada2d4c5de6b20"
+                "reference": "3ee06ec86a066057f1357cd2debdf555ad371a96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/essence/essence/zipball/28629005ce22dac63fab6a79faada2d4c5de6b20",
-                "reference": "28629005ce22dac63fab6a79faada2d4c5de6b20",
+                "url": "https://api.github.com/repos/essence/essence/zipball/3ee06ec86a066057f1357cd2debdf555ad371a96",
+                "reference": "3ee06ec86a066057f1357cd2debdf555ad371a96",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
                 "php": ">=5.3.0"
             },
             "type": "library",
@@ -757,7 +756,7 @@
                 "oembed",
                 "opengraph"
             ],
-            "time": "2013-06-25 18:11:17"
+            "time": "2013-04-14 20:08:04"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",

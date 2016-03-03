@@ -584,7 +584,8 @@ span.panel-title-content {
 * {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-tap-highlight-color: transparent;
-  outline: none;
+  outline: none !important;
+  outline: 0 !important;
 }
 
 .picture-list img {

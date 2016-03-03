@@ -1,7 +1,7 @@
 {% extends "AGILProfileBundle::baseProfileBundle.html.twig" %}
 {% block body %}
     <div class="row">
-        <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
+        <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     {% if user.userProfilePictureUrl is not null %}
@@ -12,18 +12,7 @@
                 </div>
             </div>
         </div>
-        {% if user.userFirstName is not null or user.userLastName is not null %}
-            <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-body text-center">
-                        <h3>{{ user.userFirstName }} {{ user.userLastName }}</h3>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -33,15 +22,21 @@
                     </h2>
                 </div>
                 <div class="panel-body">
+                    {% if user.userFirstName is not null or user.userLastName is not null %}
+                        <p>{{ user.userFirstName }} {{ user.userLastName }}</p>
+                    {% endif %}
                     <p>Adresse mail : {{ user.email }}</p>
                     <p>Pseudo : {{ user.username }}</p>
-                    {% if user.userCVUrlVisibility %}
-                    <p>CV : <a href="{{ asset("files/cv/") ~ user.userCvUrl }}" target="_blank">{{ user.userCvUrl }}</a></p>
+                    
+                    {% if user.userCvUrl is not null and user.userCVUrlVisibility %}
+                        <p>CV : <a href="{{ asset("files/cv/") ~ user.userCvUrl }}" target="_blank">{{ user.userCvUrl }}</a></p>
                     {% endif %}
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -53,47 +48,41 @@
                 <div class="panel-body">
                     {% if profileSkillsCategories is defined %}
                         {% for profileSkillsCategory in profileSkillsCategories %}
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h2 class="panel-title">
-                                            <span class="panel-title-content">
-                                                {{ profileSkillsCategory.profileSkillsCategoryName }}
-                                            </span>
-                                        </h2>
-                                    </div>
-                                    <div class="panel-body">
-                                        <ul class="list-group">
-                                            {% for tag in tags %}
-                                                {% if tag.skillCategory == profileSkillsCategory %}
-                                                    <li class="list-group-item">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                {{ tag.tagName }}
-                                                            </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                <div class="progress">
-                                                                    {% for skill in skills %}
-                                                                        {% if skill.tag == tag %}
-                                                                            <div class="progress-bar" role="progressbar"
-                                                                                 aria-valuenow="{{ skill.skillLevel * 10 }}"
-                                                                                 aria-valuemin="0"
-                                                                                 aria-valuemax="100"
-                                                                                 style="width: {{ skill.skillLevel * 10 }}%;">
-                                                                                <span class="sr-only">{{ skill.skillLevel * 10 }}
-                                                                                    % Complete</span>
-                                                                            </div>
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                </div>
-                                                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <h2 class="panel-title">
+                                    <span class="panel-title-content">
+                                        {{ profileSkillsCategory.profileSkillsCategoryName }}
+                                    </span>
+                                </h2>
+                                <ul class="list-group">
+                                    {% for tag in tags %}
+                                        {% if tag.skillCategory == profileSkillsCategory %}
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                        {{ tag.tagName }}
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                                        <div class="progress">
+                                                            {% for skill in skills %}
+                                                                {% if skill.tag == tag %}
+                                                                    <div class="progress-bar" role="progressbar"
+                                                                         aria-valuenow="{{ skill.skillLevel * 10 }}"
+                                                                         aria-valuemin="0"
+                                                                         aria-valuemax="100"
+                                                                         style="width: {{ skill.skillLevel * 10 }}%;">
+                                                                        <span class="sr-only">{{ skill.skillLevel * 10 }}
+                                                                            % Complete</span>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
                                                         </div>
-                                                    </li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
                             </div>
                         {% endfor %}
                     {% endif %}

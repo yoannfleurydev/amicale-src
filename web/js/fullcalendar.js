@@ -9650,8 +9650,8 @@ function Header(calendar, options) {
 		if (sections) {
 			el = $("<div class='fc-toolbar'/>")
 				.append(renderSection('left'))
-				.append(renderSection('right'))
 				.append(renderSection('center'))
+				.append(renderSection('right'))
 				.append('<div class="fc-clear"/>');
 
 			return el;
@@ -9666,7 +9666,7 @@ function Header(calendar, options) {
 	
 	
 	function renderSection(position) {
-		var sectionEl = $('<div class="fc-' + position + '"/>');
+		var sectionEl = $('<div class="col-xs-12 col-sm-12 fc-' + position + '"/>');
 		var buttonStr = options.header[position];
 
 		if (buttonStr) {
@@ -9688,7 +9688,7 @@ function Header(calendar, options) {
 					var button; // the element
 
 					if (buttonName == 'title') {
-						groupChildren = groupChildren.add($('<h2>&nbsp;</h2>')); // we always want it to take up height
+						groupChildren = groupChildren.add($('<h4>&nbsp;</h4>')); // we always want it to take up height
 						isOnlyButtons = false;
 					}
 					else {
@@ -9828,7 +9828,7 @@ function Header(calendar, options) {
 	
 	
 	function updateTitle(text) {
-		el.find('h2').text(text);
+		el.find('h4').text(text);
 	}
 	
 	
