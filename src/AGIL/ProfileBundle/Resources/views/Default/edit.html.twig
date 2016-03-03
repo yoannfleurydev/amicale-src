@@ -1,22 +1,13 @@
 {% extends "AGILProfileBundle::baseProfileBundle.html.twig" %}
 {% block body %}
     <div class="row">
-        <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
+        <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <img class="img-responsive" src="{{ asset("img/profile/") ~ user.userProfilePictureUrl }}">
                 </div>
             </div>
         </div>
-        {% if user.userFirstName is not null or user.userLastName is not null %}
-            <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-body text-center">
-                        <h3>{{ user.userFirstName }} {{ user.userLastName }}</h3>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -29,134 +20,126 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-offset-2 col-lg-8">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <form action="{{ path('agil_profile_edit') }}"
-                                          method="post" {{ form_enctype(form) }}>
+                    {% if user.userFirstName is not null or user.userLastName is not null %}
+                        <p>{{ user.userFirstName }} {{ user.userLastName }}</p>
+                    {% endif %}
+                    <form action="{{ path('agil_profile_edit') }}"
+                          method="post" {{ form_enctype(form) }}>
 
-                                        {# email field #}
-                                        <div class="form-group">
-                                            <label for="email">Modifier l'adresse email :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><span class="material-icons">email</span>
-                                                </div>
-                                                {{ form_row(form.email) }}
-                                            </div>
-                                        </div>
+                        {# email field #}
+                        <div class="form-group">
+                            <label for="email">Modifier l'adresse email :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="material-icons">email</span>
+                                </div>
+                                {{ form_row(form.email) }}
+                            </div>
+                        </div>
 
-                                        {# username field #}
-                                        <div class="form-group">
-                                            <label for="pseudo">Modifier le pseudo :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-user"></span></div>
-                                                {{ form_row(form.username) }}
-                                            </div>
-                                        </div>
+                        {# username field #}
+                        <div class="form-group">
+                            <label for="pseudo">Modifier le pseudo :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span
+                                            class="glyphicon glyphicon-user"></span></div>
+                                {{ form_row(form.username) }}
+                            </div>
+                        </div>
 
-                                        {# profile picture #}{# TODO : Modifier les labels, car tous sont 'pseudo' #}
-                                        <div class="form-group">
-                                            <label for="pseudo">Modifier la photo de profil :</label>
-                                            <div class="input-group">
-                                                <div class="fileUpload btn btn-primary">
-                                                    <span id="button_name_picture"><i
-                                                                class="material-icons">file_upload</i> Choisir un fichier</span>
-                                                    {{ form_row(form.userProfilePictureUrl) }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {# CV field #}
-                                        <div class="form-group">
-                                            <label for="pseudo">Modifier le CV :</label>
-                                            <div class="input-group">
-                                                <div class="fileUpload btn btn-primary">
-                                                    <span id="button_name_cv"><i class="material-icons">file_upload</i> Choisir un fichier</span>
-                                                    {{ form_row(form.userCVUrl) }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {#CV visibility field#}
-                                        <div class="form-group">
-                                            <label for="pseudo">Rendre mon CV public :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-eye-open"></span></div>
-
-                                                <label class="checkbox">
-                                                    {{ form_widget(form.userCVUrlVisibility) }}
-                                                    <span></span>{{ form_label(form.userCVUrlVisibility) }}
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        {# PW + PW confirmation field #}
-                                        <div class="form-group">
-                                            <label for="password">Modifier le mot de passe :</label>
-                                            <div class="input-group">
-                                                <label for="password" class="input-group-addon">
-                                                    <i class="material-icons">vpn_key</i>
-                                                </label>
-                                                {{ form_row(form.password) }}
-                                            </div>
-                                            <div class="input-group">
-                                                <label for="password_verification" class="input-group-addon">
-                                                    <i class="material-icons">vpn_key</i>
-                                                </label>
-                                                {{ form_row(form.passwordConfirm) }}
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <p>Modification des compétences du profil</p>
-                                        </div>
-                                        {% if data is defined %}
-                                            {% for profileSkillsCategory in data['profileSkillsCategories'] %}
-                                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading">
-                                                            <h2 class="panel-title">
-                                                                <span class="panel-title-content">
-                                                                    {{ profileSkillsCategory.profileSkillsCategoryName }}
-                                                                </span>
-                                                            </h2>
-                                                        </div>
-                                                        <div class="panel-body">
-                                                            <ul class="list-group">
-                                                                {% for tag in data['tags'] %}
-                                                                    {% if tag.skillCategory == profileSkillsCategory %}
-                                                                        <li class="list-group-item">
-                                                                            <div class="row">
-                                                                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                    {{ tag.tagName }}
-                                                                                </div>
-                                                                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                    {{ form_row(form['tag' ~ tag.tagId]) }}
-                                                                            </div>
-                                                                        </li>
-                                                                    {% endif %}
-                                                                {% endfor %}
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                        {% endif %}
-                                        {# update button #}
-                                        {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
-
-                                        {{ form_rest(form) }}
-                                    </form>
+                        {# profile picture #}{# TODO : Modifier les labels, car tous sont 'pseudo' #}
+                        <div class="form-group">
+                            <label for="pseudo">Modifier la photo de profil :</label>
+                            <div class="input-group">
+                                <div class="fileUpload btn btn-primary">
+                                    <span id="button_name_picture"><i
+                                                class="material-icons">file_upload</i> Choisir un fichier</span>
+                                    {{ form_row(form.userProfilePictureUrl) }}
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        {# CV field #}
+                        <div class="form-group">
+                            <label for="pseudo">Modifier le CV :</label>
+                            <div class="input-group">
+                                <div class="fileUpload btn btn-primary">
+                                    <span id="button_name_cv"><i class="material-icons">file_upload</i> Choisir un fichier</span>
+                                    {{ form_row(form.userCVUrl) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {#CV visibility field#}
+                        <div class="form-group">
+                            <label for="pseudo">Rendre mon CV public :</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span
+                                            class="glyphicon glyphicon-eye-open"></span></div>
+
+                                <label class="checkbox">
+                                    {{ form_widget(form.userCVUrlVisibility) }}
+                                    <span></span>{{ form_label(form.userCVUrlVisibility) }}
+                                </label>
+                            </div>
+                        </div>
+
+                        {# PW + PW confirmation field #}
+                        <div class="form-group">
+                            <label for="password">Modifier le mot de passe :</label>
+                            <div class="input-group">
+                                <label for="password" class="input-group-addon">
+                                    <i class="material-icons">vpn_key</i>
+                                </label>
+                                {{ form_row(form.password) }}
+                            </div>
+                            <div class="input-group">
+                                <label for="password_verification" class="input-group-addon">
+                                    <i class="material-icons">vpn_key</i>
+                                </label>
+                                {{ form_row(form.passwordConfirm) }}
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>Modification des compétences du profil</p>
+                        </div>
+                        {% if data is defined %}
+                            {% for profileSkillsCategory in data['profileSkillsCategories'] %}
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <h2 class="panel-title">
+                                        <span class="panel-title-content">
+                                            {{ profileSkillsCategory.profileSkillsCategoryName }}
+                                        </span>
+                                    </h2>
+                                    <ul class="list-group">
+                                        {% for tag in data['tags'] %}
+                                            {% if tag.skillCategory == profileSkillsCategory %}
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                            {{ tag.tagName }}
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                            {{ form_row(form['tag' ~ tag.tagId]) }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {# update button #}
+                        {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
+
+                        {{ form_rest(form) }}
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
+
 

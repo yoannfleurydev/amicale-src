@@ -9650,8 +9650,8 @@ function Header(calendar, options) {
 		if (sections) {
 			el = $("<div class='fc-toolbar'/>")
 				.append(renderSection('left'))
-				.append(renderSection('right'))
 				.append(renderSection('center'))
+				.append(renderSection('right'))
 				.append('<div class="fc-clear"/>');
 
 			return el;
@@ -9666,7 +9666,7 @@ function Header(calendar, options) {
 	
 	
 	function renderSection(position) {
-		var sectionEl = $('<div class="fc-' + position + '"/>');
+		var sectionEl = $('<div class="col-xs-12 col-sm-12 fc-' + position + '"/>');
 		var buttonStr = options.header[position];
 
 		if (buttonStr) {
