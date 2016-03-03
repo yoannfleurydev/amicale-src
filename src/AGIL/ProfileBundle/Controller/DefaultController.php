@@ -182,6 +182,7 @@ class DefaultController extends Controller
         $profilePicture->move($dir, $profilePicFileName);
 
         $user->setUserProfilePictureUrl($profilePicFileName);
+        $this->getDoctrine()->getManager()->flush();
     }
 
     public function editProfilCV($cv, $user) {
@@ -199,6 +200,7 @@ class DefaultController extends Controller
         $cv->move($dir, $cvFileName);
 
         $user->setUserCVUrl($cvFileName);
+        $this->getDoctrine()->getManager()->flush();
     }
 
 }
