@@ -17,9 +17,7 @@
                 <div class="panel-body">
                     <!-- Formulaire de suppression de la réponse -->
 
-                    <form action="{{ path('agil_forum_answers_delete', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}"
-                          method="post" {{ form_enctype(form) }}>
-
+                    {{ form_start(form) }}
                         <div class="form-group">
                             <p>
                                 Réponse :
@@ -47,7 +45,7 @@
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

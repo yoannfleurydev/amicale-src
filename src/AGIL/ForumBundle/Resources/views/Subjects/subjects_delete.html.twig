@@ -14,7 +14,7 @@
                 </div>
                 <div class="panel-body">
                     <!-- Formulaire de suppression du post pour le forum -->
-                    <form action="{{ path('agil_forum_subject_delete', {'idCategory': idCategory, 'idSubject': idSubject}) }}" method="post" {{ form_enctype(form) }}>
+                    {{ form_start(form) }}
                         <p class="control-label">Sujet : <strong>{{ subject.forumSubjectTitle }}</strong></p>
                         <p class="text-primary-blue">Voulez-vous vraiment supprimer ce sujet?</p>
                         {% if isAdmin == true %}
@@ -35,7 +35,7 @@
                                 Annuler
                             </a>
                         </div>
-                    </form>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
