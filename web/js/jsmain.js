@@ -196,22 +196,22 @@ $('.collapse').on('hide.bs.collapse', function () {
 
 $( document ).ready(function() {
     var glyph =  $('#btn-cat-ch').attr('class');
-    $('#forum_edit_category_forumCategoryIcon').attr("value", glyph);
+    $('#forum_edit_category_forumCategoryIcon').attr('value', glyph);
 });
 
 $("#liste_gly_choice li").click(function() {
     var glyph = $(this).children().children().attr('class');
 
-    $('#btn-cat-ch').attr('class', '');
-    $('#btn-cat-ch').addClass('glyphicon '+glyph);
-    $('#forum_add_category_forumCategoryIcon').attr("value", glyph);
+    $('#btn-cat-ch').removeClass();
+    $('#btn-cat-ch').addClass(glyph);
+    $('#forum_add_category_forumCategoryIcon').attr('value', glyph);
 });
 
 
 $("#liste_gly_choice_edit li").click(function() {
     var glyph = $(this).children().children().attr('class');
 
-    $('#btn-cat-ch').attr('class', '');
-    $('#btn-cat-ch').addClass('glyphicon '+glyph);
-    $('#forum_edit_category_forumCategoryIcon').attr("value", glyph);
+    $('#btn-cat-ch').removeClass();
+    $('#btn-cat-ch').addClass(glyph);
+    $('#forum_edit_category_forumCategoryIcon').attr('value', glyph);
 });

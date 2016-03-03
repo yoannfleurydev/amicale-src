@@ -31,7 +31,7 @@ class AddCategoryType extends AbstractType
         ));
 
         $builder->add('forumCategoryIcon', HiddenType::class, array(
-            'data' => 'glyphicon-stats',
+            'data' => 'glyphicon glyphicon-stats',
         ));
 
 
