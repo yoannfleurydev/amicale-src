@@ -89,6 +89,13 @@ class AgilEvent
      */
     private $eventText;
 
+    /**
+     * AgilEvent constructor.
+     */
+    public function __construct(){
+        // Date de publication
+        $this->eventPostDate = new \DateTime();
+    }
 
     /**
      * Get eventId

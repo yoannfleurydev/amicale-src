@@ -3,13 +3,13 @@
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
             <div class="panel panel-default">
-                <div class="panel-body text-center">
+                <disv class="panel-body text-center">
                     {% if user.userProfilePictureUrl is not null %}
                         <img class="img-responsive" src="{{ asset("img/profile/") ~ user.userProfilePictureUrl }}">
                     {% else %}
                         <img class="img-responsive" src="{{ asset("img/profile/default.png") }}">
                     {% endif %}
-                </div>
+                </disv>
             </div>
         </div>
         {% if user.userFirstName is not null or user.userLastName is not null %}

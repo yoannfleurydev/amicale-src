@@ -3,9 +3,10 @@
 namespace AGIL\AdminBundle\Controller;
 
 use AGIL\HallBundle\Entity\AgilEvent;
-use AGIL\HallBundle\Form\EventType;
+use AGIL\AdminBundle\Form\AddEventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class EventController extends Controller
 {
@@ -16,19 +17,22 @@ class EventController extends Controller
     public function adminEventAddAction(Request $request) {
         $event = new AgilEvent();
 
-        $form = $this->createForm(new EventType(), $event);
+        $form = $this->createForm(new AddEventType(), $event);
+
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if($request->getMethod() == Request::METHOD_POST) {
             $event->setUser($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
 
             $this->addFlash('success', 'Evenement ajouté');
 
-            return $this->redirect($this->generateUrl('agil_admin_events', array('id' => $event->getEventId())));
+//            return $this->redirect($this->generateUrl('agil_admin_events', array('id' => $event->getEventId())));
         }
+
         return $this->render('AGILAdminBundle:Event:admin_event_add.html.twig', array(
             'form' => $form->createView()
         ));
@@ -52,7 +56,7 @@ class EventController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if($request->getMethod() == Request::METHOD_POST) {
             $em->flush();
 
             $this->addFlash('success', "L'évenement a été modifié");
