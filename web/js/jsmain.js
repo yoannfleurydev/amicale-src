@@ -193,10 +193,25 @@ $('.collapse').on('hide.bs.collapse', function () {
     $fils.removeClass("animate_up");
 });
 
-$("#liste_gly_choice li").click(function () {
+
+$( document ).ready(function() {
+    var glyph =  $('#btn-cat-ch').attr('class');
+    $('#forum_edit_category_forumCategoryIcon').attr("value", glyph);
+});
+ck
+$("#liste_gly_choice li").click(function() {
     var glyph = $(this).children().children().attr('class');
+
     $('#btn-cat-ch').attr('class', '');
     $('#btn-cat-ch').addClass('glyphicon '+glyph);
     $('#forum_add_category_forumCategoryIcon').attr("value", glyph);
+});
 
+
+$("#liste_gly_choice_edit li").click(function() {
+    var glyph = $(this).children().children().attr('class');
+
+    $('#btn-cat-ch').attr('class', '');
+    $('#btn-cat-ch').addClass('glyphicon '+glyph);
+    $('#forum_edit_category_forumCategoryIcon').attr("value", glyph);
 });
