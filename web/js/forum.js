@@ -1,8 +1,6 @@
-//$('.collapse').collapse()
-
 $('#myCollapsible').collapse({
     toggle: false
-})
+});
 $('#form_select').hide();
 $('#form_add_ss_categorie').hide();
 
@@ -22,7 +20,6 @@ $('input[name=ssCat]').change(
     });
 
 // Gestion de la rotation de l'icone d'une catégorie
-
 var bool_icon_clicked = false;
 $('#icon_defil_cat').click(function () {
     if (bool_icon_clicked == false) {
@@ -82,10 +79,6 @@ $('.icon-add-cat').click(function () {
     this.removeClass("active");
     this.addClass("active");
 });
-
-function getGlyph() {
-}
-
 // Gestion Nouveau sujet Forum
 $('#inputNamePost').blur(function () {
     verifFormAddPost();
@@ -159,18 +152,6 @@ function verifFormAddPost() {
         }
     }
 }
-/*
-$(document).ready(function () {
-    $("#owl-demo").owlCarousel({
-
-        autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-        items: 4,
-        itemsDesktop: [1199, 3],
-        itemsDesktopSmall: [979, 3]
-
-    });
-});*/
 
 $('[data-toggle="tooltip"]').tooltip();
 
