@@ -40,7 +40,7 @@
 
                             <div class="text-center">
                                 {{ form_widget(form.Supprimer) }}
-                                <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
+                                <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject, 'page': page}) }}">
                                     Annuler
                                 </a>
                             </div>
