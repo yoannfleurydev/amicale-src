@@ -26,11 +26,11 @@ class AgilForumCategory
     /**
      * @var string
      *
-     * @ORM\Column(name="forumCategoryName", type="string", length=100, unique=true)
+     * @ORM\Column(name="forumCategoryName", type="string", length=30, unique=true)
      * @Assert\NotBlank(message="Le nom d'une catégorie ne peut être vide")
      * @Assert\Length(
      *      min = 2,
-     *      max = 100,
+     *      max = 30,
      *      minMessage = "La taille minimale est de {{ limit }} caractères",
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
@@ -45,7 +45,7 @@ class AgilForumCategory
      * @Assert\NotBlank(message="Une catégorie doit comporter un icone")
      * @Assert\Length(
      *      min = 2,
-     *      max = 30,
+     *      max = 40,
      *      minMessage = "La taille minimale est de {{ limit }} caractères",
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
@@ -55,11 +55,11 @@ class AgilForumCategory
     /**
      * @var string
      *
-     * @ORM\Column(name="forumCategoryText", type="string", length=255)
+     * @ORM\Column(name="forumCategoryText", type="string", length=150)
      * @Assert\NotBlank(message="La description ne peut être vide")
      * @Assert\Length(
      *      min = 2,
-     *      max = 255,
+     *      max = 150,
      *      minMessage = "La taille minimale est de {{ limit }} caractères",
      *      maxMessage = "La taille maximale est de {{ limit }} caractères"
      * )
