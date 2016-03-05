@@ -37,7 +37,8 @@ $(function () {
         selectedTags = input.split(" ");
         currentTag = selectedTags[selectedTags.length-1];
 
-        if (currentTag.length === 1) {
+        // S'il n'y a qu'un seul caractère alpha numérique
+        if (currentTag.length === 1 && /^[a-z0-9]$/i.test(currentTag)) {
             $.ajax(
                 {
                     method: "POST",
