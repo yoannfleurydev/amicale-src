@@ -9666,7 +9666,11 @@ function Header(calendar, options) {
 	
 	
 	function renderSection(position) {
-		var sectionEl = $('<div class="col-xs-12 col-sm-12 fc-' + position + '"/>');
+		if(position == 'center') {
+			var sectionEl = $('<div class="col-xs-12 col-sm-12 col-lg-2" fc-' + position + '"/>');
+		} else {
+			var sectionEl = $('<div class="col-xs-12 col-sm-12 col-lg-5" fc-' + position + '"/>');
+		}
 		var buttonStr = options.header[position];
 
 		if (buttonStr) {

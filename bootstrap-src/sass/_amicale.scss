@@ -2,6 +2,13 @@ $orange-color : #d55400;
 $menu-color : #334960;
 $footer-color : #444;
 
+.tag {
+  @extend .btn;
+  @extend .btn-primary;
+  margin-right:10px;
+  margin-top:10px;
+}
+
 .square-add-picture {
   border:1px solid #888;
   width:100px;
