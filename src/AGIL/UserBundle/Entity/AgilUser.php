@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AgilUser extends BaseUser
 {
+    const DEFAULT_PROFILE_PICTURE = "default.jpg";
     /**
      * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilMailingList")
      * @ORM\JoinTable(name="agil_users_mailing_list",
