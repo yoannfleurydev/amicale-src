@@ -3,6 +3,7 @@
 namespace AGIL\ProfileBundle\Controller;
 
 use AGIL\ProfileBundle\Form\ProfileEditType;
+use AGIL\UserBundle\Entity\AgilUser;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
@@ -175,8 +176,11 @@ class DefaultController extends Controller
 
         // supprime l'ancienne photo en locale
         $imgOld = $user->getUserProfilePictureUrl();
-        $fs = new Filesystem();
-        $fs->remove(array('symlink', $dir.'/'.$imgOld));
+
+        if ($imgOld !== AgilUser::DEFAULT_PROFILE_PICTURE) {
+            $fs = new Filesystem();
+            $fs->remove(array('symlink', $dir.'/'.$imgOld));
+        }
 
         // upload de la photo
         $profilePicture->move($dir, $profilePicFileName);
