@@ -51,11 +51,11 @@ class SubjectsController extends Controller
             $tagsManager = $this->get('agil_default.tags');
 
             // On vérifie tous les tags un à un
-            foreach($tagsArrayString as $tag){
+            foreach ($tagsArrayString as $tag) {
                 $tagsManager->insertTag($tag);
             }
-            // On les enregistre dans la base
-            $em->flush();
+            // On signifie la fin du traitement
+            $tagsManager->insertDone();
 
             // On remet les tags sous forme de tableau de AgilTag
             $subject->setTags($tagRepository->findByTagName($tagsArrayString));

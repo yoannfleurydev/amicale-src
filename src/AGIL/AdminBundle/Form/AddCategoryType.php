@@ -16,9 +16,6 @@ class AddCategoryType extends AbstractType
 
         $builder->add('forumCategoryName', TextType::class, array(
             'label' => false,
-            'constraints' => array(
-                new NotBlank(),
-            ),
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Nom',
@@ -27,9 +24,6 @@ class AddCategoryType extends AbstractType
 
         $builder->add('forumCategoryText', TextType::class, array(
             'label' => false,
-            'constraints' => array(
-                new NotBlank(),
-            ),
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Description',
@@ -37,7 +31,7 @@ class AddCategoryType extends AbstractType
         ));
 
         $builder->add('forumCategoryIcon', HiddenType::class, array(
-            'data' => 'glyphicon-tag',
+            'data' => 'glyphicon glyphicon-stats',
         ));
 
 

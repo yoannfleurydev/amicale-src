@@ -106,8 +106,11 @@ class AnswersController extends Controller
             $manager->persist($answer);
             $manager->flush($answer);
 
+            $this->addFlash('success',"Votre message a été ajouté au sujet.");
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers',
                 array('idCategory' => $idCategory, 'idSubject' => $idSubject, 'page' => ceil($answers_count / $maxAnswers))) );
+        } else if ($request->getMethod() == Request::METHOD_POST && !$form->isValid()) {
+            $this->addFlash('warning',"Erreur ! Le message n'est pas valide.");
         }
 
         // Premier message du sujet
@@ -247,8 +250,11 @@ class AnswersController extends Controller
             $em->flush($answer);
 
             $this->addFlash('success', "La réponse a bien été modifiée");
-            return $this->redirect( $this->generateUrl('agil_forum_subject_answers',
-                array('idCategory' => $idCategory, 'idSubject' => $idSubject, 'page' => ceil(($index+1) / $maxAnswers))) );
+            return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
+                'idCategory' => $idCategory,
+                'idSubject' => $idSubject,
+                'page' => ceil(($index+1) / $maxAnswers)
+            )));
         }
 
         return $this->render('AGILForumBundle:Answers:answers_edit.html.twig', array(
@@ -256,7 +262,8 @@ class AnswersController extends Controller
             'subject' => $subject,
             'idCategory' => $idCategory,
             'idSubject' => $idSubject,
-            'idAnswer' => $idAnswer
+            'idAnswer' => $idAnswer,
+            'page' => ceil(($index+1) / $maxAnswers)
         ));
     }
 
@@ -331,6 +338,11 @@ class AnswersController extends Controller
             $form = $this->createForm(new DeleteAnswerType(), null);
         }
 
+        $answers = $em->getRepository("AGILForumBundle:AgilForumAnswer")->findBy(
+            array('subject' => $subject),array('forumAnswerPostDate' => 'asc'));
+        $maxAnswers = 10;
+        $index = array_search($answer, $answers);
+
         $form->handleRequest($request);
         if ($form->isValid()) {
 
@@ -355,7 +367,8 @@ class AnswersController extends Controller
 
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
                 'idCategory' => $idCategory,
-                'idSubject' => $idSubject
+                'idSubject' => $idSubject,
+                'page' => ceil(($index+1) / $maxAnswers)
             )));
         }
 
@@ -365,7 +378,8 @@ class AnswersController extends Controller
             'idCategory' => $idCategory,
             'idSubject' => $idSubject,
             'idAnswer' => $idAnswer,
-            'isAdmin' => $isAdmin
+            'isAdmin' => $isAdmin,
+            'page' => ceil(($index+1) / $maxAnswers)
         ));
     }
 

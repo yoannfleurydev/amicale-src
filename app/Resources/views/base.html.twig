@@ -37,9 +37,10 @@
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
                 {% else %}
                 <!--Si connecté-->
-                <li class="dropdown navbar-dropdown-mobile right">
+
+                <div class="dropdown navbar-dropdown-mobile right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50px" alt="Photo de profil">
+                            <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50" alt="Photo de profil">
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -56,7 +57,8 @@
                             <a href="{{ path("fos_user_security_logout") }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
                         </li>
                     </ul>
-                </li>
+                </div>
+
                 {% endif %}
                 <a href="#" class="navbar-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Rechercher"><span class="material-icons">search</span></a>
             </div>

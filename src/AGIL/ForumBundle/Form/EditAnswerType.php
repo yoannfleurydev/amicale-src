@@ -16,8 +16,7 @@ class EditAnswerType extends AbstractType
             'label' => false,
             'attr' => array(
                 'class' => 'tinymce form-control',
-                'data-theme' => 'advanced',
-                'name' => 'forumAnswerText'
+                'data-theme' => 'advanced'
             )
         ));
 

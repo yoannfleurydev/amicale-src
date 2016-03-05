@@ -22,26 +22,26 @@
                     <form action="{{ path('agil_forum_subject_add', {'idCategory': idCategory}) }}" method="post" {{ form_enctype(form) }}>
 
                         <div class="form-group" id="formAddNamePost">
-                            <label for="inputNamePost" class="control-label"><h5>Nom du sujet</h5></label>
+                            <h5><label class="control-label">Nom du sujet</label></h5>
                                 {{ form_errors(form.subject.forumSubjectTitle) }}
                                 {{ form_widget(form.subject.forumSubjectTitle) }}
                         </div>
                         <div class="form-group" id="formAddDescPost">
-                            <label for="inputDescPost" class="control-label"><h5>Description</h5></label>
+                            <h5><label class="control-label">Description</label></h5>
                                 {{ form_errors(form.subject.forumSubjectDescription) }}
                                 {{ form_widget(form.subject.forumSubjectDescription) }}
                         </div>
 
 
                         <div class="form-group" id="formAddTagsPost">
-                            <label for="inputTagsPost" class="control-label"><h5>Tags</h5></label>
+                            <h5><label class="control-label">Tags</label></h5>
                                 {{ form_errors(form.subject.tags) }}
                                 {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
                             <div id="tags_container"></div>
                         </div>
 
                         <div class="form-group" id="formAddContentPost">
-                            <label for="inputContentPost" class="control-label"><h5>Message</h5></label>
+                            <h5><label class="control-label">Message</label></h5>
                                 {{ form_errors(form.forumAnswerText) }}
                                 {{ form_widget(form.forumAnswerText) }}
                         </div>
@@ -58,4 +58,6 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/tags.js') }}"></script>
 {% endblock %}

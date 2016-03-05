@@ -1,5 +1,7 @@
 {% extends "AGILAdminBundle::baseAdminBundle.html.twig" %}
 
+{% form_theme form '::form_errors.html.twig' %}
+
 {% block body %}
 
     <div class="row panel">
@@ -20,7 +22,8 @@
                     <label for="forumCategoryName">Nom de la catégorie :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="material-icons">mode_edit</i></div>
-                        {{ form_row(form.forumCategoryName) }}
+                        {{ form_errors(form.forumCategoryName) }}
+                        {{ form_widget(form.forumCategoryName) }}
                     </div>
                 </div>
 
@@ -28,7 +31,8 @@
                     <label for="forumCategoryText">Description de la catégorie :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="material-icons">info</i></div>
-                        {{ form_row(form.forumCategoryText) }}
+                        {{ form_errors(form.forumCategoryText) }}
+                        {{ form_widget(form.forumCategoryText) }}
                     </div>
                 </div>
 
@@ -38,9 +42,10 @@
 
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="btn-cat-ch" class="glyphicon {{ category.forumCategoryIcon }}"> <span class="caret"></span></span>
+                            <span id="btn-cat-ch" class="{{ category.forumCategoryIcon }}"> <span class="caret"></span></span>
                         </button>
-                        <ul id="liste_gly_choice" class="dropdown-menu list-inline" role="menu">
+                        <ul id="liste_gly_choice_edit" class="dropdown-menu list-inline" role="menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-stats"></span></a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-cloud"></span></a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-film"></span></a></li>
@@ -53,8 +58,7 @@
                             <li><a href="#"><span class="glyphicon glyphicon-wrench"></span></a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-tasks"></span></a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-briefcase"></span></a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-mobile"></span></a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-stats"></span></a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-phone"></span></a></li>
                         </ul>
                     </div>
 
@@ -64,9 +68,11 @@
                     </div>
                 </div>
 
-
                 <div class="text-center">
                     {{ form_row(form.Modifier) }}
+                    <a class="btn btn-default" href="{{ path('agil_admin_forum_categories') }}">
+                        Annuler
+                    </a>
                 </div>
 
                 {{ form_rest(form) }}

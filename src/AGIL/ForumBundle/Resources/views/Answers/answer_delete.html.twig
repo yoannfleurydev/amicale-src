@@ -1,5 +1,7 @@
 {% extends 'AGILForumBundle::baseForumBundle.html.twig' %}
 
+{% form_theme form '::form_errors.html.twig' %}
+
 {% block body %}
     <!-- Suppression d'une réponse -->
     <div class="row">
@@ -15,9 +17,7 @@
                 <div class="panel-body">
                     <!-- Formulaire de suppression de la réponse -->
 
-                    <form action="{{ path('agil_forum_answers_delete', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}"
-                          method="post" {{ form_enctype(form) }}>
-
+                    {{ form_start(form) }}
                         <div class="form-group">
                             <p>
                                 Réponse :
@@ -30,20 +30,22 @@
                                     {{ form_label(form.choiceReason) }}
                                     {{ form_widget(form.choiceReason) }}
                                 </div>
+                                <div class="form-group">
+                                    <label>Message additionnel :</label>
+                                    {{ form_errors(form.reasonOption) }}
+                                    {{ form_widget(form.reasonOption) }}
+                                </div>
                             {% endif %}
-                            <div class="form-group">
-                                <label for="forum_delete_answer_reasonOption">Message additionnel :</label>
-                                {{ form_row(form.reasonOption) }}
-                            </div>
+
 
                             <div class="text-center">
                                 {{ form_widget(form.Supprimer) }}
-                                <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject}) }}">
+                                <a class="btn btn-default" href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject, 'page': page}) }}">
                                     Annuler
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
