@@ -32,7 +32,7 @@ class Tags {
 
 		$tagRepo = $this->em->getRepository("AGILDefaultBundle:AgilTag");
 
-		if (null === $tagRepo->findOneByTagName($tagName)) {
+		if (ctype_alnum($tagName) && null === $tagRepo->findOneByTagName($tagName)) {
 			$tag = new AgilTag($tagName, $color, $skillCat);
 			$this->em->persist($tag);
 		}
