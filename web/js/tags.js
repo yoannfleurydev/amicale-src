@@ -3,6 +3,8 @@ $(function () {
     var prefixedTags;
     // le tag que l'on est en train d'écrire
     var currentTag;
+    // la liste des tags déjà sélectionnés
+    var selectedTags;
     // si l'ajax s'est terminé
     var ajaxDone = false;
 
@@ -11,11 +13,12 @@ $(function () {
         // on vide l'endroit où sont afichés les tags
         $('#tags_container').text('');
         // si on a reçu la réponse ajax
-        // Pour chaque tag qu'on a récupéré, on vérifie s'il est préfixé par la valeur qui est entrée
+        // Pour chaque tag qu'on a récupéréet qui n'a pas déjà été sélectionné,
+        // on vérifie s'il est préfixé par la valeur qui est entrée
         $.each(prefixedTags, function (key, value) {
             // Si un tag ne correspond plus à la recherche on l'ignore
             // startsWith est sensible à la casse
-            if (!value.toLowerCase().startsWith(currentTag.toLowerCase())) {
+            if (selectedTags.indexOf(value) !== -1 || !value.toLowerCase().startsWith(currentTag.toLowerCase())) {
                 return;
             }
             // On affiche le tag dans la zone d'affichage
@@ -31,10 +34,11 @@ $(function () {
 
         var input = $(this).val();
         // la liste des tags déjà sélectionnés
-        var selectedTags = input.split(" ");
+        selectedTags = input.split(" ");
         currentTag = selectedTags[selectedTags.length-1];
 
-        if (currentTag.length === 1) {
+        // S'il n'y a qu'un seul caractère alpha numérique
+        if (currentTag.length === 1 && /^[a-z0-9]$/i.test(currentTag)) {
             $.ajax(
                 {
                     method: "POST",
