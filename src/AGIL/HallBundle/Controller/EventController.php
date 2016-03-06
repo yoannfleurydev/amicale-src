@@ -1,12 +1,13 @@
 <?php
 
-namespace AGIL\AdminBundle\Controller;
+namespace AGIL\HallBundle\Controller;
 
 use AGIL\HallBundle\Entity\AgilEvent;
-use AGIL\AdminBundle\Form\EditEventType;
-use AGIL\AdminBundle\Form\AddEventType;
+use AGIL\HallBundle\Form\EditEventType;
+use AGIL\HallBundle\Form\AddEventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\VarDumper\VarDumper;
 
 class EventController extends Controller
@@ -30,19 +31,18 @@ class EventController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isValid()/*$request->getMethod() == Request::METHOD_POST*/) {
+        if($form->isValid()) {
             $event->setUser($this->getUser());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
 
-            $this->addFlash('success', 'Evenement ajouté');
-
-            return $this->redirect($this->generateUrl('agil_admin_events', array('id' => $event->getEventId())));
+            $this->addFlash('success', 'Evénement ajouté');
+            return $this->redirect($this->generateUrl('agil_hall_event', array('idEvent' => $event->getEventId())));
         }
 
-        return $this->render('AGILAdminBundle:Event:admin_event_add.html.twig', array(
+        return $this->render('AGILHallBundle:Event:admin_event_add.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -53,7 +53,7 @@ class EventController extends Controller
         $event = $em->getRepository('AGILHallBundle:AgilEvent')->find($idEvent);
 
         if (null === $event) {
-            throw new NotFoundHttpException("L'evénement d'id " . $id . " n'existe pas.");
+            throw new NotFoundHttpException("L'evénement d'id " . $idEvent . " n'existe pas.");
         }
 
         $form = $this->createForm(new EditEventType(), $event);
@@ -65,20 +65,20 @@ class EventController extends Controller
         $form->get('eventDateEnd')->setData($event->getEventDate());
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if($form->isValid()) {
             $em->flush();
 
             $this->addFlash('success', "L'évenement a été modifié");
 
-            return $this->redirect($this->generateUrl('agil_admin_events', array('id' => $event->getEventId())));
+            return $this->redirect($this->generateUrl('agil_hall_event', array('idEvent' => $event->getEventId())));
         }
 
-        return $this->render('AGILAdminBundle:Event:admin_event_edit.html.twig', array(
+        return $this->render('AGILHallBundle:Event:admin_event_edit.html.twig', array(
             'event' => $event,
             'form'  => $form->createView()
         ));
 
-        return $this->render('AGILAdminBundle:Event:admin_event_edit.html.twig');
+        return $this->render('AGILHallBundle:Event:admin_event_edit.html.twig');
     }
 
     public function adminEventDeleteAction ($idEvent) {

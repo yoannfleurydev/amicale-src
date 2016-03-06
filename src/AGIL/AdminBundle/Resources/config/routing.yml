@@ -53,22 +53,28 @@ agil_admin_forum_category_delete:
             idCategory: \d+
 
 # admin event routing
-agil_admin_events:
-    path:     /admin/hall/events
-    defaults: { _controller: AGILAdminBundle:Event:adminEvent }
-
-agil_admin_event_add:
-    path:     /admin/hall/event/add
-    defaults: { _controller: AGILAdminBundle:Event:adminEventAdd }
-
-agil_admin_event_edit:
-    path:     /admin/hall/event/edit/{idEvent}
-    defaults: { _controller: AGILAdminBundle:Event:adminEventEdit }
-    requirements:
-        idEvent: \d+
-
-agil_admin_event_delete:
-    path:     /admin/hall/event/delete/{idEvent}
-    defaults: { _controller: AGILAdminBundle:Event:adminEventAdd }
-    requirements:
-        idEvent: \d+
+#agil_admin_events:
+#    path:     /admin/hall/events
+#    defaults: { _controller: AGILAdminBundle:Event:adminEvent }
+#
+#agil_admin_event_show:
+#    path:     /admin/hall/event/{idEvent}
+#    defaults: { _controller: AGILAdminBundle:Event:adminEvent }
+#    requirements:
+#        idEvent: \d+
+#
+#agil_admin_event_add:
+#    path:     /admin/hall/event/add
+#    defaults: { _controller: AGILAdminBundle:Event:adminEventAdd }
+#
+#agil_admin_event_edit:
+#    path:     /admin/hall/event/edit/{idEvent}
+#    defaults: { _controller: AGILAdminBundle:Event:adminEventEdit }
+#    requirements:
+#        idEvent: \d+
+#
+#agil_admin_event_delete:
+#    path:     /admin/hall/event/delete/{idEvent}
+#    defaults: { _controller: AGILAdminBundle:Event:adminEventAdd }
+#    requirements:
+#        idEvent: \d+

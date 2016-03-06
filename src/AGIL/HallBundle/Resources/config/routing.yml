@@ -18,18 +18,6 @@ agil_hall_event:
     requirements:
         idEvent: \d+
 
-agil_event_add:
-    path: event/{idEvent}/add
-    defaults: { _controller: AGILHallBundle:Default:eventAdd }
-    requirements:
-        idEvent: \d+
-
-agil_event_edit:
-    path: event/{idEvent}/edit
-    defaults: { _controller: AGILHallBundle:Default:eventEdit }
-    requirements:
-        idEvent: \d+
-
 agil_hall_event_photos:
     path: /event/{idEvent}/photos
     defaults: { _controller: AGILHallBundle:Default:photosEvent }
@@ -50,3 +38,26 @@ agil_hall_calendar_data:
         path:     /calendar/data
         defaults: { _controller: AGILHallBundle:Calendar:getCalendarData }
         methods: [post]
+
+# Managing events
+
+#agil_admin_events:
+#    path:     /admin/events
+#    defaults: { _controller: AGILHallBundle:Event:adminEvent }
+
+agil_event_add:
+    path: /event/add
+    defaults: { _controller: AGILHallBundle:Event:adminEventAdd }
+
+agil_event_edit:
+    path: /event/{idEvent}/edit
+    defaults: { _controller: AGILHallBundle:Event:adminEventEdit }
+    requirements:
+        idEvent: \d+
+
+agil_event_delete:
+    path:     /event/{idEvent}/delete
+    defaults: { _controller: AGILHallBundle:Event:adminEventAdd }
+    requirements:
+        idEvent: \d+
+

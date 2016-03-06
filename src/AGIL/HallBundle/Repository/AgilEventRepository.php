@@ -70,4 +70,26 @@ class AgilEventRepository extends EntityRepository
 
         return new Paginator($query);
     }
+
+    /**
+     * Permet de retourner les événement triés
+     */
+    public function getEventsByStartDateDesc() {
+
+        return $this->findBy(array(), array('forumCategoryName' => 'ASC'));
+//        $query = $this->_em->createQueryBuilder();
+//
+//        $query
+//            ->select(
+//                'es.eventTitle',
+//                'es.eventDate',
+//                'es.eventPostDate',
+//                'es.eventDateEnd',
+//                'es.eventText',
+//                'es.eventId'
+//            )
+//            ->from('AGIL\HallBundle\Entity\AgilEvent', 'es')
+//            ->orderBy('es.eventDate', 'ASC')
+//        ;
+    }
 }
