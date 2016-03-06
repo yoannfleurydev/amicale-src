@@ -39,8 +39,13 @@
 
                         <div class="form-group" id="formAddTagsPost">
                             <h5><label class="control-label">Tags</label></h5>
-                            {{ form_errors(form.subject.tags) }}
+                            <div class="tag_control">
+                                <div class="list_item_tag">
+                                </div>
+                                <input type="text" class="tags_input_visible">
+                            </div>
                             {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
+                            {{ form_errors(form.subject.tags) }}
                             <div id="tags_container"></div>
                         </div>
 
