@@ -31,6 +31,9 @@ $(function () {
             // On affiche le tag dans la zone d'affichage
             tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + value + "</div>");
         });
+        if ($.inArray(currentTag, prefixedTags) === -1) {
+            tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + currentTag + "</div>");
+        }
     };
 
     tagsInput.on('input', function() {
@@ -61,6 +64,7 @@ $(function () {
                             tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + value + "</div>");
                         }
                     });
+                    tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + currentTag + "</div>");
                 }
                 ajaxDone = true;
                 if (currentTag.length > 1) {
