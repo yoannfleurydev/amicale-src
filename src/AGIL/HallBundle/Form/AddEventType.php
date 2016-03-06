@@ -52,7 +52,7 @@ class AddEventType extends AbstractType
                 'allow_add'     =>      true,
                 'allow_delete'  =>      true
             )
-        ),
+        );
 
         $builder->add('Ajouter', SubmitType::class, array(
             'label' => false,
