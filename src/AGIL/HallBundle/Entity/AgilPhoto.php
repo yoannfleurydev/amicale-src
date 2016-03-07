@@ -34,12 +34,7 @@ class AgilPhoto
      *
      * @ORM\Column(name="photoUrl", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="La photo doit contenir une url")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 255,
-     *      minMessage = "La taille minimale est de {{ limit }} caractères",
-     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
-     * )
+     * 
      */
     private $photoUrl;
 
