@@ -101,7 +101,7 @@ $(function () {
 
         //On ajout l'item qui permet de montrer et supprimer un tag
         listTagItem.append( "<div class='item_tag'>" +
-            "<span class='item_tag_label'>" + tagToAdd + "</span>" +
+            "<span class='item_tag_label'>" + tagToAdd.toUpperCase() + "</span>" +
             "<span class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
             "</span></div>" );
 
@@ -139,7 +139,7 @@ $(function () {
             for (tag of tags) {
                 //On ajout l'item qui permet de montrer et supprimer un tag
                 listTagItem.append( "<div class='item_tag'>" +
-                    "<span class='item_tag_label'>" + tag + "</span>" +
+                    "<span class='item_tag_label'>" + tag.toUpperCase() + "</span>" +
                     "<span id='" + tag + "' class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
                     "</span></div>" );
 

@@ -383,10 +383,16 @@ label.checkbox :checked+span:before {
   font-feature-settings: 'liga';
 }
 
-.list-element a::after {
+.interne-link:after {
   @extend .material-icons;
   content: "link";
 }
+
+.externe-link:after {
+  @extend .material-icons;
+  content: "open_in_new";
+}
+
 
 .navbar-mobile .material-icons{
   font-size: 18px;
