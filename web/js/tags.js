@@ -1,16 +1,10 @@
 $(function () {
-    // tableau des tags préfixés
     var prefixedTags;
-    // le tag que l'on est en train d'écrire
     var currentTag;
-    // la liste des tags déjà sélectionnés
     var selectedTags;
-    // si l'ajax s'est terminé
     var ajaxDone = false;
 
-    /* $('tags_input_visible') est l'input dans lequel on tape les tags */
     var tagsInput = $('.tags_input_visible');
-    /* $('tags_input') est l'input dans lequel on met les tags */
     var tagsInputHidden = $('#tags_input');
     var tagsContainer = $('#tags_container');
     var listTagItem = $('.list_item_tag');
@@ -20,7 +14,7 @@ $(function () {
         // on vide l'endroit où sont afichés les tags
         tagsContainer.text('');
         // si on a reçu la réponse ajax
-        // Pour chaque tag qu'on a récupéréet qui n'a pas déjà été sélectionné,
+        // Pour chaque tag qu'on a récupéré et qui n'a pas déjà été sélectionné,
         // on vérifie s'il est préfixé par la valeur qui est entrée
         $.each(prefixedTags, function (key, value) {
             // Si un tag ne correspond plus à la recherche on l'ignore
@@ -119,11 +113,8 @@ $(function () {
             //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
             // exemple : PHP et PHPSTORM
             var val = tagsInputHidden.val().replace(tagToAdd + " ", "");
-            //On met la nouvelle valeur dans l'input caché
             tagsInputHidden.val(val);
-            //On supprime mon élément
             lastInsert.remove();
-            //On remontre le boutton
             clickedButton.show();
         });
         // On remet à 0 le tag courant, pour éviter un résidu
@@ -139,5 +130,29 @@ $(function () {
         tagsInput.focus();
         //On vide le container
         tagsContainer.text('');
+    });
+
+    $(document).ready(function () {
+        var text = tagsInputHidden.val();
+        if (text.length > 0) {
+            tags = text.split(" ");
+            for (tag of tags) {
+                //On ajout l'item qui permet de montrer et supprimer un tag
+                listTagItem.append( "<div class='item_tag'>" +
+                    "<span class='item_tag_label'>" + tag + "</span>" +
+                    "<span id='" + tag + "' class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
+                    "</span></div>" );
+
+                //On rajoute sur la croix un envent
+                $("#" + tag).click(function() {
+                    //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
+                    // exemple : PHP et PHPSTORM
+                    var tagToDelete = $(this).attr('id');
+                    var val = tagsInputHidden.val().replace(tagToDelete + " ", "");
+                    tagsInputHidden.val(val);
+                    $(this).parent().remove();
+                });
+            }
+        }
     });
 });
