@@ -147,13 +147,15 @@
                     <form action="{{ path('agil_forum_subject_answers', {'idCategory': category.forumCategoryId, 'idSubject': subject.forumSubjectId}) }}"
                           method="post" {{ form_enctype(form) }}>
 
-                        {{ form_errors(form.forumAnswerText) }}
-                        {{ form_widget(form.forumAnswerText) }}
+                        <div class="form-group">
+                            {{ form_errors(form.forumAnswerText) }}
+                            {{ form_widget(form.forumAnswerText) }}
+                        </div>
 
-                        <div class="text-center">
+                        <p class="text-center">
                             {{ form_widget(form.Ajouter) }}
                             <input type="reset" class="btn btn-default" value="Effacer">
-                        </div>
+                        </p>
                         {{ tinymce_init() }}
                         {{ form_rest(form) }}
                     </form>
