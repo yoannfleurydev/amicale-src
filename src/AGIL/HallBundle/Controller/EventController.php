@@ -12,29 +12,21 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class EventController extends Controller
 {
-    public function adminEventsAction() {
+    public function eventAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
-
-    }
-
-    public function adminEventViewAction($idEvent) {
-        $em = $this->getDoctrine()->getManager();
-        $eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
-
-    }
-
-    public function adminEventAddAction(Request $request) {
         $event = new AgilEvent();
 
-        $form = $this->createForm(new AddEventType(), $event);
+        $form = $this->createForm(new AddEventType(), null);
 
         $form->handleRequest($request);
 
         if($form->isValid()) {
             $event->setUser($this->getUser());
+            $event->setEventDate($form->get('eventDate')->getData());
+            $event->setEventDateEnd($form->get('eventDateEnd')->getData());
+            $event->setEventText($form->get('eventText')->getData());
+            $event->setEventTitle($form->get('eventTitle')->getData());
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
 
@@ -42,12 +34,12 @@ class EventController extends Controller
             return $this->redirect($this->generateUrl('agil_hall_event', array('idEvent' => $event->getEventId())));
         }
 
-        return $this->render('AGILHallBundle:Event:admin_event_add.html.twig', array(
+        return $this->render('AGILHallBundle:Event:event_add.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
-    public function adminEventEditAction ($idEvent, Request $request) {
+    public function eventEditAction ($idEvent, Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $event = $em->getRepository('AGILHallBundle:AgilEvent')->find($idEvent);
@@ -73,16 +65,16 @@ class EventController extends Controller
             return $this->redirect($this->generateUrl('agil_hall_event', array('idEvent' => $event->getEventId())));
         }
 
-        return $this->render('AGILHallBundle:Event:admin_event_edit.html.twig', array(
+        return $this->render('AGILHallBundle:Event:event_edit.html.twig', array(
             'event' => $event,
             'form'  => $form->createView()
         ));
 
-        return $this->render('AGILHallBundle:Event:admin_event_edit.html.twig');
+        return $this->render('AGILHallBundle:Event:event_edit.html.twig');
     }
 
-    public function adminEventDeleteAction ($idEvent) {
+    public function eventDeleteAction ($idEvent) {
 
-        return $this->redirect($this->generateUrl('AGILHallBundle:Event:admin_event.html.twig'));
+        return $this->redirect($this->generateUrl('agil_hall_homepage'));
     }
 }

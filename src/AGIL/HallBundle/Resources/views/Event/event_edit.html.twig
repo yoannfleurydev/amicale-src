@@ -1,0 +1,60 @@
+{% extends "AGILHallBundle::baseHallBundle.html.twig" %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                    <span class="panel-title-content">
+                        Modification d'event
+                    </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form_start(form) }}
+                            <div class="form-group">
+                                <label for="eventName">Nom de l'événement : </label>
+                                {#<input class="form-control" type="text" name="eventName" id="eventName">#}
+                                {{ form_row(form.eventTitle) }}
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDesc">Description de l'événement : </label>
+                                {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
+                                {{ form_row(form.eventText) }}
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDate">Date de début de l'évènement : </label>
+                                {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
+                                {{ form_row(form.eventDate) }}
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDateEnd">Date de fin de l'évènement : </label>
+                                {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
+                                {{ form_row(form.eventDateEnd) }}
+                            </div>
+
+                            <p>
+                            <div class="picture-list" id="addedPicture"></div>
+                            <div class="square-add-picture">
+                                <input type="file" name="choosePicture" id="choosePicture" multiple="multiple">
+                            </div>
+                            </p>
+                            <p class="text-center">
+                                {#<input class="btn btn-primary" type="submit" value="valider">#}
+                                {{ form_widget(form.Modifier) }}
+                                <a href="{{ path('agil_hall_homepage') }}" class="btn btn-default">Annuler</a>
+                            </p>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

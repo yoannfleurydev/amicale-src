@@ -19,40 +19,40 @@ class EditEventType extends AbstractType
         $builder->add('eventTitle', TextType::class, array(
             'label' => false,
             'required' => true,
-//            'attr' => array(
-//                'class' => 'form-control',
-//            )
+            'attr' => array(
+                'class' => 'form-control',
+            )
         ));
 
         $builder->add('eventText', TextareaType::class, array(
             'label' => false,
             'required' => true,
-//            'attr' => array(
-//                'class' => 'form-control',
-//            )
+            'attr' => array(
+                'class' => 'form-control',
+            )
         ));
 
         $builder->add('eventDate', DateTimeType::class, array(
             'label' => false,
             'required' => true,
-//            'attr' => array(
-//                'class' => 'form-control',
-//            )
+            'attr' => array(
+                'class' => 'form-control',
+            )
         ));
 
         $builder->add('eventDateEnd', DateTimeType::class, array(
             'label' => false,
             'required' => true,
-//            'attr' => array(
-//                'class' => 'form-control',
-//            )
+            'attr' => array(
+                'class' => 'form-control',
+            )
         ));
 
         $builder->add('Modifier', SubmitType::class, array(
             'label' => false,
-//            'attr' => array(
-//                'class' => 'form-control'
-//            )
+            'attr' => array(
+                'class' => 'btn btn-primary'
+            )
         ));
 
     }

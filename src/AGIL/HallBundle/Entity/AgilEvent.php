@@ -94,6 +94,8 @@ class AgilEvent
      */
     public function __construct(){
         // Date de publication
+        $this->eventDate = new \DateTime();
+        $this->eventDateEnd = new \DateTime();
         $this->eventPostDate = new \DateTime();
     }
 

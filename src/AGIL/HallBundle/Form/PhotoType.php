@@ -16,17 +16,17 @@ class PhotoType extends AbstractType
         $builder->add('photoTitle', TextType::class, array(
             'label' => false,
             'required' => true,
-//            'attr' => array(
-//                'class' => 'form-control',
-//            )
+            'attr' => array(
+                'class' => 'form-control',
+            )
         ));
 
         $builder->add('photoDescription', TextareaType::class, array(
             'label' => false,
             'required' => false,
-//            'attr' => array(
-//                'class' => 'form-control',
-//            )
+            'attr' => array(
+                'class' => 'form-control',
+            )
         ));
 
         $builder->add('photoUrl', FileType::class, array(
@@ -34,17 +34,17 @@ class PhotoType extends AbstractType
             'required' => false,
             'constraints' => [
                 new File([
-                    'maxSize' => '3M',
+                    'maxSize' => '1M',
                     'mimeTypes' => [
                         "image/jpeg",
                         "image/png",
                         "image/bmp"
                     ],
                 ])
-            ]
-//            'attr' => array(
-//                'class' => 'form-control'
-//            )
+            ],
+            'attr' => array(
+                'class' => 'form-control'
+            )
         ));
 
     }

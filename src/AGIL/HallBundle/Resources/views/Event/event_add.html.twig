@@ -8,13 +8,12 @@
                 <div class="panel-heading">
                     <h2 class="panel-title">
                     <span class="panel-title-content">
-                        Modification d'event
+                        Creation d'un événement
                     </span>
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <form action="{{ path('agil_event_edit') }}"
-                          method="post" {{ form_enctype(form) }}>
+                    {{ form_start(form) }}
                         <div class="form-group">
                             <label for="eventName">Nom de l'événement : </label>
                             {#<input class="form-control" type="text" name="eventName" id="eventName">#}
@@ -37,17 +36,17 @@
                         </div>
 
                         <p>
-                        <div class="picture-list" id="addedPicture"></div>
-                        <div class="square-add-picture">
-                            <input type="file" name="choosePicture" id="choosePicture" multiple="multiple">
-                        </div>
+                            <div class="picture-list" id="addedPicture"></div>
+                            <div class="square-add-picture">
+                                {{ form_widget(form.photos, {id: '#choosePicture'}) }}
+                            </div>
                         </p>
                         <p class="text-center">
                             <input class="btn btn-default" type="reset" value="effacer">
                             {#<input class="btn btn-primary" type="submit" value="valider">#}
-                            {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
+                            {{ form_widget(form.Ajouter) }}
                         </p>
-                    </form>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

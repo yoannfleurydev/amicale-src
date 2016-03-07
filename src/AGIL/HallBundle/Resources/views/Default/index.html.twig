@@ -1,6 +1,14 @@
 {% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
 {% block body %}
+    {% if is_granted("ROLE_USER") %}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <a class="btn btn-primary" href="{{ path('agil_hall_event_add') }}">Ajouter un événement</a>
+        </div>
+    </div>
+    {% endif %}
+
     {% for event in events %}
         <div class="row">
             <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
@@ -8,6 +16,9 @@
                     <p><h5><a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">{{ event.eventTitle }}</a></h5></p>
                     <p><h6><em>{{ event.eventText }}</em></h6></p>
                     <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
+                    {% if not is_granted("ROLE_USER") %}
+                    <a class="btn btn-default" href="{{ path('agil_hall_event_edit', {'idEvent': event.eventId}) }}">Modifier l'événement</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

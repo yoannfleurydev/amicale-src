@@ -45,19 +45,19 @@ agil_hall_calendar_data:
 #    path:     /admin/events
 #    defaults: { _controller: AGILHallBundle:Event:adminEvent }
 
-agil_event_add:
+agil_hall_event_add:
     path: /event/add
-    defaults: { _controller: AGILHallBundle:Event:adminEventAdd }
+    defaults: { _controller: AGILHallBundle:Event:eventAdd }
 
-agil_event_edit:
+agil_hall_event_edit:
     path: /event/{idEvent}/edit
-    defaults: { _controller: AGILHallBundle:Event:adminEventEdit }
+    defaults: { _controller: AGILHallBundle:Event:eventEdit }
     requirements:
         idEvent: \d+
 
-agil_event_delete:
+agil_hall_event_delete:
     path:     /event/{idEvent}/delete
-    defaults: { _controller: AGILHallBundle:Event:adminEventAdd }
+    defaults: { _controller: AGILHallBundle:Event:eventDelete }
     requirements:
         idEvent: \d+
 
