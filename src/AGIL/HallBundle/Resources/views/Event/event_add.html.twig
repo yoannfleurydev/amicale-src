@@ -16,34 +16,31 @@
                     {{ form_start(form) }}
                         <div class="form-group">
                             <label for="eventName">Nom de l'événement : </label>
-                            {#<input class="form-control" type="text" name="eventName" id="eventName">#}
-                            {{ form_row(form.eventTitle) }}
+                            {{ form_row(form.event.eventTitle) }}
                         </div>
                         <div class="form-group">
                             <label for="eventDesc">Description de l'événement : </label>
-                            {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
-                            {{ form_row(form.eventText) }}
+                            {{ form_row(form.event.eventText) }}
                         </div>
                         <div class="form-group">
                             <label for="eventDate">Date de début de l'évènement : </label>
-                            {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
-                            {{ form_row(form.eventDate) }}
+                            {{ form_row(form.event.eventDate) }}
                         </div>
                         <div class="form-group">
                             <label for="eventDateEnd">Date de fin de l'évènement : </label>
-                            {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
-                            {{ form_row(form.eventDateEnd) }}
+                            {{ form_row(form.event.eventDateEnd) }}
                         </div>
 
                         <p>
                             <div class="picture-list" id="addedPicture"></div>
                             <div class="square-add-picture">
-                                {{ form_widget(form.photos, {id: '#choosePicture'}) }}
+                                {{ form_widget(form.photoUrl, {id: '#choosePicture'}) }}
                             </div>
                         </p>
+                        <p>{{ form_widget(form.photoDescription) }}</p>
+                        <p>{{ form_widget(form.photoTitle) }}</p>
                         <p class="text-center">
                             <input class="btn btn-default" type="reset" value="effacer">
-                            {#<input class="btn btn-primary" type="submit" value="valider">#}
                             {{ form_widget(form.Ajouter) }}
                         </p>
                     {{ form_end(form) }}

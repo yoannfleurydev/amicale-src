@@ -3,8 +3,10 @@
 namespace AGIL\HallBundle\Controller;
 
 use AGIL\HallBundle\Entity\AgilEvent;
+use AGIL\HallBundle\Entity\AgilPhoto;
 use AGIL\HallBundle\Form\EditEventType;
 use AGIL\HallBundle\Form\AddEventType;
+use AGIL\HallBundle\Form\PhotoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -12,20 +14,20 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class EventController extends Controller
 {
+    /**
+     * Ajout d'événement
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function eventAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $event = new AgilEvent();
-
-        $form = $this->createForm(new AddEventType(), null);
+        $photo = new AgilPhoto();
+        $form = $this->createForm(new PhotoType(), $photo);
 
         $form->handleRequest($request);
-
         if($form->isValid()) {
+            $event = $form->get('event')->getData();
             $event->setUser($this->getUser());
-            $event->setEventDate($form->get('eventDate')->getData());
-            $event->setEventDateEnd($form->get('eventDateEnd')->getData());
-            $event->setEventText($form->get('eventText')->getData());
-            $event->setEventTitle($form->get('eventTitle')->getData());
 
             $em->persist($event);
             $em->flush();
@@ -39,6 +41,12 @@ class EventController extends Controller
         ));
     }
 
+    /**
+     * Edition d'événement
+     * @param $idEvent
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function eventEditAction ($idEvent, Request $request) {
         $em = $this->getDoctrine()->getManager();
 

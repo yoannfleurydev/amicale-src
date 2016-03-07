@@ -16,7 +16,7 @@
                     <p><h5><a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">{{ event.eventTitle }}</a></h5></p>
                     <p><h6><em>{{ event.eventText }}</em></h6></p>
                     <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
-                    {% if not is_granted("ROLE_USER") %}
+                    {% if is_granted("ROLE_USER") %}
                     <a class="btn btn-default" href="{{ path('agil_hall_event_edit', {'idEvent': event.eventId}) }}">Modifier l'événement</a>
                     {% endif %}
                 </div>

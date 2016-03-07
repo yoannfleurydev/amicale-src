@@ -47,32 +47,6 @@ class AddEventType extends AbstractType
             )
         ));
 
-        $builder->add('photos', FileType::class, array(
-            'label' => false,
-            'required' => false,
-            'multiple' => true,
-            'constraints' => [
-                new File([
-                    'maxSize' => '1M',
-                    'mimeTypes' => [
-                        "image/jpeg",
-                        "image/png",
-                        "image/bmp"
-                    ],
-                ])
-            ],
-            'attr' => array(
-                'class' => 'form-control'
-            )
-        ));
-
-        $builder->add('Ajouter', SubmitType::class, array(
-            'label' => false,
-            'attr' => array(
-                'class' => 'btn btn-primary'
-            )
-        ));
-
     }
 
     public function getBlockPrefix()
