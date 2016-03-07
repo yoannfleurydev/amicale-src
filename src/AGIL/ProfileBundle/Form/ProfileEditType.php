@@ -79,6 +79,15 @@ class ProfileEditType extends AbstractType
 //            )
         ));
 
+        $builder->add('oldPassword', 'password', array(
+            'label' => false,
+            'required' => false,
+            'attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Ancien mot de passe'
+            )
+        ));
+
         $builder->add('password', 'password', array(
             'label' => false,
             'required' => false,
