@@ -2,6 +2,63 @@ $orange-color : #d55400;
 $menu-color : #334960;
 $footer-color : #444;
 
+.forum_header {
+  margin-bottom: 15px;
+}
+
+#tags_input {
+  display: none;
+}
+
+.tags_input_visible {
+  border: none;
+  display: block;
+  width: 100%;
+  background-color: #FFF;
+}
+
+.tag_control {
+  width: 100%;
+  display: inline-block;
+}
+
+.item_tag {
+  border: 1px solid #ddd;
+  padding: 5px;
+  display: inline;
+  border-radius: 3px;
+  box-shadow: 1px 1px 4px rgba(0,0,0,.4);
+  background-color: #f5f5f5;
+  margin-right: 5px;
+}
+
+.item_tag_label {
+  font-weight: bold;
+  padding: 5px;
+}
+
+.remove_item_tag:hover {
+  color:$menu-color;
+}
+
+.remove_item_tag:before {
+  border-left: 1px solid #DDD;
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+
+.remove_item_tag {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.tag {
+  @extend .btn;
+  @extend .btn-primary;
+  margin-right:10px;
+  margin-top:10px;
+}
+
 .square-add-picture {
   border:1px solid #888;
   width:100px;
@@ -330,10 +387,16 @@ label.checkbox :checked+span:before {
   font-feature-settings: 'liga';
 }
 
-.list-element a::after {
+.interne-link:after {
   @extend .material-icons;
   content: "link";
 }
+
+.externe-link:after {
+  @extend .material-icons;
+  content: "open_in_new";
+}
+
 
 .navbar-mobile .material-icons{
   font-size: 18px;

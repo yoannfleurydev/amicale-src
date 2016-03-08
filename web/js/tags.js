@@ -1,19 +1,20 @@
 $(function () {
-    // tableau des tags préfixés
     var prefixedTags;
-    // le tag que l'on est en train d'écrire
     var currentTag;
-    // la liste des tags déjà sélectionnés
     var selectedTags;
-    // si l'ajax s'est terminé
     var ajaxDone = false;
+
+    var tagsInput = $('.tags_input_visible');
+    var tagsInputHidden = $('#tags_input');
+    var tagsContainer = $('#tags_container');
+    var listTagItem = $('.list_item_tag');
 
     /* fonction de recherche dans le tableau de l'ajax */
     var searchInArray = function () {
         // on vide l'endroit où sont afichés les tags
-        $('#tags_container').text('');
+        tagsContainer.text('');
         // si on a reçu la réponse ajax
-        // Pour chaque tag qu'on a récupéréet qui n'a pas déjà été sélectionné,
+        // Pour chaque tag qu'on a récupéré et qui n'a pas déjà été sélectionné,
         // on vérifie s'il est préfixé par la valeur qui est entrée
         $.each(prefixedTags, function (key, value) {
             // Si un tag ne correspond plus à la recherche on l'ignore
@@ -22,20 +23,22 @@ $(function () {
                 return;
             }
             // On affiche le tag dans la zone d'affichage
-            $('#tags_container').html($('#tags_container').html() + "<div class='tag'>" + value + "</div>");
+            tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + value + "</div>");
         });
+        if ($.inArray(currentTag, prefixedTags) === -1) {
+            tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + currentTag + "</div>");
+        }
     };
 
-    /* $('tags_input') est l'input dans lequel on tape les tags */
-    $('#tags_input').on('input', function() {
+    tagsInput.on('input', function() {
 
         // vide le conteneur des tags disponibles
-        $('#tags_container').empty();
+        tagsContainer.empty();
 
         var input = $(this).val();
         // la liste des tags déjà sélectionnés
-        selectedTags = input.split(" ");
-        currentTag = selectedTags[selectedTags.length-1];
+        selectedTags = tagsInputHidden.val().split(" ");
+        currentTag = input;
 
         // S'il n'y a qu'un seul caractère alpha numérique
         if (currentTag.length === 1 && /^[a-z0-9]$/i.test(currentTag)) {
@@ -52,9 +55,10 @@ $(function () {
                         // TODO Changer pour faire créer un élément HTML à chaque fois
                         // Si l'élément n'a pas déjà été sélectionné
                         if (selectedTags.indexOf(value) === -1) {
-                            $('#tags_container').html($('#tags_container').html() + "<div class='tag'>" + value + "</div>");
+                            tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + value + "</div>");
                         }
                     });
+                    tagsContainer.html(tagsContainer.html() + "<div class='tag'>" + currentTag + "</div>");
                 }
                 ajaxDone = true;
                 if (currentTag.length > 1) {
@@ -71,7 +75,7 @@ $(function () {
             }
         }
         if (currentTag.length === 0) {
-            $('#tags_container').text('');
+            tagsContainer.text('');
         }
     });
 
@@ -80,31 +84,75 @@ $(function () {
      * on ajoute un événement pour qu'ils soient ajoutés à la liste
      * des tags que l'on souhaite
      */
-    $('#tags_container').on('click', '.tag', function() {
-        // l'endroit où on tape les tags
-        var tags_input = $('#tags_input');
+    tagsContainer.on('click', '.tag', function() {
         // La longueur de la chaine sans le tag que l'on est entrain d'écrire moins la longueur d'un espace
-        var indexEnd = tags_input.val().length - currentTag.length - 1;
+        var indexEnd = tagsInputHidden.val().length - 1;
         // la chaine que l'on met dans l'input où sont affichés les tags sélectionnés
         var toSetUp;
-
+        var clickedButton = $(this);
+        var tagToAdd = clickedButton.text();
         // Si c'est le premier tag
         if (indexEnd < 0) {
-            toSetUp = $(this).text();
+            toSetUp = tagToAdd;
         } else if (indexEnd > 0) {
             // WARNING Rajoute un espace lorsqu'on retape après avoir cliqué sur un tag
-            toSetUp = tags_input.val().substring(0, indexEnd) + ' ' + $(this).text();
+            toSetUp = tagsInputHidden.val().substring(0, indexEnd) + ' ' + tagToAdd;
         }
 
+        //On ajout l'item qui permet de montrer et supprimer un tag
+        listTagItem.append( "<div class='item_tag'>" +
+            "<span class='item_tag_label'>" + tagToAdd.toUpperCase() + "</span>" +
+            "<span class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
+            "</span></div>" );
+
+        //On séléctionne le dernier element ajouté
+        var lastInsert = listTagItem.find('.item_tag').last();
+
+        //On rajoute sur la croix un envent
+        lastInsert.find('.remove_item_tag').click(function() {
+            //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
+            // exemple : PHP et PHPSTORM
+            var val = tagsInputHidden.val().replace(tagToAdd + " ", "");
+            tagsInputHidden.val(val);
+            lastInsert.remove();
+            clickedButton.show();
+        });
         // On remet à 0 le tag courant, pour éviter un résidu
         currentTag = '';
         // On efface le tag cliqué
-        $(this).hide();
+        clickedButton.hide();
         // On dit de refaire une requête AJAX
         ajaxDone = false;
         // On met le tag actuel
-        tags_input.val(toSetUp + " ");
+        tagsInputHidden.val(toSetUp + " ");
         // On redonne le focus à l'input pour taper les tags
-        tags_input.focus();
+        tagsInput.val("");
+        tagsInput.focus();
+        //On vide le container
+        tagsContainer.text('');
+    });
+
+    $(document).ready(function () {
+        var text = tagsInputHidden.val();
+        if (text.length > 0) {
+            tags = text.split(" ");
+            for (tag of tags) {
+                //On ajout l'item qui permet de montrer et supprimer un tag
+                listTagItem.append( "<div class='item_tag'>" +
+                    "<span class='item_tag_label'>" + tag.toUpperCase() + "</span>" +
+                    "<span id='" + tag + "' class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
+                    "</span></div>" );
+
+                //On rajoute sur la croix un envent
+                $("#" + tag).click(function() {
+                    //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
+                    // exemple : PHP et PHPSTORM
+                    var tagToDelete = $(this).attr('id');
+                    var val = tagsInputHidden.val().replace(tagToDelete + " ", "");
+                    tagsInputHidden.val(val);
+                    $(this).parent().remove();
+                });
+            }
+        }
     });
 });

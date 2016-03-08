@@ -78,8 +78,6 @@
 
                 {{ form_rest(form) }}
             </form>
-
-            <br/>
         </div>
     </div>
 
@@ -98,43 +96,39 @@
                 {% if categories|length == 0 %}
 
                     <h6 class="text-center">Le forum ne contient actuellement aucune catégorie.</h6>
-                    <br/>
 
                 {% else %}
 
                     <div class="panel panel-default">
 
                         <!-- les différentes catégories existantes -->
-                        <table class="table table-striped td-center">
+                        <div class="table-responsive">
+                            <table class="table table-striped td-center">
 
-                        {% for c in categories %}
+                                {% for c in categories %}
 
-                            <tr>
-                                <td class="text-center">
-                                    <span class="glyphicon {{ c.forumCategoryIcon }} text-center icon-medium"></span>
-                                </td>
-                                <td><a href="#"><h5>{{ c.forumCategoryName }}</h5></a></td>
-                                <td class="hidden-sm hidden-xs">{{ nbSubjectsPerCategory[c.forumCategoryId] }} sujet(s)</td>
-                                <td>
-                                    <a id="editCategoryLink" href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
-                                        <button type="button" class="btn btn-default">Editer</button>
-                                    </a>
-                                </td>
-                                <td>
-                                        <button id="deleteCategoryLink" data-href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
-                                                data-target="#confirm-delete" type="button" class="btn btn-danger" data-toggle="modal"
-                                              >
-                                            Supprimer
-                                        </button>
-                                  </td>
-                            </tr>
-
-                        {% endfor %}
-
-                        </table>
-
+                                    <tr>
+                                        <td class="text-center">
+                                            <span class="glyphicon {{ c.forumCategoryIcon }} text-center icon-medium"></span>
+                                        </td>
+                                        <td><a href="#"><h5>{{ c.forumCategoryName }}</h5></a></td>
+                                        <td class="hidden-sm hidden-xs">{{ nbSubjectsPerCategory[c.forumCategoryId] }} sujet(s)</td>
+                                        <td>
+                                            <a id="editCategoryLink" href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
+                                                <button type="button" class="btn btn-default"><i class="material-icons">edit</i></button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button id="deleteCategoryLink" data-href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
+                                                    data-target="#confirm-delete" type="button" class="btn btn-danger" data-toggle="modal">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
-
                 {% endif %}
 
         </div>

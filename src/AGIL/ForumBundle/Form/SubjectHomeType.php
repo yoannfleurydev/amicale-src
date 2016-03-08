@@ -68,6 +68,7 @@ class SubjectHomeType extends AbstractType
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Tags associés',
+                'autocomplete'=> 'off',
             )
         ));
     }

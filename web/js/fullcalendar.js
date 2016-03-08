@@ -9648,8 +9648,8 @@ function Header(calendar, options) {
 		if (sections) {
 			el = $("<div class='fc-toolbar'/>")
 				.append(renderSection('left'))
-				.append(renderSection('center'))
 				.append(renderSection('right'))
+				.append(renderSection('center'))
 				.append('<div class="fc-clear"/>');
 
 			return el;
@@ -9664,7 +9664,13 @@ function Header(calendar, options) {
 	
 	
 	function renderSection(position) {
-		var sectionEl = $('<div class="col-xs-12 col-sm-12 fc-' + position + '"/>');
+		if(position == 'center') {
+			var sectionEl = $('<div class="col-xs-12 col-sm-12 col-lg-offset-4 col-lg-6" fc-' + position + '"/>');
+		} else if(position == 'left') {
+			var sectionEl = $('<div class="col-xs-12 col-sm-12 col-lg-5" fc-' + position + '"/>');
+        } else if(position == 'right') {
+			var sectionEl = $('<div class="col-xs-12 col-sm-12 col-lg-offset-2 col-lg-5" fc-' + position + '"/>');
+		}
 		var buttonStr = options.header[position];
 
 		if (buttonStr) {

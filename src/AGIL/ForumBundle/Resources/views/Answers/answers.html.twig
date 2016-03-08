@@ -11,25 +11,28 @@
         </li>
         <li class="active">{{ subject.forumSubjectTitle }}</li>
     </ol>
-
-
     <div class="row forum-subjects">
-
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-
-            <h3>{{ subject.forumSubjectTitle }}</h3>
-            <h5>{{ subject.forumSubjectDescription }}</h5>
-
             {% if subject.forumSubjectIsResolved %}
                 <div class="alert alert-success" role="alert">Ce sujet est résolu</div>
             {% else %}
 
                 {% if app.user.username == subject.user.username %}
-                    <a href="{{ path('agil_forum_subject_to_resolve',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId}) }}"
-                       class="btn btn-default">Mettre comme résolu</a>
+                    <p><a href="{{ path('agil_forum_subject_to_resolve',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId}) }}"
+                       class="btn btn-default">Mettre comme résolu</a></p>
                 {% endif %}
-                <br/><br/>
             {% endif %}
+            <div class="forum_header">
+                <div class="text-center"><h2>{{ subject.forumSubjectTitle | capitalize }}</h2></div>
+                <div class="text-center"><small>{{ subject.forumSubjectDescription | capitalize }}</small></div>
+                {% if subject.tags is not null %}
+                    <div class="text-center">
+                        {% for tag in subject.tags %}
+                            <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
 
             {% for a in answers %}
 
@@ -66,7 +69,7 @@
                                     </strong>
                                     <div class="text-center">
                                         {% for skill in userTagsSkills[a.id] %}
-                                            <span class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName }}</span>
+                                            <span class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }}</span>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -107,7 +110,7 @@
 
                                     <hr>
                                     <div class="row">
-                                        {{ a.forumAnswerText|raw }}
+                                        {{ a.forumAnswerText| raw }}
                                     </div>
 
                                 </div>
@@ -144,26 +147,20 @@
                     <form action="{{ path('agil_forum_subject_answers', {'idCategory': category.forumCategoryId, 'idSubject': subject.forumSubjectId}) }}"
                           method="post" {{ form_enctype(form) }}>
 
-                        {{ form_errors(form.forumAnswerText) }}
-                        {{ form_widget(form.forumAnswerText) }}
+                        <div class="form-group">
+                            {{ form_errors(form.forumAnswerText) }}
+                            {{ form_widget(form.forumAnswerText) }}
+                        </div>
 
-
-                        <br/>
-                        <div class="text-center">
+                        <p class="text-center">
                             {{ form_widget(form.Ajouter) }}
                             <input type="reset" class="btn btn-default" value="Effacer">
-                        </div>
+                        </p>
                         {{ tinymce_init() }}
-
-
                         {{ form_rest(form) }}
-
-
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
-
 {% endblock %}

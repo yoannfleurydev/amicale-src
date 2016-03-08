@@ -57,21 +57,21 @@
                         <div class="list">
                             <div class="list-element">
                                 <p>
-                                    <a href="https://dpt-info-sciences.univ-rouen.fr/index.php">
+                                    <a class="externe-link" href="https://dpt-info-sciences.univ-rouen.fr/index.php">
                                         Site du département informatique de l'Université de Rouen.
                                     </a>
                                 </p>
                             </div>
                             <div class="list-element">
                                 <p>
-                                    <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" >
+                                    <a class="externe-link" href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" >
                                         Contenu pédagogique, première année.
                                     </a>
                                 </p>
                             </div>
                             <div class="list-element">
                                 <p>
-                                    <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22" >
+                                    <a class="externe-link" href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22" >
                                         Contenu pédagogique, deuxième année.
                                     </a>
                                 </p>
@@ -113,18 +113,18 @@
                 <div class="panel-body">
                     <div class="list">
                         <div class="list-element">
-                            <p><a href="#">Stagiaire en Développement Mobile H/F 19 Oct. 2015</a></p>
+                            <p><a class="interne-link" href="#">Stagiaire en Développement Mobile H/F 19 Oct. 2015</a></p>
                             <span class="label label-default">#PHP</span>
                             <span class="label label-default">#JAVASCRIPT</span>
                             <span class="label label-default">#SQL</span>
                         </div>
                         <div class="list-element">
-                            <p><a href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a></p>
+                            <p><a class="interne-link" href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a></p>
                             <span class="label label-default">#BUBULLES</span>
                             <span class="label label-default">#SQL</span>
                         </div>
                         <div class="list-element">
-                            <p><a href="#">Conférence Codeur en Seine - Le Web d'aujourd'hui ! 12 Oct. 2015</a></p>
+                            <p><a class="interne-link" href="#">Conférence Codeur en Seine - Le Web d'aujourd'hui ! 12 Oct. 2015</a></p>
                             <span class="label label-default">#HTML5</span>
                             <span class="label label-default">#CSS3</span>
                             <span class="label label-default">#JAVASCRIPT</span>
@@ -148,13 +148,13 @@
                     Les tables de discussion actives.
                     <div class="list">
                         <div class="list-element">
-                            <p><a href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
+                            <p><a class="interne-link" href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
                         </div>
                         <div class="list-element">
-                            <p><a href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
+                            <p><a class="interne-link" href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
                         </div>
                         <div class="list-element">
-                            <p><a href="#">Projet SUDOKU 20 Oct. 2015</a></p>
+                            <p><a class="interne-link" href="#">Projet SUDOKU 20 Oct. 2015</a></p>
                         </div>
                     </div>
                 </div>
@@ -174,10 +174,10 @@
 
                         {% for sub in lastSubjects %}
                             <div class="list-element">
-                                <p><a href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}" >
+                                <p><a class="interne-link" href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}" >
                                     {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</a></p>
                                     {% for tag in sub.tags %}
-                                        <span class="label label-default">{{ tag.tagName }}</span>
+                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
                                     {% endfor %}
                             </div>
                         {% endfor %}
@@ -203,10 +203,10 @@
                 <div class="panel-body">
                     <div class="list">
                         <div class="list-element">
-                            <p><a href="https://ent.normandie-univ.fr" target="_blank" class="external" title="Accéder à l'ENT">L'ENT</a></p>
+                            <p><a class="externe-link" href="https://ent.normandie-univ.fr" target="_blank" class="external" title="Accéder à l'ENT">L'ENT</a></p>
                         </div>
                         <div class="list-element">
-                            <p><a href="http://webmail.univ-rouen.fr" target="_blank" class="external" title="Accéder au Webmail">Webmail</a></p>
+                            <p><a class="externe-link" href="http://webmail.univ-rouen.fr" target="_blank" class="external" title="Accéder au Webmail">Webmail</a></p>
                         </div>
                     </div>
                     <div class="well">

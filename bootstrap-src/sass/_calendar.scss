@@ -54,11 +54,11 @@
 
 .fc {
   direction: ltr;
-  text-align: left;
+  text-align: center;
 }
 
 .fc-rtl {
-  text-align: right;
+  text-align: center;
 }
 
 body .fc { /* extra precedence to overcome jqui */
@@ -306,6 +306,7 @@ NOTE: use percentage font sizes or else old IE chokes
 
 .fc-button-group {
   display: inline-block;
+  margin-bottom: 10px !important;
 }
 
 /*
@@ -745,6 +746,8 @@ a.fc-more:hover {
   display: inline-block;
 }
 
+
+
 /* the things within each left/right/center section */
 .fc .fc-toolbar > * > * { /* extra precedence to override button border margins */
   float: left;
@@ -902,11 +905,11 @@ a.fc-more:hover {
 }
 
 .fc-ltr .fc-axis {
-  text-align: right;
+  text-align: center;
 }
 
 .fc-rtl .fc-axis {
-  text-align: left;
+  text-align: center;
 }
 
 .ui-widget td.fc-axis {

@@ -6,7 +6,7 @@
 
     <!-- Ajout d'un nouveau sujet -->
     <div class="row">
-        <div class="col-xs-10 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+        <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
@@ -35,8 +35,13 @@
 
                         <div class="form-group" id="formAddTagsPost">
                             <h5><label class="control-label">Tags</label></h5>
-                                {{ form_errors(form.subject.tags) }}
-                                {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
+                            <div class="tag_control">
+                                <div class="list_item_tag">
+                                </div>
+                                <input type="text" class="tags_input_visible">
+                            </div>
+                            {{ form_widget(form.subject.tags, { 'id': 'tags_input' }) }}
+                            {{ form_errors(form.subject.tags) }}
                             <div id="tags_container"></div>
                         </div>
 
