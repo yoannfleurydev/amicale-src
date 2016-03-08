@@ -2,6 +2,7 @@
 
 namespace AGIL\HallBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,7 +21,11 @@ class AgilEvent
      */
     private $user;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="AGIL\HallBundle\Entity\AgilPhoto", mappedBy="event")
+     * @ORM\JoinColumn(nullable=true,referencedColumnName="photoId")
+     */
+    private $photos;
     /**
      * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilTag")
      * @ORM\JoinTable(name="agil_event_tags",
@@ -97,6 +102,7 @@ class AgilEvent
         $this->eventDate = new \DateTime();
         $this->eventDateEnd = new \DateTime();
         $this->eventPostDate = new \DateTime();
+        $this->photos = new ArrayCollection();
     }
 
     /**
@@ -278,5 +284,43 @@ class AgilEvent
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @param AgilPhoto $photo
+     * @return $this
+     */
+    public function addPhoto(AgilPhoto $photo)
+    {
+        $this->photos[] = $photo;
+
+        $photo->setEvent($this);
+
+        return $this;
+    }
+
+    /**
+     * @param AgilPhoto $photo
+     */
+    public function removePhoto(AgilPhoto $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    public function setImages(ArrayCollection $photos)
+    {
+        foreach ($photos as $photo) {
+            $photo->setEvent($this);
+        }
+
+        $this->photos = $photos;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

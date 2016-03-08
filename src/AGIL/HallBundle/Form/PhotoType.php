@@ -4,6 +4,7 @@ namespace AGIL\HallBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -31,36 +32,21 @@ class PhotoType extends AbstractType
                 'class' => 'form-control',
             )
         ));
-
-        $builder->add('photoUrl', FileType::class, array(
+        $builder->add('file', FileType::class, array(
             'label' => false,
-            'required' => false,
-            'multiple' => true,
-            'constraints' => [
-                new File([
-                    'maxSize' => '1M',
-                    'mimeTypes' => [
-                        "image/jpeg",
-                        "image/png",
-                        "image/bmp"
-                    ],
-                ])
-            ],
+            'required' => true,
             'attr' => array(
-                'class' => 'form-control'
-            )
-        ));
-        $builder->add('event', new AddEventType(), array (
-            'data_class' => 'AGIL\HallBundle\Entity\AgilEvent',
-        ));
-
-        $builder->add('Ajouter', SubmitType::class, array(
-            'label' => false,
-            'attr' => array(
-                'class' => 'btn btn-primary'
+                'class' => 'form-control',
             )
         ));
 
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'AGIL\HallBundle\Entity\AgilPhoto',
+        ));
     }
 
     public function getBlockPrefix()

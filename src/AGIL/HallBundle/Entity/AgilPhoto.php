@@ -13,10 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AgilPhoto
 {
-
     /**
-     * @ORM\ManyToOne(targetEntity="AGIL\HallBundle\Entity\AgilEvent")
-     * @ORM\JoinColumn(nullable=false,referencedColumnName="eventId")
+     * @ORM\ManyToOne(targetEntity="AGIL\HallBundle\Entity\AgilEvent", inversedBy="photos")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="eventId")
      */
     private $event;
 
@@ -30,11 +29,15 @@ class AgilPhoto
     private $photoId;
 
     /**
+     * @Assert\NotBlank(message="Formats autorisés : jpg, png, gif.")
+     * @Assert\File(maxSize="102400", mimeTypes={ "image/jpeg", "image/png", "image/gif", "image/jpg" })
+     */
+    public $file;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="photoUrl", type="string", length=255, unique=true)
-     * @Assert\NotBlank(message="La photo doit contenir une url")
-     * 
+     * @ORM\Column(name="photoUrl", type="string", length=255)
      */
     private $photoUrl;
 
@@ -48,7 +51,8 @@ class AgilPhoto
     /**
      * @var string
      *
-     * @ORM\Column(name="photoDescription", type="text")
+     * @ORM\Column(name="photoDescription", type="text", nullable=true)
+     *
      * @Assert\NotBlank(message="La photo doit contenir une description")
      * @Assert\Length(
      *      min = 2,
@@ -71,6 +75,13 @@ class AgilPhoto
      */
     private $photoTitle;
 
+    /**
+     * AgilPhoto constructor.
+     */
+    public function __construct()
+    {
+        $this->photoUploadDate = new \Datetime();
+    }
 
     /**
      * Get photoId
@@ -174,35 +185,83 @@ class AgilPhoto
         return $this->photoTitle;
     }
 
-    /**
-     * Set event
-     *
-     * @param \AGIL\HallBundle\Entity\AgilEvent $event
-     * @return AgilPhoto
-     */
-    public function setEvent(\AGIL\HallBundle\Entity\AgilEvent $event)
-    {
+    public function getEvent() {
+        return $this->event;
+    }
+
+    public function setEvent($event) {
         $this->event = $event;
 
         return $this;
     }
 
-    /**
-     * Get event
-     *
-     * @return \AGIL\HallBundle\Entity\AgilEvent 
-     */
-    public function getEvent()
+    public function getAbsolutePath()
     {
-        return $this->event;
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
     }
 
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'img/hall';
+    }
 
     /**
-     * AgilPhoto constructor.
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
-    public function __construct()
+    public function preUpload()
     {
-        $this->photoUploadDate = new \Datetime();
+        if (null !== $this->file) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->photoUrl = $filename.'.'.$this->file->guessExtension();
+        }
     }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->file->move($this->getUploadRootDir(), $this->path);
+
+        unset($this->file);
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
+    }
+
 }

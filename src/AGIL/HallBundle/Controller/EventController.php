@@ -21,12 +21,11 @@ class EventController extends Controller
      */
     public function eventAddAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $photo = new AgilPhoto();
-        $form = $this->createForm(new PhotoType(), $photo);
+        $event = new AgilEvent();
+        $form = $this->createForm(new AddEventType(), null);
 
         $form->handleRequest($request);
         if($form->isValid()) {
-            $event = $form->get('event')->getData();
             $event->setUser($this->getUser());
 
             $em->persist($event);
