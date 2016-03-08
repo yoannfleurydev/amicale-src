@@ -23,7 +23,8 @@ class LoadAgilEventData extends AbstractFixture implements OrderedFixtureInterfa
         $event = new AgilEvent();
         $event->setEventTitle('Codeurs En Seine');
         $event->setEventText("Codeurs en Seine est un événement qui permet d'assister à des conférences sur le Java,
-        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.");
+        le Web, les méthodes Agiles, ainsi que les dernières technologies du moment.
+        https://www.youtube.com/watch?v=YOlKxTxqsGQ La vidéo ci-dessus présente CES 2015");
         $event->setEventDate(new \DateTime('2016-02-14 08:00:00'));
         $event->setEventDateEnd(new \DateTime('2016-02-15 18:00:00'));
         $event->setEventPostDate(new \DateTime());

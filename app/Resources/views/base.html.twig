@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{% block title %}Amicale GIL{% endblock %}</title>
     <link href="{{ asset("css/styles.css") }}" rel="stylesheet">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{{ asset("js/jquery.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("js/bootstrap.js") }}"></script>
     <script type="text/javascript" src="{{ asset("js/bootstrap/popover.js") }}"></script>
     {% block stylesheets %}{% endblock %}
@@ -100,7 +100,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link">
+                            <a href="{{ path("agil_hall_calendar") }}" class="nav-link">
                                 <span class="glyphicon glyphicon-calendar"></span>
                                 Agenda
                             </a>

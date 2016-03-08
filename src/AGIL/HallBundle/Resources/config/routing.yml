@@ -6,12 +6,6 @@ agil_hall_homepage:
     requirements:
         page : \d+
 
-agil_hall_page:
-    path: /page/{idPage}
-    defaults: { _controller: AGILHallBundle:Default:renderPage, idPage: 1 }
-    requirements:
-        idPage: \d+
-
 agil_hall_event:
     path: /event/{idEvent}
     defaults: { _controller: AGILHallBundle:Default:event }

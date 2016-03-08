@@ -11,13 +11,6 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class CalendarController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('AGILHallBundle:Default:index.html.twig');
-    }
-
-
-
     // Récupère les données des événements entre 2 dates
     // pour le calendrier : Requête appelée via Ajax
     public function getCalendarDataAction(Request $req)
