@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddEventType extends AbstractType
 {
@@ -21,6 +22,9 @@ class AddEventType extends AbstractType
         $builder->add('eventTitle', TextType::class, array(
             'label' => false,
             'required' => true,
+            'constraints' => array(
+                new NotBlank(),
+            ),
             'attr' => array(
                 'class' => 'form-control',
             )
@@ -28,7 +32,10 @@ class AddEventType extends AbstractType
 
         $builder->add('eventText', TextareaType::class, array(
             'label' => false,
-            'required' => false,
+            'required' => true,
+            'constraints' => array(
+                new NotBlank(),
+            ),
             'attr' => array(
                 'class' => 'form-control',
             )
@@ -45,21 +52,16 @@ class AddEventType extends AbstractType
 
         $builder->add('eventDateEnd', DateTimeType::class, array(
             'label' => false,
-            'required' => true,
+            'required' => false,
             'data' => new \DateTime(),
             'attr' => array(
                 'class' => 'form-control',
             )
         ));
 
-        /*$builder->add('photos', CollectionType::class, array(
-            'entry_type' => PhotoType::class,
-            'allow_add' => true,
-        ));*/
-
         $builder->add('photos', FileType::class, array(
             'label' => false,
-            'required' => true,
+            'required' => false,
             'multiple' => true,
             'attr' => array(
                 'class' => 'form-control',
@@ -73,13 +75,6 @@ class AddEventType extends AbstractType
             )
         ));
     }
-
-    /*public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'AGIL\HallBundle\Entity\AgilEvent',
-        ));
-    }*/
 
     public function getBlockPrefix()
     {
