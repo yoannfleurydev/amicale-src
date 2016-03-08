@@ -1,243 +1,277 @@
 {% extends "AGILDefaultBundle::baseDefaultBundle.html.twig" %}
 {% block body %}
     {% if not is_granted("ROLE_USER") %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                             Qui sommes nous ?
                         </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        Bienvenue sur le site AMICALE GIL, ce site à pour but de faciliter l'échange entre les étudiants et ancien
-                        étudiants du master GIL, mais aussi avec les professionnels. Il permet de faciliter la diffusion des offres
-                        d'emploi ou de stage, grace à un accès direct aux étudiants.
-                    </p>
-                    <p>
-                        Le master GIL (Génie de l'Informatique Logicielle) est enseigné à l'université de Rouen, au Madrillet. Ce
-                        master à pour but d'enseigner les diverses techniques de développement afin de former de futurs développeurs.
-                        Une trentaine d’enseignants et d’enseignants-chercheurs permanents, ainsi qu’une vingtaine d’intervenants
-                        professionnels, dispensent depuis de nombreuses années un enseignement théorique et professionnel de qualité
-                        ayant permis à nos étudiants des filières professionnelles des promotions 2005 à 2008 d’être employés à <strong>100 %</strong>
-                        en CDI (source : Observatoire de la vie étudiante, université de Rouen).
-                        Vous trouverez la plaquette détaillant le Master GIL (première annèe) <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" >ici</a>
-                    </p>
-                    <p>
-                        Ce site à été effectué, par sept étudiants du master GIL, à l'occasion d'un projet annuel pendant la première
-                        année du master.
-                    </p>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Bienvenue sur le site AMICALE GIL, ce site à pour but de faciliter l'échange entre les
+                            étudiants et ancien
+                            étudiants du master GIL, mais aussi avec les professionnels. Il permet de faciliter la
+                            diffusion des offres
+                            d'emploi ou de stage, grace à un accès direct aux étudiants.
+                        </p>
+                        <p>
+                            Le master GIL (Génie de l'Informatique Logicielle) est enseigné à l'université de Rouen, au
+                            Madrillet. Ce
+                            master à pour but d'enseigner les diverses techniques de développement afin de former de
+                            futurs développeurs.
+                            Une trentaine d’enseignants et d’enseignants-chercheurs permanents, ainsi qu’une vingtaine
+                            d’intervenants
+                            professionnels, dispensent depuis de nombreuses années un enseignement théorique et
+                            professionnel de qualité
+                            ayant permis à nos étudiants des filières professionnelles des promotions 2005 à 2008 d’être
+                            employés à <strong>100 %</strong>
+                            en CDI (source : Observatoire de la vie étudiante, université de Rouen).
+                            Vous trouverez la plaquette détaillant le Master GIL (première annèe) <a
+                                    href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1">ici</a>
+                        </p>
+                        <p>
+                            Ce site à été effectué, par sept étudiants du master GIL, à l'occasion d'un projet annuel
+                            pendant la première
+                            année du master.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    Vous souhaitez déposer une oﬀre de stage à destination des étudiants du Master GIL ou une oﬀre d’emploi à destination des anciens étudiants du Master GIL ?
-                    <a href="#" >Cliquer ici</a>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                        <span class="panel-title-content">
+                             Calendrier
+                        </span>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Vous souhaitez déposer une oﬀre de stage à destination des étudiants du Master GIL ou une oﬀre
+                        d’emploi à destination des anciens étudiants du Master GIL ?
+                        <a href="#">Cliquer ici</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                              Liens Utiles
                         </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <div class="list-group">
-                        <div class="list">
-                            <div class="list-element">
-                                <p>
-                                    <a class="externe-link" href="https://dpt-info-sciences.univ-rouen.fr/index.php">
-                                        Site du département informatique de l'Université de Rouen.
-                                    </a>
-                                </p>
-                            </div>
-                            <div class="list-element">
-                                <p>
-                                    <a class="externe-link" href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1" >
-                                        Contenu pédagogique, première année.
-                                    </a>
-                                </p>
-                            </div>
-                            <div class="list-element">
-                                <p>
-                                    <a class="externe-link" href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22" >
-                                        Contenu pédagogique, deuxième année.
-                                    </a>
-                                </p>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <div class="list">
+                                <div class="list-element">
+                                    <p>
+                                        <a class="externe-link"
+                                           href="https://dpt-info-sciences.univ-rouen.fr/index.php">
+                                            Site du département informatique de l'Université de Rouen.
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="list-element">
+                                    <p>
+                                        <a class="externe-link"
+                                           href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1">
+                                            Contenu pédagogique, première année.
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="list-element">
+                                    <p>
+                                        <a class="externe-link"
+                                           href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22">
+                                            Contenu pédagogique, deuxième année.
+                                        </a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                        Une liste de liens utiles en rapport avec le master GIL.
                     </div>
-                    Une liste de liens utiles en rapport avec le master GIL.
                 </div>
             </div>
         </div>
-    </div>
     {% else %}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                             Calendrier
                         </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
+                        </h2>
+                    </div>
+                    <div class="panel-body">
 
-                    {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
+                        {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                             Dernières annonces
                         </span>
-                    </h2>
-                    <!--Les dernières annonces de stage et d’emploi postées sur le site.-->
-                </div>
-                <div class="panel-body">
-                    <div class="list">
-                        <div class="list-element">
-                            <p><a class="interne-link" href="#">Stagiaire en Développement Mobile H/F 19 Oct. 2015</a></p>
-                            <span class="label label-default">#PHP</span>
-                            <span class="label label-default">#JAVASCRIPT</span>
-                            <span class="label label-default">#SQL</span>
-                        </div>
-                        <div class="list-element">
-                            <p><a class="interne-link" href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a></p>
-                            <span class="label label-default">#BUBULLES</span>
-                            <span class="label label-default">#SQL</span>
-                        </div>
-                        <div class="list-element">
-                            <p><a class="interne-link" href="#">Conférence Codeur en Seine - Le Web d'aujourd'hui ! 12 Oct. 2015</a></p>
-                            <span class="label label-default">#HTML5</span>
-                            <span class="label label-default">#CSS3</span>
-                            <span class="label label-default">#JAVASCRIPT</span>
+                        </h2>
+                        <!--Les dernières annonces de stage et d’emploi postées sur le site.-->
+                    </div>
+                    <div class="panel-body">
+                        <div class="list">
+                            <div class="list-element">
+                                <p><a class="interne-link" href="#">Stagiaire en Développement Mobile H/F 19 Oct.
+                                        2015</a></p>
+                                <span class="label label-default">#PHP</span>
+                                <span class="label label-default">#JAVASCRIPT</span>
+                                <span class="label label-default">#SQL</span>
+                            </div>
+                            <div class="list-element">
+                                <p><a class="interne-link" href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a></p>
+                                <span class="label label-default">#BUBULLES</span>
+                                <span class="label label-default">#SQL</span>
+                            </div>
+                            <div class="list-element">
+                                <p><a class="interne-link" href="#">Conférence Codeur en Seine - Le Web d'aujourd'hui !
+                                        12 Oct. 2015</a></p>
+                                <span class="label label-default">#HTML5</span>
+                                <span class="label label-default">#CSS3</span>
+                                <span class="label label-default">#JAVASCRIPT</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                             Tables de discussion
                         </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    Les tables de discussion actives.
-                    <div class="list">
-                        <div class="list-element">
-                            <p><a class="interne-link" href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
-                        </div>
-                        <div class="list-element">
-                            <p><a class="interne-link" href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
-                        </div>
-                        <div class="list-element">
-                            <p><a class="interne-link" href="#">Projet SUDOKU 20 Oct. 2015</a></p>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        Les tables de discussion actives.
+                        <div class="list">
+                            <div class="list-element">
+                                <p><a class="interne-link" href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
+                            </div>
+                            <div class="list-element">
+                                <p><a class="interne-link" href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
+                            </div>
+                            <div class="list-element">
+                                <p><a class="interne-link" href="#">Projet SUDOKU 20 Oct. 2015</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                             Derniers sujets de forum créés
                         </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <p class="list">
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <p class="list">
 
-                        {% for sub in lastSubjects %}
+                            {% for sub in lastSubjects %}
                             <div class="list-element">
-                                <p><a class="interne-link" href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}" >
-                                    {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</a></p>
-                                    {% for tag in sub.tags %}
-                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
-                                    {% endfor %}
-                            </div>
+                        <p><a class="interne-link"
+                              href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}">
+                                {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</a></p>
+                        {% for tag in sub.tags %}
+                            <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
                         {% endfor %}
+                    </div>
+                    {% endfor %}
 
                     </p>
                     <p class="row text-center">
-                        <a class="btn btn-default btn-primary" href="{{ path('agil_forum_homepage') }}" role="button">Accéder au forum</a>
+                        <a class="btn btn-default btn-primary" href="{{ path('agil_forum_homepage') }}" role="button">Accéder
+                            au forum</a>
                     </p>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                             Liens utiles
                         </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <div class="list">
-                        <div class="list-element">
-                            <p><a class="externe-link" href="https://ent.normandie-univ.fr" target="_blank" class="external" title="Accéder à l'ENT">L'ENT</a></p>
-                        </div>
-                        <div class="list-element">
-                            <p><a class="externe-link" href="http://webmail.univ-rouen.fr" target="_blank" class="external" title="Accéder au Webmail">Webmail</a></p>
-                        </div>
+                        </h2>
                     </div>
-                    <div class="well">
-                        Liens d'accès rapide aux outils de l'Université
+                    <div class="panel-body">
+                        <div class="list">
+                            <div class="list-element">
+                                <p><a class="externe-link" href="https://ent.normandie-univ.fr" target="_blank"
+                                      class="external" title="Accéder à l'ENT">L'ENT</a></p>
+                            </div>
+                            <div class="list-element">
+                                <p><a class="externe-link" href="http://webmail.univ-rouen.fr" target="_blank"
+                                      class="external" title="Accéder au Webmail">Webmail</a></p>
+                            </div>
+                        </div>
+                        <div class="well">
+                            Liens d'accès rapide aux outils de l'Université
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                         <span class="panel-title-content">
                             Boite à suggestions
                         </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <form action="#" method="POST">
-                        <div class="form-group">
-                            <label for="idea">Une idée ?</label>
-                            <textarea class="form-control" name="idea" id="idea" row=5 placeholder="Entrer votre idée ici..."></textarea>
-                        </div>
-                        <div class="text-center">
-                            <input type="submit" class="btn btn-primary" value="Valider">
-                        </div>
-                    </form>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <form action="#" method="POST">
+                            <div class="form-group">
+                                <label for="idea">Une idée ?</label>
+                                <textarea class="form-control" name="idea" id="idea" row=5
+                                          placeholder="Entrer votre idée ici..."></textarea>
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" value="Valider">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endif %}
 
 {% endblock %}
