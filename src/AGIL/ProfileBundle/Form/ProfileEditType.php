@@ -68,8 +68,16 @@ class ProfileEditType extends AbstractType
 //                'placeholder' => 'mot de passe'
 //            )
         ));
+        $builder->add('oldPassword', 'password', array(
+            'label' => false,
+            'required' => false,
+            'attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Ancien mot de passe'
+            )
+        ));
 
-        $builder->add('password', PasswordType::class, array(
+        $builder->add('password', 'password', array(
             'label' => false,
             'required' => false,
             'attr' => array(

@@ -110,24 +110,23 @@ class DefaultController extends Controller
                 $this->editProfilCV($cv, $user);
             }
 
-            if ($form->get('password')->getData() != null && $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
+            if ($form->get('oldPassword')->getData() != null) {
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
-                $pass = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
-                $user->setPassword($pass);
-            }
+                $encoded_pass = $encoder->encodePassword($form->get('oldPassword')->getData(), $user->getSalt());
+                if ($encoded_pass == $user->getPassword() && $form->get('password')->getData() != null
+                    && $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
 
-            if (($form->get('password')->getData() != null && $form->get('passwordConfirm')->getData() == null)
-                || ($form->get('passwordConfirm')->getData() != null && $form->get('password')->getData() == null)
-                || ($form->get('passwordConfirm')->getData() != $form->get('password')->getData())) {
+                    $encoder = $factory->getEncoder($user);
+                    $pass = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
+                    $user->setPassword($pass);
+                } else {
+                    $this->addFlash('warning', 'Erreur ! Les mots de passe ne correspondent pas !');
+                    return $this->redirect($this->generateUrl('agil_profile_edit'));
+                }
+            } elseif ($form->get('password')->getData() != null ||$form->get('passwordConfirm')->getData() != null) {
                 $this->addFlash('warning', 'Erreur ! Les mots de passe ne correspondent pas !');
-
-                return $this->render('AGILProfileBundle:Default:edit.html.twig',
-                    array(
-                        'user' => $user,
-                        'form' => $form->createView()
-                    )
-                );
+                return $this->redirect($this->generateUrl('agil_profile_edit'));
             }
 
             foreach($profileSkillsCategories as $profileSkillsCategory) {
