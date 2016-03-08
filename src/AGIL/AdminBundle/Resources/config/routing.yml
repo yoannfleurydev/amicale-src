@@ -1,6 +1,7 @@
 agil_admin_homepage:
     path:     /admin
-    defaults: { _controller: AGILAdminBundle:Default:admin }
+    defaults:
+        _controller: AGILAdminBundle:Default:admin
 
 agil_admin_user:
     path:     /admin/user/page/{page}
@@ -38,20 +39,24 @@ agil_admin_user_add:
 
 agil_admin_forum_categories:
     path:     /admin/forum/categories/
-    defaults: { _controller: AGILAdminBundle:Forum:adminForumCategories }
+    defaults:
+        _controller: AGILAdminBundle:Forum:adminForumCategories
 
 agil_admin_forum_category_edit:
     path:     /admin/forum/categories/edit/{idCategory}
-    defaults: { _controller: AGILAdminBundle:Forum:adminForumCategoryEdit }
+    defaults:
+        _controller: AGILAdminBundle:Forum:adminForumCategoryEdit
     requirements:
             idCategory: \d+
 
 agil_admin_forum_category_delete:
     path:     /admin/forum/categories/delete/{idCategory}
-    defaults: { _controller: AGILAdminBundle:Forum:adminForumCategoryDelete }
+    defaults:
+        _controller: AGILAdminBundle:Forum:adminForumCategoryDelete
     requirements:
             idCategory: \d+
 
 agil_admin_event_add:
     path:     /admin/hall/add
-    defaults: { _controller: AGILAdminBundle:Event:adminEventAdd }
+    defaults:
+        _controller: AGILAdminBundle:Event:adminEventAdd

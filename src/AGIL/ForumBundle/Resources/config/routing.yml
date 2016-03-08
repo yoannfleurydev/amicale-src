@@ -1,6 +1,7 @@
 agil_forum_homepage:
     path:     /
-    defaults: { _controller: AGILForumBundle:Default:index }
+    defaults:
+        _controller: AGILForumBundle:Default:index
 
 
 agil_forum_subjects_list:

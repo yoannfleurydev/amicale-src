@@ -1,15 +1,19 @@
 agil_default_homepage:
     path: /
-    defaults: { _controller: AGILDefaultBundle:Default:index }
+    defaults:
+        _controller: AGILDefaultBundle:Default:index
 
 agil_tags_search:
     path : /tags/search
-    defaults: { _controller: AGILDefaultBundle:Tag:search }
+    defaults:
+        _controller: AGILDefaultBundle:Tag:search
 
 agil_tags_remove:
     path: /tags/remove
-    defaults: { _controller: AGILDefaultBundle:Tag:remove }
+    defaults:
+        _controller: AGILDefaultBundle:Tag:remove
 
 agil_tags_test:
     path: /tags/test
-    defaults: { _controller: AGILDefaultBundle:Tag:testFunc }
+    defaults:
+        _controller: AGILDefaultBundle:Tag:testFunc

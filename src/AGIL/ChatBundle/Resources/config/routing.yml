@@ -1,3 +1,4 @@
 agil_chat_homepage:
     path:     /chat
-    defaults: { _controller: AGILChatBundle:Default:index }
+    defaults:
+        _controller: AGILChatBundle:Default:index
