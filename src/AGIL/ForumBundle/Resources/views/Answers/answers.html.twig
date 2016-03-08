@@ -90,7 +90,7 @@
                                         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
 
                                             {% if app.user.username == a.username %}
-                                                <a name="editAnswerLink" class="btn btn-default"
+                                                <a id="editAnswerLink{{ loop.index }}" class="btn btn-default"
                                                    href="{{ path('agil_forum_answers_edit',{'idCategory' : category.forumCategoryId,'idSubject' : subject.forumSubjectId,'idAnswer' : a.forumAnswerId}) }}"
                                                    role="button"><span class="glyphicon glyphicon-edit"></span></a>
                                             {% endif %}

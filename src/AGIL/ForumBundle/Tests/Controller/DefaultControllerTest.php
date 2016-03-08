@@ -19,15 +19,16 @@ class DefaultControllerTest extends WebTestCase
 
     /**
      * Test : Accéder à l'accueil du forum
+     * @test
      */
-    public function testForumHomepage()
+    public function connect_forum_with_admin()
     {
         $crawler = $this->client->request('GET', '/forum/');
         $crawler = $this->client->followRedirect();
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'superadmin@superadmin.fr',
-            '_password'  => 'superAdmin',
+            '_username'  => 'superadmin@amicale.dev',
+            '_password'  => 'superadmin',
         ));
 
         $this->client->submit($form);
@@ -36,27 +37,33 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('Accueil Forum', $this->client->getResponse()->getContent());
     }
 
-    /**
-     * Test : Créer un sujet - Répondre au sujet - Editer une réponse - Supprimer le sujet
-     *
-     * Pré-condition : testForumHomepage()
-     */
-    public function testForum()
-    {
-        // Accéder au forum
-        $this->testForumHomepage();
 
-        /**
-         * Créer un sujet
-         */
+    /**
+     * Test :
+     * Créer un sujet depuis une catégorie
+     * Répondre au sujet
+     * Editer une réponse
+     * Supprimer le sujet
+     * @test
+     */
+
+    public function use_case_forum_testing()
+    {
+        // ******************************************
+        // Accéder au forum
+        // ******************************************
+        $this->connect_forum_with_admin();
+
+
+        // ******************************************
+        // Créer un sujet depuis une catégorie
+        // ******************************************
         $crawler = $this->client->request('GET', '/forum/categories/1/page');
 
-        $link = $crawler
-            ->filter('a:contains("Nouveau Sujet")') // Cherche tous les liens contenant Nouveau Sujet
-            ->eq(0) // Selectionne le premier trouvé
-            ->link()
-        ;
+        $link = $crawler->selectLink('Nouveau Sujet')->link();
+
         $crawler = $this->client->click($link);
+
 
         $form = $crawler->selectButton('forum_add_first_answer[Ajouter]')->form();
 
@@ -71,9 +78,11 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertContains('Le sujet a bien été créé', $this->client->getResponse()->getContent());
 
-        /**
-         * Répondre dans le sujet
-         */
+
+        // ******************************************
+        // Répondre dans le sujet
+        // ******************************************
+
         $form = $crawler->selectButton('forum_add_answer[Ajouter]')->form();
         $form['forum_add_answer[forumAnswerText]'] = "Ma réponse au sujet";
 
@@ -83,13 +92,14 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('Ma réponse au sujet', $this->client->getResponse()->getContent());
 
 
-        /**
-         * Editer son deuxième message
-         */
+        // ******************************************
+        // Editer son deuxième message
+        // ******************************************
+
         $link = $crawler
-            ->filter('#editAnswerLink') // Cherche tous les liens contenant l'id editAnswerLink
-            ->eq(1) // Selectionne le deuxième trouvé
-            ->link()
+           ->filter('#editAnswerLink2') // Cherche tous les liens contenant l'id editAnswerLink
+           ->eq(0) // Selectionne le deuxième trouvé
+           ->link()
         ;
         $crawler = $this->client->click($link);
 
@@ -103,15 +113,16 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('La réponse a bien été modifiée', $this->client->getResponse()->getContent());
 
 
-        /**
-         * Supprimer le sujet créé
-         */
+        // ******************************************
+        // Supprimer le sujet créé
+        // ******************************************
+
         $crawler = $this->client->request('GET', '/forum/categories/1/page');
 
         $link = $crawler
-            ->filter('#deleteSubjectLink') // Cherche tous les liens contenant l'id deleteSubjectLink
-            ->eq(0) // Selectionne le premier trouvé
-            ->link()
+           ->filter('#deleteSubjectLink1') // Cherche tous les liens contenant l'id deleteSubjectLink
+           ->eq(0) // Selectionne le premier trouvé
+           ->link()
         ;
 
         $crawler = $this->client->click($link);
@@ -122,6 +133,98 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertContains('Le sujet a bien été supprimé.', $this->client->getResponse()->getContent());
 
+
     }
+
+
+    /**
+     * Créer un sujet en dehors des catégories
+     * Passer en résolu le sujet créé
+     * @test
+     */
+    public function create_subject_forum_from_homepage_and_resolved_it()
+    {
+
+        $this->connect_forum_with_admin();
+
+        // ******************************************
+        // Créer un sujet en dehors des catégories
+        // ******************************************
+        $crawler = $this->client->request('GET', '/forum');
+
+        $crawler = $this->client->followRedirect();
+
+        $link = $crawler->selectLink('Nouveau Sujet')->link();
+
+        $crawler = $this->client->click($link);
+
+        $form = $crawler->selectButton('forum_add_first_answer_home[Ajouter]')->form();
+
+        $form['forum_add_first_answer_home[subject][category]'] = "4";  // 4 : id de la catégorie Informatique
+        $form['forum_add_first_answer_home[subject][forumSubjectTitle]'] = "Symfony, super framework";
+        $form['forum_add_first_answer_home[subject][forumSubjectDescription]'] = "LE framework utilisé en France";
+        $form['forum_add_first_answer_home[subject][tags]'] = "WEB PHP";
+        $form['forum_add_first_answer_home[forumAnswerText]'] = "Symfony, vous en pensez-quoi ?";
+
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Le sujet a bien été créé', $this->client->getResponse()->getContent());
+
+        // ******************************************
+        // Passer son sujet en résolu
+        // ******************************************
+        $link = $crawler->selectLink('Mettre comme résolu')->link();
+        $crawler = $this->client->click($link);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Ce sujet est résolu', $this->client->getResponse()->getContent());
+
+    }
+
+    /**
+     * Supprimer un sujet qui n'est pas le sien (admin)
+     * @test
+     */
+    public function delete_subject_by_admin()
+    {
+        $this->connect_forum_with_admin();
+
+        $crawler = $this->client->request('GET', '/forum/categories/1/deleteSubject/5');
+
+        $form = $crawler->selectButton('forum_delete_subject_with_reason[Supprimer]')->form();
+
+        $form['forum_delete_subject_with_reason[choiceReason]'] = "Abus de langage";
+        $form['forum_delete_subject_with_reason[reasonOption]'] = "Eviter les insultes s'il vous plait.";
+
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+        $this->assertContains('Le sujet a bien été supprimé.', $this->client->getResponse()->getContent());
+        $this->assertContains('Mail envoyé !', $this->client->getResponse()->getContent());
+    }
+
+
+    /**
+     * Test : Accéder à l'accueil du forum en tant qu'utilisateur
+     * @test
+     */
+    public function connect_forum_with_user()
+    {
+        $crawler = $this->client->request('GET', '/forum/');
+        $crawler = $this->client->followRedirect();
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username'  => 'user@amicale.dev',
+            '_password'  => 'user',
+        ));
+
+        $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Accueil Forum', $this->client->getResponse()->getContent());
+    }
+
+    
+
 
 }
