@@ -5577,12 +5577,10 @@ DayGrid.mixin({
 			'<span class="fc-title">' +
 				(htmlEscape(event.title || '') || '&nbsp;') + // we always want one line of height
 			'</span>';
-		console.log(event.start);
 		// Ici on customise notre label pour accueil le popover de bootstrap
 		var endDate="";
 		if ( event.end != null){ endDate =" - "+ moment(event.end).format("ddd D MMM"); }
 
-        console.log(event);
 
 		var EventContentLabel = '<h5>'+event.title+'</h5>'+
 			'<p>'+event.description+'</p>'+

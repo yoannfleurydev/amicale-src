@@ -2,13 +2,15 @@
  * Created by Matthieu.C on 24/02/2016.
  */
 $(document).ready(function () {
+    $('.loader').hide();
+
     /*
      Paramètres du calendar
      L'affichaque des données est fait directement
      dans full calendar ligne 5580
      */
     $('#calendar').fullCalendar({
-        transmitTZD: true,
+        lazyFetching:true,
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -23,21 +25,26 @@ $(document).ready(function () {
             element.popover({html:true});
         },
         events: function (start, end, timezone, callback) {
-            $.ajax({
+
+            $('.loader').show();
+           $.ajax({
                 type: "POST",
                 url: Routing.generate('agil_hall_calendar_data'),
+                cache:true,
                 dataType: 'json',
                 data: {
                     start: moment(start).format('YYYY-MM-DD'),
                     end: moment(end).format('YYYY-MM-DD')
                 },
+
+
                 // Requête ajax
                 success: function (doc) {
+                    $('.loader').hide();
                     var events = [];
                     $.each(doc, function (key, value) {
                         // Ajouts d'un événement dans la liste d'événements
                         // à afficher
-                        console.log(value);
                         events.push({
                             title: value.eventTitle,
                             start: value.eventDate.date,
