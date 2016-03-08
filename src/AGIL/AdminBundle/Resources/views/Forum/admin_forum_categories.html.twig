@@ -111,7 +111,7 @@
                                         <td class="text-center">
                                             <span class="glyphicon {{ c.forumCategoryIcon }} text-center icon-medium"></span>
                                         </td>
-                                        <td><a href="#"><h5>{{ c.forumCategoryName }}</h5></a></td>
+                                        <td><a href="{{ path('agil_forum_subjects_list', {idCategory : c.forumCategoryId}) }}"><h5>{{ c.forumCategoryName }}</h5></a></td>
                                         <td class="hidden-sm hidden-xs">{{ nbSubjectsPerCategory[c.forumCategoryId] }} sujet(s)</td>
                                         <td>
                                             <a id="editCategoryLink" href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
