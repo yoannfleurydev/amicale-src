@@ -3,12 +3,13 @@ $("#user_add_csv_form_file").change(function() {
     $("#button_name_cv").text(this.files[0].name);
 });
 
+var pictures;
+
 $("#choosePicture").change(function() {
     var tabFile = this.files;
 
     for(var i = 0 ; i < tabFile.length; i++) {
         var preview = $('#' + tabFile[i].name);
-        console.log(preview);
         var reader  = new FileReader();
         var theFile = tabFile[i];
         reader.onload = (function(theFile) {
