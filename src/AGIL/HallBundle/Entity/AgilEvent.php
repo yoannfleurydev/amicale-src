@@ -77,7 +77,7 @@ class AgilEvent
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="eventDateEnd", type="datetime")
+     * @ORM\Column(name="eventDateEnd", type="datetime", nullable=true)
      * @Assert\NotBlank(message="La date de fin l'évènement doit être spécifiée")
      */
     private $eventDateEnd;

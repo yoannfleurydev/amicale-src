@@ -37,6 +37,7 @@ class AddEventType extends AbstractType
         $builder->add('eventDate', DateTimeType::class, array(
             'label' => false,
             'required' => true,
+            'data' => new \DateTime(),
             'attr' => array(
                 'class' => 'form-control',
             )
@@ -45,6 +46,7 @@ class AddEventType extends AbstractType
         $builder->add('eventDateEnd', DateTimeType::class, array(
             'label' => false,
             'required' => true,
+            'data' => new \DateTime(),
             'attr' => array(
                 'class' => 'form-control',
             )

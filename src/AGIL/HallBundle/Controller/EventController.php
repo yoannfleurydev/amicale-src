@@ -7,9 +7,11 @@ use AGIL\HallBundle\Entity\AgilPhoto;
 use AGIL\HallBundle\Form\EditEventType;
 use AGIL\HallBundle\Form\AddEventType;
 use AGIL\HallBundle\Form\PhotoType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\VarDumper\VarDumper;
 
 class EventController extends Controller
@@ -27,6 +29,28 @@ class EventController extends Controller
         $form->handleRequest($request);
         if($form->isValid()) {
             $event->setUser($this->getUser());
+            $event->setEventTitle($form->get('eventTitle')->getData());
+            $event->setEventText($form->get('eventText')->getData());
+            $event->setEventDateEnd($form->get('eventDateEnd')->getData());
+            $event->setEventDate($form->get('eventDate')->getData());
+            $array = new ArrayCollection();
+
+            foreach($form->get('photos')->getData() as $item) {
+                if ($item != null && $item != "") {
+                    $fileName = md5(uniqid()) . '.' . $item->guessExtension();
+                    $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall';
+                    $item->move($dir, $fileName);
+
+                    $photo = new AgilPhoto();
+                    $photo->setPhotoUrl($fileName);
+                    $photo->setPhotoDescription("");
+                    $photo->setPhotoTitle($item->getClientOriginalName());
+
+                    $array->add($photo);
+                    $em->persist($photo);
+                }
+            }
+            $event->setImages($array);
 
             $em->persist($event);
             $em->flush();
