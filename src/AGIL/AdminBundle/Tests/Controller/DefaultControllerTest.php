@@ -4,107 +4,59 @@ namespace AGIL\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
-{
-    
+class DefaultControllerTest extends WebTestCase {
+    const SUPER_ADMIN = array(
+        '_username' => 'superadmin@amicale.dev',
+        '_password' => 'superadmin'
+    );
+    const ADMIN = array(
+        '_username' => 'admin@amicale.dev',
+        '_password' => 'admin'
+    );
+    const AMICALE = array(
+        '_username' => 'amicale@amicale.dev',
+        '_password' => 'amicale'
+    );
+    const MODERATOR = array(
+        '_username' => 'moderator@amicale.dev',
+        '_password' => 'moderator'
+    );
+    const USER = array(
+        '_username' => 'user@amicale.dev',
+        '_password' => 'user'
+    );
+
     private $client = null;
 
     /**
-     * "Constructeur" qui initialise le client
+     * @before
      */
-    public function setUp()
-
-    {
+    public function setUp() {
         $this->client = static::createClient();
     }
 
-
     /**
-     * Test : Accéder à l'accueil du forum
+     * @test superadmin connection and its rights
      */
-    public function testAdminHomepage()
-    {
-        $crawler = $this->client->request('GET', '/admin');
+    public function superadmin_connection_and_rights() {
+        // GIVEN
+        $this->client->request('GET', '/admin/user/page');
         $crawler = $this->client->followRedirect();
 
-        $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'superadmin@superadmin.fr',
-            '_password'  => 'superAdmin',
-        ));
+        $form = $crawler->selectButton('_submit')->form(array('_username' => $this::SUPER_ADMIN['_username'], '_password' => $this::SUPER_ADMIN['_password']));
 
+        // WHEN
         $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
+        $this->client->followRedirect();
 
-        $this->assertContains('Gestion utilisateur', $this->client->getResponse()->getContent());
+        // THEN
+        $this->assertContains('Administration utilisateurs', $this->client->getResponse()->getContent());
     }
 
-
     /**
-     * Test : Créer une catégorie - Editer la catégorie - Supprimer la catégorie
-     *
-     * Pré-condition : testAdminHomepage()
+     * @test
      */
-    public function testAdminCategory()
-    {
-        // Accéder au forum
-        $this->testAdminHomepage();
-
-        /**
-         * Créer une catégorie
-         */
-        $crawler = $this->client->request('GET', '/admin/forum/categories/');
-
-        $form = $crawler->selectButton('forum_add_category[Ajouter]')->form();
-
-        $form['forum_add_category[forumCategoryName]'] = "WEB";
-        $form['forum_add_category[forumCategoryText]'] = "Tout ce qui concerne le monde du web";
-        $form['forum_add_category[forumCategoryIcon]'] = "glyphicon-hdd";
-
-        $crawler = $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
-
-        $this->assertContains('La catégorie a été créée', $this->client->getResponse()->getContent());
-
-
-        /**
-         * Editer la catégorie créée
-         */
-        $link = $crawler
-            ->filter('#editCategoryLink') // Cherche tous les liens contenant le bouton d'id editCategoryLink
-            ->eq(5) // Selectionne le 6ème trouvé
-            ->link()
-        ;
-        $crawler = $this->client->click($link);
-
-        $form = $crawler->selectButton('forum_edit_category[Modifier]')->form();
-
-        $form['forum_edit_category[forumCategoryName]'] = "Java";
-        $form['forum_edit_category[forumCategoryText]'] = "Tout ce qui concerne le Java";
-        $form['forum_edit_category[forumCategoryIcon]'] = "glyphicon-globe";
-
-        $crawler = $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
-
-        $this->assertContains('La catégorie a été modifiée', $this->client->getResponse()->getContent());
-
-
-        /**
-         * Supprimer la catégorie créée
-         */
-        // L'ID = 6 correspond à la catégorie précédemment créée après avoir lancé les fixtures
-        $crawler = $this->client->request('GET', '/admin/forum/categories/delete/6');
-        $crawler = $this->client->followRedirect();
-        $this->assertContains('La catégorie a été supprimée.', $this->client->getResponse()->getContent());
-
-    }
-
-
-
-
-    /**
-     * Test : accéder à la page admin sans être connecté
-     */
-    public function testNotConnected()
+    public function redirect_from_admin_when_not_connected()
     {
         $crawler = $this->client->request('GET', '/logout');
         $crawler = $this->client->followRedirect();
@@ -116,18 +68,17 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test : Se connecter en tant qu'utilisateur
+     * @test
      */
-    public function testLoginUser()
-    {
+    public function user_login_cant_access_administration_panel() {
         $crawler = $this->client->request('GET', '/logout');
         $crawler = $this->client->followRedirect();
 
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'user@user.fr',
-            '_password'  => 'user',
+            '_username'  => $this::USER['_username'],
+            '_password'  => $this::USER['_password']
         ));
 
         $this->client->submit($form);
@@ -135,13 +86,14 @@ class DefaultControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/admin');
 
-        $this->assertContains('Access Denied.', $this->client->getResponse()->getContent());
+        $this->assertTrue($this->client->getResponse()->isForbidden());
     }
 
+
     /**
-     * Test : Se connecter en tant que modérateur
+     * @test
      */
-    public function testLoginModerator()
+    public function test_login_moderator()
     {
         $crawler = $this->client->request('GET', '/logout');
         $crawler = $this->client->followRedirect();
@@ -149,22 +101,22 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'moderator@amicale.dev',
-            '_password'  => 'moderator',
+            '_username'  => $this::MODERATOR['_username'],
+            '_password'  => $this::MODERATOR['_password']
         ));
 
         $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
+        $this->client->followRedirect();
 
-        $crawler = $this->client->request('GET', '/admin');
+        $this->client->request('GET', '/admin');
 
         $this->assertContains('Access Denied.', $this->client->getResponse()->getContent());
     }
 
     /**
-     * Test : Se connecter en tant qu'administrateur
+     * @test
      */
-    public function testLoginAdmin()
+    public function test_login_admin()
     {
         $crawler = $this->client->request('GET', '/logout');
         $crawler = $this->client->followRedirect();
@@ -172,8 +124,8 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'admin@amicale.dev',
-            '_password'  => 'admin',
+            '_username'  => $this::ADMIN['_username'],
+            '_password'  => $this::ADMIN['_password']
         ));
 
         $this->client->submit($form);
@@ -185,67 +137,140 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test : Se connecter en tant que super admin
+     * @test
      */
-    public function testLoginSuperAdmin()
+    public function test_login_superAdmin()
     {
-        $crawler = $this->client->request('GET', '/logout');
-        $crawler = $this->client->followRedirect();
+        $this->client->request('GET', '/logout');
+        $this->client->followRedirect();
 
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'amicale@amicale.dev',
-            '_password'  => 'amicale',
+            '_username'  => $this::SUPER_ADMIN['_username'],
+            '_password'  => $this::SUPER_ADMIN['_password']
         ));
 
         $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
+        $this->client->followRedirect();
 
-        $crawler = $this->client->request('GET', '/admin');
+        $this->client->request('GET', '/admin');
 
         $this->assertContains('Gestion utilisateur', $this->client->getResponse()->getContent());
     }
 
     /**
-     * Test : Accéder à la liste d'utilisateur
+     * @test
      */
-    public function testUsersList()
+    public function user_list_when_superadmin()
     {
-        $this->testLoginSuperAdmin();
-        $crawler = $this->client->request('GET', '/admin/user/page');
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username'  => $this::SUPER_ADMIN['_username'],
+            '_password'  => $this::SUPER_ADMIN['_password']
+        ));
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+
+        $this->client->request('GET', '/admin/user/page');
 
         $this->assertContains('Administration utilisateurs', $this->client->getResponse()->getContent());
     }
 
     /**
-     * Test : Accéder à la liste d'utilisateur
+     * @test
      */
-    public function testUsersAdminList()
+    public function admin_list_when_superadmin()
     {
-        $this->testLoginAdmin();
-        $crawler = $this->client->request('GET', '/admin/user/page');
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username'  => $this::SUPER_ADMIN['_username'],
+            '_password'  => $this::SUPER_ADMIN['_password']
+        ));
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+
+        $this->client->request('GET', '/admin/user/page');
+
+        $this->assertContains('Administrateurs', $this->client->getResponse()->getContent());
+    }
+
+    public function admin_list_when_admin()
+    {
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username'  => $this::ADMIN['_username'],
+            '_password'  => $this::ADMIN['_password']
+        ));
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+
+        $this->client->request('GET', '/admin/user/page');
 
         $this->assertNotContains('Administrateurs', $this->client->getResponse()->getContent());
     }
 
     /**
-     * Test : Accéder à l'ajout d'utilisateur
+     * @test
      */
-    public function testUsersAdd()
-    {
-        $this->testLoginSuperAdmin();
+    public function add_user_should_work() {
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username'  => $this::SUPER_ADMIN['_username'],
+            '_password'  => $this::SUPER_ADMIN['_password'],
+        ));
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+
         $crawler = $this->client->request('GET', '/admin/user/add');
         $this->assertContains('Ajouter un membre', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton('user_add_form[Inviter]')->form(array(
-            'user_add_form[email]'  => 'phpUnit@example.com',
-            'user_add_form[firstName]'  => 'php',
+            'user_add_form[email]'  => 'phpunit@admicale.dev',
+            'user_add_form[firstName]'  => 'Php',
             'user_add_form[name]'  => 'Unit',
-            'user_add_form[role]'  => 'ROLE_MODERATOR',
+            'user_add_form[role]'  => 'ROLE_USER',
         ));
         $this->client->submit($form);
 
-        $this->assertContains('enregistré.', $this->client->getResponse()->getContent());
+        $this->assertContains('alert-success', $this->client->getResponse()->getContent());
     }
+
+    /**
+     * @test
+     * @depends add_user_should_work
+     */
+    public function add_user_should_not_work_because_it_already_exist() {
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username'  => $this::SUPER_ADMIN['_username'],
+            '_password'  => $this::SUPER_ADMIN['_password'],
+        ));
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+
+        $crawler = $this->client->request('GET', '/admin/user/add');
+        $this->assertContains('Ajouter un membre', $this->client->getResponse()->getContent());
+
+        $form = $crawler->selectButton('user_add_form[Inviter]')->form(array(
+            'user_add_form[email]'  => 'phpunit@admicale.dev',
+            'user_add_form[firstName]'  => 'Php',
+            'user_add_form[name]'  => 'Unit',
+            'user_add_form[role]'  => 'ROLE_USER',
+        ));
+        $this->client->submit($form);
+
+        $this->assertContains('alert-warning', $this->client->getResponse()->getContent());
+    }
+
 }
