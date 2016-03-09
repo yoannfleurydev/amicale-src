@@ -59,13 +59,29 @@ class AddEventType extends AbstractType
             )
         ));
 
-        $builder->add('photos0', FileType::class, array(
+        /*$builder->add('photos0', FileType::class, array(
             'label' => false,
             'required' => false,
             'multiple' => true,
             'attr' => array(
                 'class' => 'form-control',
             )
+        ));*/
+
+        $builder->add('photos', CollectionType::class, array(
+            // each entry in the array will be an "email" field
+            'entry_type'   => FileType::class,
+            'label' => false,
+            'prototype_name' => 0,
+            'allow_add' => true,
+            'allow_delete' => true,
+            // these options are passed to each "email" type
+            'entry_options'  => array(
+                'required' => false,
+                'multiple' => true,
+                'label' => false,
+                'attr'   => array('class' => 'form-control')
+            ),
         ));
 
         $builder->add('Ajouter', SubmitType::class, array(

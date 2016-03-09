@@ -24,17 +24,58 @@
                         </div>
                         <div class="form-group">
                             <label for="eventDate">Date de début de l'évènement : </label>
-                            {{ form_widget(form.eventDate) }}
+                            <div class="row">
+                                <div class="col-lg-1 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDate.date.day, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDate.date.month, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDate.date.year, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDate.time.hour, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-1 col-sm-1 col-xs-1 col-md-1">
+                                    heure
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDate.time.minute, {attr : {class: 'form-control'}}) }}
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="eventDateEnd">Date de fin de l'évènement : </label>
-                            {{ form_widget(form.eventDateEnd) }}
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDateEnd.date.day, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDateEnd.date.month, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDateEnd.date.year, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDateEnd.time.hour, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-1 col-sm-1 col-xs-1 col-md-1">
+                                    heure
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.eventDateEnd.time.minute, {attr : {class: 'form-control'}}) }}
+                                </div>
+                            </div>
                         </div>
 
                         <p>
                             <div class="picture-list" id="addedPicture"></div>
                             <div class="square-add-picture">
-                                {{ form_widget(form.photos0, {id: 'choosePicture'}) }}
+
+                                {{ form_row(form.photos) }}
+                                <input type="file" id="choosePicture" name="event_add_form[photos][0][]"
+                                class="form-control" multiple="multiple" />
                             </div>
                         </p>
 

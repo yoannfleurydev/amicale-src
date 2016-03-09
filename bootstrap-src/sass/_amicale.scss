@@ -610,15 +610,16 @@ span.panel-title-content {
   filter: alpha(opacity=0);
 }
 
-.square-add-picture:before {
+
+.square-add-picture:after {
   content:"+";
-  position: absolute;
-  right: 16px;
-  bottom: 42px;
-  border: 1px solid #ccc;
+  /*position: absolute;
+  #right: 16px;
+  #bottom: 42px;
+  #border: 1px solid #ccc;*/
   width: 15px;
   height: 15px;
-  line-height: 14px;
-  text-align: center;
+  /*line-height: 14px;
+  #text-align: center;*/
   cursor: pointer;
 }

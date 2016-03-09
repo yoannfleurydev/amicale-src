@@ -6,6 +6,7 @@ $("#user_add_csv_form_file").change(function() {
 var pictures;
 var nbInput = 1;
 var nbPicture = 0;
+
 $("#choosePicture").change(imageEvent);
 
 var imageEvent = function () {
@@ -33,8 +34,10 @@ var imageEvent = function () {
     }
     $(this).attr("class","hidden");
     $(this).attr("id","");
-    $(".square-add-picture").append('<input type="file" id="choosePicture" name="event_add_form[photos' + nbInput + '][]" ' +
-     ' class="form-control" multiple="multiple">');
+
+    $(".square-add-picture").append("<input type='file' id='choosePicture' " +
+        "name='event_add_form[photos][" +  nbInput  + "][]' " +
+        "class='form-control' multiple='multiple' />");
     nbInput++;
     $("#choosePicture").change(imageEvent);
 }
