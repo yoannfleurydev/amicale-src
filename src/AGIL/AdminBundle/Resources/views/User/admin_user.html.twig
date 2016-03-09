@@ -34,8 +34,8 @@
                                     <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
                                     <td><a href="{{ path('agil_admin_user_up', {'id': user.id}) }}" class="btn btn-default"
                                            data-toggle="tooltip" data-placement="top" title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
-                                    <td><a href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" class="btn btn-default"
-                                           data-toggle="tooltip" data-placement="top" title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                    <td><a href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" class="btn btn-default btn-danger"
+                                           data-toggle="tooltip" data-placement="top" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a></td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -79,8 +79,8 @@
                                                title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
                                         <td><a href="{{ path('agil_admin_user_down', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
                                                title="Rétrograder"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                        <td><a href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                               title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                        <td><a href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top"
+                                               title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a></td>
                                     </tr>
                                 {% endfor %}
                             </table>
@@ -118,8 +118,8 @@
                                             <td>{{ admin.userSignupDate|date("m/d/Y") }}</td>
                                             <td><a href="{{ path('agil_admin_user_down', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
                                                    title="Rétrograder"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                            <td><a href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
-                                                   title="Bannir"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                            <td><a href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top"
+                                                   title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a></td>
                                         </tr>
                                     {% endfor %}
                                 </table>
