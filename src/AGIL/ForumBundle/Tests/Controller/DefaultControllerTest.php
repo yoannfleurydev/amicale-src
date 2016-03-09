@@ -224,7 +224,74 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('Accueil Forum', $this->client->getResponse()->getContent());
     }
 
-    
+    /**
+     * Test : Editer une réponse qui n'est pas la sienne
+     * @test
+     */
+    public function edit_answer_which_is_not_her()
+    {
+        $this->connect_forum_with_user();
 
+        $crawler = $this->client->request('GET', '/forum/categories/1/subject/2/edit/3');
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Permission refusée', $this->client->getResponse()->getContent());
+    }
+
+    /**
+     * Test : Supprimer un sujet qui n'est pas la sien
+     * @test
+     */
+    public function delete_subject_which_is_not_his()
+    {
+        $this->connect_forum_with_user();
+
+        $crawler = $this->client->request('GET', '/forum/categories/1/deleteSubject/3');
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Permission refusée', $this->client->getResponse()->getContent());
+    }
+
+    /**
+     * Test : Supprimer un sujet qui n'est pas la sien
+     * @test
+     */
+    public function pass_subjet_resolved_which_is_not_his()
+    {
+        $this->connect_forum_with_user();
+
+        $crawler = $this->client->request('GET', '/forum/categories/1/resolveSubject/3');
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Vous essayez passer en résolu un sujet de forum qui n&#039;est pas le votre', $this->client->getResponse()->getContent());
+    }
+
+    /**
+     * Test : Accéder à un sujet qui n'appartient pas à la bonne catégorie
+     * @test
+     */
+    public function access_subject_in_the_bad_category()
+    {
+        $this->connect_forum_with_user();
+
+        $crawler = $this->client->request('GET', '/forum/categories/2/subject/5/page');
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Le sujet d&#039;id 5 n&#039;existe pas.', $this->client->getResponse()->getContent());
+    }
+
+    /**
+     * Test : accéder à une page de sujets qui n'existe pas
+     * @test
+     */
+
+    public function access_page_of_subject_which_is_not_exist()
+    {
+        $this->connect_forum_with_user();
+
+        $crawler = $this->client->request('GET', '/forum/categories/1/page/400');
+
+        $this->assertTrue($this->client->getResponse()->isNotFound());
+    }
 
 }
