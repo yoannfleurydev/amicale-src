@@ -84,7 +84,7 @@ class DefaultController extends Controller
                 // On vérifie le format de la photo
                 if ($profilePicture->guessExtension() != "jpeg" && $profilePicture->guessExtension() != "png"
                     && $profilePicture->guessExtension() != "gif") {
-                    $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,bmp)');
+                    $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,gif)');
                     return $this->redirect($this->generateUrl('agil_profile_edit', array('id' => $user->getId())));
                 } // On vérifie la taille du fichier
                 else if($profilePicture->getClientSize() > 1024000) {
