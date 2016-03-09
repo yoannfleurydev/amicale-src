@@ -59,7 +59,7 @@ class AddEventType extends AbstractType
             )
         ));
 
-        $builder->add('photos', FileType::class, array(
+        $builder->add('photos0', FileType::class, array(
             'label' => false,
             'required' => false,
             'multiple' => true,
