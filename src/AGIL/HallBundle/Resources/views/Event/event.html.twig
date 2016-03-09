@@ -24,11 +24,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <p>
-                            {{ eventContent | raw }}
-                        </p>
-                    </div>
+                    {{ eventContent | raw }}
                     <div class="row">
                         <div class="owl-carousel">
                             {% for photo in event.photos %}
