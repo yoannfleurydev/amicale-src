@@ -204,7 +204,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Supprimer un sujet qui n'est pas le sien (admin)
+     * Supprimer le sujet d'un utilisateur (par un Admin)
      * @test
      */
     public function delete_subject_by_admin()
@@ -245,7 +245,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Tenter d'accéder à une catégorie qui n'existe pas
+     * Tenter d'accéder à une catégorie inexistante
      * @test
      */
     public function access_category_non_existent()
@@ -260,7 +260,7 @@ class DefaultControllerTest extends WebTestCase
 
 
     /**
-     * Tenter d'accéder à un sujet qui n'existe pas
+     * Tenter d'accéder à un sujet inexistant
      * @test
      */
     public function access_subject_non_existent()
@@ -275,7 +275,7 @@ class DefaultControllerTest extends WebTestCase
 
 
     /**
-     * Tenter d'accéder à un sujet qui n'existe pas
+     * Tenter d'accéder à une page d'un sujet inexistante
      * @test
      */
     public function access_answers_page_non_existent()
@@ -289,7 +289,7 @@ class DefaultControllerTest extends WebTestCase
 
 
     /**
-     * Test : Editer une réponse qui n'est pas la sienne
+     * Test : Tenter d'éditer une réponse qui n'est pas la sienne
      * @test
      */
     public function edit_answer_which_is_not_her()
@@ -303,7 +303,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test : Supprimer un sujet qui n'est pas la sien
+     * Test : Tenter de supprimer un sujet qui n'est pas le sien
      * @test
      */
     public function delete_subject_which_is_not_his()
@@ -317,7 +317,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test : Supprimer un sujet qui n'est pas la sien
+     * Test : Tenter de passer un sujet qui n'est pas le sien en résolu
      * @test
      */
     public function pass_subjet_resolved_which_is_not_his()
@@ -332,21 +332,21 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test : Accéder à un sujet qui n'appartient pas à la bonne catégorie
+     * Test : Tenter d'accéder à un sujet qui n'appartient pas à la bonne catégorie
      * @test
      */
     public function access_subject_in_the_bad_category()
     {
         $this->connect_forum_with_user();
 
-        $crawler = $this->client->request('GET', '/forum/categories/2/subject/5/page');
+        $crawler = $this->client->request('GET', '/forum/categories/2/subject/3/page');
         $crawler = $this->client->followRedirect();
 
-        $this->assertContains('Le sujet d&#039;id 5 n&#039;existe pas.', $this->client->getResponse()->getContent());
+        $this->assertContains('Le sujet d&#039;id 3 n&#039;appartient pas à la catégorie d&#039;id 2', $this->client->getResponse()->getContent());
     }
 
     /**
-     * Test : accéder à une page de sujets qui n'existe pas
+     * Test : Tenter d'accéder à une page de sujets qui n'existe pas
      * @test
      */
 
