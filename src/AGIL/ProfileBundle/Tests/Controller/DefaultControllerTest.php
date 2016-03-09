@@ -20,9 +20,9 @@ class DefaultControllerTest extends WebTestCase
     }
 
     public function testAccessToProfileAsVisitor() {
-        $crawler = $this->request('GET', '/profile/15');
-
-        $this->assertContains('Adresse mail : amicale@amicale.dev', $this->client->getResponse()->getContent());
+        $this->client->request('GET', '/profile/15');
+        $this->client->followRedirect();
+        $this->assertContains('Connexion', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -65,7 +65,7 @@ class DefaultControllerTest extends WebTestCase
 
 //    public function testEditNickname()
 //    {
-//        $this->testAccess();
+//        $this->testAccessToProfileWhenConnected();
 //        $crawler = $this->client->request('GET', '/profile/edit');
 //        $form = $crawler->selectButton('profil_edit_form[Modifier]')->form(array(
 //            'profil_edit_form[username]' => 'lee'
