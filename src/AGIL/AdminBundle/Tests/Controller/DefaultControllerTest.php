@@ -19,7 +19,7 @@ class DefaultControllerTest extends WebTestCase
 
 
     /**
-     * Test : Accéder à l'accueil du forum
+     * Test : Accéder à l'accueil de l'administration
      * @test
      */
     public function connect_in_admin()
