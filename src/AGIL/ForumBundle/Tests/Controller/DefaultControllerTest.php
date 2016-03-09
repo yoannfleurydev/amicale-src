@@ -225,6 +225,26 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
+     * Supprimer une réponse par un admin(admin)
+     * @test
+     */
+    public function delete_answer_of_user_by_admin()
+    {
+        $this->connect_forum_with_admin();
+
+        $crawler = $this->client->request('GET', '/forum/categories/1/subject/2/delete/2');
+
+        $form = $crawler->selectButton('forum_delete_answer_with_reason[Supprimer]')->form();
+
+        $form['forum_delete_answer_with_reason[choiceReason]'] = "Abus de langage";
+        $form['forum_delete_answer_with_reason[reasonOption]'] = "Eviter les insultes s'il vous plait.";
+
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+        $this->assertContains('Mail envoyé !', $this->client->getResponse()->getContent());
+    }
+
+    /**
      * Tenter d'accéder à une catégorie qui n'existe pas
      * @test
      */
