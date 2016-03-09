@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 // l'id 15 correspond au membre de test "amicale"
+/**
+ * Class DefaultControllerTest
+ * @package AGIL\ProfileBundle\Tests\Controller
+ */
 class DefaultControllerTest extends WebTestCase
 {
 
@@ -19,10 +23,13 @@ class DefaultControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
+    /**
+     * Test : Accéder à un profil en tant que visiteur
+     */
     public function testAccessToProfileAsVisitor() {
-        $crawler = $this->request('GET', '/profile/15');
-
-        $this->assertContains('Adresse mail : amicale@amicale.dev', $this->client->getResponse()->getContent());
+        $this->client->request('GET', '/profile/15');
+        $this->client->followRedirect();
+        $this->assertContains('Connexion', $this->client->getResponse()->getContent());
     }
 
     /**
@@ -45,7 +52,9 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Changer le mot de passe (Pré-condition : Accès aux paramètres de profil)
+     * Test : Changer le mot de passe avec la confirmation
+     * de mot de passe qui ne corréspond pas
+     * (Pré-condition : Accès aux paramètres de profil)
      */
     public function testEditProfilePasswordWithWrongPasswordConfirm()
     {
@@ -59,13 +68,13 @@ class DefaultControllerTest extends WebTestCase
         ));
 
         $this->client->submit($form);
-        // (pas de redirection donc followRedirect)
+        // (pas de redirection donc pas d'appel à followRedirect)
         $this->assertContains('Erreur ! Les mots de passe ne correspondent pas !', $this->client->getResponse()->getContent());
     }
 
 //    public function testEditNickname()
 //    {
-//        $this->testAccess();
+//        $this->testAccessToProfileWhenConnected();
 //        $crawler = $this->client->request('GET', '/profile/edit');
 //        $form = $crawler->selectButton('profil_edit_form[Modifier]')->form(array(
 //            'profil_edit_form[username]' => 'lee'
