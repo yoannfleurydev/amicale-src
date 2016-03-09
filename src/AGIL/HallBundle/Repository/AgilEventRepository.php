@@ -62,7 +62,7 @@ class AgilEventRepository extends EntityRepository
 
         $query->select('event')
             ->from('AGIL\HallBundle\Entity\AgilEvent','event')
-            ->orderBy('event.eventPostDate','asc')
+            ->orderBy('event.eventPostDate','desc')
         ;
 
         $query->setFirstResult(($page-1) * $maxPerPage)
