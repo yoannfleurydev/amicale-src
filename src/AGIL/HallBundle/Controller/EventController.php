@@ -4,15 +4,15 @@ namespace AGIL\HallBundle\Controller;
 
 use AGIL\HallBundle\Entity\AgilEvent;
 use AGIL\HallBundle\Entity\AgilPhoto;
+use AGIL\HallBundle\Form\DeleteEventType;
 use AGIL\HallBundle\Form\EditEventType;
 use AGIL\HallBundle\Form\AddEventType;
-use AGIL\HallBundle\Form\PhotoType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Validator\Constraints\Image;
-use Symfony\Component\VarDumper\VarDumper;
+use Essence\Essence;
 
 class EventController extends Controller
 {
@@ -21,13 +21,14 @@ class EventController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function eventAddAction(Request $request) {
+    public function eventAddAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $event = new AgilEvent();
         $form = $this->createForm(new AddEventType(), null);
 
         $form->handleRequest($request);
-        if($form->isValid()) {
+        if ($form->isValid()) {
             $event->setUser($this->getUser());
             $event->setEventTitle($form->get('eventTitle')->getData());
             $event->setEventText($form->get('eventText')->getData());
@@ -39,11 +40,12 @@ class EventController extends Controller
                 foreach ($form->get('photos')->getData() as $item) {
                     if ($item != null && $item != "") {
                         if ($item->guessExtension() != "jpeg" && $item->guessExtension() != "png"
-                            && $item->guessExtension() != "gif") {
+                            && $item->guessExtension() != "gif"
+                        ) {
                             $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,gif)');
                             return $this->redirect($this->generateUrl('agil_hall_event_add'));
                         } // On vérifie la taille du fichier
-                        else if($item->getClientSize() > 1024000) {
+                        else if ($item->getClientSize() > 1024000) {
                             $this->addFlash('warning', 'Erreur ! La taille de l\'image dépasse la limite ! (limite autorisée: 1Mo)');
                             return $this->redirect($this->generateUrl('agil_hall_event_add'));
                         }
@@ -82,7 +84,14 @@ class EventController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function eventEditAction ($idEvent, Request $request) {
+    public function eventEditAction($idEvent, Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user->hasRole('ROLE_ADMIN') and !$user->hasRole('ROLE_SUPER_ADMIN')) {
+            $this->addFlash('warning', 'Permission refusée');
+            return $this->redirect($this->generateUrl('agil_hall_homepage'));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $event = $em->getRepository('AGILHallBundle:AgilEvent')->find($idEvent);
@@ -100,7 +109,7 @@ class EventController extends Controller
         $form->get('eventDateEnd')->setData($event->getEventDate());
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if ($form->isValid()) {
             $em->flush();
 
             $this->addFlash('success', "L'évenement a été modifié");
@@ -110,14 +119,67 @@ class EventController extends Controller
 
         return $this->render('AGILHallBundle:Event:event_edit.html.twig', array(
             'event' => $event,
-            'form'  => $form->createView()
+            'form' => $form->createView()
         ));
 
         return $this->render('AGILHallBundle:Event:event_edit.html.twig');
     }
 
-    public function eventDeleteAction ($idEvent) {
+    public function eventDeleteAction($idEvent, Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user->hasRole('ROLE_ADMIN') and !$user->hasRole('ROLE_SUPER_ADMIN')) {
+            $this->addFlash('warning', 'Permission refusée');
+            return $this->redirect($this->generateUrl('agil_hall_homepage'));
+        }
 
-        return $this->redirect($this->generateUrl('agil_hall_homepage'));
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $event = $em->getRepository('AGILHallBundle:AgilEvent')->find($idEvent);
+
+        if (null === $event) {
+            throw new NotFoundHttpException("L'evénement d'id " . $idEvent . " n'existe pas.");
+        }
+        $essence = new Essence();
+
+        $eventContent = $essence->replace($event->getEventText(), function ($media) {
+            return <<<HTML
+		<div class="well well-lg col-lg-6 col-lg-offset-3 col-md-8 col-md-2 col-sm-12">
+			<p class="text-primary-blue text-center">
+				$media->title par
+				<a href="$media->authorUrl" title="Accès à la chaine de $media->authorName">
+					$media->authorName
+				</a>
+			 </p>
+			<div class="embed-responsive embed-responsive-16by9">$media->html</div>
+		</div>
+HTML;
+        });
+
+        $form = $this->createForm(new DeleteEventType(), $event);
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em->remove($event);
+
+            $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall/';
+            foreach($event->getPhotos() as $photo) {
+                $url = $photo->getPhotoUrl();
+                $fs = new Filesystem();
+                $fs->remove(array('symlink', $dir.'/'.$url));
+                $em->remove($photo);
+            }
+
+            $em->flush();
+            $this->addFlash('success', "L'évenement a été supprimé");
+
+            return $this->redirect($this->generateUrl('agil_hall_homepage'));
+        }
+
+        return $this->render('AGILHallBundle:Event:event_delete.html.twig', array(
+            'form' => $form->createView(),
+            'event' => $event,
+            'eventContent' => $eventContent
+        ));
     }
 }
