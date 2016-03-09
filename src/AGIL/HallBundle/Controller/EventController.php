@@ -33,24 +33,36 @@ class EventController extends Controller
             $event->setEventText($form->get('eventText')->getData());
             $event->setEventDateEnd($form->get('eventDateEnd')->getData());
             $event->setEventDate($form->get('eventDate')->getData());
-            $array = new ArrayCollection();
 
-            foreach($form->get('photos')->getData() as $item) {
-                if ($item != null && $item != "") {
-                    $fileName = md5(uniqid()) . '.' . $item->guessExtension();
-                    $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall';
-                    $item->move($dir, $fileName);
+            if ($form->get('photos')->getData() != null) {
+                $array = new ArrayCollection();
+                foreach ($form->get('photos')->getData() as $item) {
+                    if ($item != null && $item != "") {
+                        if ($item->guessExtension() != "jpeg" && $item->guessExtension() != "png"
+                            && $item->guessExtension() != "gif") {
+                            $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,gif)');
+                            return $this->redirect($this->generateUrl('agil_hall_event_add'));
+                        } // On vérifie la taille du fichier
+                        else if($item->getClientSize() > 1024000) {
+                            $this->addFlash('warning', 'Erreur ! La taille de l\'image dépasse la limite ! (limite autorisée: 1Mo)');
+                            return $this->redirect($this->generateUrl('agil_hall_event_add'));
+                        }
 
-                    $photo = new AgilPhoto();
-                    $photo->setPhotoUrl($fileName);
-                    $photo->setPhotoDescription("");
-                    $photo->setPhotoTitle($item->getClientOriginalName());
+                        $fileName = md5(uniqid()) . '.' . $item->guessExtension();
+                        $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall';
+                        $item->move($dir, $fileName);
 
-                    $array->add($photo);
-                    $em->persist($photo);
+                        $photo = new AgilPhoto();
+                        $photo->setPhotoUrl($fileName);
+                        $photo->setPhotoDescription("");
+                        $photo->setPhotoTitle($item->getClientOriginalName());
+
+                        $array->add($photo);
+                        $em->persist($photo);
+                    }
                 }
+                $event->setImages($array);
             }
-            $event->setImages($array);
 
             $em->persist($event);
             $em->flush();
