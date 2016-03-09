@@ -115,13 +115,12 @@
                                         <td class="hidden-sm hidden-xs">{{ nbSubjectsPerCategory[c.forumCategoryId] }} sujet(s)</td>
                                         <td>
                                             <a id="editCategoryLink" href="{{ path('agil_admin_forum_category_edit',{'idCategory':c.forumCategoryId}) }}">
-                                                <button type="button" class="btn btn-default"><i class="material-icons">edit</i></button>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-edit"></button>
                                             </a>
                                         </td>
                                         <td>
                                             <button id="deleteCategoryLink" data-href="{{ path('agil_admin_forum_category_delete',{'idCategory':c.forumCategoryId}) }}"
-                                                    data-target="#confirm-delete" type="button" class="btn btn-danger" data-toggle="modal">
-                                                <i class="material-icons">delete</i>
+                                                    data-target="#confirm-delete" type="button" class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal">
                                             </button>
                                         </td>
                                     </tr>
