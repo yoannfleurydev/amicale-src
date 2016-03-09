@@ -13,7 +13,6 @@ class DefaultControllerTest extends WebTestCase
      * "Constructeur" qui initialise le client
      */
     public function setUp()
-
     {
         $this->client = static::createClient();
     }
@@ -21,15 +20,16 @@ class DefaultControllerTest extends WebTestCase
 
     /**
      * Test : Accéder à l'accueil du forum
+     * @test
      */
-    public function testAdminHomepage()
+    public function connect_in_admin()
     {
         $crawler = $this->client->request('GET', '/admin');
         $crawler = $this->client->followRedirect();
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'superadmin@superadmin.fr',
-            '_password'  => 'superAdmin',
+            '_username'  => 'superadmin@amicale.dev',
+            '_password'  => 'superadmin',
         ));
 
         $this->client->submit($form);
@@ -40,25 +40,27 @@ class DefaultControllerTest extends WebTestCase
 
 
     /**
-     * Test : Créer une catégorie - Editer la catégorie - Supprimer la catégorie
+     * Test :
+     * Créer une catégorie
+     * Editer la catégorie
+     * Supprimer la catégorie
      *
-     * Pré-condition : testAdminHomepage()
+     * @test
      */
-    public function testAdminCategory()
+    public function use_case_category_testing()
     {
-        // Accéder au forum
-        $this->testAdminHomepage();
+        $this->connect_in_admin();
 
-        /**
-         * Créer une catégorie
-         */
+        // ******************************************
+        // Créer une catégorie
+        // ******************************************
         $crawler = $this->client->request('GET', '/admin/forum/categories/');
 
         $form = $crawler->selectButton('forum_add_category[Ajouter]')->form();
 
         $form['forum_add_category[forumCategoryName]'] = "WEB";
         $form['forum_add_category[forumCategoryText]'] = "Tout ce qui concerne le monde du web";
-        $form['forum_add_category[forumCategoryIcon]'] = "glyphicon-hdd";
+        $form['forum_add_category[forumCategoryIcon]'] = "glyphicon glyphicon-hdd";
 
         $crawler = $this->client->submit($form);
         $crawler = $this->client->followRedirect();
@@ -66,9 +68,9 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('La catégorie a été créée', $this->client->getResponse()->getContent());
 
 
-        /**
-         * Editer la catégorie créée
-         */
+        // ******************************************
+        // Editer la catégorie créée
+        // ******************************************
         $link = $crawler
             ->filter('#editCategoryLink') // Cherche tous les liens contenant le bouton d'id editCategoryLink
             ->eq(5) // Selectionne le 6ème trouvé
@@ -80,7 +82,7 @@ class DefaultControllerTest extends WebTestCase
 
         $form['forum_edit_category[forumCategoryName]'] = "Java";
         $form['forum_edit_category[forumCategoryText]'] = "Tout ce qui concerne le Java";
-        $form['forum_edit_category[forumCategoryIcon]'] = "glyphicon-globe";
+        $form['forum_edit_category[forumCategoryIcon]'] = "glyphicon glyphicon-globe";
 
         $crawler = $this->client->submit($form);
         $crawler = $this->client->followRedirect();
@@ -88,13 +90,35 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('La catégorie a été modifiée', $this->client->getResponse()->getContent());
 
 
-        /**
-         * Supprimer la catégorie créée
-         */
+        // ******************************************
+        // Supprimer la catégorie créée
+        // ******************************************
         // L'ID = 6 correspond à la catégorie précédemment créée après avoir lancé les fixtures
         $crawler = $this->client->request('GET', '/admin/forum/categories/delete/6');
         $crawler = $this->client->followRedirect();
         $this->assertContains('La catégorie a été supprimée.', $this->client->getResponse()->getContent());
+
+    }
+
+    /**
+     * Tenter de créer une catégorie qui a déjà un nom existant
+     */
+    public function create_category_with_title_already_exist()
+    {
+        $this->connect_in_admin();
+
+        $crawler = $this->client->request('GET', '/admin/forum/categories/');
+
+        $form = $crawler->selectButton('forum_add_category[Ajouter]')->form();
+
+        $form['forum_add_category[forumCategoryName]'] = "Cours Master 1";
+        $form['forum_add_category[forumCategoryText]'] = "Cette catégorie ne sera pas créée, elle existe déjà";
+        $form['forum_add_category[forumCategoryIcon]'] = "glyphicon glyphicon-hdd";
+
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Une catégorie avec ce nom existe déjà', $this->client->getResponse()->getContent());
 
     }
 
