@@ -29,9 +29,9 @@ var imageEvent = function () {
         reader.readAsDataURL(theFile);
     }
     $(this).attr("class","hidden");
-    $(this).attr("id","choosePicture");
+    $(this).attr("id","");
     $(".square-add-picture").append('<input type="file" id="choosePicture" name="event_add_form[photos' + nbInput + '][]" ' +
-        'required="required" class="form-control" multiple="multiple">');
+        'class="form-control" multiple="multiple">');
     nbInput++;
     $("#choosePicture").change(imageEvent);
 }
