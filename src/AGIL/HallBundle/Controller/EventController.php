@@ -30,6 +30,7 @@ class EventController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $event->setUser($this->getUser());
+
             if (empty($em->getRepository('AGILHallBundle:AgilEvent')->findBy(
                 array('eventTitle'=> $form->get('eventTitle')->getData())))) {
                 $event->setEventTitle($form->get('eventTitle')->getData());
@@ -41,12 +42,11 @@ class EventController extends Controller
             $event->setEventDateEnd($form->get('eventDateEnd')->getData());
             $event->setEventDate($form->get('eventDate')->getData());
 
-            if ($form->get('photos0')->getData() != null) {
+            if ($form->get('photos')->getData()[0] != null) {
 
                 $nbInputs = 0;
-                $inputPhoto = $form->get('photos'.$nbInputs)->getData();
-                $inputExist = true;
-                while($inputExist) {
+                $inputPhoto = $form->get('photos')->getData()[$nbInputs];
+                while(!empty($inputPhoto)) {
                     $array = new ArrayCollection();
                     foreach ($inputPhoto as $item) {
                         if ($item != null && $item != "") {
@@ -67,18 +67,18 @@ class EventController extends Controller
 
                             $photo = new AgilPhoto();
                             $photo->setPhotoUrl($fileName);
-                            $photo->setPhotoDescription("");
                             $photo->setPhotoTitle($item->getClientOriginalName());
 
                             $array->add($photo);
+                            $photo->setEvent($event);
                             $em->persist($photo);
                         }
                     }
                     $nbInputs++;
-                    if($form->has('photos' . $nbInputs)) {
-                        $inputPhoto = $form->get('photos' . $nbInputs)->getData();
+                    if(!empty($form->get('photos')->getData()[$nbInputs])) {
+                        $inputPhoto = $form->get('photos')->getData()[$nbInputs];
                     } else {
-                        $inputExist = false;
+                        $inputPhoto = null;
                     }
                 }
                 $event->setImages($array);
