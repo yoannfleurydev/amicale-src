@@ -12,6 +12,7 @@ use AGIL\UserBundle\Entity\AgilUser;
 use AGIL\AdminBundle\Form\UserType;
 use AGIL\AdminBundle\Form\UsersCSVType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -139,6 +140,12 @@ class UserController extends Controller
         if (null === $user) {
             throw new NotFoundHttpException("L'utilisateur d'id ".$id." n'existe pas.");
         } else {
+            $imgOld = $user->getUserProfilePictureUrl();
+            if ($imgOld !== AgilUser::DEFAULT_PROFILE_PICTURE) {
+                $fs = new Filesystem();
+                $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/profile';
+                $fs->remove(array('symlink', $dir.'/'.$imgOld));
+            }
             $em->remove($user);
             $em->flush();
 
