@@ -37,6 +37,27 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('Accueil Forum', $this->client->getResponse()->getContent());
     }
 
+    /**
+     * Test : Accéder à l'accueil du forum en tant qu'utilisateur
+     * @test
+     */
+    public function connect_forum_with_user()
+    {
+        $crawler = $this->client->request('GET', '/forum/');
+        $crawler = $this->client->followRedirect();
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username'  => 'user@amicale.dev',
+            '_password'  => 'user',
+        ));
+
+        $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Accueil Forum', $this->client->getResponse()->getContent());
+    }
+
+
 
     /**
      * Test :
@@ -203,26 +224,49 @@ class DefaultControllerTest extends WebTestCase
         $this->assertContains('Mail envoyé !', $this->client->getResponse()->getContent());
     }
 
-
     /**
-     * Test : Accéder à l'accueil du forum en tant qu'utilisateur
+     * Tenter d'accéder à une catégorie qui n'existe pas
      * @test
      */
-    public function connect_forum_with_user()
+    public function access_category_non_existent()
     {
-        $crawler = $this->client->request('GET', '/forum/');
+        $this->connect_forum_with_user();
+
+        $crawler = $this->client->request('GET', '/forum/categories/123456/page');
         $crawler = $this->client->followRedirect();
 
-        $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => 'user@amicale.dev',
-            '_password'  => 'user',
-        ));
-
-        $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
-
-        $this->assertContains('Accueil Forum', $this->client->getResponse()->getContent());
+        $this->assertContains("La catégorie d&#039;id 123456 n&#039;existe pas.", $this->client->getResponse()->getContent());
     }
+
+
+    /**
+     * Tenter d'accéder à un sujet qui n'existe pas
+     * @test
+     */
+    public function access_subject_non_existent()
+    {
+        $this->connect_forum_with_user();
+
+        $crawler = $this->client->request('GET', '/forum/categories/1/subject/123456/page');
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains("Le sujet d&#039;id 123456 n&#039;existe pas.", $this->client->getResponse()->getContent());
+    }
+
+
+    /**
+     * Tenter d'accéder à un sujet qui n'existe pas
+     * @test
+     */
+    public function access_answers_page_non_existent()
+    {
+        $this->connect_forum_with_user();
+
+        $crawler = $this->client->request('GET', '/forum/categories/1/subject/2/page/123456');
+
+        $this->assertTrue($this->client->getResponse()->isNotFound());
+    }
+
 
     /**
      * Test : Editer une réponse qui n'est pas la sienne
@@ -259,6 +303,7 @@ class DefaultControllerTest extends WebTestCase
     public function pass_subjet_resolved_which_is_not_his()
     {
         $this->connect_forum_with_user();
+
 
         $crawler = $this->client->request('GET', '/forum/categories/1/resolveSubject/3');
         $crawler = $this->client->followRedirect();
