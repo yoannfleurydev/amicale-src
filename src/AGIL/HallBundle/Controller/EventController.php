@@ -30,37 +30,55 @@ class EventController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $event->setUser($this->getUser());
-            $event->setEventTitle($form->get('eventTitle')->getData());
+            if (empty($em->getRepository('AGILHallBundle:AgilEvent')->findBy(
+                array('eventTitle'=> $form->get('eventTitle')->getData())))) {
+                $event->setEventTitle($form->get('eventTitle')->getData());
+            } else {
+                $this->addFlash('warning', 'Titre de l\'événement déjà utilisé.');
+                return $this->redirect($this->generateUrl('agil_hall_event_add'));
+            }
             $event->setEventText($form->get('eventText')->getData());
             $event->setEventDateEnd($form->get('eventDateEnd')->getData());
             $event->setEventDate($form->get('eventDate')->getData());
 
-            if ($form->get('photos')->getData() != null) {
-                $array = new ArrayCollection();
-                foreach ($form->get('photos')->getData() as $item) {
-                    if ($item != null && $item != "") {
-                        if ($item->guessExtension() != "jpeg" && $item->guessExtension() != "png"
-                            && $item->guessExtension() != "gif"
-                        ) {
-                            $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,gif)');
-                            return $this->redirect($this->generateUrl('agil_hall_event_add'));
-                        } // On vérifie la taille du fichier
-                        else if ($item->getClientSize() > 1024000) {
-                            $this->addFlash('warning', 'Erreur ! La taille de l\'image dépasse la limite ! (limite autorisée: 1Mo)');
-                            return $this->redirect($this->generateUrl('agil_hall_event_add'));
+            if ($form->get('photos0')->getData() != null) {
+
+                $nbInputs = 0;
+                $inputPhoto = $form->get('photos'.$nbInputs)->getData();
+                $inputExist = true;
+                while($inputExist) {
+                    $array = new ArrayCollection();
+                    foreach ($inputPhoto as $item) {
+                        if ($item != null && $item != "") {
+                            if ($item->guessExtension() != "jpeg" && $item->guessExtension() != "png"
+                                && $item->guessExtension() != "gif"
+                            ) {
+                                $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,gif)');
+                                return $this->redirect($this->generateUrl('agil_hall_event_add'));
+                            } // On vérifie la taille du fichier
+                            else if ($item->getClientSize() > 1024000) {
+                                $this->addFlash('warning', 'Erreur ! La taille de l\'image dépasse la limite ! (limite autorisée: 1Mo)');
+                                return $this->redirect($this->generateUrl('agil_hall_event_add'));
+                            }
+
+                            $fileName = md5(uniqid()) . '.' . $item->guessExtension();
+                            $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall';
+                            $item->move($dir, $fileName);
+
+                            $photo = new AgilPhoto();
+                            $photo->setPhotoUrl($fileName);
+                            $photo->setPhotoDescription("");
+                            $photo->setPhotoTitle($item->getClientOriginalName());
+
+                            $array->add($photo);
+                            $em->persist($photo);
                         }
-
-                        $fileName = md5(uniqid()) . '.' . $item->guessExtension();
-                        $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall';
-                        $item->move($dir, $fileName);
-
-                        $photo = new AgilPhoto();
-                        $photo->setPhotoUrl($fileName);
-                        $photo->setPhotoDescription("");
-                        $photo->setPhotoTitle($item->getClientOriginalName());
-
-                        $array->add($photo);
-                        $em->persist($photo);
+                    }
+                    $nbInputs++;
+                    if($form->has('photos' . $nbInputs)) {
+                        $inputPhoto = $form->get('photos' . $nbInputs)->getData();
+                    } else {
+                        $inputExist = false;
                     }
                 }
                 $event->setImages($array);

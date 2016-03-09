@@ -5,6 +5,7 @@ $("#user_add_csv_form_file").change(function() {
 
 var pictures;
 var nbInput = 1;
+var nbPicture = 0;
 $("#choosePicture").change(imageEvent);
 
 var imageEvent = function () {
@@ -18,10 +19,12 @@ var imageEvent = function () {
             return function(e) {
                 // Render thumbnail.
                 var span = document.createElement('span');
-                span.innerHTML = ['<img height="100px" width="100px" class="thumb" src="', e.target.result,
+                span.className = "editable-picture";
+                span.innerHTML = ['<img height="100px" width="100px" class="picture' + nbPicture + '" src="', e.target.result,
                     '" title="', escape(theFile.name), '"/>' +
                     '</a>'].join('');
                 document.getElementById('addedPicture').appendChild(span);
+                nbPicture++;
             };
         })(theFile);
 
@@ -29,9 +32,9 @@ var imageEvent = function () {
         reader.readAsDataURL(theFile);
     }
     $(this).attr("class","hidden");
-    $(this).attr("id","choosePicture");
+    $(this).attr("id","");
     $(".square-add-picture").append('<input type="file" id="choosePicture" name="event_add_form[photos' + nbInput + '][]" ' +
-        'required="required" class="form-control" multiple="multiple">');
+     ' class="form-control" multiple="multiple">');
     nbInput++;
     $("#choosePicture").change(imageEvent);
 }
