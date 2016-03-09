@@ -4,8 +4,10 @@ $("#user_add_csv_form_file").change(function() {
 });
 
 var pictures;
+var nbInput = 1;
+$("#choosePicture").change(imageEvent);
 
-$("#choosePicture").change(function() {
+var imageEvent = function () {
     var tabFile = this.files;
 
     for(var i = 0 ; i < tabFile.length; i++) {
@@ -26,4 +28,10 @@ $("#choosePicture").change(function() {
         // Read in the image file as a data URL.
         reader.readAsDataURL(theFile);
     }
-});
+    $(this).attr("class","hidden");
+    $(this).attr("id","choosePicture");
+    $(".square-add-picture").append('<input type="file" id="choosePicture" name="event_add_form[photos' + nbInput + '][]" ' +
+        'required="required" class="form-control" multiple="multiple">');
+    nbInput++;
+    $("#choosePicture").change(imageEvent);
+}
