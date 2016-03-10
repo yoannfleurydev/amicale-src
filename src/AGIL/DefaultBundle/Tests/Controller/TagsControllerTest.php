@@ -14,7 +14,11 @@ class TagsControllerTest extends WebTestCase {
 		$this->client = static::createClient();
 	}
 
-	public function testTags() {
+	/**
+	 * Teste si les routes sont accessibles or xhr
+	 * @Test access to routes
+	 */
+	public function testRoutesNotAccessible() {
 		/* Vérifier que l'accès à la route sans requête ajax n'est pas autorisé */
 		$url = $this->client->getContainer()->get('router')->generate('agil_tags_search');
 		$this->client->request(
@@ -32,7 +36,13 @@ class TagsControllerTest extends WebTestCase {
 			array('tagName' => 'Web')
 		);
 		$this->assertTrue($this->client->getResponse()->isNotFound());
+	}
 
+	/**
+	 * Teste que les tags alpha numériques sont enregistrés
+	 * @Test corrects tags are registred
+	 */
+	public function testTagsAreRegistred() {
 		/* Créer un client connecté en tant qu'user */
 		$url = $this->client->getContainer()->get('router')->generate('fos_user_profile_show');
 
@@ -42,8 +52,8 @@ class TagsControllerTest extends WebTestCase {
 		);
 
 		$form = $crawler->selectButton('_submit')->form(array(
-			'_username'  => 'user@amicale.dev',
-			'_password'  => 'user',
+			'_username' => 'user@amicale.dev',
+			'_password' => 'user',
 		));
 
 		$this->client->submit($form);
@@ -65,12 +75,33 @@ class TagsControllerTest extends WebTestCase {
 		$this->client->submit($form);
 		$this->client->followRedirect();
 
-		$content =  $this->client->getResponse()->getContent();
+		$content = $this->client->getResponse()->getContent();
 		$this->assertContains('Le sujet a bien été créé', $content);
 		$this->assertContains('PHP', $content);
 		$this->assertContains('JAVA', $content);
 		$this->assertContains('ACER', $content);
 		$this->assertContains('UNTAGINEXISTANT35', $content);
+	}
+
+	/**
+	 * Teste que les tags non alpha numériques ne sont pas enregistrés
+	 * @Test incorrects tags are not registred
+	 */
+	public function testTagsAreNotRegistred() {
+		$url = $this->client->getContainer()->get('router')->generate('fos_user_profile_show');
+
+		$crawler = $this->client->request(
+			'GET',
+			$url
+		);
+
+		$form = $crawler->selectButton('_submit')->form(array(
+			'_username' => 'user@amicale.dev',
+			'_password' => 'user',
+		));
+
+		$this->client->submit($form);
+		$this->client->followRedirect();
 
 		/* Vérifier que les tags non alpha numériques ne sont pas enregistrés */
 		$url = $this->client->getContainer()->get('router')->generate('agil_forum_subject_add_home');
