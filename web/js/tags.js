@@ -6,6 +6,7 @@ $(function () {
 
     var tagsInput = $('.tags_input_visible');
     var tagsInputHidden = $('#tags_input');
+    console.log(tagsInputHidden);
     var tagsContainer = $('#tags_container');
     var listTagItem = $('.list_item_tag');
 
