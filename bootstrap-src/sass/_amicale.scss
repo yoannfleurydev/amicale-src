@@ -694,3 +694,26 @@ span.panel-title-content {
   margin-left: auto;
   margin-right: auto;
 }
+
+.footer {
+
+  .panel, .panel-default, .panel-heading {
+    background-color : $footer-color !important;
+    box-shadow: none !important;
+    color : #FFF !important;
+  }
+
+  .panel-heading {
+    text-transform: uppercase;
+  }
+}
+
+.footer-title:after {
+  content: "";
+  background: #d55400;
+  position: absolute;
+  top: 35px;
+  left: 25px;
+  height: 4px;
+  width: 20px;
+}

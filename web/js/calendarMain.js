@@ -1,4 +1,4 @@
-
+$('.loader').hide();
 $(document).ready(function () {
     $('.loader').hide();
 
@@ -24,7 +24,7 @@ $(document).ready(function () {
         },
         events: function (start, end, timezone, callback) {
 
-            $('.loader').show();
+            //$('.loader').show();
            $.ajax({
                 type: "POST",
                 url: Routing.generate('agil_hall_calendar_data'),
