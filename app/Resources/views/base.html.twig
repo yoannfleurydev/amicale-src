@@ -10,7 +10,34 @@
     <script type="text/javascript" src="{{ asset("js/bootstrap/popover.js") }}"></script>
     {% block stylesheets %}{% endblock %}
     {% block javascript %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <!-- import pour le calendrier -->
+    <link rel="stylesheet" href="{{ asset('css/fullcalendar.css') }}" />
+    <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/calendarMain.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fullcalendar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/fr.js') }}"></script>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('icon/apple-icon-57x57.png') }}"/>
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('icon/apple-icon-60x60.png') }}"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('icon/apple-icon-72x72.png') }}"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('icon/apple-icon-76x76.png') }}"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('icon/apple-icon-114x114.png') }}"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('icon/apple-icon-120x120.png') }}"/>
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('icon/apple-icon-144x144.png') }}"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('icon/apple-icon-152x152.png') }}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('icon/apple-icon-180x180.png') }}"/>
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('icon/android-icon-192x192.png') }}"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icon/favicon-32x32.png') }}"/>
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('icon/favicon-96x96.png') }}"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('icon/favicon-16x16.png') }}"/>
+    <link rel="manifest" href="{{ asset('icon/manifest.json') }}"/>
+    <meta name="msapplication-TileColor" content="#34495f"/>
+    <meta name="msapplication-TileImage" content="{{ asset('icon/ms-icon-144x144.png') }}"/>
+    <meta name="theme-color" content="#34495f">
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -53,7 +80,7 @@
                 {% endif %}
                 <a href="#" class="navbar-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Rechercher"><span class="material-icons">search</span></a>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
         <aside class="sidebar">
             <nav class="nav">
                 <ul class="nav-items">

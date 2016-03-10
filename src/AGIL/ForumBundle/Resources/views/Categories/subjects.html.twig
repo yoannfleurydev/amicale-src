@@ -2,12 +2,10 @@
 
 
 {% block body %}
-
     <ol class="breadcrumb">
         <li><a href="{{ path('agil_forum_homepage') }}">Accueil Forum</a></li>
         <li class="active">{{ category.forumCategoryName }}</li>
     </ol>
-
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel">
@@ -17,84 +15,86 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <p><a href="{{ path('agil_forum_subject_add',{'idCategory' : category.forumCategoryId} ) }}"
-                          class="btn btn-primary">Nouveau Sujet</a></p>
+                    <p>
+                        <a href="{{ path('agil_forum_subject_add',{'idCategory' : category.forumCategoryId} ) }}"
+                           class="btn btn-primary">
+                            Nouveau Sujet
+                        </a>
+                    </p>
                     {% if subjects|length != 0 %}
-                    <table class="table panel" id="table-subjects">
-                        <!-- On rows -->
-                        <tr class="primary-blue text-white">
-                            <th></th>
-                            <th> Sujet</th>
-                            <th class="hidden-xs"> Auteur</th>
-                            <th class="hidden-xs"> Nb messages</th>
-                            <th> Date</th>
-                            <th><span class="glyphicon glyphicon-trash"></span></th>
-                        </tr>
-
-                        {% for s in subjects %}
-
-                            <tr>
-                                <td class="vert-align text-center">
-                                    {% if s.forumSubjectIsResolved %}
-                                        <span class="glyphicon glyphicon-ok icon-medium icon-succes"></span>
-
-                                    {% else %}
-                                        <span class="glyphicon glyphicon-minus icon-medium"></span>
-                                    {% endif %}
-                                </td>
-                                <td class="vert-align">
-                                    <a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId} ) }}">
-                                        <h6 class="no-margin-top-bot text-orange"><strong>{{ s.forumSubjectTitle | capitalize }}</strong></h6>
-                                    </a>
-                                    <span class="text-left hidden-xs text-justify"><em>{{ s.forumSubjectDescription | capitalize }}</em></span>
-                                    <div class="">
-                                        {% for tag in tagsPerSubject[s.forumSubjectId] %}
-                                            <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper}}</span>
-                                        {% endfor %}
-                                    </div>
-                                </td>
-                                <td class="vert-align hidden-xs"><a
-                                            href="{{ path('agil_profile_id',{'id':s.id}) }}">{{ s.username }}</a></td>
-                                <td class="vert-align hidden-xs">{{ countAnswers[s.forumSubjectId] }}</td>
-                                <td class="vert-align">
-                                    <div class="hidden-xs hidden-sm">Créé le {{ s.forumSubjectPostDate|localizeddate('none', 'none', null, null, 'd LLL Y') }}</div>
-                                    Actif il y a <span
-                                            class="text-primary-blue"><strong>{{ relativeDate[s.forumSubjectId] }}</strong></span>
-                                </td>
-
-                                {% if ((is_granted('ROLE_MODERATOR')) or (app.user.username == s.username)) %}
-                                    <td class="vert-align"><a name="deleteSubjectLink"
-                                                              href="{{ path('agil_forum_subject_delete',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId}) }}">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a></td>
-                                {% else %}
-                                    <td></td>
-                                {% endif %}
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table-subjects">
+                            <thead>
+                            <tr class="primary-blue text-white">
+                                <th></th>
+                                <th>Sujet</th>
+                                <th class="hidden-xs">Auteur</th>
+                                <th class="hidden-xs">Nb messages</th>
+                                <th>Date</th>
+                                <th></th>
                             </tr>
-
-                        {% endfor %}
-
-                    </table>
+                            </thead>
+                            <tbody>
+                            {% for s in subjects %}
+                                <tr>
+                                    <td class="vert-align text-center">
+                                        {% if s.forumSubjectIsResolved %}
+                                            <span class="glyphicon glyphicon-ok icon-medium icon-success"></span>
+                                        {% else %}
+                                            <span class="glyphicon glyphicon-minus icon-medium"></span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="vert-align">
+                                        <a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId} ) }}">
+                                            <h6 class="no-margin-top-bot text-orange">
+                                                <strong>{{ s.forumSubjectTitle | capitalize }}</strong>
+                                            </h6>
+                                        </a>
+                                    <span class="text-left hidden-xs text-justify">
+                                        <em>{{ s.forumSubjectDescription | capitalize }}</em>
+                                    </span>
+                                        <div>
+                                            {% for tag in tagsPerSubject[s.forumSubjectId] %}
+                                                <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </td>
+                                    <td class="vert-align hidden-xs">
+                                        <a href="{{ path('agil_profile_id',{'id':s.id}) }}">{{ s.username }}</a>
+                                    </td>
+                                    <td class="vert-align hidden-xs">{{ countAnswers[s.forumSubjectId] }}</td>
+                                    <td class="vert-align">
+                                        <div class="hidden-xs hidden-sm">Créé
+                                            le {{ s.forumSubjectPostDate|localizeddate('none', 'none', null, null, 'd LLL Y') }}</div>
+                                        Actif il y a <span
+                                                class="text-primary-blue"><strong>{{ relativeDate[s.forumSubjectId] }}</strong></span>
+                                    </td>
+                                    {% if ((is_granted('ROLE_MODERATOR')) or (app.user.username == s.username)) %}
+                                        <td class="vert-align">
+                                            <a class="btn btn-default btn-danger"
+                                               href="{{ path('agil_forum_subject_delete',{'idCategory' : category.forumCategoryId, 'idSubject' : s.forumSubjectId}) }}">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                        </td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav class="text-center">
+                        {% include 'AGILForumBundle:Categories:pagination.html.twig' %}
+                    </nav>
+                    {% else %}
+                    <h6 class="text-center">
+                        Cette catégorie ne contient actuellement aucun sujet.
+                        Vous pouvez en créer un à partir du bouton "Nouveau sujet".
+                    </h6>
+                    {% endif %}
                 </div>
-
-                <nav class="text-center">
-                    {% include 'AGILForumBundle:Categories:pagination.html.twig' %}
-                </nav>
-
-                {% else %}
-
             </div>
-            <p>
-            <h6 class="text-center">
-                Cette catégorie ne contient actuellement aucun sujet.
-                Vous pouvez en créer un à partir du bouton "Nouveau sujet".
-            </h6>
-            </p>
         </div>
-        {% endif %}
-
     </div>
-    </div>
-
-
 {% endblock %}
