@@ -5,26 +5,20 @@ namespace AGIL\AdminBundle\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase {
-    const SUPER_ADMIN = array(
-        '_username' => 'superadmin@amicale.dev',
-        '_password' => 'superadmin'
-    );
-    const ADMIN = array(
-        '_username' => 'admin@amicale.dev',
-        '_password' => 'admin'
-    );
-    const AMICALE = array(
-        '_username' => 'amicale@amicale.dev',
-        '_password' => 'amicale'
-    );
-    const MODERATOR = array(
-        '_username' => 'moderator@amicale.dev',
-        '_password' => 'moderator'
-    );
-    const USER = array(
-        '_username' => 'user@amicale.dev',
-        '_password' => 'user'
-    );
+    const SUPER_ADMIN_USERNAME = 'superadmin@amicale.dev';
+    const SUPER_ADMIN_PASSWORD = 'superadmin';
+
+    const ADMIN_USERNAME = 'admin@amicale.dev';
+    const ADMIN_PASSWORD = 'admin';
+
+    const AMICALE_USERNAME = 'amicale@amicale.dev';
+    const AMICALE_PASSWORD = 'amicale';
+
+    const MODERATOR_USERNAME = 'moderator@amicale.dev';
+    const MODERATOR_PASSWORD = 'moderator';
+
+    const USER_USERNAME = 'user@amicale.dev';
+    const USER_PASSWORD = 'user';
 
     private $client = null;
 
@@ -44,8 +38,9 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->followRedirect();
         $form = $crawler->selectButton('_submit')->form(
             array(
-                '_username' => $this::SUPER_ADMIN['_username'],
-                '_password' => $this::SUPER_ADMIN['_password'])
+                '_username' => $this::SUPER_ADMIN_USERNAME,
+                '_password' => $this::SUPER_ADMIN_PASSWORD
+            )
         );
         // WHEN
         $this->client->submit($form);
@@ -63,8 +58,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username' => $this::SUPER_ADMIN['_username'],
-            '_password' => $this::SUPER_ADMIN['_password']
+            '_username' => $this::SUPER_ADMIN_USERNAME,
+            '_password' => $this::SUPER_ADMIN_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -109,8 +104,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::USER['_username'],
-            '_password'  => $this::USER['_password']
+            '_username'  => $this::USER_USERNAME,
+            '_password'  => $this::USER_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -133,8 +128,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::MODERATOR['_username'],
-            '_password'  => $this::MODERATOR['_password']
+            '_username'  => $this::MODERATOR_USERNAME,
+            '_password'  => $this::MODERATOR_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -156,8 +151,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::ADMIN['_username'],
-            '_password'  => $this::ADMIN['_password']
+            '_username'  => $this::ADMIN_USERNAME,
+            '_password'  => $this::ADMIN_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -179,8 +174,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::SUPER_ADMIN['_username'],
-            '_password'  => $this::SUPER_ADMIN['_password']
+            '_username'  => $this::SUPER_ADMIN_USERNAME,
+            '_password'  => $this::SUPER_ADMIN_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -199,8 +194,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::SUPER_ADMIN['_username'],
-            '_password'  => $this::SUPER_ADMIN['_password']
+            '_username'  => $this::SUPER_ADMIN_USERNAME,
+            '_password'  => $this::SUPER_ADMIN_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -219,8 +214,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::SUPER_ADMIN['_username'],
-            '_password'  => $this::SUPER_ADMIN['_password']
+            '_username'  => $this::SUPER_ADMIN_USERNAME,
+            '_password'  => $this::SUPER_ADMIN_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -236,8 +231,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::ADMIN['_username'],
-            '_password'  => $this::ADMIN['_password']
+            '_username'  => $this::ADMIN_USERNAME,
+            '_password'  => $this::ADMIN_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -255,8 +250,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::SUPER_ADMIN['_username'],
-            '_password'  => $this::SUPER_ADMIN['_password'],
+            '_username'  => $this::SUPER_ADMIN_USERNAME,
+            '_password'  => $this::SUPER_ADMIN_PASSWORD
         ));
 
         $this->client->submit($form);
@@ -284,8 +279,8 @@ class DefaultControllerTest extends WebTestCase {
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username'  => $this::SUPER_ADMIN['_username'],
-            '_password'  => $this::SUPER_ADMIN['_password'],
+            '_username'  => $this::SUPER_ADMIN_USERNAME,
+            '_password'  => $this::SUPER_ADMIN_PASSWORD,
         ));
 
         $this->client->submit($form);
