@@ -70,14 +70,13 @@
                     </div>
                 </div>
 
-                <div class="text-center">
-                    {{ form_row(form.Modifier) }}
+                <p class="text-center">
+                    {{ form_widget(form.Modifier) }}
                     <a class="btn btn-default" href="{{ path('agil_admin_forum_categories') }}">
                         Annuler
                     </a>
-                </div>
-
-                {{ form_rest(form) }}
+                    {{ form_rest(form) }}
+                </p>
             </form>
         </div>
     </div>
