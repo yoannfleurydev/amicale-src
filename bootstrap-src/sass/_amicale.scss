@@ -59,33 +59,6 @@ $footer-color : #444;
   margin-top:10px;
 }
 
-.square-add-picture {
-  border:1px solid #888;
-  width:100px;
-  height:100px;
-  text-align:center;
-  font-size:50px;
-  opacity:.5;
-  line-height:95px;
-  cursor:pointer;
-  position: relative;
-}
-
-.square-add-picture input {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0;
-  padding: 0;
-  font-size: 20px;
-  cursor: pointer;
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
-
-.square-add-picture:before {
-  content:"+"
-}
 
 $card-events-border-radiux : 0px;
 .card-events {
@@ -655,4 +628,63 @@ span.panel-title-content {
   margin-right:10px;
   margin-bottom:10px;
   border:1px solid #888;
+}
+
+.editable-picture:after {
+  content: 'X';
+  position: absolute;
+  margin-left: -29px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  width: 15px;
+  height: 15px;
+  line-height: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.editable-picture {
+  color: #000;
+}
+
+#choosePicture {
+  height: 100px;
+}
+
+.square-add-picture {
+  border:1px solid #888;
+  width:100px;
+  height:100px;
+  text-align:center;
+  font-size:50px;
+  opacity:.5;
+  line-height:95px;
+  cursor:pointer;
+  position: relative;
+}
+
+.square-add-picture input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+
+.square-add-picture:after {
+  content:"+";
+  /*position: absolute;
+  #right: 16px;
+  #bottom: 42px;
+  #border: 1px solid #ccc;*/
+  width: 15px;
+  height: 15px;
+  /*line-height: 14px;
+  #text-align: center;*/
+  cursor: pointer;
 }

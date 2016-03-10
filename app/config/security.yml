@@ -39,4 +39,4 @@ security:
         - { path: ^/chat, roles: ROLE_USER }
         - { path: ^/forum, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/calendar, roles: ROLE_USER }
+        - { path: ^/hall/event/add, roles: ROLE_ADMIN }

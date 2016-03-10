@@ -13,10 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AgilPhoto
 {
-
     /**
-     * @ORM\ManyToOne(targetEntity="AGIL\HallBundle\Entity\AgilEvent")
-     * @ORM\JoinColumn(nullable=false,referencedColumnName="eventId")
+     * @ORM\ManyToOne(targetEntity="AGIL\HallBundle\Entity\AgilEvent", inversedBy="photos")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="eventId")
      */
     private $event;
 
@@ -32,14 +31,7 @@ class AgilPhoto
     /**
      * @var string
      *
-     * @ORM\Column(name="photoUrl", type="string", length=255, unique=true)
-     * @Assert\NotBlank(message="La photo doit contenir une url")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 255,
-     *      minMessage = "La taille minimale est de {{ limit }} caractères",
-     *      maxMessage = "La taille maximale est de {{ limit }} caractères"
-     * )
+     * @ORM\Column(name="photoUrl", type="string", length=255)
      */
     private $photoUrl;
 
@@ -53,7 +45,8 @@ class AgilPhoto
     /**
      * @var string
      *
-     * @ORM\Column(name="photoDescription", type="text")
+     * @ORM\Column(name="photoDescription", type="text", nullable=true)
+     *
      * @Assert\NotBlank(message="La photo doit contenir une description")
      * @Assert\Length(
      *      min = 2,
@@ -76,6 +69,13 @@ class AgilPhoto
      */
     private $photoTitle;
 
+    /**
+     * AgilPhoto constructor.
+     */
+    public function __construct()
+    {
+        $this->photoUploadDate = new \Datetime();
+    }
 
     /**
      * Get photoId
@@ -179,35 +179,22 @@ class AgilPhoto
         return $this->photoTitle;
     }
 
-    /**
-     * Set event
-     *
-     * @param \AGIL\HallBundle\Entity\AgilEvent $event
-     * @return AgilPhoto
-     */
-    public function setEvent(\AGIL\HallBundle\Entity\AgilEvent $event)
-    {
+    public function getEvent() {
+        return $this->event;
+    }
+
+    public function setEvent($event) {
         $this->event = $event;
 
         return $this;
     }
+    public function getFile() {
+       return $this->file;
+    }
+    public function setFile($file) {
+        $this->file = $file;
 
-    /**
-     * Get event
-     *
-     * @return \AGIL\HallBundle\Entity\AgilEvent 
-     */
-    public function getEvent()
-    {
-        return $this->event;
+        $this;
     }
 
-
-    /**
-     * AgilPhoto constructor.
-     */
-    public function __construct()
-    {
-        $this->photoUploadDate = new \Datetime();
-    }
 }

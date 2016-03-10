@@ -1,6 +1,7 @@
 {% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
 {% block body %}
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -8,8 +9,9 @@
                     <div class="row">
                         <div class="col-lg-10">
                             <h3>{{ event.eventTitle }}</h3>
-                            {% if event.eventDateEnd > event.eventDate %}
-                                <small>du {{ event.eventDate | date('j/m/Y') }} au {{ event.eventDateEnd | date('j/m/Y') }}</small>
+                            {% if event.eventDateEnd is defined %}
+                                <small>du {{ event.eventDate | date('j/m/Y') }}
+                                    au {{ event.eventDateEnd | date('j/m/Y') }}</small>
                             {% else %}
                                 <small>le {{ event.eventDate | date('j/m/Y') }}</small>
                             {% endif %}
@@ -24,7 +26,11 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    {{ eventContent | raw }}
+                    <div class="row">
+                        <p>
+                            {{ eventContent | raw }}
+                        </p>
+                    </div>
                     <div class="row">
                         <div class="owl-carousel">
                             {% for photo in event.photos %}
@@ -33,27 +39,23 @@
                             {% endfor %}
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="img-zoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                    <div class="row">
+                        {{ form_start(form) }}
+                            <div class="text-center">
+                                {{ form_widget(form.Supprimer) }}
+                                <a class="btn btn-default" href="{{ path('agil_hall_homepage') }}">Annuler</a>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        $(document).ready(function(){
-            $(".owl-carousel").owlCarousel({nav:true});
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({nav: true});
         });
-    </script>
-    <script src="{{ asset('js/event.js') }}">
     </script>
 
 {% endblock %}
+
