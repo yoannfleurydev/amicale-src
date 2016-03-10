@@ -76,9 +76,11 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertContains('existe pas.', $this->client->getResponse()->getContent());
     }
+
     /**
      * Test : Mot de passe perdu avec un email
      */
+    /*
     public function testPasswordLost()
     {
         $crawler = $this->client->request('GET', '/logout');
@@ -100,6 +102,5 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertContains('Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.', $this->client->getResponse()->getContent());
     }
-
-
+*/
 }

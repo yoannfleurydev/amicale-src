@@ -13,44 +13,57 @@ class DefaultControllerTest extends WebTestCase
     /**
      * Méthode qui initialise le client de test
      */
-    public function setUp()
-    {
+    public function setUp() {
         $this->client = static::createClient();
     }
 
 
     /**
-     * Test : Accéder aux paramètres de profil
-     * username et password à changer selon votre configuration perso
+     * @test
      */
-    public function testAccess()
+    public function access_to_profile_edition()
     {
-        $this->client->request('GET', '/profile/edit');
+        $this->client->request('GET', '/logout');
+        $this->client->followRedirect();
 
+        $this->client->request('GET', '/profile/edit');
         $crawler = $this->client->followRedirect();
 
         $form = $crawler->selectButton('_submit')->form(array(
-            '_username' => 'chuck@norris.dev',
-            '_password' => 'chuck'
+            '_username' => 'user@amicale.dev',
+            '_password' => 'user'
         ));
 
         $this->client->submit($form);
         $this->client->followRedirect();
+
         $this->assertContains('Modifier l\'adresse email :', $this->client->getResponse()->getContent());
     }
 
-    public function testEditNickname()
+    /**
+     * @test
+     */
+    public function edit_nickname_should_work()
     {
-        $this->testAccess();
-        $crawler = $this->client->request('GET', '/profile/edit');
-        $form = $crawler->selectButton('profil_edit_form[Modifier]')->form(array(
-            'profil_edit_form[username]' => 'lee'
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('_submit')->form(array(
+            '_username' => 'user@amicale.dev',
+            '_password' => 'user'
         ));
 
         $this->client->submit($form);
         $this->client->followRedirect();
-        $this->assertContains('Profil modifié.', $this->client->getResponse()->getContent());
 
+        $crawler = $this->client->request('GET', '/profile/edit');
+        $form = $crawler->selectButton('profil_edit_form[Modifier]')->form(array(
+            'profil_edit_form[username]' => 'utilisateur'
+        ));
+
+        $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        $this->assertContains('Profil modifié.', $this->client->getResponse()->getContent());
     }
 
 //    public function testEditProfilePicture()
