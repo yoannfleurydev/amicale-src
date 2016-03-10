@@ -6,7 +6,6 @@ $(function () {
 
     var tagsInput = $('.tags_input_visible');
     var tagsInputHidden = $('#tags_input');
-    console.log(tagsInputHidden);
     var tagsContainer = $('#tags_container');
     var listTagItem = $('.list_item_tag');
 
@@ -137,21 +136,23 @@ $(function () {
     if (text.length > 0) {
         tags = text.split(" ");
         for (tag of tags) {
-            //On ajout l'item qui permet de montrer et supprimer un tag
-            listTagItem.append( "<div class='item_tag'>" +
-                "<span class='item_tag_label'>" + tag.toUpperCase() + "</span>" +
-                "<span id='" + tag + "' class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
-                "</span></div>" );
+            if (tag != "") {
+                //On ajout l'item qui permet de montrer et supprimer un tag
+                listTagItem.append( "<div class='item_tag'>" +
+                    "<span class='item_tag_label'>" + tag.toUpperCase() + "</span>" +
+                    "<span id='" + tag + "' class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
+                    "</span></div>" );
 
-            //On rajoute sur la croix un envent
-            $("#" + tag).click(function() {
-                //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
-                // exemple : PHP et PHPSTORM
-                var tagToDelete = $(this).attr('id');
-                var val = tagsInputHidden.val().replace(tagToDelete + " ", "");
-                tagsInputHidden.val(val);
-                $(this).parent().remove();
-            });
+                //On rajoute sur la croix un envent
+                $("#" + tag).click(function() {
+                    //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
+                    // exemple : PHP et PHPSTORM
+                    var tagToDelete = $(this).attr('id');
+                    var val = tagsInputHidden.val().replace(tagToDelete + " ", "");
+                    tagsInputHidden.val(val);
+                    $(this).parent().remove();
+                });
+            }
         }
     }
 });

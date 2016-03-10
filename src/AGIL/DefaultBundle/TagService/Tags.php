@@ -6,6 +6,7 @@ namespace AGIL\DefaultBundle\TagService;
 use AGIL\DefaultBundle\Entity\AgilTag;
 use AGIL\ProfileBundle\Entity\AgilSkill;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\VarDumper\VarDumper;
 
 class Tags {
 

@@ -14,6 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Essence\Essence;
+use Symfony\Component\VarDumper\VarDumper;
 
 class EventController extends Controller
 {
@@ -150,6 +151,8 @@ class EventController extends Controller
             }
             $tagsManager->insertDone();
             $event->removeTags();
+            $em->persist($event);
+            $em->flush();
             $event->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
             /*if ($form->get('photos')->getData()[0] != null) {
@@ -211,10 +214,7 @@ class EventController extends Controller
         $count = 0;
         foreach($event->getTags() as $tag) {
             $count++;
-            $tagArray .= $tag->getTagName();
-            if ($count != $count_tags) {
-                $tagArray .= " ";
-            }
+            $tagArray .= $tag->getTagName() . " ";
         }
         $form->get('tags')->setData($tagArray);
 
