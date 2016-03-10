@@ -17,8 +17,7 @@
 
                 <!-- Formulaire de modification du post pour le forum -->
 
-                <form action="{{ path('agil_forum_answers_edit', {'idCategory': idCategory, 'idSubject': idSubject, 'idAnswer': idAnswer}) }}"
-                      method="post" {{ form_enctype(form) }}>
+                {{ form_start(form) }}
 
                     <div class="form-group" id="formAddNamePost">
                         <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Sujet</strong></label>
@@ -62,8 +61,7 @@
                             tools: {title: 'Tools', items: 'spellchecker code'}
                         }
                     }) }}
-                    {{ form_rest(form) }}
-                </form>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

@@ -16,10 +16,7 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-
-                    <!-- Formulaire d'ajout d'un nouveau sujet pour le forum -->
-
-                    <form action="{{ path('agil_forum_subject_add', {'idCategory': idCategory}) }}" method="post" {{ form_enctype(form) }}>
+                    {{ form_start(form) }}
 
                         <div class="form-group" id="formAddNamePost">
                             <h5><label class="control-label">Nom du sujet</label></h5>
@@ -31,7 +28,6 @@
                                 {{ form_errors(form.subject.forumSubjectDescription) }}
                                 {{ form_widget(form.subject.forumSubjectDescription) }}
                         </div>
-
 
                         <div class="form-group" id="formAddTagsPost">
                             <h5><label class="control-label">Tags</label></h5>
@@ -58,7 +54,8 @@
 
                         {{ tinymce_init() }}
                         {{ form_rest(form) }}
-                    </form>
+
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

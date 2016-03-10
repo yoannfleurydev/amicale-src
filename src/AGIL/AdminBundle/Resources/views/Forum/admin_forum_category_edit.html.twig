@@ -14,7 +14,7 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-            <form action="{{ path('agil_admin_forum_category_edit',{'idCategory' : category.forumCategoryId}) }}" method="post" {{ form_enctype(form) }}>
+            {{ form_start(form) }}
 
                 {{ form_errors(form) }}
 
@@ -77,10 +77,11 @@
                     </a>
                     {{ form_rest(form) }}
                 </p>
-            </form>
+
+            {{ form_end(form) }}
         </div>
     </div>
-    <!-- Panel qui s'affiche pour la confirmation de suppression -->
+
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">

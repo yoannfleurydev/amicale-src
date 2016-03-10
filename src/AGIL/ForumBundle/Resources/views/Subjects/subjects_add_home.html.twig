@@ -17,8 +17,7 @@
                 </div>
                 <div class="panel-body">
 
-                    <!-- Formulaire d'ajout d'un nouveau sujet pour le forum -->
-                    <form action="{{ path('agil_forum_subject_add_home') }}" method="post" {{ form_enctype(form) }}>
+                    {{ form_start(form) }}
 
                         <div class="form-group" id="formCategories">
                             <h5><label class="control-label">Catégorie</label></h5>
@@ -62,7 +61,8 @@
 
                         {{ tinymce_init() }}
                         {{ form_rest(form) }}
-                    </form>
+
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
