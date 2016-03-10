@@ -1,8 +1,10 @@
-/**
- * Created by valentin on 3/9/16.
- */
 $('img').click(function() {
-    console.log($(this));
-    $(".modal-body").html($(this).clone());
+    var img = $(this).clone();
+    $(".modal-body").html(img);
     $('#img-zoom').modal('show');
+});
+
+
+$(document).ready(function(){
+    $(".owl-carousel").owlCarousel({nav:true});
 });
