@@ -2,6 +2,7 @@
 
 namespace AGIL\HallBundle\Controller;
 
+use AGIL\DefaultBundle\Entity\AgilTag;
 use AGIL\HallBundle\Entity\AgilEvent;
 use AGIL\HallBundle\Entity\AgilPhoto;
 use AGIL\HallBundle\Form\DeleteEventType;
@@ -42,6 +43,16 @@ class EventController extends Controller
             $event->setEventDateEnd($form->get('eventDateEnd')->getData());
             $event->setEventDate($form->get('eventDate')->getData());
 
+            // les tags
+            $tagsArrayString = explode(" ", $event->getTags());
+            $tagsManager = $this->get('agil_default.tags');
+            foreach ($tagsArrayString as $tag) {
+                $tagsManager->insertTag($tag);
+            }
+            $tagsManager->insertDone();
+            $event->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
+
+            // Uploads photos
             if ($form->get('photos')->getData()[0] != null) {
 
                 $nbInputs = 0;
@@ -131,6 +142,15 @@ class EventController extends Controller
             $event->setEventDateEnd($form->get('eventDateEnd')->getData());
             $event->setEventDate($form->get('eventDate')->getData());
 
+            // les tags
+            $tagsArrayString = explode(" ", $event->getTags());
+            $tagsManager = $this->get('agil_default.tags');
+            foreach ($tagsArrayString as $tag) {
+                $tagsManager->insertTag($tag);
+            }
+            $tagsManager->insertDone();
+            $event->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
+
             /*if ($form->get('photos')->getData()[0] != null) {
 
                 $nbInputs = 0;
@@ -185,6 +205,7 @@ class EventController extends Controller
         $form->get('eventDate')->setData($event->getEventDate());
         $form->get('eventDateEnd')->setData($event->getEventDateEnd());
         //$form->get('photos')->setData($event->getPhotos());
+        $form->get('tags')->setData(explode(" ", $event->getTags()));
 
         return $this->render('AGILHallBundle:Event:event_edit.html.twig', array(
             'form' => $form->createView(),

@@ -287,6 +287,16 @@ class AgilEvent
     }
 
     /**
+     * Set tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function setTags($collection)
+    {
+        $this->tags = $collection;
+    }
+
+    /**
      * @param AgilPhoto $photo
      * @return $this
      */
