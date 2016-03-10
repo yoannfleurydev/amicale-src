@@ -2,8 +2,14 @@
 
 {% set isActive = "admin" %}
 
+{% block title %}L'administration{% endblock %}
+
 {% block javascript %}
     <script type="text/javascript" src="{{ asset("js/admin.js") }}"></script>
 {% endblock %}
 
 {% block body %}{% endblock %}
+
+{% block botJavascript %}
+    <script src="{{ asset("js/admin.js") }}"></script>
+{% endblock %}

@@ -44,17 +44,23 @@ class DefaultController extends Controller {
 
         $essence = new Essence();
 
-        $eventContent = $essence->replace($event->getEventText(), function($media) {
+		$text = '<div class="row">' .
+            '<div class="col-lg-12">' . $event->getEventText() .
+            '</div></div>';
+
+        $eventContent = $essence->replace($text, function($media) {
 			return <<<HTML
-		<div class="well well-lg col-lg-6 col-lg-offset-3 col-md-8 col-md-2 col-sm-12">
-			<p class="text-primary-blue text-center">
-				$media->title par
-				<a href="$media->authorUrl" title="Accès à la chaine de $media->authorName">
-					$media->authorName
-				</a>
-			 </p>
-			<div class="embed-responsive embed-responsive-16by9">$media->html</div>
-		</div>
+			<div class="row">
+                <div class="well well-lg col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12">
+                    <p class="text-primary-blue text-center">
+                        $media->title par
+                        <a href="$media->authorUrl" title="Accès à la chaine de $media->authorName">
+                            $media->authorName
+                        </a>
+                     </p>
+                    <div class="embed-responsive embed-responsive-16by9">$media->html</div>
+                </div>
+		    </div>
 HTML;
 		});
 

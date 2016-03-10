@@ -56,7 +56,4 @@ agil_admin_forum_category_delete:
     requirements:
             idCategory: \d+
 
-agil_admin_event_add:
-    path:     /admin/hall/add
-    defaults:
-        _controller: AGILAdminBundle:Event:adminEventAdd
+

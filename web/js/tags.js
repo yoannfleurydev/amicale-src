@@ -132,11 +132,11 @@ $(function () {
         tagsContainer.text('');
     });
 
-    $(document).ready(function () {
-        var text = tagsInputHidden.val();
-        if (text.length > 0) {
-            tags = text.split(" ");
-            for (tag of tags) {
+    var text = tagsInputHidden.val();
+    if (text.length > 0) {
+        tags = text.split(" ");
+        for (tag of tags) {
+            if (tag != "") {
                 //On ajout l'item qui permet de montrer et supprimer un tag
                 listTagItem.append( "<div class='item_tag'>" +
                     "<span class='item_tag_label'>" + tag.toUpperCase() + "</span>" +
@@ -154,5 +154,5 @@ $(function () {
                 });
             }
         }
-    });
+    }
 });

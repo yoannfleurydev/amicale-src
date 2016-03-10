@@ -1,6 +1,4 @@
-/**
- * Created by Matthieu.C on 24/02/2016.
- */
+
 $(document).ready(function () {
     $('.loader').hide();
 

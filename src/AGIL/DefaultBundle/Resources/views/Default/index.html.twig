@@ -116,13 +116,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
-                        <span class="panel-title-content">
-                            Calendrier
-                        </span>
+                            <span class="panel-title-content">
+                                Calendrier
+                            </span>
                         </h2>
                     </div>
                     <div class="panel-body">
-
                         {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
                     </div>
                 </div>
@@ -147,12 +146,14 @@
                                 <span class="label label-default">#SQL</span>
                             </div>
                             <div class="list-element">
-                                <p><a class="interne-link" href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a></p>
+                                <p><a class="interne-link" href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a>
+                                </p>
                                 <span class="label label-default">#BUBULLES</span>
                                 <span class="label label-default">#SQL</span>
                             </div>
                             <div class="list-element">
-                                <p><a class="interne-link" href="#">Conférence Codeur en Seine - Le Web d'aujourd'hui !
+                                <p><a class="interne-link" href="#">Conférence Codeur en Seine - Le Web
+                                        d'aujourd'hui !
                                         12 Oct. 2015</a></p>
                                 <span class="label label-default">#HTML5</span>
                                 <span class="label label-default">#CSS3</span>
@@ -168,9 +169,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
-                        <span class="panel-title-content">
-                            Tables de discussion
-                        </span>
+                            <span class="panel-title-content">
+                                Tables de discussion
+                            </span>
                         </h2>
                     </div>
                     <div class="panel-body">
@@ -200,27 +201,32 @@
                     </div>
                     <div class="panel-body">
                         <p class="list">
-
                             {% for sub in lastSubjects %}
                             <div class="list-element">
-                        <p><a class="interne-link"
-                              href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}">
-                                {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})</a></p>
-                        {% for tag in sub.tags %}
-                            <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
-                        {% endfor %}
+                                <p>
+                                    <a
+                                        class="interne-link"
+                                        href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}"
+                                    >
+                                        {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})
+                                    </a>
+                                </p>
+                                {% for tag in sub.tags %}
+                                    <span class="label {{ tag.tagColor }}">
+                                        {{ tag.tagName | upper }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </p>
+                        <p class="row text-center">
+                            <a class="btn btn-default btn-primary" href="{{ path('agil_forum_homepage') }}"
+                               role="button">Accéder
+                                au forum</a>
+                        </p>
                     </div>
-                    {% endfor %}
-
-                    </p>
-                    <p class="row text-center">
-                        <a class="btn btn-default btn-primary" href="{{ path('agil_forum_homepage') }}" role="button">Accéder
-                            au forum</a>
-                    </p>
                 </div>
             </div>
-        </div>
-        </div>
         <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">

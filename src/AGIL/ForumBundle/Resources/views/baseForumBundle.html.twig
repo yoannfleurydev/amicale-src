@@ -2,4 +2,10 @@
 
 {% set isActive = "forum" %}
 
+{% block title %}Le forum{% endblock %}
+
 {% block body %}{% endblock %}
+
+{% block botJavascript %}
+    <script src="{{ asset('js/forum.js') }}"></script>
+{% endblock %}

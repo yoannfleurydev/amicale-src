@@ -12,6 +12,7 @@
 /composer.phar
 /.idea/
 web/img/profile/profile*
+web/img/hall/*
 web/files/cv/
 node_modules/
 /.project

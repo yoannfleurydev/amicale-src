@@ -1,13 +1,47 @@
 {% extends "AGILHallBundle::baseHallBundle.html.twig" %}
 
 {% block body %}
-    {% for event in events %}
+    {% if is_granted("ROLE_ADMIN") %}
         <div class="row">
             <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
-                <div class="card-events">
-                    <p><h5><a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">{{ event.eventTitle }}</a></h5></p>
-                    <p><h6><em>{{ event.eventText }}</em></h6></p>
-                    <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
+                <p><a class="btn btn-primary" href="{{ path('agil_hall_event_add') }}">Ajouter un événement</a></p>
+            </div>
+        </div>
+    {% endif %}
+
+    {% for event in events %}
+        <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <div class="card-events">
+                <div class="row">
+                    {% if not is_granted("ROLE_ADMIN") %}
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        {% else %}
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                            {% endif %}
+                            <p><h5>
+                                <a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">{{ event.eventTitle }}</a>
+                            </h5></p>
+                            <p><h6><em>
+                                {{ event.eventText|slice(0, 180) }}
+                                {% if event.eventText|length > 180 %}...{% endif %}
+                            </em></h6></p>
+                            <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
+                            {% for tag in event.tags %}
+                                <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                            {% endfor %}
+                        </div>
+                        {% if is_granted("ROLE_ADMIN") %}
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 vcenter">
+                                <a class="btn btn-primary" role="button"
+                                   href="{{ path('agil_hall_event_edit', {'idEvent': event.eventId}) }}">Editer</a>
+                                <a class="btn btn-default"
+                                   href="{{ path('agil_hall_event_delete', {'idEvent': event.eventId}) }}"
+                                   role="button">Supprimer</a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

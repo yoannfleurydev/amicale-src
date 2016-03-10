@@ -179,17 +179,14 @@
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-
-    <script src="{{ asset("js/admin.js") }}"></script>
-    <script src="{{ asset("js/profile.js") }}"></script>
     <script src="{{ asset('js/menu.js') }}"></script>
     <script src="{{ asset('js/bootstrap/collapse.js') }}"></script>
     <script src="{{ asset('js/bootstrap/tooltip.js') }}"></script>
     <script src="{{ asset('js/forum.js') }}"></script>
-
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/fullcalendar.js') }}"></script>
     <script src="{{ asset('js/calendarMain.js') }}"></script>
     <script src="{{ asset('js/fr.js') }}"></script>
+    {% block botJavascript %}{% endblock %}
 </body>
 </html>

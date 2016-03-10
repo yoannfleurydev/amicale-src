@@ -46,12 +46,12 @@
 						  <i class="glyphicon glyphicon-home"> </i> Gestion Hall
 						</span>
                     </h2>
-                    <p> Nombre d'événement mis en ligne: <strong class="text-primary-blue">324</strong></p>
+                    <p> Nombre d'événement mis en ligne: <strong class="text-primary-blue">{{ nbEvents }}</strong></p>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="#" class="list-group-item">Afficher les événements</a>
-                        <a href="{{ path('agil_admin_event_add') }}" class="list-group-item">Ajouter un évenement</a>
+                        <a href="{{ path('agil_hall_homepage') }}" class="list-group-item">Afficher les événements</a>
+                        <a href="{{ path('agil_hall_event_add') }}" class="list-group-item">Ajouter un évenement</a>
                     </div>
                 </div>
             </div>
