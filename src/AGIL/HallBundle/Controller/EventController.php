@@ -184,7 +184,7 @@ class EventController extends Controller
         $form->get('eventText')->setData($event->getEventText());
         $form->get('eventDate')->setData($event->getEventDate());
         $form->get('eventDateEnd')->setData($event->getEventDateEnd());
-        $form->get('photos')->setData($event->getEventDateEnd());
+        //$form->get('photos')->setData($event->getPhotos());
 
         return $this->render('AGILHallBundle:Event:event_edit.html.twig', array(
             'form' => $form->createView(),
