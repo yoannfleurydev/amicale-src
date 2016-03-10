@@ -80,8 +80,9 @@
                         </p>
 
                         <p class="text-center">
-                            <input class="btn btn-default" type="reset" value="effacer">
                             {{ form_widget(form.Ajouter) }}
+                            {{ form_widget(form.Effacer) }}
+                            <a class="btn btn-default" href="{{ path('agil_hall_homepage') }}">Annuler</a>
                         </p>
                     {{ form_end(form) }}
                 </div>

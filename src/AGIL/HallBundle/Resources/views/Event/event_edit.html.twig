@@ -3,54 +3,94 @@
 {% block body %}
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
                     <span class="panel-title-content">
-                        Modification d'event
+                        Modification d'un événement
                     </span>
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{ form_start(form) }}
-                            <div class="form-group">
-                                <label for="eventName">Nom de l'événement : </label>
-                                {#<input class="form-control" type="text" name="eventName" id="eventName">#}
-                                {{ form_row(form.eventTitle) }}
+                    {{ form_start(form) }}
+                    <div class="form-group">
+                        <label for="eventName">Nom de l'événement : </label>
+                        {{ form_row(form.eventTitle) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDesc">Description de l'événement : </label>
+                        {{ form_row(form.eventText) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Date de début de l'évènement : </label>
+                        <div class="row">
+                            <div class="col-lg-1 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDate.date.day, {attr : {class: 'form-control'}}) }}
                             </div>
-                            <div class="form-group">
-                                <label for="eventDesc">Description de l'événement : </label>
-                                {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
-                                {{ form_row(form.eventText) }}
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDate.date.month, {attr : {class: 'form-control'}}) }}
                             </div>
-                            <div class="form-group">
-                                <label for="eventDate">Date de début de l'évènement : </label>
-                                {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
-                                {{ form_row(form.eventDate) }}
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDate.date.year, {attr : {class: 'form-control'}}) }}
                             </div>
-                            <div class="form-group">
-                                <label for="eventDateEnd">Date de fin de l'évènement : </label>
-                                {#<textarea class="form-control" name="eventDesc" id="eventDesc"></textarea>#}
-                                {{ form_row(form.eventDateEnd) }}
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDate.time.hour, {attr : {class: 'form-control'}}) }}
                             </div>
-
-                            <p>
-                            <div class="picture-list" id="addedPicture"></div>
-                            <div class="square-add-picture">
-                                <input type="file" name="choosePicture" id="choosePicture" multiple="multiple">
+                            <div class="col-lg-1 col-sm-1 col-xs-1 col-md-1">
+                                heure
                             </div>
-                            </p>
-                            <p class="text-center">
-                                {#<input class="btn btn-primary" type="submit" value="valider">#}
-                                {{ form_widget(form.Modifier) }}
-                                <a href="{{ path('agil_hall_homepage') }}" class="btn btn-default">Annuler</a>
-                            </p>
-                            {{ form_end(form) }}
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDate.time.minute, {attr : {class: 'form-control'}}) }}
+                            </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="eventDateEnd">Date de fin de l'évènement : </label>
+                        <div class="row">
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDateEnd.date.day, {attr : {class: 'form-control'}}) }}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDateEnd.date.month, {attr : {class: 'form-control'}}) }}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDateEnd.date.year, {attr : {class: 'form-control'}}) }}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDateEnd.time.hour, {attr : {class: 'form-control'}}) }}
+                            </div>
+                            <div class="col-lg-1 col-sm-1 col-xs-1 col-md-1">
+                                heure
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                {{ form_widget(form.eventDateEnd.time.minute, {attr : {class: 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>
+                    <div class="picture-list" id="addedPicture">
+                        {% for photo in event.photos %}
+                            <span class="editable-picture">
+                                <img height="100px" width="100px" src="{{ asset("img/hall/") ~ photo.photoUrl }}"
+                                     title="{{ photo.photoTitle }}" />
+                            </span>
+                        {% endfor %}
+                    </div>
+                    <div class="square-add-picture">
+
+                        {{ form_row(form.photos) }}
+                        <input type="file" id="choosePicture" name="event_add_form[photos][0][]"
+                               class="form-control" multiple="multiple" />
+                    </div>
+                    </p>
+
+                    <p class="text-center">
+                        {{ form_widget(form.Modifier) }}
+                        <a class="btn btn-default" href="{{ path('agil_hall_homepage') }}">Annuler</a>
+                    </p>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

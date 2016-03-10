@@ -2,17 +2,15 @@
 
 namespace AGIL\HallBundle\Form;
 
-use Proxies\__CG__\AGIL\HallBundle\Entity\AgilPhoto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddEventType extends AbstractType
@@ -59,15 +57,6 @@ class AddEventType extends AbstractType
             )
         ));
 
-        /*$builder->add('photos0', FileType::class, array(
-            'label' => false,
-            'required' => false,
-            'multiple' => true,
-            'attr' => array(
-                'class' => 'form-control',
-            )
-        ));*/
-
         $builder->add('photos', CollectionType::class, array(
             // each entry in the array will be an "email" field
             'entry_type'   => FileType::class,
@@ -88,6 +77,13 @@ class AddEventType extends AbstractType
             'label' => false,
             'attr' => array(
                 'class' => 'btn btn-primary'
+            )
+        ));
+
+        $builder->add('Effacer', ResetType::class, array(
+            'label' => false,
+            'attr' => array(
+                'class' => 'btn btn-default'
             )
         ));
     }

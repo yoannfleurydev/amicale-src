@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-lg-10">
                             <h3>{{ event.eventTitle }}</h3>
-                            {% if event.eventDateEnd is defined %}
+                            {% if event.eventDateEnd > event.eventDate %}
                                 <small>du {{ event.eventDate | date('j/m/Y') }} au {{ event.eventDateEnd | date('j/m/Y') }}</small>
                             {% else %}
                                 <small>le {{ event.eventDate | date('j/m/Y') }}</small>

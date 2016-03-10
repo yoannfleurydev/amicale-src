@@ -111,36 +111,85 @@ class EventController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-
         $event = $em->getRepository('AGILHallBundle:AgilEvent')->find($idEvent);
+        $form = $this->createForm(new EditEventType(), null);
 
-        if (null === $event) {
-            throw new NotFoundHttpException("L'evénement d'id " . $idEvent . " n'existe pas.");
-        }
-
-        $form = $this->createForm(new EditEventType(), $event);
-
-        // Remplissage des champs qui ont une valeur
-        $form->get('eventTitle')->setData($event->getEventTitle());
-        $form->get('eventText')->setData($event->getEventText());
-        $form->get('eventDate')->setData($event->getEventDate());
-        $form->get('eventDateEnd')->setData($event->getEventDate());
         $form->handleRequest($request);
-
         if ($form->isValid()) {
+            if ($event->getEventTitle() != $form->get('eventTitle')->getData()) {
+                $eventTmp = $em->getRepository('AGILHallBundle:AgilEvent')->findBy(
+                    array('eventTitle'=> $form->get('eventTitle')->getData())
+                );
+                if (!empty($eventTmp)) {
+                    $this->addFlash('warning', 'Titre de l\'événement déjà utilisé.');
+                    return $this->redirect($this->generateUrl('agil_hall_event_edit'));
+                }
+            }
+
+            $event->setEventTitle($form->get('eventTitle')->getData());
+            $event->setEventText($form->get('eventText')->getData());
+            $event->setEventDateEnd($form->get('eventDateEnd')->getData());
+            $event->setEventDate($form->get('eventDate')->getData());
+
+            /*if ($form->get('photos')->getData()[0] != null) {
+
+                $nbInputs = 0;
+                $inputPhoto = $form->get('photos')->getData()[$nbInputs];
+                while(!empty($inputPhoto)) {
+                    $array = new ArrayCollection();
+                    foreach ($inputPhoto as $item) {
+                        if ($item != null && $item != "") {
+                            if ($item->guessExtension() != "jpeg" && $item->guessExtension() != "png"
+                                && $item->guessExtension() != "gif"
+                            ) {
+                                $this->addFlash('warning', 'Erreur ! Le format de l\'image ne convient pas ! (formats autorisés: jpeg,png,gif)');
+                                return $this->redirect($this->generateUrl('agil_hall_event_edit'));
+                            } // On vérifie la taille du fichier
+                            else if ($item->getClientSize() > 1024000) {
+                                $this->addFlash('warning', 'Erreur ! La taille de l\'image dépasse la limite ! (limite autorisée: 1Mo)');
+                                return $this->redirect($this->generateUrl('agil_hall_event_edit'));
+                            }
+
+                            $fileName = md5(uniqid()) . '.' . $item->guessExtension();
+                            $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall';
+                            $item->move($dir, $fileName);
+
+                            $photo = new AgilPhoto();
+                            $photo->setPhotoUrl($fileName);
+                            $photo->setPhotoTitle($item->getClientOriginalName());
+
+                            $array->add($photo);
+                            $photo->setEvent($event);
+                            $em->persist($photo);
+                        }
+                    }
+                    $nbInputs++;
+                    if(!empty($form->get('photos')->getData()[$nbInputs])) {
+                        $inputPhoto = $form->get('photos')->getData()[$nbInputs];
+                    } else {
+                        $inputPhoto = null;
+                    }
+                }
+                $event->setImages($array);
+            }*/
+
+            $em->persist($event);
             $em->flush();
 
-            $this->addFlash('success', "L'évenement a été modifié");
-
+            $this->addFlash('success', 'Evénement modifié');
             return $this->redirect($this->generateUrl('agil_hall_event', array('idEvent' => $event->getEventId())));
         }
 
-        return $this->render('AGILHallBundle:Event:event_edit.html.twig', array(
-            'event' => $event,
-            'form' => $form->createView()
-        ));
+        $form->get('eventTitle')->setData($event->getEventTitle());
+        $form->get('eventText')->setData($event->getEventText());
+        $form->get('eventDate')->setData($event->getEventDate());
+        $form->get('eventDateEnd')->setData($event->getEventDateEnd());
+        $form->get('photos')->setData($event->getEventDateEnd());
 
-        return $this->render('AGILHallBundle:Event:event_edit.html.twig');
+        return $this->render('AGILHallBundle:Event:event_edit.html.twig', array(
+            'form' => $form->createView(),
+            'event' => $event
+        ));
     }
 
     public function eventDeleteAction($idEvent, Request $request)
