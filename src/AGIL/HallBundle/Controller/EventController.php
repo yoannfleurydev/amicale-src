@@ -145,19 +145,11 @@ class EventController extends Controller
             // les tags
             $tagsArrayString = explode(" ", $form->get('tags')->getData());
             $tagsManager = $this->get('agil_default.tags');
-            $tagsAll = $em->getRepository("AGILDefaultBundle:AgilTag")->findAll();
             foreach ($tagsArrayString as $tag) {
-                $exist = false;
-                foreach ($tagsAll as $t) {
-                    if ($t->getTagName() == $tag->getTagName()) {
-                        $exist = true;
-                    }
-                }
-                if (!$exist) {
                     $tagsManager->insertTag($tag);
-                }
             }
             $tagsManager->insertDone();
+            $event->removeTags();
             $event->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
             /*if ($form->get('photos')->getData()[0] != null) {

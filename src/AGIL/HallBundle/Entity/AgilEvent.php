@@ -276,6 +276,13 @@ class AgilEvent
         $this->tags->removeElement($tags);
     }
 
+    public function removeTags()
+    {
+        foreach($this->tags as $tag) {
+            $this->tags->removeElement($tag);
+        }
+    }
+
     /**
      * Get tags
      *
