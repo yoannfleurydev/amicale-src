@@ -44,7 +44,7 @@ class EventController extends Controller
             $event->setEventDate($form->get('eventDate')->getData());
 
             // les tags
-            $tagsArrayString = explode(" ", $event->getTags());
+            $tagsArrayString = explode(" ", $form->get('tags')->getData());
             $tagsManager = $this->get('agil_default.tags');
             foreach ($tagsArrayString as $tag) {
                 $tagsManager->insertTag($tag);
@@ -143,7 +143,7 @@ class EventController extends Controller
             $event->setEventDate($form->get('eventDate')->getData());
 
             // les tags
-            $tagsArrayString = explode(" ", $event->getTags());
+            $tagsArrayString = explode(" ", $form->get('tags')->getData());
             $tagsManager = $this->get('agil_default.tags');
             foreach ($tagsArrayString as $tag) {
                 $tagsManager->insertTag($tag);
