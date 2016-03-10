@@ -17,9 +17,12 @@ class DefaultController extends Controller
         $qb2->from('AGILForumBundle:AgilForumSubject','subject');
         $count_subjects = $qb2->getQuery()->getSingleScalarResult();
 
+        $count_events = $em->getRepository('AGILHallBundle:AgilEvent')->getCountEvents();
+
         return $this->render('AGILAdminBundle:Default:admin.html.twig', array(
             'nbUsers' => $count_users,
-            'nbSubjects' => $count_subjects
+            'nbSubjects' => $count_subjects,
+            'nbEvents' => $count_events
         ));
     }
 }
