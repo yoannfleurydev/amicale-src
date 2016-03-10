@@ -3,8 +3,6 @@
 {% set isActive = "hall" %}
 
 {% block stylesheets %}
-    <link href="{{ asset("css/owl.carousel.css") }}" rel="stylesheet">
-    <link href="{{ asset("css/owl.theme.css") }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascript %}
@@ -14,3 +12,7 @@
 
 {% block title %}Le Hall{% endblock %}
 {% block body %}{% endblock %}
+
+{% block botJavascript %}
+    <script src="{{ asset("js/tags.js") }}"></script>
+{% endblock %}

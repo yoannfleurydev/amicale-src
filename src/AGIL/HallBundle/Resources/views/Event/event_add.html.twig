@@ -22,6 +22,18 @@
                             <label for="eventDesc">Description de l'événement : </label>
                             {{ form_row(form.eventText) }}
                         </div>
+
+                        <div class="form-group" id="formAddTagsPost">
+                            <h5><label class="control-label">Tags</label></h5>
+                            <div class="tag_control">
+                                <div class="list_item_tag">
+                                </div>
+                                <input type="text" class="tags_input_visible">
+                            </div>
+                            {{ form_widget(form.tags, { 'id': 'tags_input' }) }}
+                            {{ form_errors(form.tags) }}
+                            <div id="tags_container"></div>
+                        </div>
                         <div class="form-group">
                             <label for="eventDate">Date de début de l'évènement : </label>
                             <div class="row">

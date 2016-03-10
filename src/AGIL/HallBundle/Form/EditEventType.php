@@ -39,6 +39,15 @@ class EditEventType extends AbstractType
             )
         ));
 
+        $builder->add('tags', TextType::class, array(
+            'label' => false,
+            'required' => false,
+            'attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Tags associés',
+            )
+        ));
+
         $builder->add('eventDate', DateTimeType::class, array(
             'label' => false,
             'required' => true,
