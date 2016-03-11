@@ -415,9 +415,14 @@ body {
 }
 
 #logo-agil {
-  font-size: 25px !important;
-  padding-left: 20px;
-  padding-top: 8px;
+  width: 60px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#logo-agil img{
+  padding: 0 !important;
   float: left;
 }
 
