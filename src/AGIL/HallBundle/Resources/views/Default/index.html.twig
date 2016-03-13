@@ -26,7 +26,7 @@
                                 {{ event.eventText|slice(0, 180) }}
                                 {% if event.eventText|length > 180 %}...{% endif %}
                             </em></h6></p>
-                            <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
+                            <p><h6>{{ event.eventPostDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}</h6></p>
                             {% for tag in event.tags %}
                                 <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
                             {% endfor %}
