@@ -30,7 +30,7 @@ $(function () {
         }
     };
 
-    tagsInput.on('input', function() {
+    tagsInput.on('input', function () {
 
         // vide le conteneur des tags disponibles
         tagsContainer.empty();
@@ -84,7 +84,7 @@ $(function () {
      * on ajoute un événement pour qu'ils soient ajoutés à la liste
      * des tags que l'on souhaite
      */
-    tagsContainer.on('click', '.tag', function() {
+    tagsContainer.on('click', '.tag', function () {
         // La longueur de la chaine sans le tag que l'on est entrain d'écrire moins la longueur d'un espace
         var indexEnd = tagsInputHidden.val().length - 1;
         // la chaine que l'on met dans l'input où sont affichés les tags sélectionnés
@@ -100,16 +100,16 @@ $(function () {
         }
 
         //On ajout l'item qui permet de montrer et supprimer un tag
-        listTagItem.append( "<div class='item_tag'>" +
+        listTagItem.append("<div class='item_tag'>" +
             "<span class='item_tag_label'>" + tagToAdd.toUpperCase() + "</span>" +
             "<span class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
-            "</span></div>" );
+            "</span></div>");
 
         //On séléctionne le dernier element ajouté
         var lastInsert = listTagItem.find('.item_tag').last();
 
         //On rajoute sur la croix un envent
-        lastInsert.find('.remove_item_tag').click(function() {
+        lastInsert.find('.remove_item_tag').click(function () {
             //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
             // exemple : PHP et PHPSTORM
             var val = tagsInputHidden.val().replace(tagToAdd + " ", "");
@@ -133,18 +133,18 @@ $(function () {
     });
 
     var text = tagsInputHidden.val();
-    if (text.length > 0) {
+    if (text != undefined && text.length > 0) {
         tags = text.split(" ");
         for (tag of tags) {
             if (tag != "") {
                 //On ajout l'item qui permet de montrer et supprimer un tag
-                listTagItem.append( "<div class='item_tag'>" +
+                listTagItem.append("<div class='item_tag'>" +
                     "<span class='item_tag_label'>" + tag.toUpperCase() + "</span>" +
                     "<span id='" + tag + "' class='remove_item_tag'><span class='glyphicon glyphicon-remove'></span>" +
-                    "</span></div>" );
+                    "</span></div>");
 
                 //On rajoute sur la croix un envent
-                $("#" + tag).click(function() {
+                $("#" + tag).click(function () {
                     //On enléve le tag et l'espace au cas ou un tag contiendrais le même motif
                     // exemple : PHP et PHPSTORM
                     var tagToDelete = $(this).attr('id');
@@ -154,5 +154,6 @@ $(function () {
                 });
             }
         }
+        
     }
 });
