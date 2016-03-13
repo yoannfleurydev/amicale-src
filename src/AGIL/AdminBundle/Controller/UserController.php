@@ -32,10 +32,11 @@ class UserController extends Controller
         $maxUsers = 25;
         $users_count = $em->getRepository('AGILUserBundle:AgilUser')->getCountUsers();
 
-        if(($users_count == 0 && $page != 1) ||
-            ($users_count != 0 && $page > ceil($users_count / $maxUsers) || $page <= 0)  ){
+        if (($users_count == 0 && $page != 1) ||
+            ($users_count != 0 && $page > ceil($users_count / $maxUsers) || $page <= 0)
+        ) {
             $this->addFlash('warning', 'Erreur dans le numéro de page');
-            return $this->redirect( $this->generateUrl('agil_admin_user') );
+            return $this->redirect($this->generateUrl('agil_admin_user'));
         }
         $pagination = array(
             'page' => $page,
@@ -64,13 +65,14 @@ class UserController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function adminUserUpAction($id) {
+    public function adminUserUpAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
-        $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
+        $user = $em->getRepository('AGILUserBundle:AgilUser')->find($id);
         $newRole = "";
 
         if (null === $user) {
-            throw new NotFoundHttpException("L'utilisateur d'id ".$id." n'existe pas.");
+            throw new NotFoundHttpException("L'utilisateur d'id " . $id . " n'existe pas.");
         } else {
             if ($user->hasRole("ROLE_MODERATOR")) {
                 $user->removeRole("ROLE_MODERATOR");
@@ -91,20 +93,22 @@ class UserController extends Controller
             $this->sendMail($subject, $message, $user->getEmail());
         }
 
-        return $this->redirect( $this->generateUrl('agil_admin_user') );
+        return $this->redirect($this->generateUrl('agil_admin_user'));
     }
+
     /**
      * Diminution des droits de l'utilisateur
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function adminUserDownAction($id) {
+    public function adminUserDownAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
-        $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
+        $user = $em->getRepository('AGILUserBundle:AgilUser')->find($id);
         $newRole = "";
 
         if (null === $user) {
-            throw new NotFoundHttpException("L'utilisateur d'id ".$id." n'existe pas.");
+            throw new NotFoundHttpException("L'utilisateur d'id " . $id . " n'existe pas.");
         } else {
             if ($user->hasRole("ROLE_MODERATOR")) {
                 $user->removeRole("ROLE_MODERATOR");
@@ -125,7 +129,7 @@ class UserController extends Controller
             $this->sendMail($subject, $message, $user->getEmail());
         }
 
-        return $this->redirect( $this->generateUrl('agil_admin_user') );
+        return $this->redirect($this->generateUrl('agil_admin_user'));
     }
 
     /**
@@ -133,18 +137,19 @@ class UserController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function adminUserDeleteAction($id) {
+    public function adminUserDeleteAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
-        $user= $em->getRepository('AGILUserBundle:AgilUser')->find($id);
+        $user = $em->getRepository('AGILUserBundle:AgilUser')->find($id);
 
         if (null === $user) {
-            throw new NotFoundHttpException("L'utilisateur d'id ".$id." n'existe pas.");
+            throw new NotFoundHttpException("L'utilisateur d'id " . $id . " n'existe pas.");
         } else {
             $imgOld = $user->getUserProfilePictureUrl();
             if ($imgOld !== AgilUser::DEFAULT_PROFILE_PICTURE) {
                 $fs = new Filesystem();
                 $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/profile';
-                $fs->remove(array('symlink', $dir.'/'.$imgOld));
+                $fs->remove(array('symlink', $dir . '/' . $imgOld));
             }
             $em->remove($user);
             $em->flush();
@@ -157,7 +162,7 @@ class UserController extends Controller
             $this->sendMail($subject, $message, $user->getEmail());
         }
 
-        return $this->redirect( $this->generateUrl('agil_admin_user') );
+        return $this->redirect($this->generateUrl('agil_admin_user'));
     }
 
     /**
@@ -165,7 +170,8 @@ class UserController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function adminUserAddAction(Request $request) {
+    public function adminUserAddAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
@@ -184,8 +190,7 @@ class UserController extends Controller
 
             if ($formCSV->isValid()) {
                 $this->addUserByCSVFile($formCSV, $em, $factory, $request);
-            }
-            elseif ($form->isValid()) {
+            } elseif ($form->isValid()) {
                 $this->addUserByForm($form, $em, $factory, $request);
             }
         }
@@ -201,7 +206,8 @@ class UserController extends Controller
      * @param $em
      * @param $factory
      */
-    function addUserByForm($form, $em, $factory, $request) {
+    function addUserByForm($form, $em, $factory, $request)
+    {
         $email = $form->get('email')->getData();
         $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
 
@@ -211,15 +217,15 @@ class UserController extends Controller
             $lastName = $form->get('name')->getData();
             $firstName = $form->get('firstName')->getData();
             $role = $form->get('role')->getData();
-            if (strlen($lastName)>=5 and strlen($firstName)>=3) {
+            if (strlen($lastName) >= 5 and strlen($firstName) >= 3) {
                 $lastNameTmp = strtolower($lastName);
                 $firstNameTmp = strtolower($firstName);
                 $username = $lastNameTmp[0] . $lastNameTmp[1] . $lastNameTmp[2] .
                     $lastNameTmp[3] . $lastNameTmp[4] . $firstNameTmp[0] . $firstNameTmp[1] . $firstNameTmp[2];
             } else {
-                $username = strtolower($firstName).'.'.strtolower($lastName);
+                $username = strtolower($firstName) . '.' . strtolower($lastName);
             }
-            $cpt=0;
+            $cpt = 0;
             $usernameTmp = $username;
             while ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
                 $username = $usernameTmp;
@@ -235,7 +241,7 @@ class UserController extends Controller
             $user->setUserLastName($lastName);
             $user->setEmail($email);
             $user->setPassword($pass);
-            if ($role != 'ROLE_USER' or $role==null) {
+            if ($role != 'ROLE_USER' or $role == null) {
                 $user->addRole($role);
             }
             $user->setEnabled(1);
@@ -264,7 +270,8 @@ class UserController extends Controller
      * @param $em
      * @param $factory
      */
-    function addUserByCSVFile($form, $em, $factory, $request) {
+    function addUserByCSVFile($form, $em, $factory, $request)
+    {
         $nbRegisters = 0;
         $file = $form['file']->getData();
 
@@ -280,72 +287,81 @@ class UserController extends Controller
                 $num = count($data);
                 //echo "<p> $num champs à la ligne $row: <br /></p>\n";
                 $row++;
-                $attr_user[$row-1] = array();
+                $attr_user[$row - 1] = array();
                 for ($c = 0; $c < $num; $c++) {
                     //echo $data[$c] . "<br />\n";
-                    $attr_user[$row-1][$c] = $data[$c];
+                    $attr_user[$row - 1][$c] = $data[$c];
                 }
             }
             fclose($handle);
         }
         //var_dump($attr_user);
-        foreach($attr_user as $value) {
+        foreach ($attr_user as $value) {
             $firstName = $value[0];
-            $lastName = $value[1];
-            $email = $value[4];
-            $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
-
-            if ($user == null) {
-                $userManager = $this->get('fos_user.user_manager');
-                $user = $userManager->createUser();
-                $lastName = $lastName;
-                $firstName = $firstName;
-                if (strlen($lastName)>=5 and strlen($firstName)>=3) {
-                    $lastNameTmp = strtolower($lastName);
-                    $firstNameTmp = strtolower($firstName);
-                    $username = $lastNameTmp[0] . $lastNameTmp[1] . $lastNameTmp[2] .
-                        $lastNameTmp[3] . $lastNameTmp[4] . $firstNameTmp[0] . $firstNameTmp[1] . $firstNameTmp[2];
-                } else {
-                    $username = strtolower($firstName).'.'.strtolower($lastName);
-                }
-                $cpt=0;
-                $usernameTmp = $username;
-                while ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
-                    $username = $usernameTmp;
-                    $username .= $cpt;
-                    $cpt++;
-                }
-
-                $password = $this->generate_password();
-                $encoder = $factory->getEncoder($user);
-                $user->setUsername($username);
-                $pass = $encoder->encodePassword($password, $user->getSalt());
-                $user->setUserFirstName($firstName);
-                $user->setUserLastName($lastName);
-                $user->setEmail($email);
-                $user->setPassword($pass);
-                $user->setEnabled(1);
-
-                $userManager->updateUser($user);
-                $this->loadSkills($user, $em);
-                $nbRegisters++;
-
-                $url = $request->getSchemeAndHttpHost();
-                $subject = "Amicale GIL[Inscription]";
-                $message = "<p>Bonjour $username,</p>";
-                $message .= "<p>vous avez été invité sur le site <a href=\"$url\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
-                $message .= "<p>Pour vous connecter :</p>";
-                $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
-                $message .= "<p>Cordialement</p>";
-
-                $this->sendMail($subject, $message, $email);
+            if (!isset($value[1])) {
+                $lastName = null;
             } else {
-                $this->addFlash('warning', 'L\'utilisateur avec l\'email '. $email .' est déjà enregistré.');
+                $lastName = $value[1];
+            }
+            if (isset($value[4])) {
+                $email = $value[4];
+                $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
+
+                if ($user == null) {
+                    $userManager = $this->get('fos_user.user_manager');
+                    $user = $userManager->createUser();
+                    $lastName = $lastName;
+                    $firstName = $firstName;
+                    if (strlen($lastName) >= 5 and strlen($firstName) >= 3) {
+                        $lastNameTmp = strtolower($lastName);
+                        $firstNameTmp = strtolower($firstName);
+                        $username = $lastNameTmp[0] . $lastNameTmp[1] . $lastNameTmp[2] .
+                            $lastNameTmp[3] . $lastNameTmp[4] . $firstNameTmp[0] . $firstNameTmp[1] . $firstNameTmp[2];
+                    } else {
+                        $username = strtolower($firstName) . '.' . strtolower($lastName);
+                    }
+                    $cpt = 0;
+                    $usernameTmp = $username;
+                    while ($em->getRepository('AGILUserBundle:AgilUser')->findBy(array('username' => $username)) != null) {
+                        $username = $usernameTmp;
+                        $username .= $cpt;
+                        $cpt++;
+                    }
+
+                    $password = $this->generate_password();
+                    $encoder = $factory->getEncoder($user);
+                    $user->setUsername($username);
+                    $pass = $encoder->encodePassword($password, $user->getSalt());
+                    $user->setUserFirstName($firstName);
+                    $user->setUserLastName($lastName);
+                    $user->setEmail($email);
+                    $user->setPassword($pass);
+                    $user->setEnabled(1);
+
+                    $userManager->updateUser($user);
+                    $this->loadSkills($user, $em);
+                    $nbRegisters++;
+
+                    $url = $request->getSchemeAndHttpHost();
+                    $subject = "Amicale GIL[Inscription]";
+                    $message = "<p>Bonjour $username,</p>";
+                    $message .= "<p>vous avez été invité sur le site <a href=\"$url\" TARGET=\"_blank\">Amicale GIL</a>.</p>";
+                    $message .= "<p>Pour vous connecter :</p>";
+                    $message .= "<p>Identifiant : $email</p><p>Mot de passe : $password</p>";
+                    $message .= "<p>Cordialement</p>";
+
+                    $this->sendMail($subject, $message, $email);
+                } else {
+                    $this->addFlash('warning', 'L\'utilisateur avec l\'email ' . $email . ' est déjà enregistré.');
+                }
+            } else {
+                $this->addFlash('warning', 'L\'email est vide');
             }
         }
 
         $this->addFlash('success', $nbRegisters . ' utilisateurs ont été enregistrés.');
     }
+
     /**
      * mot de passe aleatoire
      * @param $nb_caractere
@@ -358,9 +374,8 @@ class UserController extends Controller
         $chaine = "abcdefghjkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789+@!$%?&";
         $longeur_chaine = strlen($chaine);
 
-        for($i = 1; $i <= $nb_caractere; $i++)
-        {
-            $place_aleatoire = mt_rand(0,($longeur_chaine-1));
+        for ($i = 1; $i <= $nb_caractere; $i++) {
+            $place_aleatoire = mt_rand(0, ($longeur_chaine - 1));
             $mot_de_passe .= $chaine[$place_aleatoire];
         }
 
@@ -373,7 +388,8 @@ class UserController extends Controller
      * @param $body
      * @param $to
      */
-    function sendMail($subject, $body, $to) {
+    function sendMail($subject, $body, $to)
+    {
         $headers = 'From: amicale.gil@etu.univ-rouen.fr' . "\r\n";
         $headers .= "Reply-To: amicale.gil@etu.univ-rouen.fr\n";
         $headers .= "Content-Type: text/html; charset=\"utf-8\"";
@@ -386,25 +402,23 @@ class UserController extends Controller
             </body>
         </html>";
 
-        if(mail($to, $subject, $message, $headers))
-        {
-        }
-        else
-        {
+        if (mail($to, $subject, $message, $headers)) {
+        } else {
             $this->addFlash('warning', 'Erreur lors de l\'envois de l\'email.');
         }
 
     }
 
-    public function loadSkills(AgilUser $user, EntityManager $em) {
+    public function loadSkills(AgilUser $user, EntityManager $em)
+    {
         $profileSkillsCategoryRepository = $em->getRepository('AGILProfileBundle:AgilProfileSkillsCategory');
-        $tagRepository  = $em->getRepository('AGILDefaultBundle:AgilTag');
+        $tagRepository = $em->getRepository('AGILDefaultBundle:AgilTag');
         $skillRepository = $em->getRepository('AGILProfileBundle:AgilSkill');
 
-        foreach($profileSkillsCategoryRepository->findAll() as $profileSkillsCategory) {
-            foreach($tagRepository->findBy(array("skillCategory"  => $profileSkillsCategory)) as $tag) {
-                    $skill = new AgilSkill($tag, $user);
-                    $em->persist($skill);
+        foreach ($profileSkillsCategoryRepository->findAll() as $profileSkillsCategory) {
+            foreach ($tagRepository->findBy(array("skillCategory" => $profileSkillsCategory)) as $tag) {
+                $skill = new AgilSkill($tag, $user);
+                $em->persist($skill);
             }
         }
         $em->flush();
