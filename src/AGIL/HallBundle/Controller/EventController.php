@@ -11,6 +11,7 @@ use AGIL\HallBundle\Form\AddEventType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Essence\Essence;
@@ -121,10 +122,15 @@ class EventController extends Controller
             $this->addFlash('warning', 'Permission refusée');
             return $this->redirect($this->generateUrl('agil_hall_homepage'));
         }
-
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AGILHallBundle:AgilEvent')->find($idEvent);
-        $form = $this->createForm(new EditEventType(), null);
+
+        $files = new ArrayCollection();
+        /*$fs = new Filesystem();
+        foreach($event->getPhotos() as $photo) {
+            $files->add(new UploadedFile($photo->getPhotoUrl(), $photo->getPhotoTitle(), null, 1000000, null, false));
+        }*/
+        $form = $this->createForm(new EditEventType($files), null);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -155,7 +161,7 @@ class EventController extends Controller
             $em->flush();
             $event->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
-            /*if ($form->get('photos')->getData()[0] != null) {
+            if ($form->get('photos')->getData()[0] != null) {
 
                 $nbInputs = 0;
                 $inputPhoto = $form->get('photos')->getData()[$nbInputs];
@@ -195,7 +201,7 @@ class EventController extends Controller
                     }
                 }
                 $event->setImages($array);
-            }*/
+            }
 
             $em->persist($event);
             $em->flush();

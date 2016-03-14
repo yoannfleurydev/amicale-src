@@ -48,10 +48,12 @@
                                 {{ form_widget(form.role.1) }}
                                 <span></span>{{ form_label(form.role.1) }}
                             </label>
+                            {% if is_granted("ROLE_SUPER_ADMIN") %}
                             <label class="radio">
                                 {{ form_widget(form.role.2) }}
                                 <span></span>{{ form_label(form.role.2) }}
                             </label>
+                            {% endif %}
                         </p>
                         <p class="text-center">
                             {{ form_row(form.Inviter) }}

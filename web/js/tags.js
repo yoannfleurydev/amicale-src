@@ -133,7 +133,7 @@ $(function () {
     });
 
     var text = tagsInputHidden.val();
-    if (text.length > 0) {
+    if (text != undefined && text.length > 0) {
         tags = text.split(" ");
         for (tag of tags) {
             if (tag != "") {
