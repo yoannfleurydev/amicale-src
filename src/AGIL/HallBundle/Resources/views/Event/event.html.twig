@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-lg-2">
                             <h5>
-                                Le <span class="text-primary-blue">{{ event.eventPostDate | date('j M Y') }}</span>
+                                Le <span class="text-primary-blue">{{ event.eventPostDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}</span>
                                 par <a href="{{ path('agil_profile_id', {id : event.user.id}) }}">{{ event.user }}</a>
                             </h5>
                         </div>
