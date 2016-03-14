@@ -10,16 +10,16 @@ agil_offer_homepage:
 agil_offer_view:
     path:     /offer/{id}
     defaults:
-        _controller: AGILOfferBundle:OfferController:offer
+        _controller: AGILOfferBundle:Offer:offer
     requirements:
         id: \d+
 
 agil_offer_add:
     path:     /offer/add
     defaults:
-        _controller: AGILOfferBundle:OfferController:offerAdd
+        _controller: AGILOfferBundle:Offer:offerAdd
 
 agil_offer_edit:
     path:     /offer/{idCrypt}/edit
     defaults:
-        _controller: AGILOfferBundle:OfferController:offerEdit
+        _controller: AGILOfferBundle:Offer:offerEdit

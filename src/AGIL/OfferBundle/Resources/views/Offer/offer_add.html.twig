@@ -1,4 +1,22 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
 
 {% block body %}
+    {{ form_start(form) }}
+        {{ form_errors(form.offerTitle) }}
+        {{ form_widget(form.offerTitle) }}
+
+        {{ form_errors(form.offerText) }}
+        {{ form_widget(form.offerText) }}
+
+        {{ form_errors(form.tags) }}
+        {{ form_widget(form.tags) }}
+
+        {{ form_errors(form.offerType) }}
+        {{ form_widget(form.offerType) }}
+
+        {{ form_errors(form.offerPdfUrl) }}
+        {{ form_widget(form.offerPdfUrl) }}
+
+        {{ form_widget(form.Ajouter) }}
+    {{ form_end(form) }}
 {% endblock %}

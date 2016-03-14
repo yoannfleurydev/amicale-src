@@ -2,6 +2,7 @@
 
 namespace AGIL\OfferBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -116,6 +117,16 @@ class AgilOffer
      */
     private $offerPdfUrl;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $date = new \DateTime();
+        $this->offerPostDate = $date;
+        $this->offerExpirationDate = $date->add(new \DateInterval("P3M"));
+    }
 
     /**
      * Get offerId
@@ -314,17 +325,6 @@ class AgilOffer
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-        $date = new \DateTime();
-        $this->offerPostDate = $date;
-        $this->offerExpirationDate = $date->add(new \DateInterval("P3M"));
-    }
-
-    /**
      * Add tags
      *
      * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
@@ -355,6 +355,16 @@ class AgilOffer
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function setTags($collection)
+    {
+        $this->tags = $collection;
     }
 
 
