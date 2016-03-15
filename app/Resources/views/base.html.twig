@@ -80,7 +80,23 @@
                 </div>
 
                 {% endif %}
-                <a href="#" class="navbar-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Rechercher"><span class="material-icons">search</span></a>
+                <div class="navbar-mobile right dropdown">
+                    <button class="btn btn-unstyled dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="material-icons">search</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right search-bar" aria-labelledby="dropdownMenu1">
+                        <li>
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" size="20">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary">Rechercher</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <aside class="sidebar">

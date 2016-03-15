@@ -20,34 +20,18 @@
                 {{ form_start(form) }}
 
                     <div class="form-group" id="formAddNamePost">
-                        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Sujet</strong></label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <p>{{ subject.forumSubjectTitle }}</p>
-                        </div>
+                        <label class="control-label"><strong>Sujet</strong></label>
+                        <p>{{ subject.forumSubjectTitle }}</p>
                     </div>
                     <div class="form-group" id="formAddDescPost">
-                        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"><strong>Description</strong></label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                            <p>{{ subject.forumSubjectDescription }}</p>
-                        </div>
+                        <label class="control-label"><strong>Description</strong></label>
+                        <p>{{ subject.forumSubjectDescription }}</p>
                     </div>
 
                     <div class="form-group" id="formAddContentPost">
-                        <label class="col-sm-2 control-label"><strong>Réponse</strong></label>
-                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <label class="control-label"><strong>Réponse</strong></label>
                             {{ form_errors(form.forumAnswerText) }}
                             {{ form_widget(form.forumAnswerText) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            {{ form_widget(form.Modifier) }}
-                            <a class="btn btn-default"
-                               href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject, 'page': page}) }}">
-                                Annuler
-                            </a>
-                        </div>
                     </div>
                     {{ tinymce_init({
                         selector: 'forumAnswerText',
@@ -61,6 +45,13 @@
                             tools: {title: 'Tools', items: 'spellchecker code'}
                         }
                     }) }}
+                <p class="text-center">
+                    {{ form_widget(form.Modifier) }}
+                    <a class="btn btn-default"
+                       href="{{ path('agil_forum_subject_answers', {'idCategory': idCategory, 'idSubject': idSubject, 'page': page}) }}">
+                        Annuler
+                    </a>
+                </p>
                 {{ form_end(form) }}
             </div>
         </div>

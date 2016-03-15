@@ -722,3 +722,14 @@ span.panel-title-content {
   height: 4px;
   width: 20px;
 }
+
+.btn-unstyled {
+  box-shadow: none !important;
+  background-color: #FFF !important;
+}
+.btn-unstyled.active.focus, .btn-unstyled.active:focus, .btn-unstyled.active:hover,
+.btn-unstyled.focus:active, .btn-unstyled:active:focus, .btn-unstyled:active:hover,
+.open > .btn-unstyled.dropdown-toggle.focus, .open > .btn-unstyled.dropdown-toggle:focus,
+.open > .btn-unstyled.dropdown-toggle:hover {
+  background-color: #FFF !important;
+}

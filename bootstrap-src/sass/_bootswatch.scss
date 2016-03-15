@@ -39,7 +39,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
     background-size: 200%;
     background-position: 50%;
     background-color: $bg;
-    margin-bottom:10px;
     &:focus {
       background-color: $bg;
     }
@@ -644,3 +643,8 @@ input[type="checkbox"],
   }
 }
 
+.search-bar {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 350px;
+}
