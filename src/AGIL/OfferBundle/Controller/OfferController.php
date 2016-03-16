@@ -26,6 +26,7 @@ class OfferController extends Controller
         $em = $this->getDoctrine()->getManager();
         $offer = new AgilOffer();
         $form = $this->createForm(new OfferType(), $offer);
+        $form->get('expireAt')->setData('P3M');
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -60,6 +61,11 @@ class OfferController extends Controller
             $tagsManager->insertDone();
             $offer->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
+            // expiration
+            $date = new \DateTime();
+            $offer->setOfferExpirationDate($date->add(new \DateInterval($form->get('expireAt')->getData())));
+            
+            // send mail
             $url = $request->getSchemeAndHttpHost().$this->generateUrl('agil_offer_edit', array('idCrypt' => $offer->getOfferRoute()));
             $subject = "Amicale GIL[Confirmation de l'annonce]";
             $message = "<p>Bonjour,</p>";

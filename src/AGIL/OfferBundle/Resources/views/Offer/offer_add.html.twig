@@ -61,6 +61,12 @@
                         <p><i>(Format: PDF)</i></p>
                     </div>
 
+                    <div class="form-group required">
+                        <label class="control-label">L'annonce expire dans</label>
+                        {{ form_errors(form.expireAt) }}
+                        {{ form_widget(form.expireAt) }}
+                    </div>
+
                     <div class="form-group">
                         {{ form_widget(form.Ajouter) }}
                         <a class="btn btn-default" href="{{ path('agil_offer_homepage') }}">Annuler</a>
