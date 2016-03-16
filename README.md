@@ -1,6 +1,8 @@
 amicale-src
 ===========
 
+[![Join the chat at https://gitter.im/yoannfleurydev/amicale-src](https://badges.gitter.im/yoannfleurydev/amicale-src.svg)](https://gitter.im/yoannfleurydev/amicale-src?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Amicale GIL (Génie de l'Informatique Logicielle) is a University Project.
 
 ###Installation GULP
