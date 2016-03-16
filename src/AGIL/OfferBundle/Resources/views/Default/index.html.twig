@@ -1,4 +1,36 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
 
 {% block body %}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <p><a class="btn btn-primary" href="{{ path('agil_offer_add') }}">Ajouter une annonce</a></p>
+        </div>
+    </div>
+
+    {% for offer in offers %}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <div class="card-events">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <p><h5>{{ offer.offerTitle }}</h5></p>
+
+                        {% if offer.offerText is not null %}
+                        <p><h6></h6>Autheur: {{ offer.offerAuthor }}</h6></p>
+                        {% endif %}
+
+                        <p><h6><em>
+                                {{ offer.offerText|slice(0, 255) }}
+                                {% if offer.offerText|length > 255 %}...{% endif %}
+                        </em></h6></p>
+
+                        {% for tag in offer.tags %}
+                            <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}

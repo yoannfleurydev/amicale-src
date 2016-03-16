@@ -1,22 +1,77 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
 
 {% block body %}
-    {{ form_start(form) }}
-        {{ form_errors(form.offerTitle) }}
-        {{ form_widget(form.offerTitle) }}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <span class="panel-title-content">
+                        Ajout d'une annonce
+                    </span>
+                </h2>
+            </div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                    <div class="form-group required">
+                        <label class="control-label">Titre de l'annonce</label>
+                        {{ form_errors(form.offerTitle) }}
+                        {{ form_widget(form.offerTitle) }}
+                    </div>
 
-        {{ form_errors(form.offerText) }}
-        {{ form_widget(form.offerText) }}
+                    <div class="form-group">
+                        <label class="control-label">Autheur de l'annonce</label>
+                        {{ form_errors(form.offerAuthor) }}
+                        {{ form_widget(form.offerAuthor) }}
+                    </div>
 
-        {{ form_errors(form.tags) }}
-        {{ form_widget(form.tags) }}
+                    <div class="form-group required">
+                        <label class="control-label">Adresse mail de l'autheur</label>
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
 
-        {{ form_errors(form.offerType) }}
-        {{ form_widget(form.offerType) }}
+                    <div class="form-group">
+                        <label class="control-label">Description de l'annonce</label>
+                        {{ form_errors(form.offerText) }}
+                        {{ form_widget(form.offerText) }}
+                    </div>
 
-        {{ form_errors(form.offerPdfUrl) }}
-        {{ form_widget(form.offerPdfUrl) }}
+                    <div class="form-group" id="formAddTagsPost">
+                        <label class="control-label"><h5>Tags</h5></label>
+                        <div class="tag_control">
+                            <div class="list_item_tag">
+                            </div>
+                            <input type="text" class="tags_input_visible">
+                        </div>
+                        {{ form_errors(form.tags) }}
+                        {{ form_widget(form.tags, { 'id': 'tags_input' }) }}
+                        <div id="tags_container"></div>
+                    </div>
 
-        {{ form_widget(form.Ajouter) }}
-    {{ form_end(form) }}
+                    <div class="form-group required">
+                        <label class="control-label">Type de l'annonce</label>
+                        {{ form_errors(form.offerType) }}
+                        {{ form_widget(form.offerType) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_errors(form.offerPdfUrl) }}
+                        {{ form_widget(form.offerPdfUrl) }}
+                        <p><i>(Format: PDF)</i></p>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_widget(form.Ajouter) }}
+                        <a class="btn btn-default" href="{{ path('agil_offer_homepage') }}">Annuler</a>
+                    </div>
+
+                    <p class="asterisk">(* : obligatoire)</p>
+
+                    {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

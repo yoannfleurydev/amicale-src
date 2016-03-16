@@ -16,6 +16,11 @@ class OfferController extends Controller
         return $this->render('AGILOfferBundle:Offer:offer.html.twig');
     }
 
+    /**
+     * Ajout d'annonce
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function offerAddAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -24,6 +29,28 @@ class OfferController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $file = $form->get('offerPdfUrl')->getData();
+            if ($file == null && $form->get('offerText')->getData() == null) {
+                $this->addFlash('warning', 'Il faut au moins remplir la description ou joindre un fichier à l\'annonce !');
+                return $this->redirect($this->generateUrl('agil_offer_add'));
+            }
+
+            // insert cv
+            if ($file != null && $file != "") {
+                if ($file->guessExtension() != "pdf") {
+                    $this->addFlash('warning', 'Erreur ! Le format du fichier ne convient pas ! (format autorisé: pdf)');
+                    return $this->redirect($this->generateUrl('agil_offer_add'));
+                } else if ($file->getClientSize() > 3072000) {
+                    $this->addFlash('warning', 'Erreur ! La taille du fichier dépasse la limite ! (limite autorisée: 3Mo)');
+                    return $this->redirect($this->generateUrl('agil_offer_add'));
+                }
+
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/offer';
+                $file->move($dir, $fileName);
+                $offer->setOfferPdfUrl($fileName);
+            }
+
             // insert tags
             $tagsArrayString = explode(" ", $form->get('tags')->getData());
             $tagsManager = $this->get('agil_default.tags');
@@ -33,10 +60,20 @@ class OfferController extends Controller
             $tagsManager->insertDone();
             $offer->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
+            $url = $request->getSchemeAndHttpHost().$this->generateUrl('agil_offer_edit', array('idCrypt' => $offer->getOfferRoute()));
+            $subject = "Amicale GIL[Confirmation de l'annonce]";
+            $message = "<p>Bonjour,</p>";
+            $message .= "<p>Merci d'avoir créé une annonce sur Amicale GIL !</p>";
+            $message .= "<p>Pour confirmer votre annonce sur le site, veuillez cliquer sur le lien suivant :</p>";
+            $message .= "<p><strong><a href=\"$url\" TARGET=\"_blank\">Confirmer votre annonce</a></strong></p>";
+            $message .= "<p>Cordialement</p>";
+            $this->sendMail($subject,$message,$form->get('email')->getData());
+
             $em->persist($offer);
             $em->flush();
 
-            $this->redirectToRoute('agil_offer_homepage');
+            $this->addFlash('success', 'Un mail de confirmation vous a été envoyé.');
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
         }
 
         return $this->render('AGILOfferBundle:Offer:offer_add.html.twig', array(

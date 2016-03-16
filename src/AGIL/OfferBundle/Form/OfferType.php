@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class OfferType extends AbstractType
 {
@@ -21,6 +22,25 @@ class OfferType extends AbstractType
             'attr' => array(
                 'class' => 'form-control',
                 'placeholder' => 'Titre',
+            )
+        ));
+
+        $builder->add('offerAuthor', TextType::class, array(
+            'label' => false,
+            'required' => false,
+            'attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Autheur',
+            )
+        ));
+
+        $builder->add('email', EmailType::class, array(
+            'label' => false,
+            'required' => true,
+            'mapped' => false,
+            'attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Email',
             )
         ));
 
@@ -46,8 +66,8 @@ class OfferType extends AbstractType
             'label' => false,
             'required' => true,
             'choices' => array(
-                'Stage' => 'Stage',
-                'Emplois' => 'Emplois'
+                'stage' => 'stage',
+                'emploi' => 'emploi'
             ),
             'multiple' => false,
             'expanded' => true,
@@ -63,7 +83,6 @@ class OfferType extends AbstractType
                 'class' => 'form-control',
             )
         ));
-
 
         $builder->add('Ajouter', SubmitType::class, array(
             'label' => false,

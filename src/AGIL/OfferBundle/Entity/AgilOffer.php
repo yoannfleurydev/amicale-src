@@ -41,7 +41,6 @@ class AgilOffer
      */
     private $offerId;
 
-
     /**
      * @var string
      *
@@ -60,19 +59,14 @@ class AgilOffer
     /**
      * @var string
      *
-     * @ORM\Column(name="offerText", type="text")
-     * @Assert\NotBlank(message="L'offre doit contenir une description")
-     * @Assert\Length(
-     *      min = 2,
-     *      minMessage = "La taille minimale est de {{ limit }} caractères"
-     * )
+     * @ORM\Column(name="offerText", type="text", nullable=true)
      */
     private $offerText;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="offerType", type="string", length=50, unique=true)
+     * @ORM\Column(name="offerType", type="string", length=50)
      * @Assert\Choice(choices = {"stage", "emploi"}, message = "Choose a valid choice.")
      */
     private $offerType;
@@ -118,6 +112,19 @@ class AgilOffer
     private $offerPdfUrl;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="offerRoute", type="string")
+     */
+    private $offerRoute;
+
+    /**
+     * @var boolean $offerPublish
+     * @ORM\Column(name="offerPublish", type="boolean")
+     */
+    private $offerPublish;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -126,6 +133,8 @@ class AgilOffer
         $date = new \DateTime();
         $this->offerPostDate = $date;
         $this->offerExpirationDate = $date->add(new \DateInterval("P3M"));
+        $this->offerPublish = false;
+        $this->offerRoute = md5(uniqid());
     }
 
     /**
@@ -374,5 +383,38 @@ class AgilOffer
      */
     public function isExpired(){
         return ($this->offerExpirationDate > $this->offerPostDate);
+    }
+
+    /**
+     * Get offerPublish
+     *
+     * @return boolean
+     */
+    public function getOfferPublish()
+    {
+        return $this->offerPublish;
+    }
+
+    /**
+     * Set offerPublish
+     *
+     * @param boolean $offerPublish
+     * @return AgilOffer
+     */
+    public function setOfferPublish($offerPublish)
+    {
+        $this->offerPublish = $offerPublish;
+
+        return $this;
+    }
+
+    /**
+     * Get offerRoute
+     *
+     * @return string
+     */
+    public function getOfferRoute()
+    {
+        return $this->offerRoute;
     }
 }
