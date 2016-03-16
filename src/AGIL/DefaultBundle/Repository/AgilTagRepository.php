@@ -27,4 +27,58 @@ class AgilTagRepository extends EntityRepository
 		/* /!\ C'est une liste d'objet de type AgilTag /!\ */
 		return $request->getQuery()->getResult();
 	}
+
+
+	/**
+	 * Recherche des sujets de forum par rapport à $arrayTag,
+	 * trié par ordre de date décroissant, avec la méthode OR
+	 * @param $arrayTag
+	 * @return array
+	 */
+	public function getOrSubjectByTags($arrayTag){
+
+		$query = $this->_em->createQueryBuilder();
+		$query->select('sub.forumSubjectTitle','sub.forumSubjectPostDate','sub.forumSubjectId')
+				->distinct()
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+				->leftJoin('sub.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->setParameter('tagList', $arrayTag)
+				->orderBy('sub.forumSubjectPostDate','desc');
+		;
+
+		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+	}
+
+
+	/**
+	 * Recherche des sujets de forum par rapport à $arrayTag,
+	 * trié par ordre de date décroissant, avec la méthode AND
+	 * @param $arrayTag
+	 * @return array
+	 */
+	public function getAndSubjectByTags($arrayTag){
+
+		$subQuery = $this->_em->createQueryBuilder();
+		$query = $this->_em->createQueryBuilder();
+
+		$subQuery->select('subj.forumSubjectId')
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','subj')
+				->leftJoin('subj.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->groupBy('subj.forumSubjectId HAVING count(DISTINCT tag.tagName) >= :count')
+		;
+
+		$query->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectPostDate','sub')
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+				->where($query->expr()->In('sub.forumSubjectId', $subQuery->getDQL()))
+				->orderBy('sub.forumSubjectPostDate','desc')
+		;
+
+		$query->setParameter('count', count($arrayTag));
+		$query->setParameter('tagList', $arrayTag);
+
+		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+	}
+
 }

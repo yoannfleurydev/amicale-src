@@ -1,3 +1,31 @@
 {% extends "AGILSearchBundle::baseSearchBundle.html.twig" %}
 
-Hello World!
+{% block body %}
+    <div class="container">
+        <div class="row">
+
+            {% if searchForumLast is defined %}
+
+                <ol class="breadcrumb">
+                    <li class="active">Résultat de votre recherche</li>
+                </ol>
+
+                <h5>FORUM</h5>
+
+                {% for search in searchForumLast %}
+
+                    <p><b>Sujet</b> : {{ search.forumSubjectTitle }}
+                    - <b>Date</b> : {{ search.forumSubjectPostDate|date('d-m-Y') }}
+                    - <b>Tags</b> :
+                        {% for tag in tagsForumLast[search.forumSubjectId] %}
+                        {{ tag.tagName }}
+                    {% endfor %}
+                    </p>
+
+                {% endfor %}
+
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
