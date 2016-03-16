@@ -23,7 +23,7 @@ agil_chat:
 
 agil_search:
     resource: "@AGILSearchBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /search
 
 agil_offer:
     resource: "@AGILOfferBundle/Resources/config/routing.yml"
