@@ -10,6 +10,7 @@ class DefaultController extends Controller
 {
 
     private $forumSubjectRepository;
+    private $hallEventRepository;
     private $tagRepository;
 
 
@@ -17,6 +18,7 @@ class DefaultController extends Controller
     {
         $this->tagRepository = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
         $this->forumSubjectRepository = $this->getDoctrine()->getManager()->getRepository('AGILForumBundle:AgilForumSubject');
+        $this->hallEventRepository = $this->getDoctrine()->getManager()->getRepository('AGILHallBundle:AgilEvent');
 
         $formFilter = $request->query->get('filter');
         $formMethod = $request->query->get('method');
@@ -38,14 +40,19 @@ class DefaultController extends Controller
                     if($formMethod == "and" || $formMethod == "or"){
 
 
-                        // Recherche Forum
+                        // Recherche Forum (Sujets)
                         $searchForumLast = $this->searchForumSubjectAll($tagArray,$formMethod);
                         $tagsForumLast = $this->tagsForForumSubject($searchForumLast);
+
+                        // Recherche Hall (Evènements)
+                        $searchHall = $this->searchHall($tagArray,$formMethod);
+                        $tagsHall = $this->tagsForHallEvent($searchHall);
 
                         // Autres recherches ...
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
-                            array('searchForumLast' => $searchForumLast, 'tagsForumLast' => $tagsForumLast)
+                            array('searchForumLast' => $searchForumLast, 'tagsForumLast' => $tagsForumLast,
+                                'searchHall' => $searchHall, 'tagsHall' => $tagsHall)
                         );
 
                     }
@@ -107,6 +114,41 @@ class DefaultController extends Controller
             $tagsForumLast[$sub['forumSubjectId']] = $subject->getTags();
         }
         return $tagsForumLast;
+    }
+
+
+    /**
+     * Recherche d'evènements du hall par rapport à des tags
+     *
+     * @param $tagArray
+     * @param $method
+     * @return null
+     */
+    private function searchHall($tagArray,$method){
+
+        if($method == "and"){
+            return $this->tagRepository->getAndEventByTags($tagArray);
+        }else if ($method == "or"){
+            return $this->tagRepository->getOrEventByTags($tagArray);
+        }else{
+            return null;
+        }
+
+    }
+
+    /**
+     * Retourne les tags pour chaque évènements du hall trouvés
+     *
+     * @param $searchHall
+     * @return array
+     */
+    private function tagsForHallEvent($searchHall){
+        $tagsHall[] = null;
+        foreach($searchHall as $event){
+            $ev = $this->hallEventRepository->find($event['eventId']);
+            $tagsHall[$event['eventId']] = $ev->getTags();
+        }
+        return $tagsHall;
     }
 
 }

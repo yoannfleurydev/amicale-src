@@ -81,4 +81,57 @@ class AgilTagRepository extends EntityRepository
 		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
 	}
 
+
+	/**
+	 * Recherche des évènements du hall par rapport à $arrayTag,
+	 * trié par ordre de date décroissant, avec la méthode OR
+	 * @param $arrayTag
+	 * @return array
+	 */
+	public function getOrEventByTags($arrayTag){
+
+		$query = $this->_em->createQueryBuilder();
+		$query->select('event.eventTitle','event.eventDate','event.eventId')
+				->distinct()
+				->from('AGIL\HallBundle\Entity\AgilEvent','event')
+				->leftJoin('event.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->setParameter('tagList', $arrayTag)
+				->orderBy('event.eventDate','desc');
+		;
+
+		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+	}
+
+	/**
+	 * Recherche des évènements du hall par rapport à $arrayTag,
+	 * trié par ordre de date décroissant, avec la méthode AND
+	 * @param $arrayTag
+	 * @return array
+	 */
+	public function getAndEventByTags($arrayTag){
+
+		$subQuery = $this->_em->createQueryBuilder();
+		$query = $this->_em->createQueryBuilder();
+
+		$subQuery->select('evt.eventId')
+				->from('AGIL\HallBundle\Entity\AgilEvent','evt')
+				->leftJoin('evt.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->groupBy('evt.eventId HAVING count(DISTINCT tag.tagName) >= :count')
+		;
+
+		$query->select('event.eventId','event.eventTitle','event.eventDate','event')
+				->from('AGIL\HallBundle\Entity\AgilEvent','event')
+				->where($query->expr()->In('event.eventId', $subQuery->getDQL()))
+				->orderBy('event.eventDate','desc')
+		;
+
+		$query->setParameter('count', count($arrayTag));
+		$query->setParameter('tagList', $arrayTag);
+
+		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+	}
+
+
 }

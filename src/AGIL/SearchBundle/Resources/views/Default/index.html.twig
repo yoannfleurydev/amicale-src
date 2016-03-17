@@ -4,11 +4,11 @@
     <div class="container">
         <div class="row">
 
-            {% if searchForumLast is defined %}
+            <ol class="breadcrumb">
+                <li class="active">Résultat de votre recherche</li>
+            </ol>
 
-                <ol class="breadcrumb">
-                    <li class="active">Résultat de votre recherche</li>
-                </ol>
+            {% if searchForumLast is defined %}
 
                 <h5>FORUM</h5>
 
@@ -20,6 +20,24 @@
                         {% for tag in tagsForumLast[search.forumSubjectId] %}
                         {{ tag.tagName }}
                     {% endfor %}
+                    </p>
+
+                {% endfor %}
+
+            {% endif %}
+
+            {% if searchHall is defined %}
+
+                <h5>HALL</h5>
+
+                {% for search in searchHall %}
+
+                    <p><b>Evènement</b> : {{ search.eventTitle }}
+                        - <b>Date</b> : {{ search.eventDate|date('d-m-Y') }}
+                        - <b>Tags</b> :
+                        {% for tag in tagsHall[search.eventId] %}
+                            {{ tag.tagName }}
+                        {% endfor %}
                     </p>
 
                 {% endfor %}
