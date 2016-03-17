@@ -1,4 +1,4 @@
 agil_search_homepage:
-    path:     /search
+    path:     /
     defaults:
         _controller: AGILSearchBundle:Default:index
