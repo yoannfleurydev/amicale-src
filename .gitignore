@@ -13,6 +13,7 @@
 /.idea/
 web/img/profile/profile*
 web/img/hall/*
+web/img/offer/*
 web/files/cv/
 node_modules/
 /.project

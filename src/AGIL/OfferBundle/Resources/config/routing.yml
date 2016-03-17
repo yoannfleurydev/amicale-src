@@ -1,4 +1,25 @@
 agil_offer_homepage:
-    path:     /offer
+    path:     /offer/page/{page}
     defaults:
         _controller: AGILOfferBundle:Default:index
+        page:  1
+    requirements:
+        page: \d+
+
+
+agil_offer_view:
+    path:     /offer/{id}
+    defaults:
+        _controller: AGILOfferBundle:Offer:offer
+    requirements:
+        id: \d+
+
+agil_offer_add:
+    path:     /offer/add
+    defaults:
+        _controller: AGILOfferBundle:Offer:offerAdd
+
+agil_offer_edit:
+    path:     /offer/{idCrypt}/edit
+    defaults:
+        _controller: AGILOfferBundle:Offer:offerEdit
