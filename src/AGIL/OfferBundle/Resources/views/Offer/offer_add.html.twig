@@ -51,13 +51,24 @@
 
                     <div class="form-group required">
                         <label class="control-label">Type de l'annonce</label>
-                        {{ form_errors(form.offerType) }}
+                        <label class="radio">
+                            {{ form_widget(form.offerType.0) }}
+                            <span></span>{{ form_label(form.offerType.0) }}
+                        </label>
+                        <label class="radio">
+                            {{ form_widget(form.offerType.1) }}
+                            <span></span>{{ form_label(form.offerType.1) }}
+                        </label>
                         {{ form_widget(form.offerType) }}
                     </div>
 
                     <div class="form-group">
+
+                        <div class="fileUpload btn btn-primary">
+                            <span id="button_name_cv"><i class="material-icons">file_upload</i> Choisir un fichier</span>
+                            {{ form_row(form.offerPdfUrl) }}
+                        </div>
                         {{ form_errors(form.offerPdfUrl) }}
-                        {{ form_widget(form.offerPdfUrl) }}
                         <p><i>(Format: PDF)</i></p>
                     </div>
 
