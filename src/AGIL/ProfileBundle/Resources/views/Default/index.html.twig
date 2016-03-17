@@ -49,11 +49,11 @@
                     {% if profileSkillsCategories is defined %}
                         {% for profileSkillsCategory in profileSkillsCategories %}
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <h2 class="panel-title">
+                                <h3 class="panel-title">
                                     <span class="panel-title-content">
                                         {{ profileSkillsCategory.profileSkillsCategoryName }}
                                     </span>
-                                </h2>
+                                </h3>
                                 <ul class="list-group">
                                     {% for tag in tags %}
                                         {% if tag.skillCategory == profileSkillsCategory %}
@@ -66,7 +66,7 @@
                                                         <div class="progress">
                                                             {% for skill in skills %}
                                                                 {% if skill.tag == tag %}
-                                                                    <div class="progress-bar" role="progressbar"
+                                                                    <div class="progress-bar {{ tag.tagColor }}" role="progressbar"
                                                                          aria-valuenow="{{ skill.skillLevel * 10 }}"
                                                                          aria-valuemin="0"
                                                                          aria-valuemax="100"

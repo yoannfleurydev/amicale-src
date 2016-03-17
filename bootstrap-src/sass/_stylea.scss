@@ -167,3 +167,12 @@ $pad: 10px;
     height: auto;
   }
 }
+
+/* asterisk pour les champs obligatoire du formulaire */
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+p.asterisk {
+  color:red;
+}

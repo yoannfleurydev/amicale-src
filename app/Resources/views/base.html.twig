@@ -48,7 +48,10 @@
                     <span class="bar bottom animate"></span>
                 </button>
                 <a class="hidden-xs hidden-sm" href="http://www.univ-rouen.fr"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("img/logo.png") }}" alt="logo univ"></a>
-                <a class="hidden-xs hidden-sm" href="{{ path("agil_default_homepage") }}" id="logo-agil">AGIL</a>
+                <div id="logo-agil">
+                    <a href="{{ path("agil_default_homepage") }}"><img class="img-responsive navbar-mobile" src="{{ asset("icon/apple-icon-60x60.png") }}" alt="logo agil"></a>
+                </div>
+
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
                 <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
@@ -77,7 +80,23 @@
                 </div>
 
                 {% endif %}
-                <a href="#" class="navbar-mobile right" data-trigger="hover" data-toggle="tooltip" data-placement="bottom" title="Rechercher"><span class="material-icons">search</span></a>
+                <div class="navbar-mobile right dropdown">
+                    <button class="btn btn-unstyled dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="material-icons">search</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right search-bar" aria-labelledby="dropdownMenu1">
+                        <li>
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" size="20">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary">Rechercher</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <aside class="sidebar">
@@ -91,7 +110,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
+                        <a href="{{ path('agil_offer_homepage') }}" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
                         </a>
