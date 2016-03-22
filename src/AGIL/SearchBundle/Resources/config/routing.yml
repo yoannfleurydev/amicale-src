@@ -1,4 +1,10 @@
 agil_search_homepage:
     path:     /
     defaults:
-        _controller: AGILSearchBundle:Default:index
+        _controller: AGILSearchBundle:Default:search
+
+agil_search_test:
+    path:     /test
+    defaults:
+        _controller: AGILSearchBundle:Default:test
+        _method: GET
