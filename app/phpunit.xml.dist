@@ -9,6 +9,8 @@
 >
     <php>
         <ini name="error_reporting" value="-1" />
+        <!-- Suppression des messages de dépreciation -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
     </php>
 
     <testsuites>
