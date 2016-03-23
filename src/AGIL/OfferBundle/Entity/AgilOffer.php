@@ -125,6 +125,12 @@ class AgilOffer
     private $offerPublish;
 
     /**
+     * @var string $offerEmail
+     * @ORM\Column(name="offerEmail", type="string")
+     */
+    private $offerEmail;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -416,5 +422,21 @@ class AgilOffer
     public function getOfferRoute()
     {
         return $this->offerRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferEmail() {
+        return $this->offerEmail;
+    }
+
+    /**
+     * @param $offerEmail
+     * @return $this
+     */
+    public function setOfferEmail($offerEmail) {
+        $this->offerEmail = $offerEmail;
+        return $this;
     }
 }
