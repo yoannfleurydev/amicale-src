@@ -237,7 +237,7 @@ label.radio span {
   -webkit-transition:.24s;
   transition:.24s;
   display:inline-block;
-  width:18px;
+  width:19px;
   height:18px;
   vertical-align:middle;
   margin-right:10px;
@@ -415,9 +415,14 @@ body {
 }
 
 #logo-agil {
-  font-size: 25px !important;
-  padding-left: 20px;
-  padding-top: 8px;
+  width: 60px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#logo-agil img{
+  padding: 0 !important;
   float: left;
 }
 
@@ -568,6 +573,22 @@ h2.panel-title {
   margin:10px 0 20px;
 }
 
+h3.panel-title {
+  width:100%;
+  text-align:center;
+  border-bottom: 3px solid $menu-color;
+  line-height:0.1em;
+  margin:10px 0 20px;
+}
+
+h4.panel-title {
+  width:100%;
+  text-align:center;
+  border-bottom: 3px solid $footer-color;
+  line-height:0.1em;
+  margin:10px 0 20px;
+}
+
 span.panel-title-content {
   background:#fff;
   padding:0 10px;
@@ -706,6 +727,11 @@ span.panel-title-content {
   .panel-heading {
     text-transform: uppercase;
   }
+
+  .panel-body {
+    padding : 0px !important;
+    padding-left: 15px;
+  }
 }
 
 .footer-title:after {
@@ -716,4 +742,37 @@ span.panel-title-content {
   left: 25px;
   height: 4px;
   width: 20px;
+}
+
+.btn-unstyled {
+  box-shadow: none !important;
+  background-color: #FFF !important;
+}
+.btn-unstyled.active.focus, .btn-unstyled.active:focus, .btn-unstyled.active:hover,
+.btn-unstyled.focus:active, .btn-unstyled:active:focus, .btn-unstyled:active:hover,
+.open > .btn-unstyled.dropdown-toggle.focus, .open > .btn-unstyled.dropdown-toggle:focus,
+.open > .btn-unstyled.dropdown-toggle:hover {
+  background-color: #FFF !important;
+}
+
+$margin-value: 15px !important;
+
+.margin-bottom {
+  margin-bottom: $margin-value;
+}
+
+.margin-top {
+  margin-top: $margin-value;
+}
+
+.margin-left {
+  margin-left: $margin-value;
+}
+
+.margin-right {
+  margin-right: $margin-value;
+}
+
+.margin {
+  margin: $margin-value;
 }

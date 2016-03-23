@@ -39,7 +39,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
     background-size: 200%;
     background-position: 50%;
     background-color: $bg;
-    margin-bottom:10px;
     &:focus {
       background-color: $bg;
     }
@@ -538,6 +537,8 @@ input[type="checkbox"],
   padding: 4px 6px 4px;
 }
 
+$progress-bar-bg : #D5D5D5;
+
 .progress {
   position: relative;
   z-index: 1;
@@ -565,23 +566,23 @@ input[type="checkbox"],
         left: 0;
         right: 0;
         z-index: -1;
-        background-color: lighten($progress-bar-bg, 35%);
+        background-color: $progress-bar-bg;
       }
     }
 
     &-success:last-child.progress-bar:before {
-      background-color: lighten($brand-success, 35%);
+      background-color: $progress-bar-bg;
     }
 
     &-info:last-child.progress-bar:before {
-      background-color: lighten($brand-info, 45%);
+      background-color: $progress-bar-bg;
     }
     &-warning:last-child.progress-bar:before {
-      background-color: lighten($brand-warning, 35%);
+      background-color: $progress-bar-bg;
     }
 
     &-danger:last-child.progress-bar:before {
-      background-color: lighten($brand-danger, 25%);
+      background-color: $progress-bar-bg;
     }
   }
 }
@@ -644,3 +645,8 @@ input[type="checkbox"],
   }
 }
 
+.search-bar {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 350px;
+}
