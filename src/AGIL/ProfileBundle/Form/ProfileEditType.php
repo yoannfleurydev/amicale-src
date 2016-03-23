@@ -118,12 +118,35 @@ class ProfileEditType extends AbstractType
             }
         }
 
+        /*Checkbox Mailing list*/
+        $builder->add('Forum', CheckboxType::class, array(
+            'label'    => 'Forum',
+            'required' => false,
+        ));
+
+        $builder->add('Events', CheckboxType::class, array(
+            'label'    => 'Evénements',
+            'required' => false,
+        ));
+
+        $builder->add('Hall', CheckboxType::class, array(
+            'label'    => 'Hall',
+            'required' => false,
+        ));
+
+        $builder->add('offers', CheckboxType::class, array(
+            'label'    => 'Offres',
+            'required' => false,
+        ));
+
+        /* Bouton Submit */
         $builder->add('Modifier', SubmitType::class, array(
             'label' => false,
             'attr' => array(
                 'class' => 'form-control'
             )
         ));
+
     }
 
     public function getBlockPrefix()
