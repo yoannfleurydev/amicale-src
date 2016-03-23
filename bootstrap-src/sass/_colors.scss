@@ -22,15 +22,15 @@ $colors : (
     .text-#{$nom} { color:$bgcolor;}
     @for $i from 1 through 5 {
         .#{$nom}-darker-#{$i}{
-            background-color: darken($bgcolor, $i*5%);
+            background-color: darken($bgcolor, $i*5%) !important;
         }
     }
     @for $i from 1 through 5 {
         .#{$nom}-lighter-#{$i}{
-            background-color: lighten($bgcolor, $i*7%);
+            background-color: lighten($bgcolor, $i*7%) !important;
         }
     }
 }
 .text-white{
-    color:white;
+    color:white  !important;
 }
