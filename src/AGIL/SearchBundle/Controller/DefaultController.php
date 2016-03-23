@@ -2,6 +2,7 @@
 
 namespace AGIL\SearchBundle\Controller;
 
+use AGIL\SearchBundle\Form\SearchAdvancedType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AGIL\SearchBundle\Form\SearchType;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,7 @@ class DefaultController extends Controller
 
     private $forumSubjectRepository;
     private $hallEventRepository;
+    private $offerRepository;
     private $tagRepository;
 
 
@@ -19,11 +21,17 @@ class DefaultController extends Controller
         $this->tagRepository = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
         $this->forumSubjectRepository = $this->getDoctrine()->getManager()->getRepository('AGILForumBundle:AgilForumSubject');
         $this->hallEventRepository = $this->getDoctrine()->getManager()->getRepository('AGILHallBundle:AgilEvent');
+        $this->offerRepository = $this->getDoctrine()->getManager()->getRepository('AGILOfferBundle:AgilOffer');
 
         $formFilter = $request->query->get('filter');
         $formMethod = $request->query->get('method');
         $formTags = $request->query->get('tags');
 
+        $form = $this->createForm(new SearchAdvancedType(), array(), array(
+            'action' => $this->generateUrl('agil_search_homepage'),
+            'method' => 'GET',
+            'csrf_protection' => false
+        ));
 
         if($formFilter != null){
 
@@ -48,11 +56,16 @@ class DefaultController extends Controller
                         $searchHall = $this->searchHall($tagArray,$formMethod);
                         $tagsHall = $this->tagsForHallEvent($searchHall);
 
+                        // Recherche Offres (Annonces)
+                        $searchOffers = $this->searchOffers($tagArray,$formMethod);
+                        $tagsOffers = $this->tagsForOffers($searchOffers);
+
                         // Autres recherches ...
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
                             array('searchForumLast' => $searchForumLast, 'tagsForumLast' => $tagsForumLast,
-                                'searchHall' => $searchHall, 'tagsHall' => $tagsHall)
+                                'searchHall' => $searchHall, 'tagsHall' => $tagsHall, 'form' => $form->createView(),
+                                'searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers)
                         );
 
                     }
@@ -63,7 +76,9 @@ class DefaultController extends Controller
 
         }
 
-        return $this->render('AGILSearchBundle:Default:index.html.twig');
+        return $this->render('AGILSearchBundle:Default:index.html.twig',array(
+            'form' => $form->createView()
+        ));
     }
 
     /**
@@ -150,5 +165,42 @@ class DefaultController extends Controller
         }
         return $tagsHall;
     }
+
+
+    /**
+     * Recherche d'offres par rapport à des tags
+     *
+     * @param $tagArray
+     * @param $method
+     * @return null
+     */
+    private function searchOffers($tagArray,$method){
+
+        if($method == "and"){
+            return $this->tagRepository->getAndOfferByTags($tagArray);
+        }else if ($method == "or"){
+            return $this->tagRepository->getOrOfferByTags($tagArray);
+        }else{
+            return null;
+        }
+
+    }
+
+    /**
+     * Retourne les tags pour chaque offres trouvées
+     *
+     * @param $searchOffers
+     * @return array
+     */
+    private function tagsForOffers($searchOffers){
+        $tagsOffer[] = null;
+        foreach($searchOffers as $offer){
+            $off = $this->offerRepository->find($offer['offerId']);
+            $tagsOffer[$offer['offerId']] = $off->getTags();
+        }
+        return $tagsOffer;
+    }
+
+
 
 }

@@ -1,5 +1,7 @@
 {% extends "AGILSearchBundle::baseSearchBundle.html.twig" %}
 
+{% form_theme form '::button_widget.html.twig' %}
+
 {% block body %}
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
         <div class="panel panel-default">
@@ -10,7 +12,30 @@
                     </span>
                 </h2>
             </div>
-            <form class="form-horizontal">
+
+
+
+            {{ form_start(form) }}
+
+            {{ form_errors(form.tags) }}
+            {{ form_widget(form.tags) }}
+
+            {{ form_errors(form.filter) }}
+            {{ form_widget(form.filter) }}
+
+            {{ form_errors(form.method) }}
+            {{ form_widget(form.method) }}
+
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+
+            {{ form_rest(form) }}
+
+            {{ form_end(form) }}
+
+
+
+            <!--
+            <div class="form-horizontal">
                 <div class="panel-body">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
@@ -68,97 +93,154 @@
                         <a class="btn btn-primary">Relancer</a>
                     </p>
                 </div>
-            </form>
+            </div>
+
+
+            -->
+
         </div>
     </div>
-    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                    <span class="panel-title-content">
-                        Forum
-                    </span>
-                </h2>
-            </div>
-            <div class="panel-body">
-                <div class="list">
-                    <div class="list-element">
-                        <p><a class="interne-link">Avez-vous gouté la nouvelle Zoranna ?</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">BUBULE</span>
-                        <span class="label red">EAU</span>
-                        <span class="label green">COGNAC</span>
-                    </div>
-                    <div class="list-element">
-                        <p><a class="interne-link">Je cherche le président de Zoranna</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">BUBULE</span>
-                        <span class="label red">EAU</span>
-                        <span class="label green">COGNAC</span>
-                    </div>
-                    <div class="list-element">
-                        <p><a class="interne-link">Le cognac c'est trop bon</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">ALCOOL</span>
-                        <span class="label red">BOURRE</span>
-                        <span class="label green">COGNAC</span>
-                    </div>
-                    <div class="list-element">
-                        <p><a class="interne-link">La compilation c'est null</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">BUBULE</span>
-                        <span class="label red">EAU</span>
-                        <span class="label green">COGNAC</span>
-                    </div>
+
+
+    {% if searchForumLast is defined %}
+
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Sujets de Forum
+                        </span>
+                    </h2>
                 </div>
-                <a>Voir Plus</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                    <span class="panel-title-content">
-                        Evenements
-                    </span>
-                </h2>
-            </div>
-            <div class="panel-body">
-                <div class="list">
-                    <div class="list-element">
-                        <p><a class="interne-link">Avez-vous gouté la nouvelle Zoranna ?</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">BUBULE</span>
-                        <span class="label red">EAU</span>
-                        <span class="label green">COGNAC</span>
+                <div class="panel-body">
+                    <div class="list">
+
+                        {% if searchForumLast|length == 0 %}
+
+                            <p class="text-center">La recherche n'a retourné aucun résultat.</p>
+
+                        {% else %}
+
+                            {% for search in searchForumLast %}
+
+                                <div class="list-element">
+                                    <p><a href="{{ path('agil_forum_subject_answers',{'idCategory' : search.forumCategoryId,'idSubject':search.forumSubjectId}) }}" class="interne-link">{{ search.forumSubjectTitle }}</a></p>
+                                    <em>{{ search.forumSubjectPostDate|date('d-m-Y') }}</em>
+                                    {% for tag in tagsForumLast[search.forumSubjectId] %}
+                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span>
+                                    {% endfor %}
+                                </div>
+
+                            {% endfor %}
+
+                        {% endif %}
+
                     </div>
-                    <div class="list-element">
-                        <p><a class="interne-link">Je cherche le président de Zoranna</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">BUBULE</span>
-                        <span class="label red">EAU</span>
-                        <span class="label green">COGNAC</span>
-                    </div>
-                    <div class="list-element">
-                        <p><a class="interne-link">Le cognac c'est trop bon</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">ALCOOL</span>
-                        <span class="label red">BOURRE</span>
-                        <span class="label green">COGNAC</span>
-                    </div>
-                    <div class="list-element">
-                        <p><a class="interne-link">La compilation c'est null</a></p>
-                        <em>20 mars. 2014</em>
-                        <span class="label purple">BUBULE</span>
-                        <span class="label red">EAU</span>
-                        <span class="label green">COGNAC</span>
-                    </div>
+
+                    {% if searchForumLast|length > 4 %}
+                        <a>Voir Plus</a>
+                    {% endif %}
+
                 </div>
-                <a>Voir Plus</a>
             </div>
         </div>
-    </div>
+
+    {% endif %}
+
+    {% if searchHall is defined %}
+
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Evènements du Hall
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="list">
+
+                        {% if searchHall|length == 0 %}
+
+                            <p class="text-center">La recherche n'a retourné aucun résultat.</p>
+
+                        {% else %}
+
+                            {% for search in searchHall %}
+
+                                <div class="list-element">
+                                    <p><a href="{{ path('agil_hall_event',{'idEvent':search.eventId}) }}" class="interne-link">{{ search.eventTitle }}</a></p>
+                                    <em>{{ search.eventDate|date('d-m-Y') }}</em>
+                                    {% for tag in tagsHall[search.eventId] %}
+                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span>
+                                    {% endfor %}
+                                </div>
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+                    {% if searchHall|length > 4 %}
+                        <a>Voir Plus</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+    {% if searchOffers is defined %}
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Offres
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="list">
+
+                        {% if searchOffers|length == 0 %}
+
+                            <p class="text-center">La recherche n'a retourné aucun résultat.</p>
+
+                        {% else %}
+
+                            {% for search in searchOffers %}
+
+                                <div class="list-element">
+                                    <p><a href="#" class="interne-link">{{ search.offerTitle }}</a></p>
+                                    <em>{{ search.offerPostDate|date('d-m-Y') }}</em>
+                                    {% for tag in tagsOffer[search.offerId] %}
+                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span>
+                                    {% endfor %}
+                                </div>
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+                    {% if searchOffers|length > 4 %}
+                        <a>Voir Plus</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <!--
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -203,4 +285,5 @@
             </div>
         </div>
     </div>
+    -->
 {% endblock %}

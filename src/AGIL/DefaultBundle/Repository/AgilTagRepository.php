@@ -38,16 +38,17 @@ class AgilTagRepository extends EntityRepository
 	public function getOrSubjectByTags($arrayTag){
 
 		$query = $this->_em->createQueryBuilder();
-		$query->select('sub.forumSubjectTitle','sub.forumSubjectPostDate','sub.forumSubjectId')
+		$query->select('sub.forumSubjectTitle','sub.forumSubjectPostDate','sub.forumSubjectId','cat.forumCategoryId')
 				->distinct()
 				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
 				->leftJoin('sub.tags','tag')
+				->leftJoin('sub.category','cat')
 				->andWhere('tag.tagName IN (:tagList)')
 				->setParameter('tagList', $arrayTag)
 				->orderBy('sub.forumSubjectPostDate','desc');
 		;
 
-		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+		return $query->setFirstResult(0)->setMaxResults(4)->getQuery()->getResult();
 	}
 
 
@@ -69,8 +70,9 @@ class AgilTagRepository extends EntityRepository
 				->groupBy('subj.forumSubjectId HAVING count(DISTINCT tag.tagName) >= :count')
 		;
 
-		$query->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectPostDate','sub')
+		$query->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectPostDate','sub','cat.forumCategoryId')
 				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+				->leftJoin('sub.category','cat')
 				->where($query->expr()->In('sub.forumSubjectId', $subQuery->getDQL()))
 				->orderBy('sub.forumSubjectPostDate','desc')
 		;
@@ -78,7 +80,7 @@ class AgilTagRepository extends EntityRepository
 		$query->setParameter('count', count($arrayTag));
 		$query->setParameter('tagList', $arrayTag);
 
-		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+		return $query->setFirstResult(0)->setMaxResults(4)->getQuery()->getResult();
 	}
 
 
@@ -100,7 +102,7 @@ class AgilTagRepository extends EntityRepository
 				->orderBy('event.eventDate','desc');
 		;
 
-		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+		return $query->setFirstResult(0)->setMaxResults(4)->getQuery()->getResult();
 	}
 
 	/**
@@ -130,7 +132,59 @@ class AgilTagRepository extends EntityRepository
 		$query->setParameter('count', count($arrayTag));
 		$query->setParameter('tagList', $arrayTag);
 
-		return $query->setFirstResult(0)->setMaxResults(5)->getQuery()->getResult();
+		return $query->setFirstResult(0)->setMaxResults(4)->getQuery()->getResult();
+	}
+
+
+	/**
+	 * Recherche des offres par rapport à $arrayTag,
+	 * trié par ordre de date décroissant, avec la méthode OR
+	 * @param $arrayTag
+	 * @return array
+	 */
+	public function getOrOfferByTags($arrayTag){
+
+		$query = $this->_em->createQueryBuilder();
+		$query->select('off.offerTitle','off.offerPostDate','off.offerId')
+				->distinct()
+				->from('AGIL\OfferBundle\Entity\AgilOffer','off')
+				->leftJoin('off.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->setParameter('tagList', $arrayTag)
+				->orderBy('off.offerPostDate','desc');
+		;
+
+		return $query->setFirstResult(0)->setMaxResults(4)->getQuery()->getResult();
+	}
+
+	/**
+	 * Recherche des offres par rapport à $arrayTag,
+	 * trié par ordre de date décroissant, avec la méthode AND
+	 * @param $arrayTag
+	 * @return array
+	 */
+	public function getAndOfferByTags($arrayTag){
+
+		$subQuery = $this->_em->createQueryBuilder();
+		$query = $this->_em->createQueryBuilder();
+
+		$subQuery->select('off.offerId')
+				->from('AGIL\OfferBundle\Entity\AgilOffer','off')
+				->leftJoin('off.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->groupBy('off.offerId HAVING count(DISTINCT tag.tagName) >= :count')
+		;
+
+		$query->select('offer.offerId','offer.offerTitle','offer.offerPostDate','offer')
+				->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
+				->where($query->expr()->In('offer.offerId', $subQuery->getDQL()))
+				->orderBy('offer.offerPostDate','desc')
+		;
+
+		$query->setParameter('count', count($arrayTag));
+		$query->setParameter('tagList', $arrayTag);
+
+		return $query->setFirstResult(0)->setMaxResults(4)->getQuery()->getResult();
 	}
 
 
