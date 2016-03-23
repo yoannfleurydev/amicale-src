@@ -92,7 +92,14 @@ class OfferController extends Controller
     public function offerEditAction(Request $request, $idCrypt)
     {
         $em = $this->getDoctrine()->getManager();
-        $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerRoute' => $idCrypt))[0];
+        $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerRoute' => $idCrypt));
+
+        if ($offer == null) {
+            $this->addFlash('warning', 'Cette annonce n\'existe plus !');
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+        }
+
+        $offer = $offer[0];
 
         if (!$offer->getOfferPublish()) {
             $this->addFlash('success', 'Votre annonce est maintenant publiée sur Amicale GIL.');
@@ -156,6 +163,23 @@ class OfferController extends Controller
             'offer' => $offer,
             'form' => $form->createView()
         ));
+    }
+
+    public function offerDeleteAction(Request $request, $idCrypt) {
+        $em = $this->getDoctrine()->getManager();
+        $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerRoute' => $idCrypt))[0];
+
+        if ($offer->getOfferPdfUrl() != null) {
+            $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/offer';
+            $fs = new Filesystem();
+            $fs->remove(array('symlink', $dir.'/'.$offer->getOfferPdfUrl()));
+        }
+
+        $em->remove($offer);
+        $em->flush();
+
+        $this->addFlash('success', 'Annonce supprimée.');
+        return $this->redirect($this->generateUrl('agil_offer_homepage'));
     }
 
     /**

@@ -23,3 +23,8 @@ agil_offer_edit:
     path:     /offer/{idCrypt}/edit
     defaults:
         _controller: AGILOfferBundle:Offer:offerEdit
+
+agil_offer_delete:
+    path:     /offer/{idCrypt}/delete
+    defaults:
+            _controller: AGILOfferBundle:Offer:offerDelete
