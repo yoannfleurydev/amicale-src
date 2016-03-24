@@ -4,12 +4,9 @@ namespace AGIL\ProfileBundle\Controller;
 
 use AGIL\ProfileBundle\Form\ProfileEditType;
 use AGIL\UserBundle\Entity\AgilUser;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 class DefaultController extends Controller
 {
@@ -114,18 +111,28 @@ class DefaultController extends Controller
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
                 $encoded_pass = $encoder->encodePassword($form->get('oldPassword')->getData(), $user->getSalt());
+
                 if ($encoded_pass == $user->getPassword() && $form->get('password')->getData() != null
                     && $form->get('password')->getData() == $form->get('passwordConfirm')->getData()) {
 
-                    $encoder = $factory->getEncoder($user);
-                    $pass = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
-                    $user->setPassword($pass);
+                    // Si la longueur du mot de passe est inférieure à 5 caractères, alors on affiche un message et on
+                    // ne change rien à l'utilisateur.
+                    if (strlen($form->get('password')->getData()) <= 5) {
+                        $this->addFlash('warning', 'Pour votre sécurité, votre mot de passe doit faire plus de 5 
+                        caractères. Nous conseillons l\'utilisation de caractères alphanumériques et de caractères 
+                        spéciaux.');
+                        return $this->redirect($this->generateUrl('agil_profile_edit'));
+                    } else {
+                        $encoder = $factory->getEncoder($user);
+                        $pass = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());
+                        $user->setPassword($pass);
+                    }
                 } else {
                     $this->addFlash('warning', 'Erreur ! Les mots de passe ne correspondent pas !');
                     return $this->redirect($this->generateUrl('agil_profile_edit'));
                 }
-            } elseif ($form->get('password')->getData() != null ||$form->get('passwordConfirm')->getData() != null) {
-                $this->addFlash('warning', 'Erreur ! Les mots de passe ne correspondent pas !');
+            } else if ($form->get('password')->getData() != null ||$form->get('passwordConfirm')->getData() != null) {
+                $this->addFlash('warning', 'Erreur ! L\'ancien mot de passe doit être entré et correct !');
                 return $this->redirect($this->generateUrl('agil_profile_edit'));
             }
 
