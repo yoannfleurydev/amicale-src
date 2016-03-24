@@ -34,7 +34,7 @@ security:
     access_control:
         - { path: ^/search, roles: ROLE_USER }
         - { path: ^/profile/edit, roles: ROLE_USER }
-        - { path: ^/offer$, roles: ROLE_USER } # le '$' qui restreint la route a /offer (par défaut /offer/*)
+        - { path: ^/offer/page$, roles: ROLE_USER } # le '$' qui restreint la route a /offer (par défaut /offer/*)
         - { path: ^/offer/add, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/chat, roles: ROLE_USER }
         - { path: ^/forum, roles: ROLE_USER }

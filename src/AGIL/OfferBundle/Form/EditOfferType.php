@@ -54,7 +54,7 @@ class EditOfferType extends AbstractType
             'label' => false,
             'required' => false,
             'attr' => array(
-                'class' => 'form-control',
+                'class' => 'tinymce form-control',
                 'placeholder' => 'Description',
             )
         ));

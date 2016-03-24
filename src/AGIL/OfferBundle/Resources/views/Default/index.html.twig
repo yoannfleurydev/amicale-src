@@ -13,7 +13,9 @@
             <div class="card-events">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                        <p><h5>{{ offer.offerTitle }}</h5></p>
+                        <h5><a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a></h5>
+
+                        <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
 
                         {% if offer.offerText is not null %}
                         <p><h6></h6>Autheur: {{ offer.offerAuthor }}</h6></p>
@@ -33,4 +35,10 @@
         </div>
     </div>
     {% endfor %}
+
+    {% if pagination.pages_count>1 %}
+    <nav class="text-center">
+        {% include 'AGILHallBundle:Default:pagination.html.twig' %}
+    </nav>
+    {% endif %}
 {% endblock %}

@@ -35,7 +35,7 @@ class AddEventType extends AbstractType
                 new NotBlank(),
             ),
             'attr' => array(
-                'class' => 'form-control',
+                'class' => 'tinymce form-control',
             )
         ));
 

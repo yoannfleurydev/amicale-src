@@ -109,13 +109,15 @@
                             Accueil
                         </a>
                     </li>
+
+                    {% if is_granted("ROLE_USER") %}
                     <li>
                         <a href="{{ path('agil_offer_homepage') }}" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
                             <span class="glyphicon glyphicon-info-sign"></span>
                             Annonces
                         </a>
                     </li>
-                            {% if is_granted("ROLE_USER") %}
+
 
                     <li>
                         <a href="{{ path('agil_forum_homepage') }}" class="nav-link {% if isActive == "forum" %} nav-link-active {% endif %}" title="Forum">
@@ -123,7 +125,15 @@
                             Forum
                         </a>
                     </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('agil_offer_add') }}" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                Annonces
+                            </a>
+                        </li>
                     {% endif %}
+
                     <li><a href="{{ path('agil_hall_homepage') }}" class="nav-link {% if isActive == "hall" %} nav-link-active {% endif %}" title="Hall">
                             <span class="glyphicon glyphicon-picture"></span>
                             Hall

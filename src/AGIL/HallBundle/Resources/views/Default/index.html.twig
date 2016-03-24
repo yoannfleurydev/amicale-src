@@ -47,7 +47,9 @@
         </div>
     {% endfor %}
 
-    <nav class="text-center">
-        {% include 'AGILHallBundle:Default:pagination.html.twig' %}
-    </nav>
+    {% if pagination.pages_count>1 %}
+        <nav class="text-center">
+            {% include 'AGILHallBundle:Default:pagination.html.twig' %}
+        </nav>
+    {% endif %}
 {% endblock %}

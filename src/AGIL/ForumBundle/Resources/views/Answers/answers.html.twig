@@ -109,9 +109,11 @@
             {% endfor %}
         </div>
     </div>
-    <nav class="text-center">
-        {% include 'AGILForumBundle:Answers:pagination.html.twig' %}
-    </nav>
+    {% if pagination.pages_count>1 %}
+        <nav class="text-center">
+            {% include 'AGILHallBundle:Default:pagination.html.twig' %}
+        </nav>
+    {% endif %}
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <div class="panel">

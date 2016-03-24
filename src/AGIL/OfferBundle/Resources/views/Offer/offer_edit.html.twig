@@ -13,77 +13,77 @@
                 </div>
                 <div class="panel-body">
                     {{ form_start(form) }}
-                    <div class="form-group required">
-                        <label class="control-label">Titre de l'annonce</label>
-                        {{ form_errors(form.offerTitle) }}
-                        {{ form_widget(form.offerTitle) }}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label">Autheur de l'annonce</label>
-                        {{ form_errors(form.offerAuthor) }}
-                        {{ form_widget(form.offerAuthor) }}
-                    </div>
-
-                    <div class="form-group required">
-                        <label class="control-label">Adresse mail de contact</label>
-                        {{ form_errors(form.offerEmail) }}
-                        {{ form_widget(form.offerEmail) }}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label">Description de l'annonce</label>
-                        {{ form_errors(form.offerText) }}
-                        {{ form_widget(form.offerText) }}
-                    </div>
-
-                    <div class="form-group" id="formAddTagsPost">
-                        <label class="control-label"><h5>Tags</h5></label>
-                        <div class="tag_control">
-                            <div class="list_item_tag">
-                            </div>
-                            <input type="text" class="tags_input_visible">
+                        <div class="form-group required">
+                            <label class="control-label">Titre de l'annonce</label>
+                            {{ form_errors(form.offerTitle) }}
+                            {{ form_widget(form.offerTitle) }}
                         </div>
-                        {{ form_errors(form.tags) }}
-                        {{ form_widget(form.tags, { 'id': 'tags_input' }) }}
-                        <div id="tags_container"></div>
-                    </div>
 
-                    <div class="form-group required">
-                        <label class="control-label">Type de l'annonce</label>
-                        {{ form_errors(form.offerType) }}
-                        {{ form_widget(form.offerType) }}
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label">Autheur de l'annonce</label>
+                            {{ form_errors(form.offerAuthor) }}
+                            {{ form_widget(form.offerAuthor) }}
+                        </div>
 
-                    <a href="{{ asset("img/offer/") ~ offer.offerPdfUrl }}" TARGET="_BLANK">Annonce.pdf</a>
+                        <div class="form-group required">
+                            <label class="control-label">Adresse mail de contact</label>
+                            {{ form_errors(form.offerEmail) }}
+                            {{ form_widget(form.offerEmail) }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_errors(form.offerPdfUrl) }}
-                        {{ form_widget(form.offerPdfUrl) }}
-                        <p><i>(Format: PDF)</i></p>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label">Description de l'annonce</label>
+                            {{ form_errors(form.offerText) }}
+                            {{ form_widget(form.offerText) }}
+                        </div>
 
-                    <div class="form-group required">
-                        <label class="control-label">L'annonce expire le</label>
-                        {{ form_errors(form.offerExpirationDate) }}
-                        {{ form_widget(form.offerExpirationDate) }}
-                    </div>
+                        <div class="form-group" id="formAddTagsPost">
+                            <label class="control-label"><h5>Tags</h5></label>
+                            <div class="tag_control">
+                                <div class="list_item_tag">
+                                </div>
+                                <input type="text" class="tags_input_visible">
+                            </div>
+                            {{ form_errors(form.tags) }}
+                            {{ form_widget(form.tags, { 'id': 'tags_input' }) }}
+                            <div id="tags_container"></div>
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_widget(form.Modifier) }}
+                        <div class="form-group required">
+                            <label class="control-label">Type de contrat</label>
+                            {{ form_errors(form.offerType) }}
+                            {{ form_widget(form.offerType) }}
+                        </div>
 
-                        <a class="btn btn-default" href="{{ path('agil_offer_homepage') }}">Annuler</a>
+                        <a href="{{ asset("img/offer/") ~ offer.offerPdfUrl }}" TARGET="_BLANK">Annonce.pdf</a>
 
-                        <button id="deleteCategoryLink"
-                                data-href="{{ path('agil_offer_delete',{'idCrypt':offer.offerRoute}) }}"
-                                data-target="#confirm-delete" type="button"
-                                class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal">
-                        </button>
-                    </div>
+                        <div class="form-group">
+                            {{ form_errors(form.offerPdfUrl) }}
+                            {{ form_widget(form.offerPdfUrl) }}
+                            <p><i>(Format: PDF)</i></p>
+                        </div>
 
-                    <p class="asterisk">(* : obligatoire)</p>
+                        <div class="form-group required">
+                            <label class="control-label">L'annonce expire le</label>
+                            {{ form_errors(form.offerExpirationDate) }}
+                            {{ form_widget(form.offerExpirationDate) }}
+                        </div>
 
-                    {{ form_rest(form) }}
+                        <div class="form-group">
+                            {{ form_widget(form.Modifier) }}
+
+                            <a class="btn btn-default" href="{{ path('agil_offer_view') }}">Annuler</a>
+
+                            <button id="deleteCategoryLink"
+                                    data-href="{{ path('agil_offer_delete',{'idCrypt':offer.offerRoute}) }}"
+                                    data-target="#confirm-delete" type="button"
+                                    class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal">
+                            </button>
+                        </div>
+
+                        <p class="asterisk">(* : obligatoire)</p>
+                        {{ tinymce_init() }}
+                        {{ form_rest(form) }}
                     {{ form_end(form) }}
                 </div>
             </div>
@@ -105,4 +105,5 @@
             </div>
         </div>
     </div>
+
 {% endblock %}

@@ -15,7 +15,15 @@ class OfferController extends Controller
 {
     public function offerAction($id)
     {
-        return $this->render('AGILOfferBundle:Offer:offer.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->find($id);
+
+        if ($offer == null) {
+            $this->addFlash('warning', 'Cette annonce n\'existe pas.');
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+        }
+
+        return $this->render('AGILOfferBundle:Offer:offer.html.twig', array('offer' => $offer));
     }
 
     /**
