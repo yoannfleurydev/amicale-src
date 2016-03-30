@@ -16,7 +16,7 @@ class AgilUser extends BaseUser
     /**
      * @ORM\ManyToMany(targetEntity="AGIL\DefaultBundle\Entity\AgilMailingList")
      * @ORM\JoinTable(name="agil_users_mailing_list",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id")},
+     *      joinColumns={@ORM\JoinColumn(name="userId", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="mailingListId", referencedColumnName="mailingListId")}
      *      )
      */

@@ -83,6 +83,14 @@
                         </div>
                     </div>
 
+                    {#Mailing list#}
+                    <div class="form-group">
+                        <label for="mailingLists">Rendre mon CV public :</label>
+                            <label class="checkbox">
+                                {{ form_widget(form.userCVUrlVisibility) }}
+                                <span></span>{{ form_label(form.userCVUrlVisibility) }}
+                            </label>
+                    </div>
                     {# PW + PW confirmation field #}
                     <div class="form-group">
                         <label for="password">Modifier le mot de passe :</label>

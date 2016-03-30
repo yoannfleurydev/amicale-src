@@ -20,18 +20,22 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilProfileSkillsCategory');
         $tagRepository  = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
         $skillRepository = $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilSkill');
+        $mailingListsRepository =
+            $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilMailingList');
 
         $user = $userRepository->find($id);
         $profileSkillsCategories = $profileSkillsCategoryRepository->findAll();
         $tags = $tagRepository->findAll();
         $skills = $skillRepository->findBy(array('user' => $user));
-
+        $mailingLists = $mailingListsRepository->findAll();
+        VarDumper::dump($mailingLists);
         return $this->render('AGILProfileBundle:Default:index.html.twig',
             array(
                 'user' => $user,
                 'profileSkillsCategories' => $profileSkillsCategories,
                 'tags' => $tags,
-                'skills' => $skills
+                'skills' => $skills,
+//                'mailingLists' => $mailingLists
             )
         );
     }
@@ -50,15 +54,19 @@ class DefaultController extends Controller
             ->getRepository('AGILProfileBundle:AgilProfileSkillsCategory');
         $tagRepository  = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
         $skillRepository = $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilSkill');
+        $mailingListsRepository =
+            $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilMailingList');
 
         $profileSkillsCategories = $profileSkillsCategoryRepository->findAll();
         $tags = $tagRepository->findAll();
+        $mailingLists = $mailingListsRepository->findAll();
         $skills = $skillRepository->findBy(array('user' => $user));
 
         $data = array(
             'profileSkillsCategories' => $profileSkillsCategories,
             'tags' => $tags,
-            'skills' => $skills
+            'skills' => $skills,
+//            'MailingLists' => $mailingLists
         );
 
         // Création d'un formulaire lié à aucune entité
