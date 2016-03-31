@@ -114,7 +114,7 @@ class AgilOffer
     /**
      * @var string
      *
-     * @ORM\Column(name="offerRoute", type="string")
+     * @ORM\Column(name="offerRoute", type="string", nullable=true)
      */
     private $offerRoute;
 

@@ -64,13 +64,14 @@
 							<i class="glyphicon glyphicon-briefcase"> </i> Gestion des Offres
 						</span>
                     </h2>
-                    <p> Nombre d'offres mises en ligne: <strong class="text-primary-blue">324</strong></p>
+                    <p> Nombre d'offres mises en ligne: <strong class="text-primary-blue">{{ nbOffers }}</strong></p>
+                    <p> Nombre d'offres en cours de validation: <strong class="text-primary-blue">{{ nbOffersNotPublish }}</strong></p>
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="#" class="list-group-item">Afficher les offres</a>
+                        <a href="{{ path('agil_offer_homepage') }}" class="list-group-item">Afficher les offres</a>
                         <a href="#" class="list-group-item">Afficher les offres en attente de validation ?</a>
-                        <a href="#" class="list-group-item">Ajouter une offre</a>
+                        <a href="{{ path('agil_offer_add') }}" class="list-group-item">Ajouter une offre</a>
                     </div>
                 </div>
             </div>

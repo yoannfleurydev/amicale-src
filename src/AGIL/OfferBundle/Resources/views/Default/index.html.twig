@@ -22,7 +22,7 @@
                         {% endif %}
 
                         <p><h6><em>
-                                {{ offer.offerText|slice(0, 255) }}
+                                {{ offer.offerText|slice(0, 255)|raw }}
                                 {% if offer.offerText|length > 255 %}...{% endif %}
                         </em></h6></p>
 
@@ -35,6 +35,21 @@
         </div>
     </div>
     {% endfor %}
+
+    {% if offers is empty %}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+            <div class="card-events">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <h5>Aucune offre disponible pour l'instant.</h5>
+                        <p>Revenez plus tard ou inscrivez-vous à la mailing list !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     {% if pagination.pages_count>1 %}
     <nav class="text-center">

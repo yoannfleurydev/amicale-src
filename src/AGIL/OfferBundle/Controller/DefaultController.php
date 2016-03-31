@@ -3,6 +3,7 @@
 namespace AGIL\OfferBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 class DefaultController extends Controller
@@ -30,6 +31,15 @@ class DefaultController extends Controller
         );
 
         $offers = $em->getRepository('AGILOfferBundle:AgilOffer')->getOffersByPage($page, DefaultController::MAX_OFFERS);
+
+        $date = new \DateTime();
+        foreach($offers as $offer) {
+            if($offer->getOfferExpirationDate()<$date) {
+                $em->remove($offer);
+            }
+        }
+
+        $em->flush();
 
         return $this->render('AGILOfferBundle:Default:index.html.twig', array(
             'offers' => $offers,

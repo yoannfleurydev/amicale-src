@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class AgilOfferRepository extends EntityRepository
 {
     /**
-     * Permet d'obtenir le nombre d'annonces
+     * Permet d'obtenir le nombre d'annonces publiées
      *
      * @return mixed
      */
@@ -25,6 +25,35 @@ class AgilOfferRepository extends EntityRepository
         $query->select('COUNT(offer.offerId) as cnt')
             ->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
             ->where('offer.offerPublish = true')
+        ;
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Permet d'obtenir le nombre d'annonces
+     *
+     * @return mixed
+     */
+    public function getCountOffersAll(){
+        $query = $this->_em->createQueryBuilder();
+        $query->select('COUNT(offer.offerId) as cnt')
+            ->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
+        ;
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Permet d'obtenir le nombre d'annonces non publiées
+     *
+     * @return mixed
+     */
+    public function getCountOffersNotPublish(){
+        $query = $this->_em->createQueryBuilder();
+        $query->select('COUNT(offer.offerId) as cnt')
+            ->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
+            ->where('offer.offerPublish = false')
         ;
 
         return $query->getQuery()->getSingleScalarResult();

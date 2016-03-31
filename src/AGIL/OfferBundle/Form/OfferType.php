@@ -54,6 +54,7 @@ class OfferType extends AbstractType
 
         $builder->add('tags', TextType::class, array(
             'label' => false,
+            'mapped' => false,
             'required' => false,
             'attr' => array(
                 'class' => 'form-control',
