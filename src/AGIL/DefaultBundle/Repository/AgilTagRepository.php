@@ -69,7 +69,7 @@ class AgilTagRepository extends EntityRepository
 
 		// Gère la pagination
 		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
-		$countTotal = count($result);
+		$countTotal = count($query->getQuery()->getResult());
 
 		return array($result,$countTotal);
 
@@ -118,7 +118,7 @@ class AgilTagRepository extends EntityRepository
 
 		// Gère la pagination
 		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
-		$countTotal = count($result);
+		$countTotal = count($query->getQuery()->getResult());
 
 		return array($result,$countTotal);
 	}
@@ -165,7 +165,7 @@ class AgilTagRepository extends EntityRepository
 
 		// Gère la pagination
 		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
-		$countTotal = count($result);
+		$countTotal = count($query->getQuery()->getResult());
 
 		return array($result,$countTotal);
 
@@ -211,7 +211,7 @@ class AgilTagRepository extends EntityRepository
 
 		// Gère la pagination
 		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
-		$countTotal = count($result);
+		$countTotal = count($query->getQuery()->getResult());
 
 		return array($result,$countTotal);
 	}
@@ -258,7 +258,7 @@ class AgilTagRepository extends EntityRepository
 
 		// Gère la pagination
 		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
-		$countTotal = count($result);
+		$countTotal = count($query->getQuery()->getResult());
 
 		return array($result,$countTotal);
 
@@ -304,7 +304,7 @@ class AgilTagRepository extends EntityRepository
 
 		// Gère la pagination
 		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
-		$countTotal = count($result);
+		$countTotal = count($query->getQuery()->getResult());
 
 		return array($result,$countTotal);
 	}

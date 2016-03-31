@@ -26,7 +26,7 @@
                 {% if subject.tags is not null %}
                     <div class="text-center">
                         {% for tag in subject.tags %}
-                            <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                            <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -62,7 +62,7 @@
                                     </strong>
                                     <div class="text-center">
                                         {% for skill in userTagsSkills[a.id] %}
-                                            <span class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }}</span>
+                                            <a href="{{ path('agil_search_homepage',{'tags':skill.tag.tagName}) }}"><span class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }}</span></a>
                                         {% endfor %}
                                     </div>
                                 </div>

@@ -28,7 +28,7 @@
                             </em></h6></p>
                             <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
                             {% for tag in event.tags %}
-                                <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                                <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                             {% endfor %}
                         </div>
                         {% if is_granted("ROLE_ADMIN") %}

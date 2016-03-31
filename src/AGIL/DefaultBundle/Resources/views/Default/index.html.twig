@@ -211,7 +211,7 @@
                                     </a>
                                 </p>
                                 {% for tag in sub.tags %}
-                                    <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                                    <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
                                 {% endfor %}
                             </div>
                             {% endfor %}

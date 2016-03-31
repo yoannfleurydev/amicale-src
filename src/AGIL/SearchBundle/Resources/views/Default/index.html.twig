@@ -107,59 +107,66 @@
 
     {% if searchForum is defined %}
 
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
-                        <span class="panel-title-content">
-                            Sujets de Forum
-                        </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <div class="list">
+        {% if is_granted('ROLE_USER') %}
 
-                        {% if searchForum[1] == 0 %}
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <span class="panel-title-content">
+                                Sujets de Forum
+                            </span>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list">
 
-                            <p class="text-center">La recherche n'a retourné aucun résultat.</p>
+                            {% if searchForum[1] == 0 %}
 
-                        {% else %}
+                                <p class="text-center">La recherche n'a retourné aucun résultat.</p>
 
-                            {% for s in searchForum[0] %}
+                            {% else %}
 
-                                <div class="list-element">
-                                    <p><a href="{{ path('agil_forum_subject_answers',{'idCategory' : s.forumCategoryId,'idSubject':s.forumSubjectId}) }}" class="interne-link">{{ s.forumSubjectTitle }}</a></p>
-                                    <em>{{ s.forumSubjectPostDate|date('d-m-Y') }}</em>
+                                {% for s in searchForum[0] %}
 
-                                    {% for tag in tagsForum[s.forumSubjectId] %}
-                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span>
-                                    {% endfor %}
+                                    <div class="list-element">
+                                        <p><a href="{{ path('agil_forum_subject_answers',{'idCategory' : s.forumCategoryId,'idSubject':s.forumSubjectId}) }}" class="interne-link">{{ s.forumSubjectTitle }}</a></p>
+                                        <em>{{ s.forumSubjectPostDate|date('d-m-Y') }}</em>
 
-                                </div>
+                                        {% for tag in tagsForum[s.forumSubjectId] %}
+                                            <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
+                                        {% endfor %}
 
-                            {% endfor %}
+                                    </div>
 
+                                {% endfor %}
+
+                            {% endif %}
+
+                        </div>
+
+                        {% if searchForum[1] > 4 and pagination is not defined %}
+                            <a>Voir Plus</a>
                         {% endif %}
 
                     </div>
 
+                    {% if pagination is defined and searchForum[1] != 0 and pagination.pages_count > 1 %}
 
-                    {% if searchForum[1] > 4 and pagination is not defined %}
-                        <a>Voir Plus</a>
+                        <nav class="text-center">
+                            {% include 'AGILSearchBundle:Pagination:pagination.html.twig' %}
+                        </nav>
+
                     {% endif %}
 
                 </div>
-
-                {% if pagination is defined and searchForum[1] != 0 and pagination.pages_count > 1 %}
-
-                    <nav class="text-center">
-                        {% include 'AGILSearchBundle:Pagination:pagination.html.twig' %}
-                    </nav>
-
-                {% endif %}
-
             </div>
-        </div>
+
+        {% else %}
+
+            <p>Veuillez vous connecter pour accéder à la recherche Forum</p>
+
+        {% endif %}
 
     {% endif %}
 
@@ -189,7 +196,7 @@
                                     <p><a href="{{ path('agil_hall_event',{'idEvent':search.eventId}) }}" class="interne-link">{{ search.eventTitle }}</a></p>
                                     <em>{{ search.eventDate|date('d-m-Y') }}</em>
                                     {% for tag in tagsHall[search.eventId] %}
-                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span>
+                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                                     {% endfor %}
                                 </div>
 
@@ -220,6 +227,8 @@
 
     {% if searchOffers is defined %}
 
+        {% if is_granted('ROLE_USER') %}
+
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -244,7 +253,7 @@
                                     <p><a href="#" class="interne-link">{{ search.offerTitle }}</a></p>
                                     <em>{{ search.offerPostDate|date('d-m-Y') }}</em>
                                     {% for tag in tagsOffer[search.offerId] %}
-                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span>
+                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                                     {% endfor %}
                                 </div>
 
@@ -270,6 +279,12 @@
 
             </div>
         </div>
+
+        {% else %}
+
+            <p>Veuillez vous connecter pour accéder à la recherche des Offres</p>
+
+        {% endif %}
 
     {% endif %}
 

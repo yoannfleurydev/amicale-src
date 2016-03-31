@@ -31,16 +31,6 @@ class SearchType extends AbstractType
             'data' => 'and',
         ));
 
-        /*
-        $builder->add('filter', ChoiceType::class, array(
-            'choices' => array('Tout' => 'all', 'Forum' => 'forum', 'Offres' => 'offer'),
-            'choices_as_values' => true,
-            'expanded' => true,
-            'multiple' => false,
-            'data' => 'all'
-        ));
-        */
-
     }
 
     public function getBlockPrefix()
