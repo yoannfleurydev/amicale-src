@@ -6,6 +6,8 @@ use AGIL\SearchBundle\Form\SearchAdvancedType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AGIL\SearchBundle\Form\SearchType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 class DefaultController extends Controller
 {
@@ -26,46 +28,147 @@ class DefaultController extends Controller
         $formFilter = $request->query->get('filter');
         $formMethod = $request->query->get('method');
         $formTags = $request->query->get('tags');
+        $formNo = $request->query->get('no');
+        $page = $request->query->get('p');
 
-        $form = $this->createForm(new SearchAdvancedType(), array(), array(
+        // Les valeurs par défaut
+        if($page == null)
+            $page = 1;
+        if($formMethod == null)
+            $formMethod = "and";
+        if($formFilter == null)
+            $formFilter = "all";
+
+        $form = $this->createForm(new SearchAdvancedType(),
+            array(
+            'tags' => $formTags,
+            'method' => $formMethod,
+            'filter' => $formFilter,
+            'no' => $formNo),
+            array(
             'action' => $this->generateUrl('agil_search_homepage'),
             'method' => 'GET',
             'csrf_protection' => false
         ));
 
-        if($formFilter != null){
+        if($formFilter != null && $formTags != null){
 
             $tagArray = preg_split("/[\\s,]+/", $formTags);
             $tagArray = array_unique($tagArray);
             $tagArray = preg_grep("/^[a-zA-Z0-9]+$/", $tagArray);
 
+            $tagNo = preg_split("/[\\s,]+/", $formNo);
+            $tagNo = array_unique($tagNo);
+            $tagNo = preg_grep("/^[a-zA-Z0-9]+$/", $tagNo);
 
+            // Méthode de recherche qui contient un peu de tout
             if($formFilter == "all"){
 
-                if($formMethod != null){
+                if($formMethod == "and" || $formMethod == "or"){
 
-                    // ----------- METHOD AND / OR -----------
-                    if($formMethod == "and" || $formMethod == "or"){
+                    // Recherche Forum (Sujets)
+                    $searchForum = $this->searchForumSubject($tagArray,$tagNo,$formMethod);
+                    $tagsForum = $this->tagsForForumSubject($searchForum[0]);
+
+                    // Recherche Hall (Evènements)
+                    $searchHall = $this->searchHall($tagArray,$tagNo,$formMethod);
+                    $tagsHall = $this->tagsForHallEvent($searchHall[0]);
+
+                    // Recherche Offres (Annonces)
+                    $searchOffers = $this->searchOffers($tagArray,$tagNo,$formMethod);
+                    $tagsOffers = $this->tagsForOffers($searchOffers[0]);
+
+                    // Autres recherches ...
+
+                    return $this->render('AGILSearchBundle:Default:index.html.twig',
+                        array('searchForum' => $searchForum, 'tagsForum' => $tagsForum,
+                            'searchHall' => $searchHall, 'tagsHall' => $tagsHall, 'form' => $form->createView(),
+                            'searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers)
+                    );
+
+                }
+
+            } // Méthode de recherche individuelle
+            else if ($formFilter == "forum" || $formFilter == "offer" || $formFilter == "hall"){
+
+                if($formMethod == "and" || $formMethod == "or"){
+
+                    $maxPerPage = 10;
+                    $route = 'agil_search_homepage';
+                    $route_params = array('tags' => $formTags,
+                        'method' => $formMethod,
+                        'filter' => $formFilter);
+
+                    if($page <= 0)
+                        throw new NotFoundHttpException("Erreur dans le numéro de page");
 
 
-                        // Recherche Forum (Sujets)
-                        $searchForumLast = $this->searchForumSubjectAll($tagArray,$formMethod);
-                        $tagsForumLast = $this->tagsForForumSubject($searchForumLast);
+                    // ---------------------- RECHERCHE FORUM ----------------------
+                    if($formFilter == "forum"){
 
-                        // Recherche Hall (Evènements)
-                        $searchHall = $this->searchHall($tagArray,$formMethod);
-                        $tagsHall = $this->tagsForHallEvent($searchHall);
+                        $searchForum = $this->searchForumSubject($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $tagsForum = $this->tagsForForumSubject($searchForum[0]);
+                        $countTotal = $searchForum[1];
 
-                        // Recherche Offres (Annonces)
-                        $searchOffers = $this->searchOffers($tagArray,$formMethod);
-                        $tagsOffers = $this->tagsForOffers($searchOffers);
+                        if($page > ceil($countTotal / $maxPerPage) && $countTotal != 0)
+                            throw new NotFoundHttpException("Erreur dans le numéro de page");
 
-                        // Autres recherches ...
+                        $pagination = array(
+                            'page' => $page,
+                            'route' => $route,
+                            'pages_count' => ceil($countTotal / $maxPerPage),
+                            'route_params' => $route_params
+                        );
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
-                            array('searchForumLast' => $searchForumLast, 'tagsForumLast' => $tagsForumLast,
-                                'searchHall' => $searchHall, 'tagsHall' => $tagsHall, 'form' => $form->createView(),
-                                'searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers)
+                            array('searchForum' => $searchForum, 'tagsForum' => $tagsForum,
+                                'form' => $form->createView(), 'pagination' => $pagination)
+                        );
+
+                    }
+                    // ---------------------- RECHERCHE HALL ----------------------
+                    if($formFilter == "hall"){
+
+                        $searchHall = $this->searchHall($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $tagsHall = $this->tagsForHallEvent($searchHall[0]);
+                        $countTotal = $searchHall[1];
+
+                        if($page > ceil($countTotal / $maxPerPage) && $countTotal != 0)
+                            throw new NotFoundHttpException("Erreur dans le numéro de page");
+
+                        $pagination = array(
+                            'page' => $page,
+                            'route' => $route,
+                            'pages_count' => ceil($countTotal / $maxPerPage),
+                            'route_params' => $route_params
+                        );
+
+                        return $this->render('AGILSearchBundle:Default:index.html.twig',
+                            array('searchHall' => $searchHall, 'tagsHall' => $tagsHall,
+                                'form' => $form->createView(), 'pagination' => $pagination)
+                        );
+
+                    }
+                    // ---------------------- RECHERCHE OFFRES ----------------------
+                    if($formFilter == "offer"){
+
+                        $searchOffers = $this->searchOffers($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $tagsOffers = $this->tagsForOffers($searchOffers[0]);
+                        $countTotal = $searchOffers[1];
+
+                        if($page > ceil($countTotal / $maxPerPage) && $countTotal != 0)
+                            throw new NotFoundHttpException("Erreur dans le numéro de page");
+
+                        $pagination = array(
+                            'page' => $page,
+                            'route' => $route,
+                            'pages_count' => ceil($countTotal / $maxPerPage),
+                            'route_params' => $route_params
+                        );
+
+                        return $this->render('AGILSearchBundle:Default:index.html.twig',
+                            array('searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers,
+                                'form' => $form->createView(), 'pagination' => $pagination)
                         );
 
                     }
@@ -102,14 +205,16 @@ class DefaultController extends Controller
      *
      * @param $tagArray
      * @param $method
+     * @param int $page
+     * @param int $maxPerPage
      * @return null
      */
-    private function searchForumSubjectAll($tagArray,$method){
+    private function searchForumSubject($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
 
         if($method == "and"){
-            return $this->tagRepository->getAndSubjectByTags($tagArray);
+            return $this->tagRepository->getAndSubjectByTags($tagArray,$tagNo,$page,$maxPerPage);
         }else if ($method == "or"){
-            return $this->tagRepository->getOrSubjectByTags($tagArray);
+            return $this->tagRepository->getOrSubjectByTags($tagArray,$tagNo,$page,$maxPerPage);
         }else{
             return null;
         }
@@ -119,16 +224,16 @@ class DefaultController extends Controller
     /**
      * Retourne les tags pour chaque sujets de forum trouvés
      *
-     * @param $searchForumLast
+     * @param $searchForum
      * @return array
      */
-    private function tagsForForumSubject($searchForumLast){
-        $tagsForumLast[] = null;
-        foreach($searchForumLast as $sub){
+    private function tagsForForumSubject($searchForum){
+        $tagsForum[] = null;
+        foreach($searchForum as $sub){
             $subject = $this->forumSubjectRepository->find($sub['forumSubjectId']);
-            $tagsForumLast[$sub['forumSubjectId']] = $subject->getTags();
+            $tagsForum[$sub['forumSubjectId']] = $subject->getTags();
         }
-        return $tagsForumLast;
+        return $tagsForum;
     }
 
 
@@ -137,14 +242,16 @@ class DefaultController extends Controller
      *
      * @param $tagArray
      * @param $method
+     * @param int $page
+     * @param int $maxPerPage
      * @return null
      */
-    private function searchHall($tagArray,$method){
+    private function searchHall($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
 
         if($method == "and"){
-            return $this->tagRepository->getAndEventByTags($tagArray);
+            return $this->tagRepository->getAndEventByTags($tagArray,$tagNo,$page,$maxPerPage);
         }else if ($method == "or"){
-            return $this->tagRepository->getOrEventByTags($tagArray);
+            return $this->tagRepository->getOrEventByTags($tagArray,$tagNo,$page,$maxPerPage);
         }else{
             return null;
         }
@@ -172,14 +279,16 @@ class DefaultController extends Controller
      *
      * @param $tagArray
      * @param $method
+     * @param int $page
+     * @param int $maxPerPage
      * @return null
      */
-    private function searchOffers($tagArray,$method){
+    private function searchOffers($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
 
         if($method == "and"){
-            return $this->tagRepository->getAndOfferByTags($tagArray);
+            return $this->tagRepository->getAndOfferByTags($tagArray,$tagNo,$page,$maxPerPage);
         }else if ($method == "or"){
-            return $this->tagRepository->getOrOfferByTags($tagArray);
+            return $this->tagRepository->getOrOfferByTags($tagArray,$tagNo,$page,$maxPerPage);
         }else{
             return null;
         }

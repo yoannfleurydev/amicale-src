@@ -27,16 +27,25 @@ class SearchAdvancedType extends AbstractType
             'choices' => array('Tout' => 'all', 'Forum' => 'forum', 'Offres' => 'offer', 'Evenements' => 'hall', 'Profils' => 'profile'),
             'choices_as_values' => true,
             'expanded' => true,
-            'multiple' => false,
-            'data' => 'all'
+            'multiple' => false
         ));
 
         $builder->add('method', ChoiceType::class, array(
             'choices' => array('Et' => 'and', 'Ou' => 'or'),
             'choices_as_values' => true,
             'expanded' => true,
-            'multiple' => false,
-            'data' => 'and'
+            'multiple' => false
+        ));
+
+        $builder->add('no', TextType::class, array(
+            'label' => false,
+            'constraints' => array(
+                new Length(array('min' => 2,'max' => 50))
+            ),
+            'attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'Non'
+            )
         ));
 
 
