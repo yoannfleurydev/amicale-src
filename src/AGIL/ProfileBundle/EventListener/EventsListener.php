@@ -7,7 +7,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use AGIL\DefaultBundle\Entity\AgilMailingList;
 
 
-class EventsListner
+class EventsListener
 {
     private $mailer;
 

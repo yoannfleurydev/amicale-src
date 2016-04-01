@@ -20,22 +20,17 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilProfileSkillsCategory');
         $tagRepository  = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
         $skillRepository = $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilSkill');
-        $mailingListsRepository =
-            $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilMailingList');
 
         $user = $userRepository->find($id);
         $profileSkillsCategories = $profileSkillsCategoryRepository->findAll();
         $tags = $tagRepository->findAll();
         $skills = $skillRepository->findBy(array('user' => $user));
-        $mailingLists = $mailingListsRepository->findAll();
-        VarDumper::dump($mailingLists);
         return $this->render('AGILProfileBundle:Default:index.html.twig',
             array(
                 'user' => $user,
                 'profileSkillsCategories' => $profileSkillsCategories,
                 'tags' => $tags,
                 'skills' => $skills,
-//                'mailingLists' => $mailingLists
             )
         );
     }
@@ -60,13 +55,14 @@ class DefaultController extends Controller
         $profileSkillsCategories = $profileSkillsCategoryRepository->findAll();
         $tags = $tagRepository->findAll();
         $mailingLists = $mailingListsRepository->findAll();
+//        VarDumper::dump(get_class($mailingLists[0]));
         $skills = $skillRepository->findBy(array('user' => $user));
 
         $data = array(
             'profileSkillsCategories' => $profileSkillsCategories,
             'tags' => $tags,
             'skills' => $skills,
-//            'MailingLists' => $mailingLists
+            'mailingLists' => $mailingLists
         );
 
         // Création d'un formulaire lié à aucune entité
@@ -76,7 +72,6 @@ class DefaultController extends Controller
         $form->get('username')->setData($user->getUsername());
         $form->get('email')->setData($user->getEmail());
         $form->get('userCVUrlVisibility')->setData($user->getUserCVUrlVisibility());
-
 
         // S'exécute à la reception du formmulaire.
         if ($request->getMethod() == Request::METHOD_POST) {

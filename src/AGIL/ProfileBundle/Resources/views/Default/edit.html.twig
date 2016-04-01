@@ -83,14 +83,6 @@
                         </div>
                     </div>
 
-                    {#Mailing list#}
-                    <div class="form-group">
-                        <label for="mailingLists">Rendre mon CV public :</label>
-                            <label class="checkbox">
-                                {{ form_widget(form.userCVUrlVisibility) }}
-                                <span></span>{{ form_label(form.userCVUrlVisibility) }}
-                            </label>
-                    </div>
                     {# PW + PW confirmation field #}
                     <div class="form-group">
                         <label for="password">Modifier le mot de passe :</label>
@@ -114,6 +106,20 @@
                         </div>
                     </div>
 
+                    {# Listes de diffusion #}
+                    <div class="form-group">
+                        <label for="mailingList">Listes de diffusion :</label>
+                        {#<div class="input-group">#}
+                            {#<label class="checkbox">#}
+                                {#{{ form_widget(form.mailingLists) }}#}
+                            {#</label>#}
+                        {% for mailingList in data['mailingLists'] %}
+                            {{ form_row(form[mailingList.getMailingListName], {'label' : mailingList.getMailingListName}) }}
+                        {% endfor %}
+                        </div>
+                    </div>
+
+                    {#compétences#}
                     <div>
                         <p>Modification des compétences du profil</p>
                     </div>
@@ -144,9 +150,9 @@
                             </div>
                         {% endfor %}
                     {% endif %}
+
                     {# update button #}
                     {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
-
 
                     {{ form_rest(form) }}
                     {{ form_end(form) }}

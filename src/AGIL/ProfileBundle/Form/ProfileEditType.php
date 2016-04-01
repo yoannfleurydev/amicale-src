@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 
 class ProfileEditType extends AbstractType
@@ -118,21 +119,24 @@ class ProfileEditType extends AbstractType
             }
         }
 
-        /*Checkbox Mailing list*/
-//        $builder->add('forumMailingList', CheckboxType::class, array(
-//            'label'    => 'Forum',
-//            'required' => false,
+        /* Listes de diffusion */
+//        $builder->add('mailingLists', CollectionType::class, array(
+//            'entry_type'   => CheckboxType::class,
+//            'entry_options'  => array(
+//                'required'  => false,
+//                'label' => false
+////                'attr'      => array('class' => 'form-control')
+//            ),
 //        ));
-//
-//        $builder->add('eventsMailingList', CheckboxType::class, array(
-//            'label'    => 'Evénements',
-//            'required' => false,
-//        ));
-//
-//        $builder->add('offersMailingList', CheckboxType::class, array(
-//            'label'    => 'Offres',
-//            'required' => false,
-//        ));
+        foreach($this->data['mailingLists'] as $mailingList) {
+            $builder->add($mailingList->getMailingListName(), CheckboxType::class, array(
+                'label'    => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'form-control'
+                )
+            ));
+        }
 
         /* Bouton Submit */
         $builder->add('Modifier', SubmitType::class, array(
