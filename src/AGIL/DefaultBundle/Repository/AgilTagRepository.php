@@ -293,7 +293,7 @@ class AgilTagRepository extends EntityRepository
 
 		$completeResult = $query->getQuery()->getResult();
 
-		// On retire les sujets qui possède au moins un tag appartenant à $arrayNo
+		// On retire les offres qui possède au moins un tag appartenant à $arrayNo
 		foreach($completeResult as $key => $res){
 			foreach($res[0]->getTags() as $tag){
 				if(in_array($tag->getTagName(),$arrayNo)){
@@ -307,6 +307,146 @@ class AgilTagRepository extends EntityRepository
 		$countTotal = count($query->getQuery()->getResult());
 
 		return array($result,$countTotal);
+	}
+
+
+
+	/**
+	 * Recherche des profils par rapport à $arrayTag,
+	 * trié par skill maximum sur ces tags, avec la méthode AND
+	 * @param $arrayTag
+	 * @return array
+	 */
+	public function getAndProfileByTags($arrayTag,$arrayNo,$page=1, $maxperpage=4){
+
+		$query = $this->_em->createQueryBuilder();
+
+		$query->select('user.id','user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+
+		$completeResult = $query->getQuery()->getResult();
+		$bestUser = null;
+
+		foreach($completeResult as $key => $res){
+
+			// On récupère tous les Skills associé au User
+			$skills = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill')->findBy(array('user' => $res));
+
+			// Pour chaque skill, on récupère les tagName
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+
+			// Si le user n'a pas tous les tags contenu dans $arrayTag,
+			// ou si il possède un tag qui appartient à $arrayNo, on l'enlève
+			if(array_diff($arrayTag,$tagTab) != null || !empty(array_intersect($arrayNo, $tagTab))){
+				unset($completeResult[$key]);
+			}else{
+				// Sinon, on calcul son niveau pour les tags d'arrayTag
+				$level = 0;
+				foreach($skills as $s){
+					if(in_array($s->getTag()->getTagName(),$arrayTag)){
+						$level += $s->getSkillLevel();
+					}
+				}
+				$bestUser[$res['id']] = $level;
+			}
+
+		}
+
+		// Tri par rapport au niveau de skill
+		if(count($bestUser) > 0){
+			arsort($bestUser);
+
+			$userSortedList[] = null;
+			$i = 0;
+			// On prend tous les Users dans l'ordre
+			foreach($bestUser as $key => $res){
+				$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
+			}
+
+			// Gère la pagination
+			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
+			$countTotal = count($userSortedList);
+
+			return array($result,$countTotal);
+		}else{
+			return array(array(),0);
+		}
+
+	}
+
+	/**
+	 * Recherche des profils par rapport à $arrayTag,
+	 * trié par skill maximum sur ces tags, avec la méthode OR
+	 * @param $arrayTag
+	 * @param $arrayNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getOrProfileByTags($arrayTag,$arrayNo,$page=1, $maxperpage=4){
+
+		$query = $this->_em->createQueryBuilder();
+
+		$query->select('user.id','user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+
+		$completeResult = $query->getQuery()->getResult();
+		$bestUser = null;
+
+		foreach($completeResult as $key => $res){
+
+			// On récupère tous les Skills associé au User
+			$skillRepository = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill');
+			$skills = $skillRepository->findBy(array('user' => $res));
+
+			// Pour chaque skill, on récupère les tagName
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+
+			// Si le user n'a aucun des tags contenu dans $arrayTag,
+			// ou si il possède un tag qui appartient à $arrayNo, on l'enlève
+			if(empty(array_intersect($arrayTag,$tagTab)) || !empty(array_intersect($arrayNo, $tagTab))){
+				unset($completeResult[$key]);
+			}else{
+				// Sinon, on calcul le niveau de son meilleur skill parmi les tags
+				$levelMax = 0;
+				foreach($skills as $s)
+					if(in_array($s->getTag()->getTagName(),$arrayTag))
+						if($s->getSkillLevel() > $levelMax)
+							$levelMax = $s->getSkillLevel();
+				$bestUser[$res['id']] = $levelMax;
+			}
+
+		}
+
+
+		// Tri par rapport au niveau de skill
+		if(count($bestUser) > 0){
+			arsort($bestUser);
+
+			$userSortedList[] = null;
+			$i = 0;
+			// On prend tous les Users dans l'ordre
+			foreach($bestUser as $key => $res){
+				$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
+			}
+
+			// Gère la pagination
+			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
+			$countTotal = count($userSortedList);
+
+			return array($result,$countTotal);
+		}else{
+			return array(array(),0);
+		}
+
 	}
 
 

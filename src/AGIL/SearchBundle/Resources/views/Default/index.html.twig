@@ -146,7 +146,7 @@
                         </div>
 
                         {% if searchForum[1] > 4 and pagination is not defined %}
-                            <a>Voir Plus</a>
+                            <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'forum','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir Plus</a>
                         {% endif %}
 
                     </div>
@@ -207,7 +207,7 @@
                     </div>
 
                     {% if searchHall[1] > 4 and pagination is not defined  %}
-                        <a>Voir Plus</a>
+                        <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'hall','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir Plus</a>
                     {% endif %}
 
                 </div>
@@ -264,7 +264,7 @@
                     </div>
 
                     {% if searchOffers[1] > 4 and pagination is not defined  %}
-                        <a>Voir Plus</a>
+                        <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'offer','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir Plus</a>
                     {% endif %}
 
                 </div>
@@ -283,6 +283,68 @@
         {% else %}
 
             <p>Veuillez vous connecter pour accéder à la recherche des Offres</p>
+
+        {% endif %}
+
+    {% endif %}
+
+    {% if searchProfile is defined %}
+
+        {% if is_granted('ROLE_USER') %}
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Profils
+                        </span>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list">
+
+                            {% if searchProfile[1] == 0 %}
+
+                                <p class="text-center">La recherche n'a retourné aucun résultat.</p>
+
+                            {% else %}
+
+                                {% for search in searchProfile[0] %}
+
+                                    <div class="list-element">
+                                        <p><a href="{{ path('agil_profile_id',{'id':search.id}) }}" class="interne-link">{{ search.userFirstName }} {{ search.userLastName }} ({{ search.username }})</a></p>
+                                        {% for skill in tagsProfile[search.id] %}
+                                            <a href="{{ path('agil_search_homepage',{'tags':skill.tag.tagName}) }}"><span class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }} : {{ skill.skillLevel }}/10</span></a>
+                                        {% endfor %}
+                                    </div>
+
+                                {% endfor %}
+
+                            {% endif %}
+
+                        </div>
+
+                        {% if searchProfile[1] > 4 and pagination is not defined  %}
+                            <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'profile','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir Plus</a>
+                        {% endif %}
+
+                    </div>
+
+                    {% if pagination is defined and searchProfile[1] != 0 and pagination.pages_count > 1  %}
+
+                        <nav class="text-center">
+                            {% include 'AGILSearchBundle:Pagination:pagination.html.twig' %}
+                        </nav>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        {% else %}
+
+            <p>Veuillez vous connecter pour accéder à la recherche des Profils</p>
 
         {% endif %}
 

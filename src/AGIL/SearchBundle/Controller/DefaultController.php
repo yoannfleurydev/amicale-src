@@ -16,6 +16,7 @@ class DefaultController extends Controller
     private $hallEventRepository;
     private $offerRepository;
     private $tagRepository;
+    private $skillRepository;
 
 
     public function searchAction(Request $request)
@@ -24,6 +25,7 @@ class DefaultController extends Controller
         $this->forumSubjectRepository = $this->getDoctrine()->getManager()->getRepository('AGILForumBundle:AgilForumSubject');
         $this->hallEventRepository = $this->getDoctrine()->getManager()->getRepository('AGILHallBundle:AgilEvent');
         $this->offerRepository = $this->getDoctrine()->getManager()->getRepository('AGILOfferBundle:AgilOffer');
+        $this->skillRepository = $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilSkill');
 
         $formFilter = $request->query->get('filter');
         $formMethod = $request->query->get('method');
@@ -78,18 +80,22 @@ class DefaultController extends Controller
                     $searchOffers = $this->searchOffers($tagArray,$tagNo,$formMethod);
                     $tagsOffers = $this->tagsForOffers($searchOffers[0]);
 
-                    // Autres recherches ...
+                    // Recherche Profils (User)
+                    $searchProfile = $this->searchProfiles($tagArray,$tagNo,$formMethod);
+                    $tagsProfile = $this->tagsForProfiles($searchProfile[0]);
 
                     return $this->render('AGILSearchBundle:Default:index.html.twig',
                         array('searchForum' => $searchForum, 'tagsForum' => $tagsForum,
                             'searchHall' => $searchHall, 'tagsHall' => $tagsHall, 'form' => $form->createView(),
-                            'searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers)
+                            'searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers,
+                            'searchProfile' => $searchProfile, 'tagsProfile' => $tagsProfile)
                     );
 
                 }
 
             } // Méthode de recherche individuelle
-            else if ($formFilter == "forum" || $formFilter == "offer" || $formFilter == "hall"){
+            else if ($formFilter == "forum" || $formFilter == "offer"
+                || $formFilter == "hall" || $formFilter == "profile"){
 
                 if($formMethod == "and" || $formMethod == "or"){
 
@@ -168,6 +174,29 @@ class DefaultController extends Controller
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
                             array('searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers,
+                                'form' => $form->createView(), 'pagination' => $pagination)
+                        );
+
+                    }
+                    // ---------------------- RECHERCHE PROFILS ----------------------
+                    if($formFilter == "profile"){
+
+                        $searchProfile = $this->searchProfiles($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $tagsProfile = $this->tagsForProfiles($searchProfile[0]);
+                        $countTotal = $searchProfile[1];
+
+                        if($page > ceil($countTotal / $maxPerPage) && $countTotal != 0)
+                            throw new NotFoundHttpException("Erreur dans le numéro de page");
+
+                        $pagination = array(
+                            'page' => $page,
+                            'route' => $route,
+                            'pages_count' => ceil($countTotal / $maxPerPage),
+                            'route_params' => $route_params
+                        );
+
+                        return $this->render('AGILSearchBundle:Default:index.html.twig',
+                            array('searchProfile' => $searchProfile, 'tagsProfile' => $tagsProfile,
                                 'form' => $form->createView(), 'pagination' => $pagination)
                         );
 
@@ -310,6 +339,40 @@ class DefaultController extends Controller
         return $tagsOffer;
     }
 
+    /**
+     * Recherche de profils par rapport à des tags
+     *
+     * @param $tagArray
+     * @param $method
+     * @param int $page
+     * @param int $maxPerPage
+     * @return null
+     */
+    private function searchProfiles($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
 
+        if($method == "and"){
+            return $this->tagRepository->getAndProfileByTags($tagArray,$tagNo,$page,$maxPerPage);
+        }else if ($method == "or"){
+            return $this->tagRepository->getOrProfileByTags($tagArray,$tagNo,$page,$maxPerPage);
+        }else{
+            return null;
+        }
+
+    }
+
+
+    /**
+     * Recherche des 5 meilleurs tags pour les users recherché
+     *
+     * @param $searchProfile
+     * @return null
+     */
+    private function tagsForProfiles($searchProfile){
+        $tagsProfile = null;
+        foreach($searchProfile as $user){
+            $tagsProfile[$user->getId()] = $this->skillRepository->findBy(array('user' => $user->getId()),array('skillLevel' => 'desc'),5);
+        }
+        return $tagsProfile;
+    }
 
 }
