@@ -155,6 +155,9 @@ class OfferController extends Controller
                 $tagsManager->insertTag($tag);
             }
             $tagsManager->insertDone();
+            $offer->removeTags();
+            $em->persist($offer);
+            $em->flush();
             $offer->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
             // expiration
@@ -166,6 +169,12 @@ class OfferController extends Controller
 
             return $this->redirect($this->generateUrl('agil_offer_view', array('id' => $offer->getOfferId())));
         }
+
+        $tagArray = "";
+        foreach($offer->getTags() as $tag) {
+            $tagArray .= $tag->getTagName() . " ";
+        }
+        $form->get('tags')->setData($tagArray);
 
         return $this->render('AGILOfferBundle:Offer:offer_edit.html.twig', array(
             'offer' => $offer,

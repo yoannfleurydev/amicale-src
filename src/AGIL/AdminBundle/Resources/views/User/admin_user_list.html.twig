@@ -1,0 +1,13 @@
+<table>
+    {% for user in users %}
+        <tr>
+        <td>{{ user.username }}
+        <td>{{ user.userFirstName }}</td>
+        <td>{{ user.userLastName }}</td>
+
+    {% else %}
+        <tr>
+            <td>Aucun users n'a été trouvé.</td>
+        </tr>
+    {% endfor %}
+</table>

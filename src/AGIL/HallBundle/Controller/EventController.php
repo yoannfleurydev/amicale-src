@@ -208,12 +208,11 @@ class EventController extends Controller
         $form->get('eventText')->setData($event->getEventText());
         $form->get('eventDate')->setData($event->getEventDate());
         $form->get('eventDateEnd')->setData($event->getEventDateEnd());
+
         //$form->get('photos')->setData($event->getPhotos());
+
         $tagArray = "";
-        $count_tags = count($event->getTags());
-        $count = 0;
         foreach($event->getTags() as $tag) {
-            $count++;
             $tagArray .= $tag->getTagName() . " ";
         }
         $form->get('tags')->setData($tagArray);

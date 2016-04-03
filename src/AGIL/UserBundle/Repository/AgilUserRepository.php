@@ -13,6 +13,17 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class AgilUserRepository extends EntityRepository
 {
+    public function searchByName($keyword) {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('user')
+            ->from('AGILUserBundle:Acteur', 'user')
+            ->where("user.username OR user.userFirstName LIKE :motcle OR user.userLastName LIKE :keyword")
+            ->orderBy('user.username', 'ASC')
+            ->setParameter('keyword', '%'.$keyword.'%');
+
+        return $qb->getQuery()->getResult();
+    }
 
     /**
      * @param string $role

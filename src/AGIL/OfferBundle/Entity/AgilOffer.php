@@ -382,6 +382,12 @@ class AgilOffer
         $this->tags = $collection;
     }
 
+    public function removeTags()
+    {
+        foreach($this->tags as $tag) {
+            $this->tags->removeElement($tag);
+        }
+    }
 
     /**
      * Fonction qui test si une offre est expirée ou non
