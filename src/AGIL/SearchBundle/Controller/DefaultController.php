@@ -29,9 +29,9 @@ class DefaultController extends Controller
 
         $formFilter = $request->query->get('filter');
         $formMethod = $request->query->get('method');
-        $formTags = $request->query->get('tags');
-        $formNo = $request->query->get('no');
-        $page = $request->query->get('p');
+        $formTags   = $request->query->get('tags');
+        $formNo     = $request->query->get('no');
+        $page       = $request->query->get('p');
 
         // Les valeurs par défaut
         if($page == null)
@@ -55,34 +55,26 @@ class DefaultController extends Controller
 
         if($formFilter != null && $formTags != null){
 
-            $tagArray = preg_split("/[\\s,]+/", $formTags);
-            $tagArray = array_unique($tagArray);
-            $tagArray = preg_grep("/^[a-zA-Z0-9]+$/", $tagArray);
-
-            $tagNo = preg_split("/[\\s,]+/", $formNo);
-            $tagNo = array_unique($tagNo);
-            $tagNo = preg_grep("/^[a-zA-Z0-9]+$/", $tagNo);
-
             // Méthode de recherche qui contient un peu de tout
             if($formFilter == "all"){
 
                 if($formMethod == "and" || $formMethod == "or"){
 
                     // Recherche Forum (Sujets)
-                    $searchForum = $this->searchForumSubject($tagArray,$tagNo,$formMethod);
-                    $tagsForum = $this->tagsForForumSubject($searchForum[0]);
+                    $searchForum    = $this->searchForumSubject($formTags,$formNo,$formMethod);
+                    $tagsForum      = $this->tagsForForumSubject($searchForum[0]);
 
                     // Recherche Hall (Evènements)
-                    $searchHall = $this->searchHall($tagArray,$tagNo,$formMethod);
-                    $tagsHall = $this->tagsForHallEvent($searchHall[0]);
+                    $searchHall     = $this->searchHall($formTags,$formNo,$formMethod);
+                    $tagsHall       = $this->tagsForHallEvent($searchHall[0]);
 
                     // Recherche Offres (Annonces)
-                    $searchOffers = $this->searchOffers($tagArray,$tagNo,$formMethod);
-                    $tagsOffers = $this->tagsForOffers($searchOffers[0]);
+                    $searchOffers   = $this->searchOffers($formTags,$formNo,$formMethod);
+                    $tagsOffers     = $this->tagsForOffers($searchOffers[0]);
 
                     // Recherche Profils (User)
-                    $searchProfile = $this->searchProfiles($tagArray,$tagNo,$formMethod);
-                    $tagsProfile = $this->tagsForProfiles($searchProfile[0]);
+                    $searchProfile  = $this->searchProfiles($formTags,$formNo,$formMethod);
+                    $tagsProfile    = $this->tagsForProfiles($searchProfile[0]);
 
                     return $this->render('AGILSearchBundle:Default:index.html.twig',
                         array('searchForum' => $searchForum, 'tagsForum' => $tagsForum,
@@ -112,7 +104,7 @@ class DefaultController extends Controller
                     // ---------------------- RECHERCHE FORUM ----------------------
                     if($formFilter == "forum"){
 
-                        $searchForum = $this->searchForumSubject($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $searchForum = $this->searchForumSubject($formTags,$formNo,$formMethod,$page,$maxPerPage);
                         $tagsForum = $this->tagsForForumSubject($searchForum[0]);
                         $countTotal = $searchForum[1];
 
@@ -135,7 +127,7 @@ class DefaultController extends Controller
                     // ---------------------- RECHERCHE HALL ----------------------
                     if($formFilter == "hall"){
 
-                        $searchHall = $this->searchHall($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $searchHall = $this->searchHall($formTags,$formNo,$formMethod,$page,$maxPerPage);
                         $tagsHall = $this->tagsForHallEvent($searchHall[0]);
                         $countTotal = $searchHall[1];
 
@@ -158,7 +150,7 @@ class DefaultController extends Controller
                     // ---------------------- RECHERCHE OFFRES ----------------------
                     if($formFilter == "offer"){
 
-                        $searchOffers = $this->searchOffers($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $searchOffers = $this->searchOffers($formTags,$formNo,$formMethod,$page,$maxPerPage);
                         $tagsOffers = $this->tagsForOffers($searchOffers[0]);
                         $countTotal = $searchOffers[1];
 
@@ -181,7 +173,7 @@ class DefaultController extends Controller
                     // ---------------------- RECHERCHE PROFILS ----------------------
                     if($formFilter == "profile"){
 
-                        $searchProfile = $this->searchProfiles($tagArray,$tagNo,$formMethod,$page,$maxPerPage);
+                        $searchProfile = $this->searchProfiles($formTags,$formNo,$formMethod,$page,$maxPerPage);
                         $tagsProfile = $this->tagsForProfiles($searchProfile[0]);
                         $countTotal = $searchProfile[1];
 
