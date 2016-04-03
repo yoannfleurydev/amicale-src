@@ -25,11 +25,12 @@
                     {% if user.userFirstName is not null or user.userLastName is not null %}
                         <p>{{ user.userFirstName }} {{ user.userLastName }}</p>
                     {% endif %}
-                    <p>Adresse mail : {{ user.email }}</p>
+                    <p>Adresse mail : <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
                     <p>Pseudo : {{ user.username }}</p>
-                    
+
                     {% if user.userCvUrl is not null and user.userCVUrlVisibility %}
-                        <p>CV : <a href="{{ asset("files/cv/") ~ user.userCvUrl }}" target="_blank">{{ user.userCvUrl }}</a></p>
+                        <p>CV : <a href="{{ asset("files/cv/") ~ user.userCvUrl }}"
+                                   target="_blank">{{ user.userCvUrl }}</a></p>
                     {% endif %}
                 </div>
             </div>
@@ -60,13 +61,17 @@
                                             <li class="list-group-item">
                                                 <div class="row">
                                                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                                        {{ tag.tagName | upper }}
+                                                        <p>{{ tag.tagName | upper }}</p>
                                                     </div>
                                                     <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                                                        <div class="progress">
-                                                            {% for skill in skills %}
-                                                                {% if skill.tag == tag %}
-                                                                    <div class="progress-bar {{ tag.tagColor }}" role="progressbar"
+                                                        {% for skill in skills %}
+                                                            {% if skill.tag == tag %}
+                                                                <div class="progress"
+                                                                     data-toggle="tooltip"
+                                                                     data-placement="top"
+                                                                     title="{{ skill.skillLevel }}">
+                                                                    <div class="progress-bar {{ tag.tagColor }}"
+                                                                         role="progressbar"
                                                                          aria-valuenow="{{ skill.skillLevel * 10 }}"
                                                                          aria-valuemin="0"
                                                                          aria-valuemax="100"
@@ -74,9 +79,10 @@
                                                                         <span class="sr-only">{{ skill.skillLevel * 10 }}
                                                                             % Complete</span>
                                                                     </div>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </div>
+
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     </div>
                                                 </div>
                                             </li>
