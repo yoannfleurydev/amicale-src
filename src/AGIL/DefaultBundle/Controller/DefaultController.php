@@ -25,4 +25,8 @@ class DefaultController extends Controller
         return $this->render('AGILDefaultBundle:Default:index.html.twig',
             array('lastSubjects' => $lastSubjects));
     }
+
+    public function creditsAction() {
+        return $this->render('AGILDefaultBundle:Default:credits.html.twig');
+    }
 }

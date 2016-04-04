@@ -17,3 +17,8 @@ agil_tags_test:
     path: /tags/test
     defaults:
         _controller: AGILDefaultBundle:Tag:testFunc
+
+agil_default_credits:
+    path: /credits
+    defaults:
+        _controller: AGILDefaultBundle:Default:credits
