@@ -1,13 +1,33 @@
-<table>
-    {% for user in users %}
-        <tr>
-        <td>{{ user.username }}
-        <td>{{ user.userFirstName }}</td>
-        <td>{{ user.userLastName }}</td>
 
-    {% else %}
-        <tr>
-            <td>Aucun users n'a été trouvé.</td>
-        </tr>
-    {% endfor %}
-</table>
+<p>{{ usersSearch|length }} utilisateur{% if usersSearch|length > 1 %}s{% endif %} trouvé{% if usersSearch|length > 1 %}s{% endif %}.</p>
+
+<div class="loading text-center"><button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</button></div>
+
+<div class="row">
+    <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+
+                            {% for user in usersSearch %}
+                                <tr>
+                                    <td><a href="{{ path('agil_profile_id',{'id':user.id}) }}" target="_blank">{{ user.username }}</a></td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
+                                    <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" data-target="#confirm"
+                                           type="button"class="btn btn-default btn-danger" data-toggle="modal"
+                                           title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

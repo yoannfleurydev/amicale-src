@@ -27,7 +27,7 @@ class UserController extends Controller
      * @param $page
      * @return Response
      */
-    public function adminUserAction($page)
+    public function adminUserAction(Request $request, $page)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -50,7 +50,7 @@ class UserController extends Controller
         $moderators = $em->getRepository('AGILUserBundle:AgilUser')->findByRole("ROLE_MODERATOR");
         $admins = $em->getRepository('AGILUserBundle:AgilUser')->findByRole("ROLE_ADMIN");
 
-        $searchForm = $this->container->get('form.factory')->create(new SearchUserType());
+        $searchForm = $this->container->get('form.factory')->create(new SearchUserType(''));
 
         return $this->render('AGILAdminBundle:User:admin_user.html.twig', array(
             'users' => $users,
@@ -166,23 +166,27 @@ class UserController extends Controller
         return $this->redirect( $this->generateUrl('agil_admin_user') );
     }
 
-    public function adminUserSearchAction(Request $request, $page)
+    public function adminUserSearchAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         if($request->isXmlHttpRequest())
         {
             $keyword = '';
             $keyword = $request->request->get('keyword');
 
-            $em = $this->getDoctrine()->getManager();
-
-            $maxUsers = 25;
-
             if($keyword != '')
             {
-                $users = $em->getRepository('AGILUserBundle:AgilUser')->searchByName($keyword);
+                $usersSearch = $em->getRepository('AGILUserBundle:AgilUser')->searchByName($keyword);
+
+                return $this->render('AGILAdminBundle:User:admin_user_list.html.twig', array(
+                    'usersSearch' => $usersSearch
+                ));
             }
             else {
-                return $this->adminUserAction();
+                return $this->render('AGILAdminBundle:User:admin_user_list.html.twig', array(
+                    'usersSearch' => null
+                ));
             }
 
             return $this->render('AGILAdminBundle:User:admin_user.html.twig', array(
@@ -190,8 +194,9 @@ class UserController extends Controller
             ));
         }
         else {
-            return $this->adminUserAction();
+            return $this->redirect( $this->generateUrl('agil_admin_user') );
         }
+
     }
 
     /**

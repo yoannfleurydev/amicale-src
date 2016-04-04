@@ -8,13 +8,20 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class SearchUserType extends AbstractType
 {
+    private $keyword;
+
+    public function __construct($keyword) {
+        $this->keyword = $keyword;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('keyword', TextType::class, array(
             'label' => false,
+            'data' => $this->keyword,
             'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'nom utilisateur ou prénom ou nom',
+                'placeholder' => 'nom d\'utilisateur ou prénom ou nom',
             )
         ));
     }

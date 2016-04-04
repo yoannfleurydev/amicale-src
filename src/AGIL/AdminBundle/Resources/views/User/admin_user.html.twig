@@ -2,17 +2,19 @@
 
 {% block body %}
     <div class="list-group">
+
         <a href="{{ path("agil_admin_user_add") }}" class="list-group-item">Ajouter un utilisateur</a>
 
         {{ form_start(search, {'action': path('agil_admin_user_search'), 'id': 'form_search' }) }}
-            {{ form_widget(search.keyword, {'id': 'keyword' }) }}
+        <div class="form-group">
+            <label class="control-label">Recherche d'utilisateurs :</label>
+            {{ form_widget(search.keyword, {'id': 'search_keywords', 'name': 'query'}) }}
+        </div>
         {{ form_end(search) }}
-    </div>
 
-    <div class="loading"><button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</button></div>
-
-    <div id="resultats_recherche">
-        {% include 'AGILAdminBundle:User:admin_user_list.html.twig' with {'users' : usersSearch}  %}
+        <div id="search_result">
+            {% include 'AGILAdminBundle:User:admin_user_list.html.twig' with {'usersSearch' : usersSearch}  %}
+        </div>
     </div>
 
     <h3>Administration utilisateurs</h3>
@@ -167,20 +169,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function()
-            {
-                $(".loading").hide();
-
-                $('#keyword').keyup(function(key)
-                {
-                    if (this.value.length >= 1 || this.value == '')
-                    {
-                        $(".loading").show();
-
-                    }
-                });
-            });
-    </script>
 {% endblock %}
