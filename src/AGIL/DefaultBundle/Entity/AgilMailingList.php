@@ -33,6 +33,10 @@ class AgilMailingList
      */
     private $mailingListName;
     /**
+     * @ORM\Column(name="userIsSubscribed", type="boolean")
+     */
+    protected $userIsSubscribed = false;
+    /**
      * Get mailingListId
      *
      * @return integer

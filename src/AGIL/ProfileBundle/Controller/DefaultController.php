@@ -145,6 +145,15 @@ class DefaultController extends Controller
                 }
             }
 
+            foreach($mailingLists as $mailingList) {
+//                if (!in_array($mailingList->getMailingListName(), $user->getMailingLists()->toArray())) {
+//                    $user->addMailingList($mailingList);
+//                }
+                if (!$user->getMailingLists()->contains($mailingList)) {
+                    $user->addMailingList($mailingList);
+                }
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             if ($form->get('username')->getData() == null || $form->get('email')->getData() == null) {
@@ -161,8 +170,8 @@ class DefaultController extends Controller
                 $this->addFlash('success', 'Profil modifié.');
                 return $this->redirect($this->generateUrl('agil_profile_id', array('id' => $user->getId())));
             }
-        }
 
+        }
 
         return $this->render('AGILProfileBundle:Default:edit.html.twig', array(
             'user' => $user,
