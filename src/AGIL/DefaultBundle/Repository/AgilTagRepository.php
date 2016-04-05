@@ -550,12 +550,27 @@ class AgilTagRepository extends EntityRepository
 		$inputNoSplit = $this->tagFormat($inputNo);
 
 		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+
+		// Requète par rapport au titre de l'offre
+		$queryTitle->select('user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+		foreach ($inputSearchSplit as $id => $keyword) {
+			$queryTitle->andWhere($queryTitle->expr()->orX(
+					$queryTitle->expr()->like('user.userLastName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.userFirstName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.username', ":keyword_".$id)
+			));
+			$queryTitle->setParameter("keyword_".$id, '%'.$keyword.'%');
+		}
 
 		$query->select('user.id','user')
 				->from('AGIL\UserBundle\Entity\AgilUser','user')
 		;
 
 		$completeResult = $query->getQuery()->getResult();
+		$resultTitle = $queryTitle->getQuery()->getResult();
 		$bestUser = null;
 
 		foreach($completeResult as $key => $res){
@@ -586,25 +601,49 @@ class AgilTagRepository extends EntityRepository
 
 		}
 
-		// Tri par rapport au niveau de skill
+		$userSortedList = null;
+		$i = 0;
+
+		// Ajout des users de la requète Title (On enlève les users qui possèdent des tags dans le No)
+		foreach($resultTitle as $user){
+			$skills = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill')->findBy(array('user' => $user));
+			$addBoolean = true;
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+			foreach($tagTab as $tag){
+				if(in_array($tag,$inputNoSplit)){
+					$addBoolean = false;
+				}
+			}
+			if($addBoolean)
+				$userSortedList[$i++] = $user;
+		}
+
+
+		// Ajout des users triés par rapport au niveau de skill (en évitant les doublons)
 		if(count($bestUser) > 0){
 			arsort($bestUser);
-
-			$userSortedList[] = null;
-			$i = 0;
-			// On prend tous les Users dans l'ordre
 			foreach($bestUser as $key => $res){
-				$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
+				$exist = false;
+				foreach($userSortedList as $user)
+					if($user->getId() == $key)
+						$exist = true;
+				if(!$exist)
+					$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
 			}
-
-			// Gère la pagination
-			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
-			$countTotal = count($userSortedList);
-
-			return array($result,$countTotal);
-		}else{
-			return array(array(),0);
 		}
+
+		// Gère la pagination
+		if(count($userSortedList) > 0)
+			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
+		else
+			$result = null;
+
+		$countTotal = count($userSortedList);
+
+		return array($result,$countTotal);
 
 	}
 
@@ -623,12 +662,28 @@ class AgilTagRepository extends EntityRepository
 		$inputNoSplit = $this->tagFormat($inputNo);
 
 		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
 
+		// Requète par rapport au titre de l'offre
+		$queryTitle->select('user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+		foreach ($inputSearchSplit as $id => $keyword) {
+			$queryTitle->orWhere($queryTitle->expr()->orX(
+					$queryTitle->expr()->like('user.userLastName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.userFirstName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.username', ":keyword_".$id)
+			));
+			$queryTitle->setParameter("keyword_".$id, '%'.$keyword.'%');
+		}
+
+		// Requète par rapport aux skills
 		$query->select('user.id','user')
 				->from('AGIL\UserBundle\Entity\AgilUser','user')
 		;
 
 		$completeResult = $query->getQuery()->getResult();
+		$resultTitle = $queryTitle->getQuery()->getResult();
 		$bestUser = null;
 
 		foreach($completeResult as $key => $res){
@@ -659,26 +714,49 @@ class AgilTagRepository extends EntityRepository
 
 		}
 
+		$userSortedList = null;
+		$i = 0;
 
-		// Tri par rapport au niveau de skill
+		// Ajout des users de la requète Title (On enlève les users qui possèdent des tags dans le No)
+		foreach($resultTitle as $user){
+			$skills = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill')->findBy(array('user' => $user));
+			$addBoolean = true;
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+			foreach($tagTab as $tag){
+				if(in_array($tag,$inputNoSplit)){
+					$addBoolean = false;
+				}
+			}
+			if($addBoolean)
+				$userSortedList[$i++] = $user;
+		}
+
+
+		// Ajout des users triés par rapport au niveau de skill (en évitant les doublons)
 		if(count($bestUser) > 0){
 			arsort($bestUser);
-
-			$userSortedList[] = null;
-			$i = 0;
-			// On prend tous les Users dans l'ordre
 			foreach($bestUser as $key => $res){
-				$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
+				$exist = false;
+				foreach($userSortedList as $user)
+					if($user->getId() == $key)
+						$exist = true;
+				if(!$exist)
+					$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
 			}
-
-			// Gère la pagination
-			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
-			$countTotal = count($userSortedList);
-
-			return array($result,$countTotal);
-		}else{
-			return array(array(),0);
 		}
+
+		// Gère la pagination
+		if(count($userSortedList) > 0)
+			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
+		else
+			$result = null;
+
+		$countTotal = count($userSortedList);
+
+		return array($result,$countTotal);
 
 	}
 

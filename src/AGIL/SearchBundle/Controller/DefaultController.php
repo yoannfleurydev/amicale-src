@@ -361,8 +361,10 @@ class DefaultController extends Controller
      */
     private function tagsForProfiles($searchProfile){
         $tagsProfile = null;
-        foreach($searchProfile as $user){
-            $tagsProfile[$user->getId()] = $this->skillRepository->findBy(array('user' => $user->getId()),array('skillLevel' => 'desc'),5);
+        if($searchProfile != null){
+            foreach($searchProfile as $user){
+                $tagsProfile[$user->getId()] = $this->skillRepository->findBy(array('user' => $user->getId()),array('skillLevel' => 'desc'),5);
+            }
         }
         return $tagsProfile;
     }
