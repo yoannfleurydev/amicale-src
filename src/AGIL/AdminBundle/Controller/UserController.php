@@ -50,7 +50,7 @@ class UserController extends Controller
         $moderators = $em->getRepository('AGILUserBundle:AgilUser')->findByRole("ROLE_MODERATOR");
         $admins = $em->getRepository('AGILUserBundle:AgilUser')->findByRole("ROLE_ADMIN");
 
-        $searchForm = $this->container->get('form.factory')->create(new SearchUserType(''));
+        $searchForm = $this->createForm(new SearchUserType(''));
 
         return $this->render('AGILAdminBundle:User:admin_user.html.twig', array(
             'users' => $users,

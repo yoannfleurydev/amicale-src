@@ -5,19 +5,23 @@
 
         <a href="{{ path("agil_admin_user_add") }}" class="list-group-item">Ajouter un utilisateur</a>
 
-        {{ form_start(search, {'action': path('agil_admin_user_search'), 'id': 'form_search' }) }}
-        <div class="form-group">
-            <label class="control-label">Recherche d'utilisateurs :</label>
-            {{ form_widget(search.keyword, {'id': 'search_keywords', 'name': 'query'}) }}
-        </div>
-        {{ form_end(search) }}
-
-        <div id="search_result">
-            {% include 'AGILAdminBundle:User:admin_user_list.html.twig' with {'usersSearch' : usersSearch}  %}
-        </div>
     </div>
 
-    <h3>Administration utilisateurs</h3>
+
+    {{ form_start(search, {'action': path('agil_admin_user_search')}) }}
+
+    <div class="form-group">
+        <label class="control-label">Recherche d'utilisateurs :</label>
+        {{ form_widget(search.keyword, {'id': 'search_keywords'}) }}
+    </div>
+
+    {{ form_end(search) }}
+
+    <div id="search_result">
+        {% include 'AGILAdminBundle:User:admin_user_list.html.twig' with {'usersSearch' : usersSearch}  %}
+    </div>
+
+    <h3 class="text-center">Administration des utilisateurs</h3>
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
             <div class="panel panel-default">
@@ -34,7 +38,7 @@
                         <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Nom</th>
+                                    <th>Nom d'utilisateur</th>
                                     <th>Mail</th>
                                     <th>Inscrit le</th>
                                     <th></th>
@@ -80,7 +84,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Nom</th>
+                                    <th>Nom d'utilisateur</th>
                                     <th>Mail</th>
                                     <th>Inscrit le</th>
                                     <th></th>
@@ -125,7 +129,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Nom</th>
+                                        <th>Nom d'utilisateur</th>
                                         <th>Mail</th>
                                         <th>Inscrit le</th>
                                         <th></th>

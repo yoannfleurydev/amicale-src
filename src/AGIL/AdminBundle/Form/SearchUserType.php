@@ -25,6 +25,12 @@ class SearchUserType extends AbstractType
             )
         ));
     }
+    public function getDefaultOptions()
+    {
+        return array(
+            'id'         => 'search_form'
+        );
+    }
 
     public function getBlockPrefix()
     {
