@@ -1,23 +1,14 @@
 {% extends "AGILSearchBundle::baseSearchBundle.html.twig" %}
 
-{% form_theme form '::button_widget.html.twig' %}
-
 {% block body %}
     <div class="container">
         <div class="row">
 
-            {{ form_start(form) }}
 
-            {{ form_errors(form.tags) }}
-            {{ form_widget(form.tags) }}
-
-            <button type="submit" class="btn btn-primary">Rechercher</button>
-
-            {# {{ form_widget(form.Rechercher, {'label': '<span class="material-icons">search</span>'}) }} #}
-
-            {{ form_rest(form) }}
-
-            {{ form_end(form) }}
+            {# CODE A INCLURE AU NIVEAU DE LA BARRE DE RECHERCHE #}
+            {{ form_start(formSearchBar, {'method': 'GET', 'action' : path('agil_search_homepage')}) }}
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            {{ form_end(formSearchBar) }}
 
 
         </div>

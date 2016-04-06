@@ -19,6 +19,29 @@ class DefaultController extends Controller
     private $skillRepository;
 
 
+    /**
+     * Code qui sera à insérer dans tous les contrôleurs du site !!
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function testAction()
+    {
+        // Ajouter cette ligne dans tous les contrôleurs du site
+        $formSearchBar = $this->createForm(new SearchType());
+
+        // Ajouter 'formSearchBar' => $formSearchBar->createView() dans l'array de retour du render
+        return $this->render('AGILSearchBundle:Default:test.html.twig',array('formSearchBar' => $formSearchBar->createView()));
+    }
+
+
+
+
+    /**
+     * Contrôleur du formulaire avancé de recherche
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function searchAction(Request $request)
     {
         $this->tagRepository = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
@@ -55,7 +78,7 @@ class DefaultController extends Controller
 
         if($formFilter != null && $formTags != null){
 
-            // Méthode de recherche qui contient un peu de tout
+            // Méthode de recherche qui de tout (4/type au maximum)
             if($formFilter == "all"){
 
                 if($formMethod == "and" || $formMethod == "or"){
@@ -78,9 +101,10 @@ class DefaultController extends Controller
 
                     return $this->render('AGILSearchBundle:Default:index.html.twig',
                         array('searchForum' => $searchForum, 'tagsForum' => $tagsForum,
-                            'searchHall' => $searchHall, 'tagsHall' => $tagsHall, 'form' => $form->createView(),
+                            'searchHall' => $searchHall, 'tagsHall' => $tagsHall,
                             'searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers,
-                            'searchProfile' => $searchProfile, 'tagsProfile' => $tagsProfile)
+                            'searchProfile' => $searchProfile, 'tagsProfile' => $tagsProfile,
+                            'form' => $form->createView())
                     );
 
                 }
@@ -91,6 +115,7 @@ class DefaultController extends Controller
 
                 if($formMethod == "and" || $formMethod == "or"){
 
+                    // Paramètres de pagination
                     $maxPerPage = 10;
                     $route = 'agil_search_homepage';
                     $route_params = array('tags' => $formTags,
@@ -206,36 +231,21 @@ class DefaultController extends Controller
     }
 
     /**
-     * Code de test (formulaire header)
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function testAction()
-    {
-        $form = $this->createForm(new SearchType(), array(), array(
-            'action' => $this->generateUrl('agil_search_homepage'),
-            'method' => 'GET',
-            'csrf_protection' => false
-        ));
-
-        return $this->render('AGILSearchBundle:Default:test.html.twig',array('form' => $form->createView()));
-    }
-
-
-    /**
-     * Recherche de sujets de forum par rapport à des tags
+     * Recherche de sujets de forum
      *
-     * @param $tagArray
+     * @param $formTags
+     * @param $formNo
      * @param $method
      * @param int $page
      * @param int $maxPerPage
      * @return null
      */
-    private function searchForumSubject($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
+    private function searchForumSubject($formTags,$formNo,$method,$page=1,$maxPerPage=4){
 
         if($method == "and"){
-            return $this->tagRepository->getAndSubjectByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getAndSubject($formTags,$formNo,$page,$maxPerPage);
         }else if ($method == "or"){
-            return $this->tagRepository->getOrSubjectByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getOrSubject($formTags,$formNo,$page,$maxPerPage);
         }else{
             return null;
         }
@@ -259,20 +269,21 @@ class DefaultController extends Controller
 
 
     /**
-     * Recherche d'evènements du hall par rapport à des tags
+     * Recherche d'evènements du hall
      *
-     * @param $tagArray
+     * @param $formTags
+     * @param $formNo
      * @param $method
      * @param int $page
      * @param int $maxPerPage
      * @return null
      */
-    private function searchHall($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
+    private function searchHall($formTags,$formNo,$method,$page=1,$maxPerPage=4){
 
         if($method == "and"){
-            return $this->tagRepository->getAndEventByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getAndEvent($formTags,$formNo,$page,$maxPerPage);
         }else if ($method == "or"){
-            return $this->tagRepository->getOrEventByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getOrEvent($formTags,$formNo,$page,$maxPerPage);
         }else{
             return null;
         }
@@ -296,20 +307,21 @@ class DefaultController extends Controller
 
 
     /**
-     * Recherche d'offres par rapport à des tags
+     * Recherche d'offres
      *
-     * @param $tagArray
+     * @param $formTags
+     * @param $formNo
      * @param $method
      * @param int $page
      * @param int $maxPerPage
      * @return null
      */
-    private function searchOffers($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
+    private function searchOffers($formTags,$formNo,$method,$page=1,$maxPerPage=4){
 
         if($method == "and"){
-            return $this->tagRepository->getAndOfferByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getAndOffer($formTags,$formNo,$page,$maxPerPage);
         }else if ($method == "or"){
-            return $this->tagRepository->getOrOfferByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getOrOffer($formTags,$formNo,$page,$maxPerPage);
         }else{
             return null;
         }
@@ -332,20 +344,21 @@ class DefaultController extends Controller
     }
 
     /**
-     * Recherche de profils par rapport à des tags
+     * Recherche de profils
      *
-     * @param $tagArray
+     * @param $formTags
+     * @param $formNo
      * @param $method
      * @param int $page
      * @param int $maxPerPage
      * @return null
      */
-    private function searchProfiles($tagArray,$tagNo,$method,$page=1,$maxPerPage=4){
+    private function searchProfiles($formTags,$formNo,$method,$page=1,$maxPerPage=4){
 
         if($method == "and"){
-            return $this->tagRepository->getAndProfileByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getAndProfile($formTags,$formNo,$page,$maxPerPage);
         }else if ($method == "or"){
-            return $this->tagRepository->getOrProfileByTags($tagArray,$tagNo,$page,$maxPerPage);
+            return $this->tagRepository->getOrProfile($formTags,$formNo,$page,$maxPerPage);
         }else{
             return null;
         }
@@ -354,7 +367,7 @@ class DefaultController extends Controller
 
 
     /**
-     * Recherche des 5 meilleurs tags pour les users recherché
+     * Recherche des 5 meilleurs tags pour les users recherchés
      *
      * @param $searchProfile
      * @return null

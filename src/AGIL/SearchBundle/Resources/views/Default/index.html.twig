@@ -13,7 +13,7 @@
                 </h2>
             </div>
 
-
+            {# Formulaire de recherche avancée #}
 
             {{ form_start(form) }}
 
@@ -104,7 +104,9 @@
         </div>
     </div>
 
-
+    {# ------------------------------------------------------------- #}
+    {#                  Block de la recherche Forum                  #}
+    {# ------------------------------------------------------------- #}
     {% if searchForum is defined %}
 
         {% if is_granted('ROLE_USER') %}
@@ -170,6 +172,9 @@
 
     {% endif %}
 
+    {# ------------------------------------------------------------- #}
+    {#                   Block de la recherche Hall                  #}
+    {# ------------------------------------------------------------- #}
     {% if searchHall is defined %}
 
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -225,6 +230,9 @@
 
     {% endif %}
 
+    {# ------------------------------------------------------------- #}
+    {#                  Block de la recherche Offres                 #}
+    {# ------------------------------------------------------------- #}
     {% if searchOffers is defined %}
 
         {% if is_granted('ROLE_USER') %}
@@ -288,6 +296,9 @@
 
     {% endif %}
 
+    {# ------------------------------------------------------------- #}
+    {#                  Block de la recherche Proils                 #}
+    {# ------------------------------------------------------------- #}
     {% if searchProfile is defined %}
 
         {% if is_granted('ROLE_USER') %}
@@ -315,7 +326,7 @@
                                     <div class="list-element">
                                         <p><a href="{{ path('agil_profile_id',{'id':search.id}) }}" class="interne-link">{{ search.userFirstName }} {{ search.userLastName }} ({{ search.username }})</a></p>
                                         {% for skill in tagsProfile[search.id] %}
-                                            <a href="{{ path('agil_search_homepage',{'tags':skill.tag.tagName}) }}"><span class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }} : {{ skill.skillLevel }}/10</span></a>
+                                            <a href="{{ path('agil_search_homepage',{'tags':skill.tag.tagName}) }}"><span class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }}</span></a>
                                         {% endfor %}
                                     </div>
 
