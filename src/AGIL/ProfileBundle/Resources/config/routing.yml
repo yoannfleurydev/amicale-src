@@ -9,3 +9,8 @@ agil_profile_edit:
     path:     /profile/edit
     defaults:
         _controller: AGILProfileBundle:Default:edit
+
+agil_profile_delete:
+    path:     /profile/delete
+    defaults:
+        _controller: AGILProfileBundle:Default:delete

@@ -19,7 +19,7 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:       { fallback: %locale% }
+    translator:       { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -81,7 +81,7 @@ stfalcon_tinymce:
     tinymce_jquery: true
     selector: ".tinymce"
     # Get current language from the parameters.ini
-    language: %locale%
+    language: "%locale%"
     theme:
         # Simple theme: same as default theme
         simple: ~

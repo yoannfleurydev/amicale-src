@@ -1,15 +1,16 @@
 {% extends "AGILProfileBundle::baseProfileBundle.html.twig" %}
+{% block title %}Profil | {{ user.userFirstName }} {{ user.userLastName }} {{ user.username }}{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
             <div class="panel panel-default">
-                <disv class="panel-body text-center">
+                <div class="panel-body text-center">
                     {% if user.userProfilePictureUrl is not null %}
                         <img class="img-responsive" src="{{ asset("img/profile/") ~ user.userProfilePictureUrl }}">
                     {% else %}
                         <img class="img-responsive" src="{{ asset("img/profile/default.png") }}">
                     {% endif %}
-                </disv>
+                </div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -31,6 +32,16 @@
                     {% if user.userCvUrl is not null and user.userCVUrlVisibility %}
                         <p>CV : <a href="{{ asset("files/cv/") ~ user.userCvUrl }}"
                                    target="_blank">{{ user.userCvUrl }}</a></p>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_USER') %}
+                        {% if user.userId == app.user.userId %}
+                            <a href="{{ path('agil_profile_delete') }}"
+                               title="Supprimer mon compte"
+                               class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span> Supprimer mon compte
+                            </a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

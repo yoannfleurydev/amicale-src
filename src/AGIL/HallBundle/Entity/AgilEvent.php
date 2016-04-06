@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AgilEvent
 {
-
     /**
      * @ORM\ManyToOne(targetEntity="AGIL\UserBundle\Entity\AgilUser")
      * @ORM\JoinColumn(nullable=true,referencedColumnName="id")

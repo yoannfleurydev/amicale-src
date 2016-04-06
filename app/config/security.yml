@@ -29,7 +29,7 @@ security:
                 path:   /logout
                 target: /login
             remember_me:
-                secret:    %secret% # %secret% est un paramètre de parameters.yml
+                secret:    "%secret%" # %secret% est un paramètre de parameters.yml
 
     access_control:
         - { path: ^/search, roles: ROLE_USER }

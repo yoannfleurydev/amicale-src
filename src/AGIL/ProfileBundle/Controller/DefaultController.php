@@ -4,6 +4,8 @@ namespace AGIL\ProfileBundle\Controller;
 
 use AGIL\ProfileBundle\Form\ProfileEditType;
 use AGIL\UserBundle\Entity\AgilUser;
+use FOS\UserBundle\FOSUserBundle;
+use FOS\UserBundle\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -175,7 +177,7 @@ class DefaultController extends Controller
         ));
     }
 
-    public function editProfilPicture($profilePicture, $user) {
+    private function editProfilPicture($profilePicture, $user) {
         // Générer le nom du fichier image
         $profilePicFileName = 'profile' . $user->getUserId() . '.' . $profilePicture->guessExtension();
         $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/profile';
@@ -195,7 +197,7 @@ class DefaultController extends Controller
         $this->getDoctrine()->getManager()->flush();
     }
 
-    public function editProfilCV($cv, $user) {
+    private function editProfilCV($cv, $user) {
         // Générer le nom du fichier
         $cvFileName = md5(uniqid()).'.'.$cv->guessExtension();
         //$cvFileName = 'cv' . $user->getUserId() . '.' . $cv->guessExtension();
@@ -213,4 +215,29 @@ class DefaultController extends Controller
         $this->getDoctrine()->getManager()->flush();
     }
 
+    /**
+     * La méthode deleteAction permet de supprimer le compte de l'utilisateur courant s'il utilise le lien dédié sur
+     * la page de son profil.
+     */
+    public function deleteAction() {
+        if (empty($this->getUser()) || $this->getUser() === null) {
+            $this->addFlash('danger', 'Vous ne pouvez pas accéder à cette partie');
+            return $this->redirect($this->generateUrl('agil_default_homepage'));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $eventRepo = $em->getRepository("AGILHallBundle:AgilEvent");
+        $events = $eventRepo->findBy(array('user' => $this->getUser()));
+
+        foreach ($events as $event) {
+            $em->remove($event);
+        }
+        $this->get('fos_user.user_manager')->deleteUser($this->getUser());
+
+        $em->flush();
+
+        $this->addFlash('danger', 'Votre compte a bien été supprimé.');
+        return $this->redirect($this->generateUrl('agil_default_homepage'));
+    }
 }
