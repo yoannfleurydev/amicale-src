@@ -146,11 +146,14 @@ class DefaultController extends Controller
             }
 
             foreach($mailingLists as $mailingList) {
-//                if (!in_array($mailingList->getMailingListName(), $user->getMailingLists()->toArray())) {
-//                    $user->addMailingList($mailingList);
-//                }
-                if (!$user->getMailingLists()->contains($mailingList)) {
-                    $user->addMailingList($mailingList);
+                if ($form->get($mailingList->getMailingListName())->getData() == true) {
+                    if (!$user->getMailingLists()->contains($mailingList)) {
+                        $user->addMailingList($mailingList);
+                    }
+                } else {
+                    if ($user->getMailingLists()->contains($mailingList)) {
+                        $user->removeMailingList($mailingList);
+                    }
                 }
             }
 

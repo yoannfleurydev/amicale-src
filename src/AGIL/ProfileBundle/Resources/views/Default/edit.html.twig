@@ -114,7 +114,13 @@
                                 {#{{ form_widget(form.mailingLists) }}#}
                             {#</label>#}
                         {% for mailingList in data['mailingLists'] %}
-                            {{ form_row(form[mailingList.getMailingListName], {'label' : mailingList.getMailingListName}) }}
+                            {# Si l'utilisateur est déjà abonné à la mailing list, la checkbox sera cochée... #}
+                            {% if user.mailinglists.contains(mailingList) == true %}
+                                {{ form_row(form[mailingList.getMailingListName], {'label' : mailingList.getMailingListName, 'checked': 'checked'}) }}
+                            {# ... elle sera décochée sinon #}
+                            {% else %}
+                                {{ form_row(form[mailingList.getMailingListName], {'label' : mailingList.getMailingListName}) }}
+                            {% endif %}
                         {% endfor %}
                         </div>
                     </div>
