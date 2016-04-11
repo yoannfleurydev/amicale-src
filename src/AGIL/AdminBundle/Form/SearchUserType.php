@@ -17,18 +17,18 @@ class SearchUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('keyword', TextType::class, array(
-            'label' => false,
+            'label' => 'Recherche d\'utilisateur : ',
             'data' => $this->keyword,
             'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'nom d\'utilisateur ou prénom ou nom',
+                'placeholder' => 'Pseudonyme, Prénom ou Nom',
             )
         ));
     }
     public function getDefaultOptions()
     {
         return array(
-            'id'         => 'search_form'
+            'id' => 'search_form'
         );
     }
 

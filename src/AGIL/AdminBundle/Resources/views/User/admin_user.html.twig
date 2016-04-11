@@ -11,8 +11,7 @@
     {{ form_start(search, {'action': path('agil_admin_user_search')}) }}
 
     <div class="form-group">
-        <label class="control-label">Recherche d'utilisateurs :</label>
-        {{ form_widget(search.keyword, {'id': 'search_keywords'}) }}
+        {{ form_row(search.keyword, {'id': 'search_keywords'}) }}
     </div>
 
     {{ form_end(search) }}
