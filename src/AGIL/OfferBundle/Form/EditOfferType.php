@@ -10,9 +10,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\Date;
 
-class OfferType extends AbstractType
+class EditOfferType extends AbstractType
 {
+    private $yearExpire;
+
+    public function __construct($yearExpire) {
+        $this->yearExpire = $yearExpire;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -30,7 +37,7 @@ class OfferType extends AbstractType
             'required' => false,
             'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Auteur',
+                'placeholder' => 'Autheur',
             )
         ));
 
@@ -66,8 +73,8 @@ class OfferType extends AbstractType
             'label' => false,
             'required' => true,
             'choices' => array(
-                'stage' => 'Stage',
-                'emploi' => 'Emploi'
+                'stage' => 'stage',
+                'emploi' => 'emploi'
             ),
             'multiple' => false,
             'expanded' => true,
@@ -85,30 +92,18 @@ class OfferType extends AbstractType
             )
         ));
 
-        $builder->add('expireAt', ChoiceType::class, array(
+        $builder->add('offerExpirationDate', DateType::class, array(
             'label' => false,
             'required' => true,
-            'mapped' => false,
-            'choices' => array(
-                'P1M' => '1 mois',
-                'P2M' => '2 mois',
-                'P3M' => '3 mois',
-                'P4M' => '4 mois',
-                'P5M' => '5 mois',
-                'P6M' => '6 mois',
-                'P7M' => '7 mois',
-                'P8M' => '8 mois',
-                'P9M' => '9 mois',
-                'P10M' => '10 mois',
-                'P11M' => '11 mois',
-                'P12M' => '12 mois',
-            ),
+            'years' => range($this->yearExpire, $this->yearExpire+1),
+            'input'  => 'datetime',
+            'widget' => 'choice',
             'attr' => array(
                 'class' => 'form-control',
             )
         ));
 
-        $builder->add('Ajouter', SubmitType::class, array(
+        $builder->add('Modifier', SubmitType::class, array(
             'label' => false,
             'attr' => array(
                 'class' => 'btn btn-primary',

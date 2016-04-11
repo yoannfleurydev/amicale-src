@@ -10,6 +10,7 @@ use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Model\UserInterface;
 use AGIL\UserBundle\Entity\AgilUser;
 use AGIL\AdminBundle\Form\UserType;
+use AGIL\AdminBundle\Form\SearchUserType;
 use AGIL\AdminBundle\Form\UsersCSVType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
@@ -20,12 +21,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends Controller
 {
+
     /**
      * retourne la liste des utilisateurs en fonction de ses droits
      * @param $page
      * @return Response
      */
-    public function adminUserAction($page)
+    public function adminUserAction(Request $request, $page)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -48,6 +50,8 @@ class UserController extends Controller
         $moderators = $em->getRepository('AGILUserBundle:AgilUser')->findByRole("ROLE_MODERATOR");
         $admins = $em->getRepository('AGILUserBundle:AgilUser')->findByRole("ROLE_ADMIN");
 
+        $searchForm = $this->createForm(new SearchUserType(''));
+
         return $this->render('AGILAdminBundle:User:admin_user.html.twig', array(
             'users' => $users,
             'pagination' => $pagination,
@@ -55,7 +59,9 @@ class UserController extends Controller
             'admins' => $admins,
             'nbMembers' => $users_count,
             'nbModerators' => count($moderators),
-            'nbAdmins' => count($admins)
+            'nbAdmins' => count($admins),
+            'search' => $searchForm->createView(),
+            'usersSearch' => null
         ));
     }
 
@@ -158,6 +164,39 @@ class UserController extends Controller
         }
 
         return $this->redirect( $this->generateUrl('agil_admin_user') );
+    }
+
+    public function adminUserSearchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if($request->isXmlHttpRequest())
+        {
+            $keyword = '';
+            $keyword = $request->request->get('keyword');
+
+            if($keyword != '')
+            {
+                $usersSearch = $em->getRepository('AGILUserBundle:AgilUser')->searchByName($keyword);
+
+                return $this->render('AGILAdminBundle:User:admin_user_list.html.twig', array(
+                    'usersSearch' => $usersSearch
+                ));
+            }
+            else {
+                return $this->render('AGILAdminBundle:User:admin_user_list.html.twig', array(
+                    'usersSearch' => null
+                ));
+            }
+
+            return $this->render('AGILAdminBundle:User:admin_user.html.twig', array(
+                'usersSearch' => $users
+            ));
+        }
+        else {
+            return $this->redirect( $this->generateUrl('agil_admin_user') );
+        }
+
     }
 
     /**

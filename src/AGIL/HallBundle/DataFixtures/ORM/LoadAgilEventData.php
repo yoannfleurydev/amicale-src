@@ -29,6 +29,7 @@ class LoadAgilEventData extends AbstractFixture implements OrderedFixtureInterfa
         $event->setEventDateEnd(new \DateTime('2016-02-15 18:00:00'));
         $event->setEventPostDate(new \DateTime());
         $event->setUser($amicale);
+
         $events[] = $event;
 
         $event = new AgilEvent();

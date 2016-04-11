@@ -19,10 +19,13 @@ class DefaultController extends Controller
 
         $count_events = $em->getRepository('AGILHallBundle:AgilEvent')->getCountEvents();
 
+        $count_offers = $em->getRepository('AGILOfferBundle:AgilOffer')->getCountOffers();
+
         return $this->render('AGILAdminBundle:Default:admin.html.twig', array(
             'nbUsers' => $count_users,
             'nbSubjects' => $count_subjects,
-            'nbEvents' => $count_events
+            'nbEvents' => $count_events,
+            'nbOffers' => $count_offers
         ));
     }
 }

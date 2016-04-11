@@ -13,6 +13,73 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class AgilUserRepository extends EntityRepository
 {
+    /**
+     * recherche les utilisateurs soit par leur nom, leur prénom ou leur nom d'utilisateur
+     * @param $keyword
+     * @return array
+     */
+    public function searchByName($keyword) {
+
+        $qb = $this->_em->createQueryBuilder()
+            ->select('agil_user')
+            ->from('AGILUserBundle:AgilUser', 'agil_user')
+            ->where("agil_user.username LIKE :keyword OR agil_user.userLastName LIKE :keyword
+            OR agil_user.userFirstName LIKE :keyword")
+            ->setParameter('keyword', $keyword.'%')
+            ->orderBy('agil_user.username', 'ASC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * recherche les utilisateurs par leur role puis, soit par leur nom, leur prénom ou leur nom d'utilisateur
+     * @param $keyword
+     * @param $role
+     * @return array
+     */
+    public function searchByNameAndRole($keyword, $role) {
+
+        $qb = $this->_em->createQueryBuilder()
+            ->select('agil_user')
+            ->from('AGILUserBundle:AgilUser', 'agil_user')
+            ->where('agil_user.roles LIKE :roles')
+            ->andwhere("agil_user.username LIKE :keyword OR agil_user.userLastName LIKE :keyword
+            OR agil_user.userFirstName LIKE :keyword")
+            ->setParameter('roles', '%"' .$role.'"%')
+            ->setParameter('keyword', $keyword.'%')
+            ->orderBy('agil_user.username', 'ASC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * recherche les utilisateurs avec le rôle de membre (user) soit par leur nom, leur prénom ou leur nom d'utilisateur
+     * @param $keyword
+     * @return array
+     */
+    public function searchByNameAndUsers($keyword)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('agil_user')
+            ->from('AGILUserBundle:AgilUser','agil_user')
+            ->where('
+            agil_user.roles NOT LIKE :roles AND
+            agil_user.roles NOT LIKE :roles2 AND
+            agil_user.roles NOT LIKE :roles3
+            ')
+            ->andwhere("agil_user.username LIKE :keyword OR agil_user.userLastName LIKE :keyword
+            OR agil_user.userFirstName LIKE :keyword")
+            ->setParameter('roles', '%"ROLE_SUPER_ADMIN"%')
+            ->setParameter('roles2', '%"ROLE_MODERATOR"%')
+            ->setParameter('roles3', '%"ROLE_ADMIN"%')
+            ->setParameter('keyword', $keyword.'%')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     /**
      * @param string $role

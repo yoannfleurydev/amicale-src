@@ -84,9 +84,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <nav class="text-center">
-                        {% include 'AGILForumBundle:Categories:pagination.html.twig' %}
-                    </nav>
+                    {% if pagination.pages_count>1 %}
+                        <nav class="text-center">
+                            {% include 'AGILHallBundle:Default:pagination.html.twig' %}
+                        </nav>
+                    {% endif %}
                     {% else %}
                     <h6 class="text-center">
                         Cette catégorie ne contient actuellement aucun sujet.

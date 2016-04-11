@@ -1,4 +1,42 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
-
+{% block title %}Offre | {{ offer.offerTitle }}{% endblock %}
 {% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <h3>{{ offer.offerTitle }}</h3>
+                        </div>
+                        <div class="col-lg-2">
+                            <h5>
+                                Le <span class="text-primary-blue">{{ offer.offerPostDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}</span>
+                                par {{ offer.offerAuthor }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <h6>Type de contrat : <strong>{{ offer.offerType | upper }}</strong></h6>
+                    <hr/>
+
+                    {% if offer.offerText is not null %}
+                        <h5>Description du poste</h5>
+                        {{ offer.offerText | raw }}
+                    {% endif %}
+
+                    {% if offer.offerPdfUrl is not null %}
+                        <p>En savoir plus :
+                            <a href="{{ asset("img/offer/") ~ offer.offerPdfUrl }}" TARGET='_BLANK'>
+                                PDF de l'annonce
+                            </a>
+                        </p>
+                    {% endif %}
+
+                    <p>Contactez-nous : <a href="mailto:{{ offer.offerEmail }}">{{ offer.offerEmail }}</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

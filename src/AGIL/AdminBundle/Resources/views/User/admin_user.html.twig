@@ -2,9 +2,26 @@
 
 {% block body %}
     <div class="list-group">
+
         <a href="{{ path("agil_admin_user_add") }}" class="list-group-item">Ajouter un utilisateur</a>
+
     </div>
-    <h3>Administration utilisateurs</h3>
+
+
+    {{ form_start(search, {'action': path('agil_admin_user_search')}) }}
+
+    <div class="form-group">
+        <label class="control-label">Recherche d'utilisateurs :</label>
+        {{ form_widget(search.keyword, {'id': 'search_keywords'}) }}
+    </div>
+
+    {{ form_end(search) }}
+
+    <div id="search_result">
+        {% include 'AGILAdminBundle:User:admin_user_list.html.twig' with {'usersSearch' : usersSearch}  %}
+    </div>
+
+    <h3 class="text-center">Administration des utilisateurs</h3>
     <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
             <div class="panel panel-default">
@@ -21,7 +38,7 @@
                         <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Nom</th>
+                                    <th>Nom d'utilisateur</th>
                                     <th>Mail</th>
                                     <th>Inscrit le</th>
                                     <th></th>
@@ -31,22 +48,24 @@
                             <tbody>
                                 {% for user in users %}
                                 <tr>
-                                    <td>{{ user.username }}</td>
+                                    <td><a href="{{ path('agil_profile_id',{'id':user.id}) }}" target="_blank">{{ user.username }}</a></td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
                                     <td><a href="{{ path('agil_admin_user_up', {'id': user.id}) }}" class="btn btn-default"
                                            data-toggle="tooltip" data-placement="top" title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
-                                    <td><a href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" class="btn btn-default btn-danger"
-                                           data-toggle="tooltip" data-placement="top" title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                    <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" data-target="#confirm"
+                                           type="button"class="btn btn-default btn-danger" data-toggle="modal"
+                                           title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
-
+                    {% if pagination.pages_count>1 %}
                     <nav class="text-center">
-                        {% include 'AGILAdminBundle:Default:pagination.html.twig' %}
+                        {% include 'AGILAdminBundle:User:pagination.html.twig' %}
                     </nav>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -65,7 +84,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Nom</th>
+                                    <th>Nom d'utilisateur</th>
                                     <th>Mail</th>
                                     <th>Inscrit le</th>
                                     <th></th>
@@ -76,15 +95,16 @@
                             <tbody>
                                 {% for moderator in moderators %}
                                     <tr>
-                                        <td>{{ moderator.username }}</td>
+                                        <td><a href="{{ path('agil_profile_id',{'id':moderator.id}) }}" target="_blank">{{ moderator.username }}</a></td>
                                         <td>{{ moderator.email }}</td>
                                         <td>{{ moderator.userSignupDate|date("m/d/Y") }}</td>
                                         <td><a href="{{ path('agil_admin_user_up', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
                                                title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
                                         <td><a href="{{ path('agil_admin_user_down', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
                                                title="Rétrograder"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                        <td><a href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top"
-                                               title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                        <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" data-target="#confirm"
+                                               type="button"class="btn btn-default btn-danger" data-toggle="modal"
+                                               title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -109,7 +129,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Nom</th>
+                                        <th>Nom d'utilisateur</th>
                                         <th>Mail</th>
                                         <th>Inscrit le</th>
                                         <th></th>
@@ -119,13 +139,14 @@
                                 <tbody>
                                     {% for admin in admins %}
                                         <tr>
-                                            <td>{{ admin.username }}</td>
+                                            <td><a href="{{ path('agil_profile_id',{'id':admin.id}) }}" target="_blank">{{ admin.username }}</a></td>
                                             <td>{{ admin.email }}</td>
                                             <td>{{ admin.userSignupDate|date("m/d/Y") }}</td>
                                             <td><a href="{{ path('agil_admin_user_down', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
                                                    title="Rétrograder"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                            <td><a href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top"
-                                                   title="Supprimer"><i class="glyphicon glyphicon-trash"></i> </a></td>
+                                            <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" data-target="#confirm"
+                                                   type="button"class="btn btn-default btn-danger" data-toggle="modal"
+                                                   title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -137,5 +158,19 @@
         {% endif %}
     </div>
 
-
+    <!-- Panel qui s'affiche pour la confirmation de suppression -->
+    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Etes vous sûr ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-danger btn-ok">Confirmer</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

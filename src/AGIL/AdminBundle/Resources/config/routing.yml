@@ -11,6 +11,11 @@ agil_admin_user:
     requirements:
             page: \d+
 
+agil_admin_user_search:
+    path:     /admin/user/search
+    defaults:
+        _controller: AGILAdminBundle:User:adminUserSearch
+
 agil_admin_user_up:
     path:     /admin/user/up/{id}
     defaults:

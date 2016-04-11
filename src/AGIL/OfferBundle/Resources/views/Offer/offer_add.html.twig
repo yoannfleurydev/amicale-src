@@ -1,5 +1,5 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
-
+{% block title %}Offres | Ajout d'offre{% endblock %}
 {% block body %}
 <div class="row">
     <div class="col-md-12">
@@ -20,15 +20,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Autheur de l'annonce</label>
+                        <label class="control-label">Auteur de l'annonce</label>
                         {{ form_errors(form.offerAuthor) }}
                         {{ form_widget(form.offerAuthor) }}
                     </div>
 
                     <div class="form-group required">
-                        <label class="control-label">Adresse mail de l'autheur</label>
-                        {{ form_errors(form.email) }}
-                        {{ form_widget(form.email) }}
+                        <label class="control-label">Adresse mail de contact</label>
+                        {{ form_errors(form.offerEmail) }}
+                        {{ form_widget(form.offerEmail) }}
                     </div>
 
                     <div class="form-group">
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="form-group" id="formAddTagsPost">
-                        <label class="control-label"><h5>Tags</h5></label>
+                        <label class="control-label">Tags</label>
                         <div class="tag_control">
                             <div class="list_item_tag">
                             </div>
@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="form-group required">
-                        <label class="control-label">Type de l'annonce</label>
+                        <label class="control-label">Type de contrat</label>
                         {{ form_errors(form.offerType) }}
                         {{ form_widget(form.offerType) }}
                     </div>
@@ -58,11 +58,11 @@
                     <div class="form-group">
                         {{ form_errors(form.offerPdfUrl) }}
                         {{ form_widget(form.offerPdfUrl) }}
-                        <p><i>(Format: PDF)</i></p>
+                        <p><i>(Format autorisé: PDF)</i></p>
                     </div>
 
                     <div class="form-group required">
-                        <label class="control-label">L'annonce expire dans</label>
+                        <label class="control-label">Expiration de l'annonce dans : </label>
                         {{ form_errors(form.expireAt) }}
                         {{ form_widget(form.expireAt) }}
                     </div>
@@ -74,10 +74,12 @@
 
                     <p class="asterisk">(* : obligatoire)</p>
 
+                    {{ tinymce_init() }}
                     {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

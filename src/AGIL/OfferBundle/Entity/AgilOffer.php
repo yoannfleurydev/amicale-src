@@ -114,7 +114,7 @@ class AgilOffer
     /**
      * @var string
      *
-     * @ORM\Column(name="offerRoute", type="string")
+     * @ORM\Column(name="offerRoute", type="string", nullable=true)
      */
     private $offerRoute;
 
@@ -123,6 +123,12 @@ class AgilOffer
      * @ORM\Column(name="offerPublish", type="boolean")
      */
     private $offerPublish;
+
+    /**
+     * @var string $offerEmail
+     * @ORM\Column(name="offerEmail", type="string")
+     */
+    private $offerEmail;
 
     /**
      * Constructor
@@ -376,6 +382,12 @@ class AgilOffer
         $this->tags = $collection;
     }
 
+    public function removeTags()
+    {
+        foreach($this->tags as $tag) {
+            $this->tags->removeElement($tag);
+        }
+    }
 
     /**
      * Fonction qui test si une offre est expirée ou non
@@ -416,5 +428,21 @@ class AgilOffer
     public function getOfferRoute()
     {
         return $this->offerRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferEmail() {
+        return $this->offerEmail;
+    }
+
+    /**
+     * @param $offerEmail
+     * @return $this
+     */
+    public function setOfferEmail($offerEmail) {
+        $this->offerEmail = $offerEmail;
+        return $this;
     }
 }

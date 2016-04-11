@@ -1,0 +1,73 @@
+<div class="search-informations"><p>{{ usersSearch|length }} utilisateur{% if usersSearch|length > 1 %}s{% endif %}
+        trouvé{% if usersSearch|length > 1 %}s{% endif %}.</p></div>
+
+<div class="loading text-center">
+    <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+        Loading...
+    </button>
+</div>
+
+{% if usersSearch is not null %}
+    <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Nom d'utilisateur</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Mail</th>
+                                    <th>Inscrit le</th>
+                                    <th>Rôle</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in usersSearch %}
+                                    <tr>
+                                        <td><a href="{{ path('agil_profile_id',{'id':user.id}) }}"
+                                               target="_blank">{{ user.username }}</a></td>
+                                        <td>{{ user.userLastName }}</td>
+                                        <td>{{ user.userFirstName }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
+                                        <td>{{ user.roles[0]|replace({'ROLE_': ""}) }}</td>
+                                        <td>
+                                            {% if user.roles[0] != 'ROLE_ADMIN' %}
+                                                <a href="{{ path('agil_admin_user_up', {'id': user.id}) }}"
+                                                   class="btn btn-default"
+                                                   data-toggle="tooltip" data-placement="top" title="Promouvoir"><i
+                                                            class="glyphicon glyphicon-arrow-up"></i> </a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.roles[0] != 'ROLE_USER' %}
+                                                <a href="{{ path('agil_admin_user_down', {'id': user.id}) }}"
+                                                   class="btn btn-default" data-toggle="tooltip" data-placement="top"
+                                                   title="Rétrograder"><i class="glyphicon glyphicon-arrow-down"></i>
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                        <td><a role="button"
+                                               data-href="{{ path('agil_admin_user_delete', {'id': user.id}) }}"
+                                               data-target="#confirm"
+                                               type="button" class="btn btn-default btn-danger" data-toggle="modal"
+                                               title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
