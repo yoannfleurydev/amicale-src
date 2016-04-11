@@ -360,12 +360,12 @@ label.checkbox :checked+span:before {
   font-feature-settings: 'liga';
 }
 
-.interne-link:after {
+.internal-link:after {
   @extend .material-icons;
   content: "link";
 }
 
-.externe-link:after {
+.external-link:after {
   @extend .material-icons;
   content: "open_in_new";
 }
