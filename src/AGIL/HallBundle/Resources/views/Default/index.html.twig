@@ -19,14 +19,19 @@
                         {% else %}
                         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                             {% endif %}
-                            <p><h5>
-                                <a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">{{ event.eventTitle }}</a>
-                            </h5></p>
-                            <p><h6><em>
-                                    {{ event.eventText|slice(0, 180)|raw }}
-                                    {% if event.eventText|length > 180 %}...{% endif %}
-                                </em></h6></p>
-                            <p><h6>{{ event.eventPostDate | date('j M Y') }}</h6></p>
+                            <h5>
+                                <a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">
+                                    {{ event.eventTitle }}
+                                </a>
+                            </h5>
+                            <p>
+                                {{ event.eventText|slice(0, 180) }}
+                                {% if event.eventText|length > 180 %}
+                                    ...
+                                {% endif %}
+                            </p>
+                            <p>
+                            <h6>{{ event.eventPostDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}</h6></p>
                             {% for tag in event.tags %}
                                 <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
                             {% endfor %}

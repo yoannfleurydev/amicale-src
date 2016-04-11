@@ -2,6 +2,8 @@
 
 namespace AGIL\HallBundle\Form;
 
+use AGIL\HallBundle\Entity\AgilEvent;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,14 +13,21 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EditEventType extends AbstractType
 {
+    private $files;
+
+    public function __construct(ArrayCollection $files) {
+        $this->files = $files;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('eventTitle', TextType::class, array(
-            'label' => false,
+            'label' => 'Nom de l\'événement : ',
             'required' => true,
             'constraints' => array(
                 new NotBlank(),
@@ -29,7 +38,7 @@ class EditEventType extends AbstractType
         ));
 
         $builder->add('eventText', TextareaType::class, array(
-            'label' => false,
+            'label' => 'Description de l\'événement : ',
             'required' => true,
             'constraints' => array(
                 new NotBlank(),
@@ -40,7 +49,7 @@ class EditEventType extends AbstractType
         ));
 
         $builder->add('tags', TextType::class, array(
-            'label' => false,
+            'label' => 'Tags liés à l\'événement : ',
             'required' => false,
             'attr' => array(
                 'class' => 'form-control',
@@ -49,7 +58,7 @@ class EditEventType extends AbstractType
         ));
 
         $builder->add('eventDate', DateTimeType::class, array(
-            'label' => false,
+            'label' => 'Date de début de l\'évènement : ',
             'required' => true,
             'attr' => array(
                 'class' => 'form-control',
@@ -57,7 +66,7 @@ class EditEventType extends AbstractType
         ));
 
         $builder->add('eventDateEnd', DateTimeType::class, array(
-            'label' => false,
+            'label' => 'Date de fin de l\'évènement : ',
             'required' => false,
             'attr' => array(
                 'class' => 'form-control',
