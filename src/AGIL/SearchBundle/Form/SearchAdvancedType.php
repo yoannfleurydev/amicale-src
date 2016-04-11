@@ -39,6 +39,7 @@ class SearchAdvancedType extends AbstractType
 
         $builder->add('no', TextType::class, array(
             'label' => false,
+            'required' => false,
             'constraints' => array(
                 new Length(array('min' => 2,'max' => 50))
             ),
