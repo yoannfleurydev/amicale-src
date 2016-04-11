@@ -80,7 +80,7 @@
                             <div class="list">
                                 <div class="list-element">
                                     <p>
-                                        <a class="externe-link"
+                                        <a class="external-link"
                                            href="https://dpt-info-sciences.univ-rouen.fr/index.php">
                                             Site du département informatique de l'Université de Rouen.
                                         </a>
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="list-element">
                                     <p>
-                                        <a class="externe-link"
+                                        <a class="external-link"
                                            href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1">
                                             Contenu pédagogique, première année.
                                         </a>
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="list-element">
                                     <p>
-                                        <a class="externe-link"
+                                        <a class="external-link"
                                            href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/contenu22">
                                             Contenu pédagogique, deuxième année.
                                         </a>
@@ -129,35 +129,23 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
-                        <span class="panel-title-content">
-                            Dernières annonces
-                        </span>
+                            <span class="panel-title-content">
+                                Dernières offres
+                            </span>
                         </h2>
-                        <!--Les dernières annonces de stage et d’emploi postées sur le site.-->
                     </div>
                     <div class="panel-body">
                         <div class="list">
-                            <div class="list-element">
-                                <p><a class="interne-link" href="#">Stagiaire en Développement Mobile H/F 19 Oct.
-                                        2015</a></p>
-                                <span class="label label-default">#PHP</span>
-                                <span class="label label-default">#JAVASCRIPT</span>
-                                <span class="label label-default">#SQL</span>
-                            </div>
-                            <div class="list-element">
-                                <p><a class="interne-link" href="#">CDI Chef de projet cher Zoranna 18 Oct. 2015</a>
-                                </p>
-                                <span class="label label-default">#BUBULLES</span>
-                                <span class="label label-default">#SQL</span>
-                            </div>
-                            <div class="list-element">
-                                <p><a class="interne-link" href="#">Conférence Codeur en Seine - Le Web
-                                        d'aujourd'hui !
-                                        12 Oct. 2015</a></p>
-                                <span class="label label-default">#HTML5</span>
-                                <span class="label label-default">#CSS3</span>
-                                <span class="label label-default">#JAVASCRIPT</span>
-                            </div>
+                            {% for offer in offers %}
+                                <div class="list-element">
+                                    <p>
+                                        <a class="internal-link" href="{{ path('agil_offer_view', {'id' : offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                                    </p>
+                                    {% for tag in offer.tags %}
+                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -177,13 +165,13 @@
                         Les tables de discussion actives.
                         <div class="list">
                             <div class="list-element">
-                                <p><a class="interne-link" href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
+                                <p><a class="internal-link" href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
                             </div>
                             <div class="list-element">
-                                <p><a class="interne-link" href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
+                                <p><a class="internal-link" href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
                             </div>
                             <div class="list-element">
-                                <p><a class="interne-link" href="#">Projet SUDOKU 20 Oct. 2015</a></p>
+                                <p><a class="internal-link" href="#">Projet SUDOKU 20 Oct. 2015</a></p>
                             </div>
                         </div>
                     </div>
@@ -199,12 +187,12 @@
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <p class="list">
+                        <div class="list">
                             {% for sub in lastSubjects %}
                             <div class="list-element">
                                 <p>
                                     <a
-                                        class="interne-link"
+                                        class="internal-link"
                                         href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}"
                                     >
                                         {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})
@@ -215,7 +203,7 @@
                                 {% endfor %}
                             </div>
                             {% endfor %}
-                        </p>
+                        </div>
                         <p class="row text-center">
                             <a class="btn btn-default btn-primary" href="{{ path('agil_forum_homepage') }}"
                                role="button">Accéder
@@ -238,12 +226,12 @@
                     <div class="panel-body">
                         <div class="list">
                             <div class="list-element">
-                                <p><a class="externe-link" href="https://ent.normandie-univ.fr" target="_blank"
-                                      class="external" title="Accéder à l'ENT">L'ENT</a></p>
+                                <p><a class="external-link" href="https://ent.normandie-univ.fr" target="_blank"
+                                      title="Accéder à l'ENT">L'ENT</a></p>
                             </div>
                             <div class="list-element">
-                                <p><a class="externe-link" href="http://webmail.univ-rouen.fr" target="_blank"
-                                      class="external" title="Accéder au Webmail">Webmail</a></p>
+                                <p><a class="external-link" href="http://webmail.univ-rouen.fr" target="_blank"
+                                      title="Accéder au Webmail">Webmail</a></p>
                             </div>
                         </div>
                         <div class="well">
@@ -265,7 +253,7 @@
                         <form action="#" method="POST">
                             <div class="form-group">
                                 <label for="idea">Une idée ?</label>
-                                <textarea class="form-control" name="idea" id="idea" row=5
+                                <textarea class="form-control" name="idea" id="idea"
                                           placeholder="Entrer votre idée ici..."></textarea>
                             </div>
                             <div class="text-center">
