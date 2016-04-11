@@ -30,7 +30,7 @@ class OfferType extends AbstractType
             'required' => false,
             'attr' => array(
                 'class' => 'form-control',
-                'placeholder' => 'Autheur',
+                'placeholder' => 'Auteur',
             )
         ));
 
@@ -66,8 +66,8 @@ class OfferType extends AbstractType
             'label' => false,
             'required' => true,
             'choices' => array(
-                'stage' => 'stage',
-                'emploi' => 'emploi'
+                'stage' => 'Stage',
+                'emploi' => 'Emploi'
             ),
             'multiple' => false,
             'expanded' => true,

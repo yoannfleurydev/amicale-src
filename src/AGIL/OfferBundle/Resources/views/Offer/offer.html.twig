@@ -1,5 +1,5 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
-
+{% block title %}Offre | {{ offer.offerTitle }}{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
@@ -15,26 +15,27 @@
                                 par {{ offer.offerAuthor }}
                             </h5>
                         </div>
-
                     </div>
                 </div>
                 <div class="panel-body">
-                    <h6>Type de contrat : {{ offer.offerType }}</h6>
-
-                    <hr />
+                    <h6>Type de contrat : <strong>{{ offer.offerType | upper }}</strong></h6>
+                    <hr/>
 
                     {% if offer.offerText is not null %}
-                    <h5>Description du poste</h5>
-                    <p>{{ offer.offerText | raw }}</p>
+                        <h5>Description du poste</h5>
+                        {{ offer.offerText | raw }}
                     {% endif %}
 
                     {% if offer.offerPdfUrl is not null %}
-                    <p>En savoir plus : <a href="{{ asset("img/offer/") ~ offer.offerPdfUrl }}" TARGET='_BLANK'>Annonce.pdf</a></p>
+                        <p>En savoir plus :
+                            <a href="{{ asset("img/offer/") ~ offer.offerPdfUrl }}" TARGET='_BLANK'>
+                                PDF de l'annonce
+                            </a>
+                        </p>
                     {% endif %}
 
                     <p>Contactez-nous : <a href="mailto:{{ offer.offerEmail }}">{{ offer.offerEmail }}</a></p>
                 </div>
-
             </div>
         </div>
     </div>

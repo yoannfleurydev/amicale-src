@@ -1,54 +1,56 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
 
 {% block body %}
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <p><a class="btn btn-primary" href="{{ path('agil_offer_add') }}">Ajouter une annonce</a></p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <p><a class="btn btn-primary btn-block" href="{{ path('agil_offer_add') }}">Ajouter une annonce</a></p>
+        </div>
     </div>
-</div>
 
-{% for offer in offers %}
-<div class="row">
-    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-        <div class="card-events">
-            <div class="row">
-                {% if is_granted("ROLE_ADMIN") %}
-                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                {% else %}
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                {% endif %}
-                    <h5>
-                        <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
-                    </h5>
-                </div>
-                {% if is_granted("ROLE_ADMIN") %}
-                    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">
-                        <a role="button" data-href="{{ path('agil_offer_delete', {'idCrypt': offer.offerRoute}) }}"
-                           data-target="#confirm-delete" type="button" title="Supprimer" type="button"
-                           class="btn btn-danger" data-toggle="modal"><i class="glyphicon glyphicon-trash"></i></a>
+    {% for offer in offers %}
+        <div class="row">
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                <div class="card-events">
+                    <div class="row">
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                                <h5>
+                                    <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                                </h5>
+                            </div>
+                        {% else %}
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h5>
+                                    <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                                </h5>
+                            </div>
+                        {% endif %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">
+                                <a role="button"
+                                   data-href="{{ path('agil_offer_delete', {'idCrypt': offer.offerRoute}) }}"
+                                   data-target="#confirm-delete" title="Supprimer"
+                                   class="btn btn-danger" data-toggle="modal"><i
+                                            class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                            {% for tag in offer.tags %}
+                                <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">
+                            <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
+
+                            {% if offer.offerText is not null %}
+                                <p>Auteur: {{ offer.offerAuthor }}</p>
+                            {% endif %}
+                        </div>
                     </div>
-                {% endif %}
-                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                    <p><h6><em>
-                            {{ offer.offerText|slice(0, 255) | raw }}
-                            {% if offer.offerText|length > 255 %}...{% endif %}
-                        </em></h6></p>
-
-                    {% for tag in offer.tags %}
-                        <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
-                    {% endfor %}
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">
-                    <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
-
-                    {% if offer.offerText is not null %}
-                        <p><h6></h6>Autheur: {{ offer.offerAuthor }}</h6></p>
-                    {% endif %}
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     {% endfor %}
 
     {% if offers is empty %}
@@ -67,7 +69,7 @@
     {% endif %}
 
     <!-- Panel qui s'affiche pour la confirmation de suppression -->
-    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -82,10 +84,9 @@
         </div>
     </div>
 
-    {% if pagination.pages_count>1 %}
+    {% if pagination.pages_count > 1 %}
         <nav class="text-center">
             {% include 'AGILHallBundle:Default:pagination.html.twig' %}
         </nav>
     {% endif %}
-
-    {% endblock %}
+{% endblock %}
