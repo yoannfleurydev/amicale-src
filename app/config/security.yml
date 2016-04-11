@@ -32,7 +32,6 @@ security:
                 secret:    "%secret%" # %secret% est un paramètre de parameters.yml
 
     access_control:
-        - { path: ^/search, roles: ROLE_USER }
         - { path: ^/profile/edit, roles: ROLE_USER }
         - { path: ^/offer/page$, roles: ROLE_USER } # le '$' qui restreint la route a /offer (par défaut /offer/*)
         - { path: ^/offer/add, roles: IS_AUTHENTICATED_ANONYMOUSLY }

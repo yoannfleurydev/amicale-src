@@ -776,3 +776,8 @@ $margin-value: 15px !important;
 .margin {
   margin: $margin-value;
 }
+
+.hideSearch {
+  color: $orange-color;
+  cursor: pointer;
+}

@@ -55,7 +55,7 @@
                                     </span>
                                         <div>
                                             {% for tag in tagsPerSubject[s.forumSubjectId] %}
-                                                <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                                                <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
                                             {% endfor %}
                                         </div>
                                     </td>

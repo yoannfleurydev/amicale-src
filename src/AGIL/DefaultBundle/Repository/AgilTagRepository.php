@@ -2,10 +2,7 @@
 
 namespace AGIL\DefaultBundle\Repository;
 
-use AGIL\DefaultBundle\Entity\AgilTag;
-use AGIL\ProfileBundle\Entity\AgilSkill;
 use Doctrine\ORM\EntityRepository;
-use InvalidArgumentException;
 
 /**
  * AgilTagRepository
@@ -27,4 +24,774 @@ class AgilTagRepository extends EntityRepository
 		/* /!\ C'est une liste d'objet de type AgilTag /!\ */
 		return $request->getQuery()->getResult();
 	}
+
+
+	/**
+	 * Recherche de sujets de forum avec la méthode OR
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getOrSubject($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+		$subQuery = $this->_em->createQueryBuilder();
+
+		// Requète par rapport aux tags d'un sujet
+		$subQuery->select('subj.forumSubjectId')
+				->distinct()
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','subj')
+				->leftJoin('subj.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->orderBy('subj.forumSubjectPostDate','desc')
+		;
+		$query->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectPostDate','sub','cat.forumCategoryId','t')
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+				->leftJoin('sub.category','cat')
+				->leftJoin('sub.tags','t')
+				->where($query->expr()->In('sub.forumSubjectId', $subQuery->getDQL()))
+				->orderBy('sub.forumSubjectPostDate','desc')
+		;
+		$query->setParameter('tagList', $inputSearchSplit);
+
+		// Requète par rapport au titre du sujet
+		$queryTitle->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectPostDate','sub','cat.forumCategoryId')
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+				->leftJoin('sub.category','cat')
+				->orderBy('sub.forumSubjectPostDate','desc')
+		;
+		foreach ($inputSearchSplit as $id => $keyword)
+		{
+			$queryTitle->orWhere($queryTitle->expr()->like('sub.forumSubjectTitle', ":keyword_".$id));
+			$queryTitle->setParameter("keyword_".$id, '%'.$keyword.'%');
+		}
+
+		// Résultat des requètes
+		$completeResultTitle = $queryTitle->getQuery()->getResult();
+		$completeResult = $query->getQuery()->getResult();
+
+		// Ajout de la recherche 2 à la 1
+		foreach($completeResultTitle as $res){
+			$exist = false;
+			foreach($completeResult as $r){
+				if($r[0]->getForumSubjectId() == $res[0]->getForumSubjectId()){
+					$exist = true;
+				}
+			}
+			if(!$exist)
+				array_push($completeResult,$res);
+		}
+
+		// Tri par dates
+		usort($completeResult, function($a, $b) {
+			$ad = $a[0]->getForumSubjectPostDate();
+			$bd = $b[0]->getForumSubjectPostDate();
+			if ($ad == $bd) {
+				return 0;
+			}
+			return $ad > $bd ? -1 : 1;
+		});
+
+		// On retire les sujets qui possèdent au moins un tag appartenant à $inputNoSplit
+		foreach($completeResult as $key => $res){
+			foreach($res[0]->getTags() as $tag){
+				if(in_array($tag->getTagName(),$inputNoSplit)){
+					unset($completeResult[$key]);
+				}
+			}
+		}
+
+		// Gère la pagination
+		$countTotal = count($completeResult);
+		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
+
+		return array($result,$countTotal);
+
+	}
+
+
+	/**
+	 * Recherche de sujets de forum avec la méthode AND
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getAndSubject($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$subQuery = $this->_em->createQueryBuilder();
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+
+		// Requète par rapport aux tags
+		$subQuery->select('subj.forumSubjectId')
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','subj')
+				->leftJoin('subj.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->groupBy('subj.forumSubjectId HAVING count(DISTINCT tag.tagName) >= :count')
+		;
+		$query->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectPostDate','sub','cat.forumCategoryId')
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+				->leftJoin('sub.category','cat')
+				->where($query->expr()->In('sub.forumSubjectId', $subQuery->getDQL()))
+				->orderBy('sub.forumSubjectPostDate','desc')
+		;
+		$query->setParameter('count', count($inputSearchSplit));
+		$query->setParameter('tagList', $inputSearchSplit);
+
+		// Requète par rapport au titre du sujet
+		$queryTitle->select('sub.forumSubjectId','sub.forumSubjectTitle','sub.forumSubjectPostDate','sub','cat.forumCategoryId')
+				->from('AGIL\ForumBundle\Entity\AgilForumSubject','sub')
+				->leftJoin('sub.category','cat')
+				->where($queryTitle->expr()->like('sub.forumSubjectTitle', ":inputSearch"))
+				->setParameter("inputSearch", '%'.$inputSearch.'%')
+				->orderBy('sub.forumSubjectPostDate','desc')
+		;
+
+		// Résultat des requètes
+		$completeResultTitle = $queryTitle->getQuery()->getResult();
+		$completeResult = $query->getQuery()->getResult();
+
+		// Ajout de la recherche 2 à la 1
+		foreach($completeResultTitle as $res){
+			$exist = false;
+			foreach($completeResult as $r){
+				if($r[0]->getForumSubjectId() == $res[0]->getForumSubjectId()){
+					$exist = true;
+				}
+			}
+			if(!$exist)
+				array_push($completeResult,$res);
+		}
+
+		// Tri par dates
+		usort($completeResult, function($a, $b) {
+			$ad = $a[0]->getForumSubjectPostDate();
+			$bd = $b[0]->getForumSubjectPostDate();
+			if ($ad == $bd) {
+				return 0;
+			}
+			return $ad > $bd ? -1 : 1;
+		});
+
+		// On retire les sujets qui possèdent au moins un tag appartenant à $inputNoSplit
+		foreach($completeResult as $key => $res){
+			foreach($res[0]->getTags() as $tag){
+				if(in_array($tag->getTagName(),$inputNoSplit)){
+					unset($completeResult[$key]);
+				}
+			}
+		}
+
+		// Gère la pagination
+		$countTotal = count($completeResult);
+		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
+
+		return array($result,$countTotal);
+	}
+
+
+	/**
+	 * Recherche d'évènements avec la méthode OR
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getOrEvent($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+		$subQuery = $this->_em->createQueryBuilder();
+
+		// Requète par rapport aux tags
+		$subQuery->select('evt.eventId')
+				->distinct()
+				->from('AGIL\HallBundle\Entity\AgilEvent','evt')
+				->leftJoin('evt.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->orderBy('evt.eventDate','desc')
+		;
+		$query->select('event.eventTitle','event.eventDate','event.eventId','event','t')
+				->from('AGIL\HallBundle\Entity\AgilEvent','event')
+				->leftJoin('event.tags','t')
+				->where($query->expr()->In('event.eventId', $subQuery->getDQL()))
+				->orderBy('event.eventDate','desc')
+		;
+		$query->setParameter('tagList', $inputSearchSplit);
+
+		// Requète par rapport au titre de l'évènement
+		$queryTitle->select('event.eventTitle','event.eventDate','event.eventId','event')
+				->from('AGIL\HallBundle\Entity\AgilEvent','event')
+				->orderBy('event.eventDate','desc')
+		;
+		foreach ($inputSearchSplit as $id => $keyword)
+		{
+			$queryTitle->orWhere($queryTitle->expr()->like('event.eventTitle', ":keyword_".$id));
+			$queryTitle->setParameter("keyword_".$id, '%'.$keyword.'%');
+		}
+
+		// Resultat des requètes
+		$completeResultTitle = $queryTitle->getQuery()->getResult();
+		$completeResult = $query->getQuery()->getResult();
+
+		// Ajout de la recherche 2 à la une
+		foreach($completeResultTitle as $res){
+			$exist = false;
+			foreach($completeResult as $r){
+				if($r[0]->getEventId() == $res[0]->getEventId()){
+					$exist = true;
+				}
+			}
+			if(!$exist)
+				array_push($completeResult,$res);
+		}
+
+		// Tri par dates
+		usort($completeResult, function($a, $b) {
+			$ad = $a[0]->getEventDate();
+			$bd = $b[0]->getEventDate();
+			if ($ad == $bd) {
+				return 0;
+			}
+			return $ad > $bd ? -1 : 1;
+		});
+
+		// On retire les évènements qui possèdent au moins un tag appartenant à $inputNoSplit
+		foreach($completeResult as $key => $res){
+			foreach($res[0]->getTags() as $tag){
+				if(in_array($tag->getTagName(),$inputNoSplit)){
+					unset($completeResult[$key]);
+				}
+			}
+		}
+
+		// Gère la pagination
+		$countTotal = count($completeResult);
+		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
+
+		return array($result,$countTotal);
+
+	}
+
+	/**
+	 * Recherche d'évènements avec la méthode AND
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getAndEvent($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$subQuery = $this->_em->createQueryBuilder();
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+
+		// Requète par rapport aux tags
+		$subQuery->select('evt.eventId')
+				->from('AGIL\HallBundle\Entity\AgilEvent','evt')
+				->leftJoin('evt.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->groupBy('evt.eventId HAVING count(DISTINCT tag.tagName) >= :count')
+		;
+		$query->select('event.eventId','event.eventTitle','event.eventDate','event')
+				->from('AGIL\HallBundle\Entity\AgilEvent','event')
+				->where($query->expr()->In('event.eventId', $subQuery->getDQL()))
+				->orderBy('event.eventDate','desc')
+		;
+		$query->setParameter('count', count($inputSearchSplit));
+		$query->setParameter('tagList', $inputSearchSplit);
+
+		// Requète par rapport au titre de l'evènement
+		$queryTitle->select('event.eventId','event.eventTitle','event.eventDate','event')
+				->from('AGIL\HallBundle\Entity\AgilEvent','event')
+				->where($queryTitle->expr()->like('event.eventTitle', ":inputSearch"))
+				->setParameter("inputSearch", '%'.$inputSearch.'%')
+				->orderBy('event.eventDate','desc')
+		;
+
+		// Resultat des requètes
+		$completeResultTitle = $queryTitle->getQuery()->getResult();
+		$completeResult = $query->getQuery()->getResult();
+
+		// Ajout de la recherche 2 à la 1
+		foreach($completeResultTitle as $res){
+			$exist = false;
+			foreach($completeResult as $r){
+				if($r[0]->getEventId() == $res[0]->getEventId()){
+					$exist = true;
+				}
+			}
+			if(!$exist)
+				array_push($completeResult,$res);
+		}
+
+		// Tri par dates
+		usort($completeResult, function($a, $b) {
+			$ad = $a[0]->getEventDate();
+			$bd = $b[0]->getEventDate();
+			if ($ad == $bd) {
+				return 0;
+			}
+			return $ad > $bd ? -1 : 1;
+		});
+
+		// On retire les évènements qui possèdent au moins un tag appartenant à $inputNoSplit
+		foreach($completeResult as $key => $res){
+			foreach($res[0]->getTags() as $tag){
+				if(in_array($tag->getTagName(),$inputNoSplit)){
+					unset($completeResult[$key]);
+				}
+			}
+		}
+
+		// Gère la pagination
+		$countTotal = count($completeResult);
+		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
+
+		return array($result,$countTotal);
+	}
+
+
+	/**
+	 * Recherche d'offres avec la méthode OR
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getOrOffer($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+		$subQuery = $this->_em->createQueryBuilder();
+
+		// Requète par rapport aux tags
+		$subQuery->select('off.offerId')
+				->distinct()
+				->from('AGIL\OfferBundle\Entity\AgilOffer','off')
+				->leftJoin('off.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->orderBy('off.offerPostDate','desc')
+		;
+		$query->select('offer.offerTitle','offer.offerPostDate','offer.offerId','offer','t')
+				->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
+				->leftJoin('offer.tags','t')
+				->where($query->expr()->In('offer.offerId', $subQuery->getDQL()))
+				->orderBy('offer.offerPostDate','desc')
+		;
+		$query->setParameter('tagList', $inputSearchSplit);
+
+		// Requète par rapport au titre de l'offre
+		$queryTitle->select('offer.offerTitle','offer.offerPostDate','offer.offerId','offer')
+				->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
+				->orderBy('offer.offerPostDate','desc')
+		;
+		foreach ($inputSearchSplit as $id => $keyword)
+		{
+			$queryTitle->orWhere($queryTitle->expr()->like('offer.offerTitle', ":keyword_".$id));
+			$queryTitle->setParameter("keyword_".$id, '%'.$keyword.'%');
+		}
+
+		// Résultat des recherches
+		$completeResultTitle = $queryTitle->getQuery()->getResult();
+		$completeResult = $query->getQuery()->getResult();
+
+		// Ajout de la recherche 2 à la 1
+		foreach($completeResultTitle as $res){
+			$exist = false;
+			foreach($completeResult as $r){
+				if($r[0]->getOfferId() == $res[0]->getOfferId()){
+					$exist = true;
+				}
+			}
+			if(!$exist)
+				array_push($completeResult,$res);
+		}
+
+		// Tri par dates
+		usort($completeResult, function($a, $b) {
+			$ad = $a[0]->getOfferPostDate();
+			$bd = $b[0]->getOfferPostDate();
+			if ($ad == $bd) {
+				return 0;
+			}
+			return $ad > $bd ? -1 : 1;
+		});
+
+		// On retire les offres qui possèdent au moins un tag appartenant à $inputNoSplit
+		foreach($completeResult as $key => $res){
+			foreach($res[0]->getTags() as $tag){
+				if(in_array($tag->getTagName(),$inputNoSplit)){
+					unset($completeResult[$key]);
+				}
+			}
+		}
+
+		// Gère la pagination
+		$countTotal = count($completeResult);
+		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
+
+		return array($result,$countTotal);
+
+	}
+
+	/**
+	 * Recherche d'offres avec la méthode AND
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getAndOffer($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$subQuery = $this->_em->createQueryBuilder();
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+
+		// Requète par rapport aux tags
+		$subQuery->select('off.offerId')
+				->from('AGIL\OfferBundle\Entity\AgilOffer','off')
+				->leftJoin('off.tags','tag')
+				->andWhere('tag.tagName IN (:tagList)')
+				->groupBy('off.offerId HAVING count(DISTINCT tag.tagName) >= :count')
+		;
+		$query->select('offer.offerId','offer.offerTitle','offer.offerPostDate','offer')
+				->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
+				->where($query->expr()->In('offer.offerId', $subQuery->getDQL()))
+				->orderBy('offer.offerPostDate','desc')
+		;
+		$query->setParameter('count', count($inputSearchSplit));
+		$query->setParameter('tagList', $inputSearchSplit);
+
+		// Requète par rapport au titre de l'offre
+		$queryTitle->select('offer.offerId','offer.offerTitle','offer.offerPostDate','offer')
+				->from('AGIL\OfferBundle\Entity\AgilOffer','offer')
+				->where($queryTitle->expr()->like('offer.offerTitle', ":inputSearch"))
+				->setParameter("inputSearch", '%'.$inputSearch.'%')
+				->orderBy('offer.offerPostDate','desc')
+		;
+
+		// Résultat des requètes
+		$completeResultTitle = $queryTitle->getQuery()->getResult();
+		$completeResult = $query->getQuery()->getResult();
+
+		// Ajout de la recherche 2 à la 1
+		foreach($completeResultTitle as $res){
+			$exist = false;
+			foreach($completeResult as $r){
+				if($r[0]->getOfferId() == $res[0]->getOfferId()){
+					$exist = true;
+				}
+			}
+			if(!$exist)
+				array_push($completeResult,$res);
+		}
+
+		// Tri par dates
+		usort($completeResult, function($a, $b) {
+			$ad = $a[0]->getOfferPostDate();
+			$bd = $b[0]->getOfferPostDate();
+			if ($ad == $bd) {
+				return 0;
+			}
+			return $ad > $bd ? -1 : 1;
+		});
+
+		// On retire les offres qui possède au moins un tag appartenant à $inputNoSplit
+		foreach($completeResult as $key => $res){
+			foreach($res[0]->getTags() as $tag){
+				if(in_array($tag->getTagName(),$inputNoSplit)){
+					unset($completeResult[$key]);
+				}
+			}
+		}
+
+		// Gère la pagination
+		$countTotal = count($completeResult);
+		$result = array_slice($completeResult,($page-1) * $maxperpage,$maxperpage);
+
+		return array($result,$countTotal);
+	}
+
+
+	/**
+	 * Recherche de profils avec la méthode AND
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getAndProfile($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+
+		// Requète par rapport au Nom / Prenom / Username du user
+		$queryTitle->select('user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+		foreach ($inputSearchSplit as $id => $keyword) {
+			$queryTitle->andWhere($queryTitle->expr()->orX(
+					$queryTitle->expr()->like('user.userLastName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.userFirstName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.username', ":keyword_".$id)
+			));
+			$queryTitle->setParameter("keyword_".$id, '%'.$keyword.'%');
+		}
+
+		// Requète par rapport aux skills
+		$query->select('user.id','user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+
+		// Résultat des requètes
+		$completeResult = $query->getQuery()->getResult();
+		$resultTitle = $queryTitle->getQuery()->getResult();
+
+		$bestUser = null;
+
+		foreach($completeResult as $key => $res){
+
+			// On récupère tous les Skills associé au User
+			$skills = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill')->findBy(array('user' => $res));
+
+			// Pour chaque skill, on récupère les tagName
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+
+			// Si le user n'a pas tous les tags contenu dans $inputSearchSplit,
+			// ou si il possède un tag qui appartient à $inputNoSplit, on l'enlève
+			if(array_diff($inputSearchSplit,$tagTab) != null || !empty(array_intersect($inputNoSplit, $tagTab))){
+				unset($completeResult[$key]);
+			}else{
+				// Sinon, on calcul son niveau pour les tags d'inputSearchSplit
+				$level = 0;
+				foreach($skills as $s){
+					if(in_array($s->getTag()->getTagName(),$inputSearchSplit)){
+						$level += $s->getSkillLevel();
+					}
+				}
+				$bestUser[$res['id']] = $level;
+			}
+
+		}
+
+		$userSortedList = null;
+		$i = 0;
+
+		// Ajout des users de la requète Title (On enlève les users qui possèdent des tags dans le No)
+		foreach($resultTitle as $user){
+			$skills = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill')->findBy(array('user' => $user));
+			$addBoolean = true;
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+			foreach($tagTab as $tag){
+				if(in_array($tag,$inputNoSplit)){
+					$addBoolean = false;
+				}
+			}
+			if($addBoolean)
+				$userSortedList[$i++] = $user;
+		}
+
+
+		// Ajout des users triés par rapport au niveau de skill (en évitant les doublons)
+		if(count($bestUser) > 0){
+			arsort($bestUser);
+			foreach($bestUser as $key => $res){
+				$exist = false;
+				if(count($userSortedList) > 0)
+					foreach($userSortedList as $user)
+						if($user->getId() == $key)
+							$exist = true;
+				if(!$exist)
+					$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
+			}
+		}
+
+		// Gère la pagination
+		if(count($userSortedList) > 0)
+			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
+		else
+			$result = null;
+
+		$countTotal = count($userSortedList);
+
+		return array($result,$countTotal);
+
+	}
+
+	/**
+	 * Recherche de profils avec la méthode OR
+	 *
+	 * @param $inputSearch
+	 * @param $inputNo
+	 * @param int $page
+	 * @param int $maxperpage
+	 * @return array
+	 */
+	public function getOrProfile($inputSearch,$inputNo,$page=1, $maxperpage=4){
+
+		$inputSearchSplit = $this->tagFormat($inputSearch);
+		$inputNoSplit = $this->tagFormat($inputNo);
+
+		$query = $this->_em->createQueryBuilder();
+		$queryTitle = $this->_em->createQueryBuilder();
+
+		// Requète par rapport au Nom / Prenom / Username du user
+		$queryTitle->select('user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+		foreach ($inputSearchSplit as $id => $keyword) {
+			$queryTitle->orWhere($queryTitle->expr()->orX(
+					$queryTitle->expr()->like('user.userLastName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.userFirstName', ":keyword_".$id),
+					$queryTitle->expr()->like('user.username', ":keyword_".$id)
+			));
+			$queryTitle->setParameter("keyword_".$id, '%'.$keyword.'%');
+		}
+
+		// Requète par rapport aux skills
+		$query->select('user.id','user')
+				->from('AGIL\UserBundle\Entity\AgilUser','user')
+		;
+
+		// Résultat des requètes
+		$completeResult = $query->getQuery()->getResult();
+		$resultTitle = $queryTitle->getQuery()->getResult();
+
+		$bestUser = null;
+
+		foreach($completeResult as $key => $res){
+
+			// On récupère tous les Skills associé au User
+			$skillRepository = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill');
+			$skills = $skillRepository->findBy(array('user' => $res));
+
+			// Pour chaque skill, on récupère les tagName
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+
+			// Si le user n'a aucun des tags contenu dans $inputSearchSplit,
+			// ou si il possède un tag qui appartient à $inputNoSplit, on l'enlève
+			if(empty(array_intersect($inputSearchSplit,$tagTab)) || !empty(array_intersect($inputNoSplit, $tagTab))){
+				unset($completeResult[$key]);
+			}else{
+				// Sinon, on calcul le niveau de son meilleur skill parmi les tags
+				$levelMax = 0;
+				foreach($skills as $s)
+					if(in_array($s->getTag()->getTagName(),$inputSearchSplit))
+						if($s->getSkillLevel() > $levelMax)
+							$levelMax = $s->getSkillLevel();
+				$bestUser[$res['id']] = $levelMax;
+			}
+
+		}
+
+		$userSortedList = null;
+		$i = 0;
+
+		// Ajout des users de la requète Title (On enlève les users qui possèdent des tags dans le No)
+		foreach($resultTitle as $user){
+			$skills = $this->getEntityManager()->getRepository('AGILProfileBundle:AgilSkill')->findBy(array('user' => $user));
+			$addBoolean = true;
+			$tagTab = array();
+			foreach($skills as $s){
+				$tagTab[] = $s->getTag()->getTagName();
+			}
+			foreach($tagTab as $tag){
+				if(in_array($tag,$inputNoSplit)){
+					$addBoolean = false;
+				}
+			}
+			if($addBoolean)
+				$userSortedList[$i++] = $user;
+		}
+
+		// Ajout des users triés par rapport au niveau de skill (en évitant les doublons)
+		if(count($bestUser) > 0){
+			arsort($bestUser);
+			foreach($bestUser as $key => $res){
+				$exist = false;
+				if(count($userSortedList) > 0)
+					foreach($userSortedList as $user)
+						if($user->getId() == $key)
+							$exist = true;
+				if(!$exist)
+					$userSortedList[$i++] = $this->getEntityManager()->getRepository('AGILUserBundle:AgilUser')->find($key);
+			}
+		}
+
+		// Gère la pagination
+		if(count($userSortedList) > 0)
+			$result = array_slice($userSortedList,($page-1) * $maxperpage,$maxperpage);
+		else
+			$result = null;
+
+		$countTotal = count($userSortedList);
+
+		return array($result,$countTotal);
+
+	}
+
+	/**
+	 * Permet de spliter les tags, de retirer les doublons
+	 * ainsi que les blancs
+	 * @param $arrayTags
+	 * @return array
+	 */
+	private function tagFormat($arrayTags){
+
+		$tagArray   = preg_split("/[\\s,]+/", $arrayTags);
+		$tagArray   = array_unique($tagArray);
+		$tagArray   = preg_grep("/^[^\\s]+$/", $tagArray);
+
+		return $tagArray;
+	}
+
+
 }

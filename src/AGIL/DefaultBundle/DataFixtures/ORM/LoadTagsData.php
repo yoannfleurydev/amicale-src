@@ -58,7 +58,7 @@ class LoadTagsData extends AbstractFixture implements OrderedFixtureInterface
         $tags[] = new AgilTag("sql","purple-darker-5",$BDDCategory);
         $this->addReference('tagSQL', $tags[count($tags)-1]);
 
-        $tags[] = new AgilTag("cordova ","grey-darker-2",$mobileCategory);
+        $tags[] = new AgilTag("cordova","grey-darker-2",$mobileCategory);
         $this->addReference('tagCordova', $tags[count($tags)-1]);
 
         $tags[] = new AgilTag("objectivec","grey-lighter-1",$mobileCategory);

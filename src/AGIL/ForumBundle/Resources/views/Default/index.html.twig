@@ -31,7 +31,7 @@
                                         <div class="col-lg-offset-1 col-xs-2 col-sm-1 col-md-1 col-lg-1 child">
                                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ category.forumCategoryId }}"
                                                aria-expanded="true" aria-controls="collapse{{ category.forumCategoryId }}">
-                                            <span class="rotate-icon glyphicon glyphicon glyphicon-chevron-down icon-bigger"
+                                            <span class="rotate-icon glyphicon glyphicon-chevron-down icon-bigger"
                                                   aria-hidden="true"></span>
                                             </a>
                                         </div>
@@ -52,7 +52,7 @@
                                                                     <h6 class="no-margin-top-bot"><strong><a href="{{ path('agil_forum_subject_answers',{'idCategory' : category.forumCategoryId, 'idSubject' : subject.forumSubjectId} ) }}">{{ subject.forumSubjectTitle | capitalize }}</a></strong></h6>
                                                                     <div>{{ subject.forumSubjectDescription | capitalize }}</div>
                                                                     {% for tag in subject.tags %}
-                                                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper}}</span>
+                                                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper}}</span></a>
                                                                     {% endfor %}
                                                                 </div>
                                                                 <div class="col-xs-4 col-xm-3 col-md-3 col-lg-3 text-right">
