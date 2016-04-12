@@ -1,6 +1,6 @@
-﻿#!/bin/bash
+#!/bin/bash
 
-composer update
+#composer update
 
 php app/console doctrine:database:drop --force
 php app/console doctrine:database:create

@@ -18,8 +18,7 @@ class SearchAdvancedType extends AbstractType
                 new Length(array('min' => 2,'max' => 50))
             ),
             'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Recherche'
+                'class' => 'form-control'
             )
         ));
 
@@ -31,7 +30,7 @@ class SearchAdvancedType extends AbstractType
         ));
 
         $builder->add('method', ChoiceType::class, array(
-            'choices' => array('Et' => 'and', 'Ou' => 'or'),
+            'choices' => array('ET' => 'and', 'OU' => 'or'),
             'choices_as_values' => true,
             'expanded' => true,
             'multiple' => false
@@ -44,8 +43,7 @@ class SearchAdvancedType extends AbstractType
                 new Length(array('min' => 2,'max' => 50))
             ),
             'attr' => array(
-                'class' => 'form-control',
-                'placeholder' => 'Non'
+                'class' => 'form-control'
             )
         ));
 

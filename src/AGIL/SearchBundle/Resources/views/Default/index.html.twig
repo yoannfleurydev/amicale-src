@@ -3,6 +3,7 @@
 {% form_theme form '::button_widget.html.twig' %}
 
 {% block body %}
+    {# Formulaire de recherche avancée #}
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -17,39 +18,15 @@
                     <span class="rotate-icon glyphicon glyphicon-chevron-up icon-bigger hideSearch"></span>
                 </div>
             </div>
-
-            {# Formulaire de recherche avancée #}
-
             {{ form_start(form) }}
-
-            {{ form_errors(form.tags) }}
-            {{ form_widget(form.tags) }}
-
-            {{ form_errors(form.filter) }}
-            {{ form_widget(form.filter) }}
-
-            {{ form_errors(form.method) }}
-            {{ form_widget(form.method) }}
-
-            {{ form_errors(form.no) }}
-            {{ form_widget(form.no) }}
-
-            <button type="submit" class="btn btn-primary">Rechercher</button>
-
-            {{ form_rest(form) }}
-
-            {{ form_end(form) }}
-
-
-            <!--
-            <div class="form-horizontal">
                 <div class="panel-body">
                     <div class="searchContent">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
+                                {{ form_errors(form.tags) }}
                                 <label class="col-sm-1 col-lg-1 col-xs-1 col-md-1 control-label" for="search">Recherche</label>
                                 <div class="col-sm-10 col-lg-10 col-xs-10 col-md-10">
-                                    <input class="form-control" name="search" id="search">
+                                    {{ form_row(form.tags) }}
                                 </div>
                             </div>
                         </div>
@@ -59,28 +36,30 @@
                                     Filtre
                                 </span>
                             </h3>
+
+                            {{ form_errors(form.filter) }}
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <label class="radio">
-                                    <input type="radio" name="optionsSearch" id="optionsSearch" value="all">
-                                    <span></span><i class="glyphicon glyphicon-align-justify"></i> Tous
+                                    {{ form_widget(form.filter.0) }}
+                                    <span></span><i class="glyphicon glyphicon-align-justify"></i>{{ form_label(form.filter.0) }}
                                 </label>
                                 <label class="radio">
-                                    <input type="radio" name="optionsSearch" id="optionsSearch" value="forum">
-                                    <span></span><i class="glyphicon glyphicon-th-list"></i> Forum
+                                    {{ form_widget(form.filter.1) }}
+                                    <span></span><i class="glyphicon glyphicon-th-list"></i>{{ form_label(form.filter.1) }}
                                 </label>
                                 <label class="radio">
-                                    <input type="radio" name="optionsSearch" id="optionsSearch" value="profile">
-                                    <span></span><i class="glyphicon glyphicon-user"></i> Profile
+                                    {{ form_widget(form.filter.2) }}
+                                    <span></span><i class="glyphicon glyphicon-user"></i>{{ form_label(form.filter.2) }}
                                 </label>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <label class="radio">
-                                    <input type="radio" name="optionsSearch" id="optionsSearch" value="offer">
-                                    <span></span><i class="glyphicon glyphicon-info-sign"></i> Offres
+                                    {{ form_widget(form.filter.3) }}
+                                    <span></span><i class="glyphicon glyphicon-info-sign"></i>{{ form_label(form.filter.3) }}
                                 </label>
                                 <label class="radio">
-                                    <input type="radio" name="optionsSearch" id="optionsSearch" value="event">
-                                    <span></span><i class="glyphicon glyphicon-picture"></i> Evenement
+                                    {{ form_widget(form.filter.4) }}
+                                    <span></span><i class="glyphicon glyphicon-picture"></i>{{ form_label(form.filter.4) }}
                                 </label>
                             </div>
                         </div>
@@ -90,31 +69,33 @@
                                     Opérateur
                                 </span>
                             </h3>
+                            {{ form_errors(form.method) }}
                             <label class="radio">
-                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="et">
-                                <span></span>ET
+                                {{ form_widget(form.method.0) }}
+                                <span></span>{{ form_label(form.method.0) }}
                             </label>
                             <label class="radio">
                                 <input type="radio" name="optionsRadios" id="optionsRadios2" value="ou">
-                                <span></span>OU
+                                {{ form_widget(form.method.1) }}
+                                <span></span>{{ form_label(form.method.1) }}
                             </label>
                             <div class="form-group">
+                                {{ form_errors(form.no) }}
                                 <label class="col-sm-1 col-lg-1 col-xs-1 col-md-1 control-label" for="no">NON</label>
                                 <div class="col-sm-10 col-lg-10 col-xs-10 col-md-10">
-                                    <input class="form-control" type="text" name="no" id="no">
+                                    {{ form_row(form.no) }}
                                 </div>
                             </div>
                         </div>
                         <p class="col-lg-12 col-sm-12 col-xs-12 col-md-12 text-center">
-                            <a class="btn btn-primary">Relancer</a>
+                            <button type="submit" class="btn btn-primary margin-top">Rechercher</button>
                         </p>
                     </div>
                 </div>
-            </div>
 
+            {{ form_rest(form) }}
 
-            -->
-
+            {{ form_end(form) }}
         </div>
     </div>
     {#<<<<<<< HEAD#}
