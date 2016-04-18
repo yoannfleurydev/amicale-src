@@ -152,6 +152,12 @@
                                 Agenda
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ path("agil_search_homepage") }}" class="nav-link {% if isActive == "search" %} nav-link-active {% endif %}">
+                                <span class="material-icons">search</span>
+                                Recherche
+                            </a>
+                        </li>
                     {% endif %}
                     {% if is_granted("ROLE_ADMIN") %}
                         <li>
@@ -198,7 +204,7 @@
                         </div>
                         <div class="panel-body">
                             <p>&copy; Université de Rouen. Site développé par 7 étudiants de l'Université de Rouen dans le cadre d'un projet universitaire.</p>
-                            <a class="btn btn-default" href="{{ path('agil_default_credits') }}">Crédits</a>
+                            <a class="btn btn-primary" href="{{ path('agil_default_credits') }}">Crédits</a>
                         </div>
                     </div>
                 </div>
