@@ -21,6 +21,9 @@ class OfferController extends Controller
         if ($offer == null) {
             $this->addFlash('warning', 'Cette annonce n\'existe pas.');
             return $this->redirect($this->generateUrl('agil_offer_homepage'));
+        } elseif (!$offer->getOfferPublish()) {
+            $this->addFlash('warning', 'Cette annonce n\'est pas encore publiée.');
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
         }
 
         return $this->render('AGILOfferBundle:Offer:offer.html.twig', array('offer' => $offer));
@@ -89,7 +92,7 @@ class OfferController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Un mail de confirmation vous a été envoyé.');
-            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            return $this->redirect($this->generateUrl('agil_offer_add'));
         }
 
         return $this->render('AGILOfferBundle:Offer:offer_add.html.twig', array(
@@ -185,6 +188,11 @@ class OfferController extends Controller
     public function offerDeleteAction(Request $request, $idCrypt) {
         $em = $this->getDoctrine()->getManager();
         $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerRoute' => $idCrypt))[0];
+
+        if ($offer == null) {
+            $this->addFlash('success', 'Annonce déjà supprimée.');
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+        }
 
         if ($offer->getOfferPdfUrl() != null) {
             $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/offer';
