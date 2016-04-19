@@ -37,7 +37,7 @@
                         {% endif %}
                         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
                             {% for tag in offer.tags %}
-                                <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                                <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
                             {% endfor %}
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">

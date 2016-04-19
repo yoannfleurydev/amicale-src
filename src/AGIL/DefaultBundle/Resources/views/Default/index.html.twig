@@ -41,22 +41,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">
-                        <span class="panel-title-content">
-                             Calendrier
-                        </span>
-                        </h2>
-                    </div>
-                    <div class="panel-body">
-                        {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
-                    </div>
-                </div>
-            </div>
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -66,6 +50,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -108,16 +94,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
-                            <span class="panel-title-content">
-                                Calendrier
-                            </span>
+                        <span class="panel-title-content">
+                             Calendrier
+                        </span>
                         </h2>
                     </div>
                     <div class="panel-body">
@@ -125,6 +108,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+    {% else %}
+        <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -150,8 +136,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -177,6 +161,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -212,8 +198,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -240,6 +224,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -260,6 +246,20 @@
                                 <input type="submit" class="btn btn-primary" value="Valider">
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <span class="panel-title-content">
+                                Calendrier
+                            </span>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
                     </div>
                 </div>
             </div>
