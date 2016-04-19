@@ -33,16 +33,6 @@
                         <p>CV : <a href="{{ asset("files/cv/") ~ user.userCvUrl }}"
                                    target="_blank">{{ user.userCvUrl }}</a></p>
                     {% endif %}
-
-                    {% if is_granted('ROLE_USER') %}
-                        {% if user.userId == app.user.userId %}
-                            <a href="{{ path('agil_profile_delete') }}"
-                               title="Supprimer mon compte"
-                               class="btn btn-danger">
-                                <span class="glyphicon glyphicon-trash"></span> Supprimer mon compte
-                            </a>
-                        {% endif %}
-                    {% endif %}
                 </div>
             </div>
         </div>

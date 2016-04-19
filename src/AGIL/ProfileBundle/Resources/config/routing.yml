@@ -1,14 +1,9 @@
 agil_profile_id:
     path:     /profile/{id}
     defaults:
-        _controller: AGILProfileBundle:Default:show
+        _controller: AGILProfileBundle:Default:profile
     requirements:
         id:   \d+
-
-agil_profile_edit:
-    path:     /profile/edit
-    defaults:
-        _controller: AGILProfileBundle:Default:edit
 
 agil_profile_delete:
     path:     /profile/delete

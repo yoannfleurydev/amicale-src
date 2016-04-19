@@ -8,6 +8,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+            {% if is_granted('ROLE_USER') %}
+                {% if user.userId == app.user.userId %}
+                    <a href="{{ path('agil_profile_delete') }}"
+                       title="Supprimer mon compte"
+                       class="btn btn-danger btn-block">
+                        <span class="glyphicon glyphicon-trash"></span> Supprimer mon compte
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -137,7 +148,7 @@
                         {% endfor %}
                     {% endif %}
                     {# update button #}
-                    {{ form_widget(form.Modifier, {'attr' : {'class' : 'btn btn-primary'}}) }}
+                    {{ form_widget(form.modify, {'attr' : {'class' : 'btn btn-primary'}}) }}
 
 
                     {{ form_rest(form) }}
