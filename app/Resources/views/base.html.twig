@@ -54,7 +54,7 @@
 
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
-                <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
+                <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Connexion"><span class="glyphicon glyphicon-log-in"></span></a>
                 {% else %}
                 <!--Si connecté-->
 
