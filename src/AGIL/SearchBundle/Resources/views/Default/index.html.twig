@@ -127,7 +127,7 @@
                                         <em>{{ s.forumSubjectPostDate|date('d-m-Y') }}</em>
 
                                         {% for tag in tagsForum[s.forumSubjectId] %}
-                                            <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
+                                            <a class="label-link" href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
                                                         class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                                         {% endfor %}
 
@@ -177,7 +177,7 @@
                                           class="interne-link">{{ search.eventTitle }}</a></p>
                                     <em>{{ search.eventDate|date('d-m-Y') }}</em>
                                     {% for tag in tagsHall[search.eventId] %}
-                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
+                                        <a class="label-link" href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
                                                     class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                                     {% endfor %}
                                 </div>
