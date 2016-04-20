@@ -61,6 +61,10 @@ class DefaultController extends Controller {
                     $this->editProfilPicture($profilePicture, $user);
                 }
 
+                if ($form->get('userDeleteProfilePicture')->getData()) {
+                    $user->setUserProfilePictureUrl(AgilUser::DEFAULT_PROFILE_PICTURE);
+                }
+
                 $cv = $form->get('userCVUrl')->getData();
                 if ($cv != null || $cv != "") {
                     // On vérifie le format du CV

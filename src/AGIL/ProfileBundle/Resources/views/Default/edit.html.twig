@@ -9,15 +9,11 @@
             </div>
         </div>
         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
-            {% if is_granted('ROLE_USER') %}
-                {% if user.userId == app.user.userId %}
-                    <a href="{{ path('agil_profile_delete') }}"
-                       title="Supprimer mon compte"
-                       class="btn btn-danger btn-block">
-                        <span class="glyphicon glyphicon-trash"></span> Supprimer mon compte
-                    </a>
-                {% endif %}
-            {% endif %}
+            <a href="{{ path('agil_profile_delete') }}"
+               title="Supprimer mon compte"
+               class="btn btn-danger btn-block">
+                <span class="glyphicon glyphicon-trash"></span> Supprimer mon compte
+            </a>
         </div>
     </div>
     <div class="row">
@@ -38,7 +34,7 @@
 
                     {# email field #}
                     <div class="form-group">
-                        <label for="email">Modifier l'adresse email :</label>
+                        <label for="profile_edit_form_email">Modifier l'adresse email :</label>
                         <div class="input-group">
                             <div class="input-group-addon"><span class="material-icons">email</span>
                             </div>
@@ -48,7 +44,7 @@
 
                     {# username field #}
                     <div class="form-group">
-                        <label for="pseudo">Modifier le pseudo :</label>
+                        <label for="profile_edit_form_username">Modifier le pseudo :</label>
                         <div class="input-group">
                             <div class="input-group-addon"><span
                                         class="glyphicon glyphicon-user"></span></div>
@@ -56,9 +52,9 @@
                         </div>
                     </div>
 
-                    {# profile picture #}{# TODO : Modifier les labels, car tous sont 'pseudo' #}
+                    {# profile picture #}
                     <div class="form-group">
-                        <label for="pseudo">Modifier la photo de profil :</label>
+                        <label for="profile_edit_form_userProfilePictureUrl">Modifier la photo de profil :</label>
                         <div class="input-group">
                             <div class="fileUpload btn btn-primary">
                                     <span id="button_name_picture"><i
@@ -68,9 +64,23 @@
                         </div>
                     </div>
 
+                    {# Profile picture checkbox deletion #}
+                    <div class="form-group">
+                        {{ form_label(form.userDeleteProfilePicture) }}
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-picture"></span>
+                            </div>
+                            <label class="checkbox">
+                                {{ form_widget(form.userDeleteProfilePicture) }}
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+
                     {# CV field #}
                     <div class="form-group">
-                        <label for="pseudo">Modifier le CV :</label>
+                        <label for="profile_edit_form_userCVUrl">Modifier le CV :</label>
                         <div class="input-group">
                             <div class="fileUpload btn btn-primary">
                                 <span id="button_name_cv"><i
@@ -82,7 +92,7 @@
 
                     {#CV visibility field#}
                     <div class="form-group">
-                        <label for="pseudo">Rendre mon CV public :</label>
+                        <label for="profile_edit_form_userCVUrlVisibility">Rendre mon CV public :</label>
                         <div class="input-group">
                             <div class="input-group-addon"><span
                                         class="glyphicon glyphicon-eye-open"></span></div>
@@ -96,21 +106,21 @@
 
                     {# PW + PW confirmation field #}
                     <div class="form-group">
-                        <label for="password">Modifier le mot de passe :</label>
+                        <label for="profile_edit_form_oldPassword">Modifier le mot de passe :</label>
                         <div class="input-group">
-                            <label for="password" class="input-group-addon">
+                            <label for="profile_edit_form_oldPassword" class="input-group-addon">
                                 <i class="material-icons">vpn_key</i>
                             </label>
                             {{ form_row(form.oldPassword) }}
                         </div>
                         <div class="input-group">
-                            <label for="password" class="input-group-addon">
+                            <label for="profile_edit_form_password" class="input-group-addon">
                                 <i class="material-icons">vpn_key</i>
                             </label>
                             {{ form_row(form.password) }}
                         </div>
                         <div class="input-group">
-                            <label for="password_verification" class="input-group-addon">
+                            <label for="profile_edit_form_passwordConfirm" class="input-group-addon">
                                 <i class="material-icons">vpn_key</i>
                             </label>
                             {{ form_row(form.passwordConfirm) }}
@@ -158,6 +168,5 @@
         </div>
     </div>
 {% endblock %}
-
 
 

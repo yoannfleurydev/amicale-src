@@ -47,6 +47,11 @@ class ProfileEditType extends AbstractType
             'required' => false,
         ));
 
+        $builder->add('userDeleteProfilePicture', CheckboxType::class, array(
+            'label' => 'Supprimer ma photo de profil : ',
+            'required' => false,
+        ));
+
 
         $builder->add('userCVUrl', FileType::class, array(
             'label' => false,
@@ -122,6 +127,6 @@ class ProfileEditType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'profil_edit_form';
+        return 'profile_edit_form';
     }
 }
