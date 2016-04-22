@@ -106,6 +106,10 @@ class AnswersController extends Controller
             $manager->persist($answer);
             $manager->flush($answer);
 
+            $logger = $this->get('service_forum.logger');
+            $logger->info('[Nouvelle Réponse] : '.$subject->getForumSubjectTitle().
+                " (".$user->getUserFirstName()." ".$user->getUserLastName()."," . $user->getUsername().")");
+
             $this->addFlash('success',"Votre message a été ajouté au sujet.");
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers',
                 array('idCategory' => $idCategory, 'idSubject' => $idSubject, 'page' => ceil($answers_count / $maxAnswers))) );
@@ -364,6 +368,10 @@ class AnswersController extends Controller
 
             $em->remove($answer);
             $em->flush();
+
+            $logger = $this->get('service_forum.logger');
+            $logger->info('[Réponse Supprimée] : '.$subject->getForumSubjectTitle().
+                " (".$author->getUserFirstName()." ".$author->getUserLastName()."," . $author->getUsername().")");
 
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
                 'idCategory' => $idCategory,

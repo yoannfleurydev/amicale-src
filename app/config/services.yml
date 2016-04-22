@@ -32,3 +32,23 @@ services:
        class: Twig_Extensions_Extension_Intl
        tags:
            - { name: twig.extension }
+
+    # Format personnalisé pour le Logger de Monolog
+    service.logger_formatter:
+                class:     Monolog\Formatter\LineFormatter
+                arguments: ["[%%datetime%%] %%message%% \n",null,false,true]
+
+    # Logger Forum
+    service_forum.logger:
+        class:     Symfony\Bridge\Monolog\Logger
+        arguments: [app]
+        calls:
+            - [pushHandler, [@service_forum.logger_handler]]
+    # Logger Handler Forum
+    service_forum.logger_handler:
+        class:     Monolog\Handler\StreamHandler
+        arguments: [%kernel.logs_dir%/logsForum.log, 200]
+        calls:
+            - [setFormatter, [@service.logger_formatter]]
+
+

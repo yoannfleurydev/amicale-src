@@ -7,9 +7,7 @@ use AGIL\ForumBundle\Entity\AgilForumAnswer;
 use AGIL\ForumBundle\Form\FirstAnswerType;
 use AGIL\ForumBundle\Form\DeleteSubjectAdminType;
 use AGIL\ForumBundle\Form\FirstAnswerHomeType;
-use AGIL\ForumBundle\Form\SubjectHomeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AGIL\ForumBundle\Form\DeleteSubjectType;
@@ -66,6 +64,11 @@ class SubjectsController extends Controller
             $em->flush($firstPost);
 
             $this->addFlash('success', "Le sujet a bien été créé");
+
+            $logger = $this->get('service_forum.logger');
+            $logger->info('[Nouveau Sujet] : '.$subject->getForumSubjectTitle().
+                " (".$user->getUserFirstName()." ".$user->getUserLastName()."," . $user->getUsername().")");
+
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
                 'idCategory' => $subject->getCategory()->getForumCategoryId(),
                 'idSubject' => $subject->getForumSubjectId()
@@ -133,6 +136,11 @@ class SubjectsController extends Controller
             $em->flush($firstPost);
 
             $this->addFlash('success', "Le sujet a bien été créé");
+
+            $logger = $this->get('service_forum.logger');
+            $logger->info('[Nouveau Sujet] : '.$subject->getForumSubjectTitle().
+                " (".$user->getUserFirstName()." ".$user->getUserLastName()."," . $user->getUsername().")");
+
             return $this->redirect( $this->generateUrl('agil_forum_subject_answers', array(
                 'idCategory' => $idCategory,
                 'idSubject' => $subject->getForumSubjectId()
@@ -214,6 +222,11 @@ class SubjectsController extends Controller
             $em->remove($subject);
             $em->flush();
 
+            $logger = $this->get('service_forum.logger');
+            $logger->info('[Sujet supprimé] : '.$subject->getForumSubjectTitle().
+                " (Auteur : ".$author->getUserFirstName()." ".$author->getUserLastName()."," . $author->getUsername().
+                " - Supprimé par : ".$user->getUserFirstName()." ".$user->getUserLastName()."," . $user->getUsername().")");
+
             $this->addFlash('success', "Le sujet a bien été supprimé.");
             return $this->redirect( $this->generateUrl('agil_forum_subjects_list', array(
                 'idCategory' => $idCategory
@@ -274,6 +287,11 @@ class SubjectsController extends Controller
                 // Modification du sujet dans la BDD
                 $manager->persist($subject);
                 $manager->flush();
+
+                $logger = $this->get('service_forum.logger');
+                $logger->info('[Sujet résolu] : '.$subject->getForumSubjectTitle().
+                    " (".$subject->getUser()->getUserFirstName()." ".$subject->getUser()->getUserLastName().","
+                    . $subject->getUser()->getUsername().")");
 
             }else{
                 $this->addFlash('warning', "Vous essayez passer en résolu un sujet de forum qui n'est pas le votre");

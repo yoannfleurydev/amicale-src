@@ -57,3 +57,7 @@ agil_admin_forum_category_delete:
             idCategory: \d+
 
 
+agil_admin_logs_forum:
+    path:     /admin/logs/forum
+    defaults:
+        _controller: AGILAdminBundle:Logs:forum
