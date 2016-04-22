@@ -8,16 +8,26 @@
                     <div class="row">
                         <div class="col-lg-10">
                             <h3>{{ event.eventTitle }}</h3>
-                            {% if event.eventDateEnd > event.eventDate %}
-                                <small>du {{ event.eventDate | date('j/m/Y') }} au {{ event.eventDateEnd | date('j/m/Y') }}</small>
-                            {% else %}
-                                <small>le {{ event.eventDate | date('j/m/Y') }}</small>
-                            {% endif %}
+
                         </div>
                         <div class="col-lg-2">
                             <h5>
-                                Le <span class="text-primary-blue">{{ event.eventPostDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}</span>
-                                par <a href="{{ path('agil_profile_id', {id : event.user.id}) }}">{{ event.user }}</a>
+                                <small>
+                                    <span
+                                            class="text-primary-blue">
+                                {% if event.eventDateEnd > event.eventDate %}
+
+                                    Du {{ event.eventDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}
+                                    au {{ event.eventDateEnd | localizeddate('none', 'none', null, null, 'd LLL Y') }}
+
+                                {% else %}
+
+                                    Le {{ event.eventDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}
+
+                                {% endif %}
+                                        par </span><a
+                                            href="{{ path('agil_profile_id', {id : event.user.id}) }}">{{ event.user }}</a>
+                                </small>
                             </h5>
                         </div>
 
@@ -41,12 +51,15 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body text-center">
                 </div>
                 <div class="modal-footer">
-                    <p class="text-center"><button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button></p>
+                    <p class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                    </p>
                 </div>
             </div>
         </div>
