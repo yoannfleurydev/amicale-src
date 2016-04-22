@@ -61,4 +61,34 @@ agil_admin_forum_category_delete:
     requirements:
             idCategory: \d+
 
+# //----------------------- Logs routing ----------------------------------------------
 
+agil_admin_logs_offer:
+    path:     /admin/logs/offer
+    defaults:
+        _controller: AGILAdminBundle:Logs:offer
+
+agil_admin_logs_profile:
+    path:     /admin/logs/profile
+    defaults:
+        _controller: AGILAdminBundle:Logs:profile
+
+agil_admin_logs_chat:
+    path:     /admin/logs/chat
+    defaults:
+        _controller: AGILAdminBundle:Logs:chat
+
+agil_admin_logs_forum:
+    path:     /admin/logs/forum
+    defaults:
+        _controller: AGILAdminBundle:Logs:forum
+
+agil_admin_logs_search:
+    path:     /admin/logs/search
+    defaults:
+        _controller: AGILAdminBundle:Logs:search
+
+agil_admin_logs_hall:
+    path:     /admin/logs/hall
+    defaults:
+        _controller: AGILAdminBundle:Logs:hall
