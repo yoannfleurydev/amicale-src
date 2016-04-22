@@ -1,6 +1,16 @@
 {% extends "AGILOfferBundle::baseOfferBundle.html.twig" %}
 {% block title %}Offres | Ajout d'offre{% endblock %}
 {% block body %}
+    <div>
+        <div class="alert alert-info alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+            Cette page vous permet de déposer des offres de stage ou d'emploi pour les étudiants du Master GIL.
+            Suite à la validation du formulaire ci-dessous, vous allez recevoir un <strong>email</strong>. Concervez
+            le pour pouvoir modifier l'annonce plus tard.
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">

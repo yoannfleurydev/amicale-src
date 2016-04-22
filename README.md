@@ -3,6 +3,15 @@ amicale-src
 
 Amicale GIL (Génie de l'Informatique Logicielle) is a University Project.
 
+## Installation
+
+1. Clone this repository
+
+    ```
+     git clone https://github.com/yoannfleurydev/amicale-src.git
+    ```
+
+
 ###Installation GULP
 
 Pour compiler le css (et le minifier) on utilise gulp.
