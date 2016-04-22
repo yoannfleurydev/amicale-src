@@ -38,6 +38,19 @@ services:
                 class:     Monolog\Formatter\LineFormatter
                 arguments: ["[%%datetime%%] %%message%% \n",null,false,true]
 
+    # Logger Offer
+    service_offer.logger:
+        class:     Symfony\Bridge\Monolog\Logger
+        arguments: [app]
+        calls:
+            - [pushHandler, [@service_offer.logger_handler]]
+    # Logger Handler Offer
+    service_offer.logger_handler:
+        class:     Monolog\Handler\StreamHandler
+        arguments: [%kernel.logs_dir%/logsOffer.log, 200]
+        calls:
+            - [setFormatter, [@service.logger_formatter]]
+
     # Logger Forum
     service_forum.logger:
         class:     Symfony\Bridge\Monolog\Logger
@@ -51,6 +64,32 @@ services:
         calls:
             - [setFormatter, [@service.logger_formatter]]
 
+    # Logger Profile
+    service_profile.logger:
+        class:     Symfony\Bridge\Monolog\Logger
+        arguments: [app]
+        calls:
+            - [pushHandler, [@service_profile.logger_handler]]
+    # Logger Handler Profile
+    service_profile.logger_handler:
+        class:     Monolog\Handler\StreamHandler
+        arguments: [%kernel.logs_dir%/logsProfile.log, 200]
+        calls:
+            - [setFormatter, [@service.logger_formatter]]
+
+    # Logger Chat
+    service_chat.logger:
+        class:     Symfony\Bridge\Monolog\Logger
+        arguments: [app]
+        calls:
+            - [pushHandler, [@service_chat.logger_handler]]
+    # Logger Handler Chat
+    service_chat.logger_handler:
+        class:     Monolog\Handler\StreamHandler
+        arguments: [%kernel.logs_dir%/logsChat.log, 200]
+        calls:
+            - [setFormatter, [@service.logger_formatter]]
+
     # Logger Search
     service_search.logger:
         class:     Symfony\Bridge\Monolog\Logger
@@ -61,6 +100,19 @@ services:
     service_search.logger_handler:
         class:     Monolog\Handler\StreamHandler
         arguments: [%kernel.logs_dir%/logsSearch.log, 200]
+        calls:
+            - [setFormatter, [@service.logger_formatter]]
+
+    # Logger Hall
+    service_hall.logger:
+        class:     Symfony\Bridge\Monolog\Logger
+        arguments: [app]
+        calls:
+            - [pushHandler, [@service_hall.logger_handler]]
+    # Logger Handler Hall
+    service_hall.logger_handler:
+        class:     Monolog\Handler\StreamHandler
+        arguments: [%kernel.logs_dir%/logsHall.log, 200]
         calls:
             - [setFormatter, [@service.logger_formatter]]
 

@@ -1,0 +1,14 @@
+{% extends "AGILAdminBundle::baseAdminBundle.html.twig" %}
+
+{% block body %}
+
+    <p>Contenu du fichier de Logs Profils :</p>
+
+    {# |nl2br permet d'interpréter les \n et d'afficher correctement le fichier avec les sauts de lignes #}
+    <p>{{ logsProfile|nl2br }}</p>
+
+    <form action="{{ path('agil_admin_logs_profile') }}" method="post">
+        <input type="submit" value="Vider les logs">
+    </form>
+
+{% endblock %}
