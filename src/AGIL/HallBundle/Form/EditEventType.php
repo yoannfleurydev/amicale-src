@@ -80,6 +80,7 @@ class EditEventType extends AbstractType
             'prototype_name' => 0,
             'allow_add' => true,
             'allow_delete' => true,
+            'delete_empty' => true,
             // these options are passed to each "email" type
             'entry_options'  => array(
                 'required' => false,

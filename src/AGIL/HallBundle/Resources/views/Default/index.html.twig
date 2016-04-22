@@ -24,17 +24,17 @@
                                     {{ event.eventTitle }}
                                 </a>
                             </h5>
+                            {% for tag in event.tags %}
+                                <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
+                            {% endfor %}
                             <p>
-                                {{ event.eventText|slice(0, 180) }}
-                                {% if event.eventText|length > 180 %}
+                                {{ event.eventText|slice(0, 250)|raw }}
+                                {% if event.eventText|length > 250 %}
                                     ...
                                 {% endif %}
                             </p>
                             <p>
                             <h6>{{ event.eventPostDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}</h6></p>
-                            {% for tag in event.tags %}
-                                <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
-                            {% endfor %}
                         </div>
                         {% if is_granted("ROLE_ADMIN") %}
 

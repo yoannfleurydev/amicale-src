@@ -138,9 +138,18 @@
                         <div class="list">
                             {% for offer in offers %}
                                 <div class="list-element">
-                                    <p>
-                                        <a class="internal-link" href="{{ path('agil_offer_view', {'id' : offer.offerId}) }}">{{ offer.offerTitle }}</a>
-                                    </p>
+                                    <div class="row">
+                                        <div class="col-lg-9 col-md-9 col-sm-9">
+                                            <p>
+                                                <a class="internal-link"
+                                                   href="{{ path('agil_offer_view', {'id' : offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
+                                        </div>
+                                    </div>
+
                                     {% for tag in offer.tags %}
                                         <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
                                     {% endfor %}
@@ -189,19 +198,20 @@
                     <div class="panel-body">
                         <div class="list">
                             {% for sub in lastSubjects %}
-                            <div class="list-element">
-                                <p>
-                                    <a
-                                        class="internal-link"
-                                        href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}"
-                                    >
-                                        {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})
-                                    </a>
-                                </p>
-                                {% for tag in sub.tags %}
-                                    <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
-                                {% endfor %}
-                            </div>
+                                <div class="list-element">
+                                    <p>
+                                        <a
+                                                class="internal-link"
+                                                href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}"
+                                        >
+                                            {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})
+                                        </a>
+                                    </p>
+                                    {% for tag in sub.tags %}
+                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
+                                                    class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
+                                    {% endfor %}
+                                </div>
                             {% endfor %}
                         </div>
                         <p class="row text-center">

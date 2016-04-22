@@ -12,41 +12,42 @@
             <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
                 <div class="card-events">
                     <div class="row">
-                        {% if is_granted("ROLE_ADMIN") %}
-                            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                                <h5>
-                                    <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
-                                </h5>
-                            </div>
-                        {% else %}
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <h5>
-                                    <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
-                                </h5>
-                            </div>
+                        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                            <h5>
+                                <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                            </h5>
+                            {% for tag in offer.tags %}
+                                <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
+                            {% if offer.offerAuthor is not null %}
+                                <p>Auteur: {{ offer.offerAuthor }}</p>
+                            {% endif %}
+
+                            <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
+                        </div>
+                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        {% if offer.offerText is not null %}
+
+                            <p>{{ offer.offerText|slice(0, 250)|raw }}</p>
+                            {% if offer.offerText|length > 255 %}
+                                ...
+                            {% endif %}
                         {% endif %}
+                        </div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
+
                                 <a role="button"
                                    data-href="{{ path('agil_offer_delete', {'idCrypt': offer.offerRoute}) }}"
                                    data-target="#confirm-delete" title="Supprimer"
                                    class="btn btn-danger" data-toggle="modal"><i
                                             class="glyphicon glyphicon-trash"></i>
                                 </a>
-                            </div>
-                        {% endif %}
-                        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-                            {% for tag in offer.tags %}
-                                <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
-                            {% endfor %}
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">
-                            <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
 
-                            {% if offer.offerText is not null %}
-                                <p>Auteur: {{ offer.offerAuthor }}</p>
-                            {% endif %}
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
