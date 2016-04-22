@@ -51,4 +51,17 @@ services:
         calls:
             - [setFormatter, [@service.logger_formatter]]
 
+    # Logger Search
+    service_search.logger:
+        class:     Symfony\Bridge\Monolog\Logger
+        arguments: [app]
+        calls:
+            - [pushHandler, [@service_search.logger_handler]]
+    # Logger Handler Search
+    service_search.logger_handler:
+        class:     Monolog\Handler\StreamHandler
+        arguments: [%kernel.logs_dir%/logsSearch.log, 200]
+        calls:
+            - [setFormatter, [@service.logger_formatter]]
+
 

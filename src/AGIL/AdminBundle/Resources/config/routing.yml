@@ -61,3 +61,8 @@ agil_admin_logs_forum:
     path:     /admin/logs/forum
     defaults:
         _controller: AGILAdminBundle:Logs:forum
+
+agil_admin_logs_search:
+    path:     /admin/logs/search
+    defaults:
+        _controller: AGILAdminBundle:Logs:search

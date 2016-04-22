@@ -83,6 +83,9 @@ class DefaultController extends Controller
 
                 if($formMethod == "and" || $formMethod == "or"){
 
+                    $logger = $this->get('service_search.logger');
+                    $logger->info("[Filtre : tout - Méthode : ".$formMethod."] Saisie : ".$formTags." - Non : ".$formNo);
+
                     // Recherche Forum (Sujets)
                     $searchForum    = $this->searchForumSubject($formTags,$formNo,$formMethod);
                     $tagsForum      = $this->tagsForForumSubject($searchForum[0]);
@@ -124,6 +127,10 @@ class DefaultController extends Controller
 
                     if($page <= 0)
                         throw new NotFoundHttpException("Erreur dans le numéro de page");
+
+
+                    $logger = $this->get('service_search.logger');
+                    $logger->info("[Filtre : ".$formFilter." - Méthode : ".$formMethod."] Saisie : ".$formTags." - Non : ".$formNo);
 
 
                     // ---------------------- RECHERCHE FORUM ----------------------
