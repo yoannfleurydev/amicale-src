@@ -88,6 +88,9 @@ class OfferController extends Controller
             $em->persist($offer);
             $em->flush();
 
+            $logger = $this->get('service_offer.logger');
+            $logger->info("[Nouvelle Offre proposée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
+
             $this->addFlash('success', 'Un mail de confirmation vous a été envoyé.');
             return $this->redirect($this->generateUrl('agil_offer_homepage'));
         }
@@ -114,6 +117,8 @@ class OfferController extends Controller
             $offer->setOfferPublish(true);
             $em->persist($offer);
             $em->flush();
+            $logger = $this->get('service_offer.logger');
+            $logger->info("[Nouvelle Offre validée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
         }
 
         $form = $this->createForm(new EditOfferType(date_format($offer->getOfferExpirationDate(), 'Y')), $offer);
@@ -158,6 +163,7 @@ class OfferController extends Controller
             $offer->removeTags();
             $em->persist($offer);
             $em->flush();
+
             $offer->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
             // expiration
@@ -166,6 +172,8 @@ class OfferController extends Controller
 
             $em->persist($offer);
             $em->flush();
+            $logger = $this->get('service_offer.logger');
+            $logger->info("[Offre modifiée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
             return $this->redirect($this->generateUrl('agil_offer_view', array('id' => $offer->getOfferId())));
         }
@@ -194,6 +202,9 @@ class OfferController extends Controller
 
         $em->remove($offer);
         $em->flush();
+
+        $logger = $this->get('service_offer.logger');
+        $logger->info("[Offre supprimée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
         $this->addFlash('success', 'Annonce supprimée.');
         return $this->redirect($this->generateUrl('agil_offer_homepage'));

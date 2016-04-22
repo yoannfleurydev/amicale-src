@@ -100,6 +100,9 @@ class EventController extends Controller
             $em->persist($event);
             $em->flush();
 
+            $logger = $this->get('service_hall.logger');
+            $logger->info("[Nouvel Evenement] ".$event->getEventTitle());
+
             $this->addFlash('success', 'Evénement ajouté');
             return $this->redirect($this->generateUrl('agil_hall_event', array('idEvent' => $event->getEventId())));
         }
@@ -275,6 +278,10 @@ HTML;
             }
 
             $em->flush();
+
+            $logger = $this->get('service_hall.logger');
+            $logger->info("[Evenement Supprimé] ".$event->getEventTitle());
+
             $this->addFlash('success', "L'évenement a été supprimé");
 
             return $this->redirect($this->generateUrl('agil_hall_homepage'));

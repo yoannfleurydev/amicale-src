@@ -136,6 +136,10 @@ class DefaultController extends Controller {
                     $userManager->updateUser($user);
                     $this->addFlash('success', 'Profil modifié.');
 
+                    $logger = $this->get('service_profile.logger');
+                    $logger->info("[Profil modifié] ".$this->getUser()->getUserFirstName()." "
+                        .$this->getUser()->getUserLastName()." (" .$this->getUser()->getUsername(). ")");
+
                     return $this->redirect($this->generateUrl('agil_profile_id', array('id' => $user->getId())));
                 }
             }
@@ -230,6 +234,10 @@ class DefaultController extends Controller {
         $em->flush();
 
         $this->addFlash('danger', 'Votre compte a bien été supprimé.');
+
+        $logger = $this->get('service_profile.logger');
+        $logger->info("[Profil supprimé] ".$this->getUser()->getUserFirstName()." "
+            .$this->getUser()->getUserLastName()." (" .$this->getUser()->getUsername(). ")");
 
         return $this->redirect($this->generateUrl('agil_default_homepage'));
     }
