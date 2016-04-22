@@ -128,3 +128,6 @@ fos_user:
 
 fos_js_routing:
     routes_to_expose: [ (.)* ]
+
+# Captcha Bundle
+gregwar_captcha: ~

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "44ea949bc0445abfb646dca80c239a03",
-    "content-hash": "d5531c89debc448406744cc9f4c69ba9",
+    "hash": "cf74e26f04910ee6fad14b704fc0d69f",
+    "content-hash": "ecf0432a8d80ffc2115ec15cc58e220f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1080,6 +1080,108 @@
                 "User management"
             ],
             "time": "2016-03-08 11:05:28"
+        },
+        {
+            "name": "gregwar/captcha",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Captcha.git",
+                "reference": "1240ab993ca713680573b2d4166900da5f758623"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/Captcha/zipball/1240ab993ca713680573b2d4166900da5f758623",
+                "reference": "1240ab993ca713680573b2d4166900da5f758623",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "captcha",
+            "autoload": {
+                "psr-4": {
+                    "Gregwar\\Captcha\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                },
+                {
+                    "name": "Jeremy Livingston",
+                    "email": "jeremy.j.livingston@gmail.com"
+                }
+            ],
+            "description": "Captcha generator",
+            "homepage": "https://github.com/Gregwar/Captcha",
+            "keywords": [
+                "bot",
+                "captcha",
+                "spam"
+            ],
+            "time": "2015-09-11 15:23:20"
+        },
+        {
+            "name": "gregwar/captcha-bundle",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/CaptchaBundle.git",
+                "reference": "53c25b2e9aaa7ddbdf7e9a6f69007b91a5f1efa0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/53c25b2e9aaa7ddbdf7e9a6f69007b91a5f1efa0",
+                "reference": "53c25b2e9aaa7ddbdf7e9a6f69007b91a5f1efa0",
+                "shasum": ""
+            },
+            "require": {
+                "gregwar/captcha": "~1.1",
+                "php": ">=5.3.9",
+                "symfony/form": "~2.1|~3.0",
+                "symfony/framework-bundle": "~2.1|~3.0"
+            },
+            "type": "captcha-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Gregwar\\CaptchaBundle\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                },
+                {
+                    "name": "Jeremy Livingston",
+                    "email": "jeremy.j.livingston@gmail.com"
+                }
+            ],
+            "description": "Captcha bundle",
+            "homepage": "https://github.com/Gregwar/CaptchaBundle",
+            "keywords": [
+                "Symfony2",
+                "bot",
+                "captcha",
+                "code",
+                "security",
+                "spam",
+                "visual"
+            ],
+            "time": "2016-02-02 22:40:33"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2686,6 +2788,52 @@
                 "persistence"
             ],
             "time": "2015-11-04 21:23:23"
+        },
+        {
+            "name": "emotionloop/visualcaptcha",
+            "version": "0.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emotionLoop/visualCaptcha-packagist.git",
+                "reference": "459cd8bdb9c65cb710a7579a01ca3cfa31278ffa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emotionLoop/visualCaptcha-packagist/zipball/459cd8bdb9c65cb710a7579a01ca3cfa31278ffa",
+                "reference": "459cd8bdb9c65cb710a7579a01ca3cfa31278ffa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "visualCaptcha": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "emotionLoop",
+                    "email": "hello@emotionloop.com",
+                    "homepage": "http://emotionloop.com"
+                }
+            ],
+            "description": "PHP library for visualCaptcha. Still requires you to have the front-end companion.",
+            "homepage": "http://visualcaptcha.net",
+            "keywords": [
+                "captcha",
+                "security",
+                "visualCaptcha"
+            ],
+            "time": "2015-07-12 09:17:03"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

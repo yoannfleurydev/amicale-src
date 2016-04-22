@@ -2,6 +2,7 @@
 
 namespace AGIL\OfferBundle\Form;
 
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -107,6 +108,8 @@ class OfferType extends AbstractType
                 'class' => 'form-control',
             )
         ));
+
+        $builder->add('captcha', CaptchaType::class);
 
         $builder->add('Ajouter', SubmitType::class, array(
             'label' => false,
