@@ -34,15 +34,6 @@
                                    target="_blank">{{ user.userCvUrl }}</a></p>
                     {% endif %}
 
-                    {% if is_granted('ROLE_USER') %}
-                        {% if user.userId == app.user.userId %}
-                            <a href="{{ path('agil_profile_delete') }}"
-                               title="Supprimer mon compte"
-                               class="btn btn-danger">
-                                <span class="glyphicon glyphicon-trash"></span> Supprimer mon compte
-                            </a>
-                        {% endif %}
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -103,6 +94,31 @@
                             </div>
                         {% endfor %}
                     {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if is_granted('ROLE_USER') %}
+        {% if user.userId == app.user.userId %}
+            <a role="button" data-href="{{ path('agil_profile_delete') }}"
+               data-target="#confirm-delete" type="button" data-toggle="modal" title="Supprimer mon compte"
+               class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash"></span> Supprimer mon compte
+            </a>
+        {% endif %}
+    {% endif %}
+
+    <!-- Panel qui s'affiche pour la confirmation de suppression -->
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Etes vous sûr ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-danger btn-ok">Confirmer</a>
                 </div>
             </div>
         </div>
