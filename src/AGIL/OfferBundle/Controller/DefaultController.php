@@ -3,6 +3,7 @@
 namespace AGIL\OfferBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AGIL\SearchBundle\Form\SearchType;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 
@@ -12,6 +13,9 @@ class DefaultController extends Controller
 
     public function indexAction($page)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         //$offers = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerPublish' => true),array('offerPostDate' => 'DESC'));
 
@@ -43,7 +47,8 @@ class DefaultController extends Controller
 
         return $this->render('AGILOfferBundle:Default:index.html.twig', array(
             'offers' => $offers,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 }

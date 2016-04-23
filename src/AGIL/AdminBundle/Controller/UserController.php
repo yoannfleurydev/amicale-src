@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use AGIL\SearchBundle\Form\SearchType;
 
 class UserController extends Controller
 {
@@ -29,6 +30,9 @@ class UserController extends Controller
      */
     public function adminUserAction(Request $request, $page)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
 
         $maxUsers = 25;
@@ -62,7 +66,8 @@ class UserController extends Controller
             'nbModerators' => count($moderators),
             'nbAdmins' => count($admins),
             'search' => $searchForm->createView(),
-            'usersSearch' => null
+            'usersSearch' => null,
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -73,6 +78,9 @@ class UserController extends Controller
      */
     public function adminUserUpAction($id)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AGILUserBundle:AgilUser')->find($id);
         $newRole = "";
@@ -109,6 +117,9 @@ class UserController extends Controller
      */
     public function adminUserDownAction($id)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AGILUserBundle:AgilUser')->find($id);
         $newRole = "";
@@ -145,6 +156,9 @@ class UserController extends Controller
      */
     public function adminUserDeleteAction($id)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AGILUserBundle:AgilUser')->find($id);
 
@@ -173,6 +187,9 @@ class UserController extends Controller
 
     public function adminUserSearchAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
 
         if($request->isXmlHttpRequest())
@@ -185,18 +202,14 @@ class UserController extends Controller
                 $usersSearch = $em->getRepository('AGILUserBundle:AgilUser')->searchByName($keyword);
 
                 return $this->render('AGILAdminBundle:User:admin_user_list.html.twig', array(
-                    'usersSearch' => $usersSearch
+                    'usersSearch' => $usersSearch,'formSearchBar' => $formSearchBar->createView()
                 ));
             }
             else {
                 return $this->render('AGILAdminBundle:User:admin_user_list.html.twig', array(
-                    'usersSearch' => null
+                    'usersSearch' => null,'formSearchBar' => $formSearchBar->createView()
                 ));
             }
-
-            return $this->render('AGILAdminBundle:User:admin_user.html.twig', array(
-                'usersSearch' => $users
-            ));
         }
         else {
             return $this->redirect( $this->generateUrl('agil_admin_user') );
@@ -211,6 +224,9 @@ class UserController extends Controller
      */
     public function adminUserAddAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
@@ -235,7 +251,8 @@ class UserController extends Controller
         }
         return $this->render('AGILAdminBundle:User:admin_user_add.html.twig', array(
             'form' => $form->createView(),
-            'formCSV' => $formCSV->createView()
+            'formCSV' => $formCSV->createView(),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 

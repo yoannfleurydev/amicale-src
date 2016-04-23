@@ -3,6 +3,7 @@
 namespace AGIL\ForumBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AGIL\SearchBundle\Form\SearchType;
 
 class DefaultController extends Controller
 {
@@ -15,6 +16,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
 
         $manager = $this->getDoctrine()->getManager();
 
@@ -31,6 +34,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('AGILForumBundle:Default:index.html.twig',
-            array('categoryList' => $categoryList,'subjectsPerCategories' => $subjectsPerCategories));
+            array('categoryList' => $categoryList,'subjectsPerCategories' => $subjectsPerCategories,
+                'formSearchBar' => $formSearchBar->createView()));
     }
 }

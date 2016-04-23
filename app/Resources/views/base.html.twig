@@ -83,14 +83,13 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right search-bar" aria-labelledby="dropdownMenu1">
                         <li>
-                            <form>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="search" size="20">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary">Rechercher</button>
-                                    </span>
-                                </div>
-                            </form>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    {{ form_start(formSearchBar, {'action' : path('agil_search_homepage'),'method': 'GET'}) }}
+                                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                                    {{ form_end(formSearchBar) }}
+                                </span>
+                            </div>
                         </li>
                     </ul>
                 </div>

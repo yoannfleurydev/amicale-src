@@ -14,6 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use AGIL\SearchBundle\Form\SearchType;
 use Essence\Essence;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -26,6 +27,9 @@ class EventController extends Controller
      */
     public function eventAddAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $event = new AgilEvent();
         $form = $this->createForm(new AddEventType(), null);
@@ -108,7 +112,8 @@ class EventController extends Controller
         }
 
         return $this->render('AGILHallBundle:Event:event_add.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -120,6 +125,9 @@ class EventController extends Controller
      */
     public function eventEditAction($idEvent, Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $user = $this->getUser();
         if (!$user->hasRole('ROLE_ADMIN') and !$user->hasRole('ROLE_SUPER_ADMIN')) {
             $this->addFlash('warning', 'Permission refusée');
@@ -228,12 +236,16 @@ class EventController extends Controller
 
         return $this->render('AGILHallBundle:Event:event_edit.html.twig', array(
             'form' => $form->createView(),
-            'event' => $event
+            'event' => $event,
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
     public function eventDeleteAction($idEvent, Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $user = $this->getUser();
         if (!$user->hasRole('ROLE_ADMIN') and !$user->hasRole('ROLE_SUPER_ADMIN')) {
             $this->addFlash('warning', 'Permission refusée');
@@ -290,7 +302,8 @@ HTML;
         return $this->render('AGILHallBundle:Event:event_delete.html.twig', array(
             'form' => $form->createView(),
             'event' => $event,
-            'eventContent' => $eventContent
+            'eventContent' => $eventContent,
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 }

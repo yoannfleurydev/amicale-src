@@ -7,9 +7,14 @@ use AGIL\UserBundle\Entity\AgilUser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use AGIL\SearchBundle\Form\SearchType;
 
 class DefaultController extends Controller {
+
     public function profileAction($id, Request $request) {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $userRepository = $this->getDoctrine()->getManager()->getRepository('AGILUserBundle:AgilUser');
         $profileSkillsCategoryRepository = $this->getDoctrine()->getManager()->getRepository('AGILProfileBundle:AgilProfileSkillsCategory');
         $tagRepository = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
@@ -131,7 +136,9 @@ class DefaultController extends Controller {
                 if ($form->get('username')->getData() == null || $form->get('email')->getData() == null) {
                     $this->addFlash('warning', 'Erreur ! Champs vides ou mal remplis !');
 
-                    return $this->render('AGILProfileBundle:Default:index.html.twig', array('user' => $user, 'form' => $form->createView()));
+                    return $this->render('AGILProfileBundle:Default:index.html.twig', array(
+                        'user' => $user, 'form' => $form->createView(),
+                        'formSearchBar' => $formSearchBar->createView()));
                 } else {
                     $userManager->updateUser($user);
                     $this->addFlash('success', 'Profil modifié.');
@@ -152,7 +159,8 @@ class DefaultController extends Controller {
                     'data' => $data,
                     'profileSkillsCategories' => $profileSkillsCategories,
                     'tags' => $tags,
-                    'skills' => $skills
+                    'skills' => $skills,
+                    'formSearchBar' => $formSearchBar->createView()
                 )
             );
         } else {
@@ -167,7 +175,8 @@ class DefaultController extends Controller {
                     'user' => $user,
                     'profileSkillsCategories' => $profileSkillsCategories,
                     'tags' => $tags,
-                    'skills' => $skills)
+                    'skills' => $skills,
+                    'formSearchBar' => $formSearchBar->createView())
             );
         }
     }
@@ -215,6 +224,10 @@ class DefaultController extends Controller {
      * la page de son profil.
      */
     public function deleteAction() {
+
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         if (empty($this->getUser()) || $this->getUser() === null) {
             $this->addFlash('danger', 'Vous ne pouvez pas accéder à cette partie');
 

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\VarDumper\VarDumper;
+use AGIL\SearchBundle\Form\SearchType;
 
 class CalendarController extends Controller
 {
@@ -30,6 +31,10 @@ class CalendarController extends Controller
 
     public function showCalendarAction()
     {
-        return $this->render('AGILHallBundle:Calendar:index.html.twig');
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
+        return $this->render('AGILHallBundle:Calendar:index.html.twig',
+            array('formSearchBar' => $formSearchBar->createView()));
     }
 }
