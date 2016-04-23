@@ -2,13 +2,25 @@
 
 {% block body %}
 
-    <p>Contenu du fichier de Logs Chat :</p>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+            <div class="panel">
+                <div class="panel-default">
+                    <div class="panel-body">
+                        <p><strong>Contenu du fichier de Logs Chat :</strong></p>
 
-    {# |nl2br permet d'interpréter les \n et d'afficher correctement le fichier avec les sauts de lignes #}
-    <p>{{ logsChat|nl2br }}</p>
+                        {# |nl2br permet d'interpréter les \n et d'afficher correctement le fichier avec les sauts de lignes #}
+                        <p><textarea class="form-control" rows="15">{{ logsChat|nl2br }}</textarea></p>
 
-    <form action="{{ path('agil_admin_logs_chat') }}" method="post">
-        <input type="submit" value="Vider les logs">
-    </form>
+                        <form action="{{ path('agil_admin_logs_chat') }}" method="post">
+                            <p class="text-center">
+                                <input class="btn btn-primary" type="submit" value="Vider les logs">
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
