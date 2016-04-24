@@ -255,21 +255,21 @@
                     <div class="panel-heading">
                         <h2 class="panel-title">
                         <span class="panel-title-content">
-                            Boite à suggestions
+                            Boite à idées
                         </span>
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <form action="#" method="POST">
+                        {{ form_start(form) }}
                             <div class="form-group">
                                 <label for="idea">Une idée ?</label>
-                                <textarea class="form-control" name="idea" id="idea"
-                                          placeholder="Entrer votre idée ici..."></textarea>
+                                {{ form_widget(form.idea) }}
+                                {{ form_errors(form.idea) }}
                             </div>
                             <div class="text-center">
-                                <input type="submit" class="btn btn-primary" value="Valider">
+                                {{ form_widget(form.Valider) }}
                             </div>
-                        </form>
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>

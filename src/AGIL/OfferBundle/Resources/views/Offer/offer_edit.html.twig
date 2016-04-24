@@ -72,7 +72,11 @@
                     <div class="form-group">
                         {{ form_widget(form.Modifier) }}
 
-                        <a class="btn btn-default" href="{{ path('agil_offer_view',{'id':offer.offerId}) }}">Annuler</a>
+                        {% if is_granted("ROLE_USER") %}
+                            <a class="btn btn-default" href="{{ path('agil_offer_view',{'id':offer.offerId}) }}">Annuler</a>
+                        {% else %}
+                            <a class="btn btn-default" href="{{ path('agil_offer_add') }}">Annuler</a>
+                        {% endif %}
 
                         <a role="button"
                            data-href="{{ path('agil_offer_delete', {'idCrypt': offer.offerRoute}) }}"

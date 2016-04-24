@@ -85,6 +85,7 @@ class OfferController extends Controller
             $message .= "<p>Merci d'avoir créé une annonce sur Amicale GIL !</p>";
             $message .= "<p>Pour confirmer votre annonce sur le site, veuillez cliquer sur le lien suivant :</p>";
             $message .= "<p><strong><a href=\"$url\" TARGET=\"_blank\">Confirmer votre annonce</a></strong></p>";
+            $message .= "<p><i>Il est important de garder ce mail pour pouvoir modifier ou supprimer cette annonce.</i></p>";
             $message .= "<p>Cordialement.</p>";
             $this->sendMail($subject, $message, $form->get('offerEmail')->getData());
 
@@ -107,7 +108,11 @@ class OfferController extends Controller
 
         if ($offer == null) {
             $this->addFlash('warning', 'Cette annonce n\'existe plus !');
-            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            if (!empty($this->getUser())) {
+                return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            } else {
+                return $this->redirect($this->generateUrl('agil_offer_add'));
+            }
         }
 
         $offer = $offer[0];
@@ -170,7 +175,12 @@ class OfferController extends Controller
             $em->persist($offer);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('agil_offer_view', array('id' => $offer->getOfferId())));
+            $this->addFlash('success','Annonce modifiée.');
+            if (!empty($this->getUser())) {
+                return $this->redirect($this->generateUrl('agil_offer_view', array('id' => $offer->getOfferId())));
+            } else {
+                return $this->redirect($this->generateUrl('agil_offer_edit', array('idCrypt' => $offer->getOfferRoute())));
+            }
         }
 
         $tagArray = "";
@@ -191,7 +201,12 @@ class OfferController extends Controller
 
         if ($offer == null) {
             $this->addFlash('success', 'Annonce déjà supprimée.');
-            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+
+            if (!empty($this->getUser())) {
+                return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            } else {
+                return $this->redirect($this->generateUrl('agil_offer_add'));
+            }
         }
 
         if ($offer->getOfferPdfUrl() != null) {
@@ -204,7 +219,12 @@ class OfferController extends Controller
         $em->flush();
 
         $this->addFlash('success', 'Annonce supprimée.');
-        return $this->redirect($this->generateUrl('agil_offer_homepage'));
+
+        if (!empty($this->getUser())) {
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+        } else {
+            return $this->redirect($this->generateUrl('agil_offer_add'));
+        }
     }
 
     /**
