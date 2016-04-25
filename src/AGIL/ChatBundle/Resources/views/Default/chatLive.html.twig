@@ -1,0 +1,30 @@
+{% extends "AGILChatBundle::baseChatBundle.html.twig" %}
+
+
+{% block body %}
+    <h3>Table : {{ chatTable.chatTableName }}</h3>
+    <div class="container">
+        <span id="idChatTable" idRoom="{{ chatTable.chatTableId }}">id table {{ chatTable.chatTableId }}</span>
+        <span id="idUser" idUser="{{ user.id }}">id user {{ user.id }}</span>
+        <div class="users_connected"></div>
+        <div class="new_user hidden"></div>
+
+
+        <!-- Ici qu'on affiches tous les messages -->
+        <div class="messages"></div>
+        <div class="col">
+            <div class="col-lg-12">
+                <h5>Message : </h5>
+                <textarea autofocus id="message_to_send" rows="5" value=""></textarea>
+                <a class="btn btn-primary send_message">Envoyer</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block botJavascript %}
+    <script src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+    <script src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
+    <script src="{{ asset('js/chat.js') }}"></script>
+{% endblock %}
