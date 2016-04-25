@@ -59,7 +59,7 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/search?tags=mobile+web&filter=offer&method=or&no=');
         $crawler = $this->client->followRedirect();
 
-        $this->assertContains("La recherche n'a retourné aucun résultat.", $this->client->getResponse()->getContent());
+        $this->assertContains("Développeur Web Backend", $this->client->getResponse()->getContent());
     }
 
 
