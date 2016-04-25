@@ -275,7 +275,7 @@
                                                 ({{ search.username }})</a></p>
                                         {% for skill in tagsProfile[search.id] %}
                                             <a href="{{ path('agil_search_homepage',{'tags':skill.tag.tagName}) }}"><span
-                                                        class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }}</span></a>
+                                                        class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }} : {{ skill.skillLevel }}/10</span></a>
                                         {% endfor %}
                                     </div>
                                 {% endfor %}

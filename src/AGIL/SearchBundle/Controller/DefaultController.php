@@ -240,7 +240,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('AGILSearchBundle:Default:index.html.twig',array(
-            'form' => $form->createView()
+            'form' => $form->createView(), 'formSearchBar' => $formSearchBar->createView()
         ));
     }
 

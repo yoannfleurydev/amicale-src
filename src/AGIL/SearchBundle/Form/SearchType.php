@@ -21,7 +21,7 @@ class SearchType extends AbstractType
             'attr' => array(
                 'class' => 'form-control',
                 'size' => 20,
-                'placeholder' => 'Recherche'
+                'placeholder' => 'Recherche',
             )
         ));
 
