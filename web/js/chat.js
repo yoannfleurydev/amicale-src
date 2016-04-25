@@ -130,8 +130,8 @@ function addMessage(msg) {
                     "<div class=\"panel panel-default\">" +
                     "<div class=\"panel-body\">" +
                     "<div class=\"col-lg-1 col-md-1 col-sm-1 col-xs-2\">" +
+                    "<div><img class=\"img-circle img-responsive\" src=\"/img/profile/" + image + "\" size='5px'></div>" +
                     "<div class=\"text-center " + couleur + "\">" + name + "</div>" +
-                    "<img class=\"img-responsive\" src=\"/img/profile/" + image + "\">" +
                     "</div>" +
                     "<div date=\"" + moment().format() + "\" class=\"contenu col-lg-12 col-md-12 col-sm-12 col-xs-12\">"
                     + msg.contenu
@@ -162,7 +162,7 @@ function actualiseDate() {
     //$('.message_received').children('.date').val();
 
     $('.message_received').each(function () {
-        var date_message = $(this).children('.contenu').attr('date');
+        var date_message = $(this).children('.date');
         $(this).children('.date').empty();
         $(this).children('.date').append(moment(date_message).fromNow());
 
