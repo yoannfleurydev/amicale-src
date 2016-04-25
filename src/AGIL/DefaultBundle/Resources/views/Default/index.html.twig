@@ -149,7 +149,7 @@
                                         <a class="internal-link" href="{{ path('agil_offer_view', {'id' : offer.offerId}) }}">{{ offer.offerTitle }}</a>
                                     </p>
                                     {% for tag in offer.tags %}
-                                        <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
                                     {% endfor %}
                                 </div>
                             {% endfor %}
