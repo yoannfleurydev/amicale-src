@@ -20,23 +20,25 @@
     <script type="text/javascript" src="{{ asset('js/fr.js') }}"></script>
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('icon/apple-icon-57x57.png') }}"/>
-    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('icon/apple-icon-60x60.png') }}"/>
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('icon/apple-icon-72x72.png') }}"/>
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('icon/apple-icon-76x76.png') }}"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('icon/apple-icon-114x114.png') }}"/>
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('icon/apple-icon-120x120.png') }}"/>
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('icon/apple-icon-144x144.png') }}"/>
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('icon/apple-icon-152x152.png') }}"/>
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('icon/apple-icon-180x180.png') }}"/>
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('icon/android-icon-192x192.png') }}"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icon/favicon-32x32.png') }}"/>
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('icon/favicon-96x96.png') }}"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('icon/favicon-16x16.png') }}"/>
-    <link rel="manifest" href="{{ asset('icon/manifest.json') }}"/>
-    <meta name="msapplication-TileColor" content="#34495f"/>
-    <meta name="msapplication-TileImage" content="{{ asset('icon/ms-icon-144x144.png') }}"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-touch-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-touch-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-touch-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/apple-touch-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon/apple-touch-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicon/apple-touch-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-touch-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-touch-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-32x32.png') }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ asset('favicon/android-chrome-192x192.png') }}" sizes="192x192">
+    <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-16x16.png') }}" sizes="16x16">
+    <link rel="manifest" href="{{ asset('favicon/manifest.json') }}">
+    <link rel="mask-icon" color="#5bbad5" href="{{ asset('favicon/safari-pinned-tab.svg') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon/mstile-144x144.png') }}">
+    <meta name="msapplication-TileColor" content="#34495f">
     <meta name="theme-color" content="#34495f">
+
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -49,7 +51,7 @@
                 </button>
                 <a class="hidden-xs hidden-sm" href="http://www.univ-rouen.fr"><img id="logo-university" class="img-responsive navbar-mobile" src="{{ asset("img/logo.png") }}" alt="logo univ"></a>
                 <div id="logo-agil">
-                    <a href="{{ path("agil_default_homepage") }}"><img class="img-responsive navbar-mobile" src="{{ asset("icon/apple-icon-60x60.png") }}" alt="logo agil"></a>
+                    <a href="{{ path("agil_default_homepage") }}"><img class="img-responsive navbar-mobile" src="{{ asset("favicon/apple-touch-icon-60x60.png") }}" alt="logo agil"></a>
                 </div>
 
                 <!--Si non connecté-->
@@ -83,13 +85,14 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right search-bar" aria-labelledby="dropdownMenu1">
                         <li>
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    {{ form_start(formSearchBar, {'action' : path('agil_search_homepage'),'method': 'GET'}) }}
+                            {{ form_start(formSearchBar, {'action' : path('agil_search_homepage'),'method': 'GET'}) }}
+                                <div class="input-group">
+                                {{ form_widget(formSearchBar.tags) }}
+                                    <span class="input-group-btn">
                                         <button type="submit" class="btn btn-primary">Rechercher</button>
-                                    {{ form_end(formSearchBar) }}
-                                </span>
-                            </div>
+                                    </span>
+                                </div>
+                            {{ form_end(formSearchBar) }}
                         </li>
                     </ul>
                 </div>

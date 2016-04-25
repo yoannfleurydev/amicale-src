@@ -9,8 +9,7 @@
                     <div class="panel-body">
                         <p><strong>Contenu du fichier de Logs Forum :</strong></p>
 
-                        {# |nl2br permet d'interpréter les \n et d'afficher correctement le fichier avec les sauts de lignes #}
-                        <p><textarea class="form-control" rows="15">{{ logsForum|nl2br }}</textarea></p>
+                        <p><textarea readonly="readonly" class="form-control" rows="15">{{ logsForum|raw }}</textarea></p>
 
                         <form action="{{ path('agil_admin_logs_forum') }}" method="post">
                             <p class="text-center">

@@ -28,13 +28,20 @@ class DefaultController extends Controller
         $subjectRepository = $manager ->getRepository('AGILForumBundle:AgilForumSubject');
 
         $subjectsPerCategories[] = NULL;
+        $answersCountPerSubject[] = NULL;
         foreach($categoryList as $c){
             $subjects = $subjectRepository->findBy(array('category' => $c),array('forumSubjectPostDate' => 'desc'),5);
             $subjectsPerCategories[$c->getForumCategoryId()] = $subjects;
+            foreach($subjects as $s){
+                $answersCountPerSubject[$s->getForumSubjectId()] = $subjectRepository->getCountAnswersInSubject($s->getForumSubjectId());
+            }
+
         }
 
         return $this->render('AGILForumBundle:Default:index.html.twig',
-            array('categoryList' => $categoryList,'subjectsPerCategories' => $subjectsPerCategories,
-                'formSearchBar' => $formSearchBar->createView()));
+            array('categoryList' => $categoryList,
+                'subjectsPerCategories' => $subjectsPerCategories,
+                'formSearchBar' => $formSearchBar->createView(),
+                'answersCountPerSubject' => $answersCountPerSubject));
     }
 }
