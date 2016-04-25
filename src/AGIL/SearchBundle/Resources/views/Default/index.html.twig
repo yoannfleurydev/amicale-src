@@ -222,7 +222,7 @@
                                     <div class="list-element">
                                         <p><a href="#" class="interne-link">{{ search.offerTitle }}</a></p>
                                         <em>{{ search.offerPostDate|date('d-m-Y') }}</em>
-                                        {% for tag in tagsOffer[search.offerId] %}
+                                        {% for tag in tagsOffers[search.offerId] %}
                                             <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
                                                         class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                                         {% endfor %}

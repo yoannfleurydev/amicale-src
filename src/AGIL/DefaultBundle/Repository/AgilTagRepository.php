@@ -447,10 +447,15 @@ class AgilTagRepository extends EntityRepository
 		});
 
 		// On retire les offres qui possèdent au moins un tag appartenant à $inputNoSplit
+		// et qui ne sont pas publiées
 		foreach($completeResult as $key => $res){
-			foreach($res[0]->getTags() as $tag){
-				if(in_array($tag->getTagName(),$inputNoSplit)){
-					unset($completeResult[$key]);
+			if($res[0]->getOfferPublish() == 0){
+				unset($completeResult[$key]);
+			}else{
+				foreach($res[0]->getTags() as $tag){
+					if(in_array($tag->getTagName(),$inputNoSplit)){
+						unset($completeResult[$key]);
+					}
 				}
 			}
 		}

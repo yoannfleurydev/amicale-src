@@ -56,11 +56,10 @@ class DefaultControllerTest extends WebTestCase
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
 
-        $crawler = $this->client->request('GET', '/search?tags=php+java&filter=forum&method=or&no=android');
+        $crawler = $this->client->request('GET', '/search?tags=mobile+web&filter=offer&method=or&no=');
         $crawler = $this->client->followRedirect();
 
-        $this->assertNotContains('[Projet] BDD', $this->client->getResponse()->getContent());
-        $this->assertContains('[Aide] Cours de Compilation', $this->client->getResponse()->getContent());
+        $this->assertContains("La recherche n'a retourné aucun résultat.", $this->client->getResponse()->getContent());
     }
 
 
