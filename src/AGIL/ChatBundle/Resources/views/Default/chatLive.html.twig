@@ -9,8 +9,26 @@
         <div class="users_connected"></div>
         <div class="new_user hidden"></div>
 
+        {% include 'AGILChatBundle:Default:lastMessages.html.twig' with {'lastMessages': lastMessages}  %}
 
         <!-- Ici qu'on affiches tous les messages -->
+        {% if messages is defined %}
+            {% for message in messages %}
+                <div class="row">
+                    <div idUser="{{ message.user.id }}"
+                         class="message_received panel col-lg-6 col-md-6 col-sm-6 col-xs-8 ">
+
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                            <div class="text-center">{{ message.user.username }}</div>
+                            <img class="img-responsive"
+                                 src="{{ asset("img/profile/") ~ message.user.userProfilePictureUrl }}">
+                        </div>
+                        <div class="contenu col-lg-11 col-md-11 col-sm-11 col-xs-10"><p>{{ message.chatMessageText }}</p></div>
+                        <div class="date">{{ message.chatMessageDate|localizeddate('none', 'none', null, null, 'd LLL H:mm') }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
         <div class="messages"></div>
         <div class="col">
             <div class="col-lg-12">

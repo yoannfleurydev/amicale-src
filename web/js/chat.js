@@ -3,11 +3,24 @@ var message = $("#ChatMessage");
 var sessionGlobal = null;
 var idChatTable;
 var idUser;
+var nb_msg;
 
 $(document).ready(function () {
     idChatTable = $('#idChatTable').attr("idRoom");
     idUser = $('#idUser').attr("idUser");
     $('#message_to_send').focus();
+    nb_msg = $('.contenu').length;
+});
+
+$(window).on('scroll', function() {
+        if (document.body.scrollTop === 0) {
+        if (nb_msg >= 100) {
+            $.post(Routing.generate('agil_chat_message_load'), {id_table: idChatTable, nb_msg: nb_msg})
+                .done(function (data) {
+                    nb_msg = $('.contenu').length - 100;
+                });
+        }
+    }
 });
 
 webSocket.on("socket/connect", function (session) {
@@ -119,9 +132,9 @@ function addMessage(msg) {
             var image = user.profilPicture;
             var lastMessage = $('.message_received').last();
 
+            var date = moment().format();
             if (lastMessage.attr('idUser') == user.userId) {
                 lastMessage.children('.contenu').append(msg.contenu + "<br/>");
-
             } else {
                 var theMessage =
                     "<div class=\"row\">" +
@@ -131,7 +144,7 @@ function addMessage(msg) {
                     "<div class=\"text-center " + couleur + "\">" + name + "</div>" +
                     "<img class=\"img-responsive\" src=\"/img/profile/" + image + "\">" +
                     "</div>" +
-                    "<div date=\"" + moment().format() + "\" class=\"contenu col-lg-11 col-md-11 col-sm-11 col-xs-10\">" + msg.contenu + "<br/></div>" +
+                    "<div date=\"" + date + "\" class=\"contenu col-lg-11 col-md-11 col-sm-11 col-xs-10\">" + msg.contenu + "<br/></div>" +
                     "<div class=\"date\"></div>" +
                     "</div>" +
 
@@ -143,6 +156,9 @@ function addMessage(msg) {
                 messages.append(theMessage);
 
             }
+
+            $.post(Routing.generate('agil_chat_message'), {msg_content: msg.contenu, msg_date:date, id_table: idChatTable})
+                .done(function (data) {});
 
         });
 

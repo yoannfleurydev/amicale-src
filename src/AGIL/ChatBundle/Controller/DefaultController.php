@@ -2,11 +2,13 @@
 
 namespace AGIL\ChatBundle\Controller;
 
+use AGIL\ChatBundle\Entity\AgilChatMessage;
 use AGIL\ChatBundle\Entity\AgilChatTable;
 use AGIL\ChatBundle\Form\ChatTableType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Date;
 
 class DefaultController extends Controller
 {
@@ -54,10 +56,15 @@ class DefaultController extends Controller
 
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
         $table= $chatTableRepository ->find($roomId);
+        $messages = $manager->getRepository('AGILChatBundle:AgilChatMessage')->findBy(
+            array('table' => $table),
+            array('chatMessageDate' => 'ASC'),
+            100
+        );
 
         if($table!=null){
             $user =$this->getUser();
-            return $this->render('AGILChatBundle:Default:chatLive.html.twig', array('chatTable'=>$table,'user'=>$user));
+            return $this->render('AGILChatBundle:Default:chatLive.html.twig', array('chatTable'=>$table,'user'=>$user,'messages' => $messages, 'lastMessages' => null));
         }else{
             $this->addFlash('warning', "La table id " . $roomId. " n'existe pas .");
             return $this->redirectToRoute('agil_chat_homepage');
@@ -82,5 +89,54 @@ class DefaultController extends Controller
                 return new Response(json_encode($user_final));
         }
         return new Response("erreur...");
+    }
+
+    public function addChatMessageAction(Request $request) {
+
+        if($request->isXmlHttpRequest())
+        {
+            $content = $request->get('msg_content');
+            $date = $request->get('msg_date');
+            $idTable = $request->get('id_table');
+
+            if (!empty($content) && !empty($date) && !empty($idTable)) {
+                $em = $this->getDoctrine()->getManager();
+                $user = $this->getUser();
+                $table = $em->getRepository('AGILChatBundle:AgilChatTable')->find($idTable);
+
+                if ($user != null && $table != null) {
+                    $message = new AgilChatMessage($user, $table, $content, new \DateTime($date));
+                    $em->persist($message);
+                    $em->flush($message);
+                }
+            }
+        }
+        return new Response();
+    }
+
+    public function loadChatMessageAction(Request $request) {
+
+        if($request->isXmlHttpRequest())
+        {
+            $offset = $request->get('nb_msg');
+            $idTable = $request->get('id_table');
+
+            if (!empty($offset) && !empty($idTable)) {
+                $em = $this->getDoctrine()->getManager();
+                $table = $em->getRepository('AGILChatBundle:AgilChatTable')->find($idTable);
+
+                if (!empty($table)) {
+                    $messages = $em->getRepository('AGILChatBundle:AgilChatMessage')->findBy(
+                        array('table' => $table),
+                        array('chatMessageDate' => 'ASC'),
+                        100,
+                        $offset
+                    );
+
+                    return $this->render('AGILChatBundle:Default:lastMessages.html.twig', array('lastMessages' => $messages));
+                }
+            }
+        }
+
     }
 }

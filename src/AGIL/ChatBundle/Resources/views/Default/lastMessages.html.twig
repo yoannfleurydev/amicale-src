@@ -1,0 +1,18 @@
+{% if lastMessages is not null %}
+    {% for message in lastMessages %}
+        <div class="row">
+            <div idUser="{{ message.user.id }}"
+                 class="message_received panel col-lg-6 col-md-6 col-sm-6 col-xs-8 ">
+
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                    <div class="text-center">{{ message.user.username }}</div>
+                    <img class="img-responsive"
+                         src="{{ asset("img/profile/") ~ message.user.userProfilePictureUrl }}">
+                </div>
+                <div class="contenu col-lg-11 col-md-11 col-sm-11 col-xs-10"><p>{{ message.chatMessageText }}</p></div>
+                <div class="date">{{ message.chatMessageDate|localizeddate('none', 'none', null, null, 'd LLL H:mm') }}</div>
+            </div>
+        </div>
+    {% endfor %}
+    <hr />
+{% endif %}
