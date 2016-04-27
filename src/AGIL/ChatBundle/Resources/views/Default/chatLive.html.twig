@@ -2,39 +2,96 @@
 
 
 {% block body %}
-    <h3>Table : {{ chatTable.chatTableName }}</h3>
-    <div class="container">
-        <span id="idChatTable" idRoom="{{ chatTable.chatTableId }}">id table {{ chatTable.chatTableId }}</span>
-        <span id="idUser" idUser="{{ user.id }}">id user {{ user.id }}</span>
-        <div class="users_connected"></div>
-        <div class="new_user hidden"></div>
-
-        {% include 'AGILChatBundle:Default:lastMessages.html.twig' with {'lastMessages': lastMessages}  %}
-
-        <!-- Ici qu'on affiches tous les messages -->
-        {% if messages is defined %}
-            {% for message in messages %}
-                <div class="row">
-                    <div idUser="{{ message.user.id }}"
-                         class="message_received panel col-lg-6 col-md-6 col-sm-6 col-xs-8 ">
-
-                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                            <div class="text-center">{{ message.user.username }}</div>
-                            <img class="img-responsive"
-                                 src="{{ asset("img/profile/") ~ message.user.userProfilePictureUrl }}">
-                        </div>
-                        <div class="contenu col-lg-11 col-md-11 col-sm-11 col-xs-10"><p>{{ message.chatMessageText }}</p></div>
-                        <div class="date">{{ message.chatMessageDate|localizeddate('none', 'none', null, null, 'd LLL H:mm') }}</div>
-                    </div>
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                          Table : {{ chatTable.chatTableName }}
+                        </span>
+                    </h2>
                 </div>
-            {% endfor %}
-        {% endif %}
-        <div class="messages"></div>
-        <div class="col">
-            <div class="col-lg-12">
-                <h5>Message : </h5>
-                <textarea autofocus id="message_to_send" rows="5" value=""></textarea>
-                <a class="btn btn-primary send_message">Envoyer</a>
+                <div class="panel-body">
+                    <span id="idChatTable" idRoom="{{ chatTable.chatTableId }}">id table {{ chatTable.chatTableId }}</span>
+                    <span id="idUser" idUser="{{ user.id }}">id user {{ user.id }}</span>
+                    <div class="users_connected"></div>
+                    <div class="new_user hidden"></div>
+
+       				 {% include 'AGILChatBundle:Default:lastMessages.html.twig' with {'lastMessages': lastMessages}  %}
+
+			        <!-- Ici qu'on affiches tous les messages -->
+			        {% if messages is defined %}
+			            {% for message in messages %}
+			                <div class="row">
+			                    <div idUser="{{ message.user.id }}"
+			                         class="message_received panel col-lg-6 col-md-6 col-sm-6 col-xs-8 ">
+
+			                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+			                            <div class="text-center">{{ message.user.username }}</div>
+			                            <img class="img-responsive"
+			                                 src="{{ asset("img/profile/") ~ message.user.userProfilePictureUrl }}">
+			                        </div>
+			                        <div class="contenu col-lg-11 col-md-11 col-sm-11 col-xs-10"><p>{{ message.chatMessageText }}</p></div>
+			                        <div class="date">{{ message.chatMessageDate|localizeddate('none', 'none', null, null, 'd LLL H:mm') }}</div>
+			                    </div>
+			                </div>
+			            {% endfor %}
+			        {% endif %}
+      
+			        <!-- Ici qu'on affiches tous les messages -->
+			        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+			            <div class="well">
+			                <div class="messages"></div>
+			            </div>
+			        </div>
+			        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+			            <form>
+			                <div class="form-group">
+			                    <label for="message_to_send">Répondre :</label>
+			                    <input class="form-control" autofocus id="message_to_send" value="">
+			                </div>
+			                <p class="text-center">
+			                    <a class="btn btn-primary send_message">Envoyer</a>
+			                </p>
+			            </form>
+			        </div>
+			    </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Utilisateurs connectés
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <div class="list">
+                            <div class="list-element">
+                                <img class="img-circle" src="/img/profile/default.jpg" width="20px">
+                                Jean neige
+                            </div>
+                            <div class="list-element">
+                                <img class="img-circle" src="/img/profile/default.jpg" width="20px">
+                                Melissandre
+                            </div>
+                            <div class="list-element">
+                                <img class="img-circle" src="/img/profile/default.jpg" width="20px">
+                                Sansa stark
+                            </div>
+
+                            <div class="list-element">
+                                <img class="img-circle" src="/img/profile/default.jpg" width="20px">
+                                Aria Stark (aka Daredevil)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
