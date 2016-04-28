@@ -3,11 +3,17 @@ var text = "En poursuivant votre navigation sur ce site, vous acceptez l’utili
 var ok = "OK";
 
 $(document).ready(function () {
+    var jBodyElement = $("body");
+
     if (getCookie("cookie") !== "true") {
-        $("body").append('<div class="cookie_popup">' + text + '<button class="cookie_popup_ok">' + ok + '</button></div>');
+        jBodyElement.append('<div class="alert alert-info cookie_popup"><p class="text-justify">'
+            + text
+            + '</p><button class="cookie_popup_ok btn btn-primary btn-block">'
+            + ok
+            + '</button></div>');
     }
 
-    $("body").on('click', '.cookie_popup_ok', function() {
+    jBodyElement.on('click', '.cookie_popup_ok', function() {
         $('.cookie_popup').fadeOut();
         setCookie("cookie", "true", 30);
     });

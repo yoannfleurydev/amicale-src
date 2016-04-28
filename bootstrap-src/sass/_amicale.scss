@@ -781,3 +781,10 @@ $margin-value: 15px !important;
   color: $orange-color;
   cursor: pointer;
 }
+
+.cookie_popup {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+}
