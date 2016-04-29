@@ -4,9 +4,12 @@
 {% block body %}
     <h3>Table : {{ chatTable.chatTableName }}</h3>
     <div class="container">
+        <div id="users_connected">
+        </div>
+        <hr/>
         <span id="idChatTable" idRoom="{{ chatTable.chatTableId }}">id table {{ chatTable.chatTableId }}</span>
         <span id="idUser" idUser="{{ user.id }}">id user {{ user.id }}</span>
-        <div class="users_connected"></div>
+
         <div class="new_user hidden"></div>
 
 

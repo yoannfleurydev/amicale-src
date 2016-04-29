@@ -3,6 +3,7 @@ var message = $("#ChatMessage");
 var sessionGlobal = null;
 var idChatTable;
 var idUser;
+var lesUsers = [];
 
 $(document).ready(function () {
     idChatTable = $('#idChatTable').attr("idRoom");
@@ -11,36 +12,83 @@ $(document).ready(function () {
 });
 
 webSocket.on("socket/connect", function (session) {
+
     sessionGlobal = session;
+    // Connexion de l'utilisateur au chat
     session.subscribe("agil/chat/" + idChatTable + "/", function (uri, payload) {
+
+        // Reception d'un message
         if (payload.msg != null) {
-            console.log('message de : ' + payload.msg.id_user);
             addMessage(payload.msg);
+
         }
-        /*if(payload.users != null){
-            console.log("---"+JSON.parse(payload.users));
-        }*/
+        // Quand on se connecte
+        if (payload.se_co != null) {
+
+            var connec = {'type': 'user_co', 'id_user': idUser, 'id': payload.se_co};
+            session.publish("agil/chat/" + idChatTable + "/", connec)
+        }
+
+        if (payload.user_add != null) {
+            if (lesUsers.indexOf(payload.user_add) == -1) {
+                lesUsers.push(payload.user_add);
+                console.log("ajout d'un utilisateur : " + payload.user_add);
+                $.post(Routing.generate('agil_chat_user'), {id_user: payload.user_add})
+                    .done(function (data) {
+                        var user = jQuery.parseJSON(data);
+                        $('#users_connected').append(
+                            "<span class=\"user_connected\" id_user=" + user.userId + ">" +
+                            "<div class=\" col-lg-2 col-md-2 col-sm-2 col-xs-2\">" +
+                            "<img class=\"img-responsive\" src=\"/img/profile/" + user.profilPicture + "\">" +
+                            "<span>" + user.userName + "</span>" +
+                            "</div>" + "</span>"
+                        );
+                    });
+            }
+
+        }
+
+        if (payload.user_remove != null) {
+            console.log("déco de : " + payload.user_remove);
+            if(lesUsers.indexOf(payload.user_remove)!=-1){
+                lesUsers.splice(lesUsers.indexOf(payload.user_remove), 1);
+            }
+            $('.user_connected[id_user="' + payload.user_remove + '"]').remove();
+        }
+
+        if (payload.users != null && payload.users != 'false') {
+
+            /* console.log(payload.users);
+             var users = JSON.stringify(payload.users);
+             console.log("entrée : " + users);
+
+             $.post(Routing.generate('agil_chat_users'), {users: users})
+             .done(function (data) {
+             $("#users_connected").html("");
+             var lesUsers = jQuery.parseJSON(data);
+             console.log(lesUsers);
+             for (var k in lesUsers) {
+             var user = lesUsers[k];
+             $('#users_connected').append(
+             "<span class=\"user_connected\">" +
+             "<div class=\" col-lg-2 col-md-2 col-sm-2 col-xs-2\" id_user=" + user.userId + ">" +
+             "<img class=\"img-responsive\" src=\"/img/profile/" + user.profilPicture + "\">" +
+             "<span>" + user.userName + "</span>" +
+             "</div>" + "</span>"
+             );
+             }
+             }
+             );
+             */
+        }
+
+
         // timer
         if (payload.refresh != null) {
             actualiseDate();
         }
-        if (payload.msg_co != null) {
-            console.log(payload.msg_co);
-
-            // Afficher une petite popup 5 secondes
-        }
-        if (payload.msg_deco != null) {
-        }
-        if (payload.users != null) {
-            var users = jQuery.parseJSON(payload.users);
-           console.log(users[0]);
-            //console.log(JSON.parse(payload.users));*/
-        }
-        if (payload.con != null) {
-            console.log(JSON.stringify(payload.con));
-        }
-
     });
+
 
     $('.send_message').on('click', function () {
         send();
@@ -84,7 +132,7 @@ webSocket.on("socket/connect", function (session) {
     function send() {
 
         var textArea = $('#message_to_send');
-        var message = {'id_user': idUser, 'contenu': textArea.val()};
+        var message = {'type': 'msg', 'id_user': idUser, 'contenu': textArea.val()};
         if (message.contenu != '') {
             session.publish("agil/chat/" + idChatTable + "/", message);
             textArea.val('');
@@ -147,11 +195,7 @@ function addMessage(msg) {
         });
 
 }
-
 function actualiseDate() {
-    //$('.message_received').children('.date').empty();
-    //var dateMessage = $('.message_received').children('.contenu')
-    //$('.message_received').children('.date').val();
 
     $('.message_received').each(function () {
         var date_message = $(this).children('.contenu').attr('date');

@@ -15,3 +15,9 @@ agil_chat_user:
     defaults:
         _controller: AGILChatBundle:Default:getUserById
     methods: [POST]
+
+agil_chat_users:
+    path:     /users
+    defaults:
+        _controller: AGILChatBundle:Default:getUsersById
+    methods: [POST]

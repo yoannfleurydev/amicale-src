@@ -29,7 +29,7 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
             new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
-            //new Snc\RedisBundle\SncRedisBundle(),
+//            new Snc\RedisBundle\SncRedisBundle(),
             );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
@@ -38,7 +38,7 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
-            //$bundles[] = new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle();
+            $bundles[] = new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle();
         }
 
         return $bundles;

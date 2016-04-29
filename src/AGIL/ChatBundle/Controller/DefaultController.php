@@ -24,15 +24,15 @@ class DefaultController extends Controller
         $chatTableRepository = $manager->getRepository('AGILChatBundle:AgilChatTable');
         $chatTableList = $chatTableRepository->findAll();
 
-        $form = $this->createForm(new ChatTableType(), $chatTable, array('attr'=>array('autocomplete'=>'off')));
+        $form = $this->createForm(new ChatTableType(), $chatTable, array('attr' => array('autocomplete' => 'off')));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
 
             $chatTableTest = $chatTableRepository->findBy(array('chatTableName' => $form->get('chatTableName')->getData()));
-            if($chatTableTest != null){
+            if ($chatTableTest != null) {
                 $this->addFlash('warning', 'Le nom de Table est déjà utilisé');
-            }else{
+            } else {
                 $chatTable->setUser($user);
                 $em->persist($chatTable);
                 $em->flush();
@@ -53,13 +53,13 @@ class DefaultController extends Controller
         $chatTableRepository = $manager->getRepository('AGILChatBundle:AgilChatTable');
 
         // Récupération de l'objet Category par rapport à l'ID spécifié dans l'URL
-        $table= $chatTableRepository ->find($roomId);
+        $table = $chatTableRepository->find($roomId);
 
-        if($table!=null){
-            $user =$this->getUser();
-            return $this->render('AGILChatBundle:Default:chatLive.html.twig', array('chatTable'=>$table,'user'=>$user));
-        }else{
-            $this->addFlash('warning', "La table id " . $roomId. " n'existe pas .");
+        if ($table != null) {
+            $user = $this->getUser();
+            return $this->render('AGILChatBundle:Default:chatLive.html.twig', array('chatTable' => $table, 'user' => $user));
+        } else {
+            $this->addFlash('warning', "La table id " . $roomId . " n'existe pas .");
             return $this->redirectToRoute('agil_chat_homepage');
         }
 
@@ -71,15 +71,35 @@ class DefaultController extends Controller
      * @param Request $req
      * @return Response
      */
-    public function getUserByIdAction(Request $req){
+    public function getUserByIdAction(Request $req)
+    {
         if ($req->isXMLHttpRequest()) {
             $idUser = $req->get('id_user');
 
             $em = $this->getDoctrine()->getManager();
-            $user  = $em->getRepository('AGILUserBundle:AgilUser')->find($idUser);
-            $user_final = array('userName'=>$user->getUserName(), 'userId'=>$user->getUserId(), 'profilPicture'=>$user->getUserProfilePictureUrl());
+            $user = $em->getRepository('AGILUserBundle:AgilUser')->find($idUser);
+            $user_final = array('userName' => $user->getUserName(), 'userId' => $user->getUserId(), 'profilPicture' => $user->getUserProfilePictureUrl());
 
-                return new Response(json_encode($user_final));
+            return new Response(json_encode($user_final));
+        }
+        return new Response("erreur...");
+    }
+
+    public function getUsersByIdAction(Request $req)
+    {
+        if ($req->isXMLHttpRequest()) {
+            $ids = json_decode($req->get('users'), true);
+
+            $em = $this->getDoctrine()->getManager();
+            $users = array();
+            foreach ($ids as $idUser) {
+                if ($idUser != "") {
+                    $user = $em->getRepository('AGILUserBundle:AgilUser')->find($idUser);
+                    $user_final = array('userName' => $user->getUserName(), 'userId' => $user->getUserId(), 'profilPicture' => $user->getUserProfilePictureUrl());
+                    array_push($users, $user_final);
+                }
+            }
+            return new Response(json_encode($users));
         }
         return new Response("erreur...");
     }

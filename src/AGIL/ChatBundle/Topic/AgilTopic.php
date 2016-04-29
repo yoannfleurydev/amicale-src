@@ -12,15 +12,9 @@ use Gos\Bundle\WebSocketBundle\Router\WampRequest;
 
 class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
 {
-    protected $clientManipulator;
 
-    /**
-     * @param ClientManipulatorInterface $clientManipulator
-     */
-    public function __construct(ClientManipulatorInterface $clientManipulator)
-    {
-        $this->clientManipulator = $clientManipulator;
-    }
+    protected $users;
+
 
     /**
      * @var TopicPeriodicTimer
@@ -43,8 +37,8 @@ class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
     public function registerPeriodicTimer(Topic $topic)
     {
         //add
-        $this->periodicTimer->addPeriodicTimer($this, 'hello', 5, function() use ($topic) {
-            $topic->broadcast(['msg'=>"ellooooo"]);
+        $this->periodicTimer->addPeriodicTimer($this, 'hello', 5, function () use ($topic) {
+            $topic->broadcast(['msg' => "ellooooo"]);
         });
 
         //exist
@@ -65,33 +59,28 @@ class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
     public function onSubscribe(ConnectionInterface $connection, Topic $topic, WampRequest $request)
     {
 
-        $user = $this->clientManipulator->getClient($connection);
-
-        //this will broadcast the message to ALL subscribers of this topic.
         /** @var ConnectionPeriodicTimer $topicTimer */
         $topicTimer = $connection->PeriodicTimer;
 
         //Add periodic timer
-        $topicTimer->addPeriodicTimer('hello', 60, function() use ($topic, $connection) {
+        $topicTimer->addPeriodicTimer('hello', 150, function () use ($topic, $connection) {
             ;
             $topic->broadcast([
                 'refresh' => "coucou",
             ]);
-            // $topic->broadcast(['msg' => 'coucou']);
-            //$connection->event($topic->getId(), ['msg' => 'hello world']);
         });
+
 
         //exist
         $topicTimer->isPeriodicTimerActive('hello'); //true or false
 
-        //Remove periodic timer
-        //$topicTimer->cancelPeriodicTimer('hello');
-        $user = $this->clientManipulator->getClient($connection);
-        $users = $this->clientManipulator->getAll($topic);
+//        $user = $this->clientManipulator->getClient($connection);
+        $this->users[$topic->getId()] = array($connection->resourceId => "");
+
         $topic->broadcast(
             [
-                'msg_co' => $user . " a rejoint " . $topic->getId(). '. Vous êtes maintenant : '.$topic->count(),
-                'users' => json_encode($users)
+                'se_co' => $connection->resourceId,
+                'users' => $this->users[$topic->getId()]
             ]);
     }
 
@@ -105,9 +94,27 @@ class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
      */
     public function onUnSubscribe(ConnectionInterface $connection, Topic $topic, WampRequest $request)
     {
-        //this will broadcast the message to ALL subscribers of this topic.
+        $tmp = null;
 
-        $topic->broadcast(['msg_deco' => $connection->resourceId . " has left " . $topic->getId() ." --> "]);
+        if (isset($this->users)) {
+            $tmp = $this->users[$topic->getId()][$connection->resourceId];
+            unset($this->users[$topic->getId()][$connection->resourceId]);
+        }
+
+        if ($tmp != null) {
+            $topic->broadcast([
+                'msg_deco' => $connection->resourceId . " has left " . $topic->getId() . " --> ",
+//            'users' => $this->users[$topic->getId()]
+                'user_remove' => $tmp
+            ]);
+        } else {
+            $topic->broadcast([
+                'msg_deco' => $connection->resourceId . " has left " . $topic->getId() . " --> ",
+//            'users' => $this->users[$topic->getId()]
+//                'user_remove' => $this->users[$topic->getId()][$connection->resourceId]
+            ]);
+        }
+
     }
 
     /**
@@ -121,31 +128,29 @@ class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
      * @param array $eligibles
      * @return mixed|void
      */
+
+
     public function onPublish(ConnectionInterface $connection, Topic $topic, WampRequest $request, $event, array $exclude, array $eligible)
     {
-        /*
-            $topic->getId() will contain the FULL requested uri, so you can proceed based on that
 
-            if ($topic->getId() == "acme/channel/shout")
-               //shout something to all subs.
+        switch ($event['type']) {
+            // Quand un user se connecte
+            case "user_co":
+                $this->users[$topic->getId()][$connection->resourceId] = intval($event['id_user']);
+                var_dump($this->users[$topic->getId()]);
+                $topic->broadcast([
+                    'user_add' => intval($event['id_user']),
+//                    'users' => $this->users[$topic->getId()]
+                ]);
 
-        */
-        //this will broadcast the message to ALL subscribers of this topic.
-        $users = array();
-        /** @var ConnectionInterface $client **/
-        foreach ($topic as $client) {
-            array_push($users, $client);
+                break;
+            case "msg":
+                $topic->broadcast([
+                    'msg' => $event,
+//                    'users' => $this->users[$topic->getId()]
+                ]);
+                break;
         }
-
-
-        $topic->broadcast([
-            'msg' => $event,
-            'users' => json_encode($users),
-        ]);
-    }
-
-    public function onCreateChan(ConnectionInterface $connection, Topic $topic, WampRequest $request){
-
     }
 
 
