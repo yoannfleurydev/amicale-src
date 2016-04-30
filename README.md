@@ -1,45 +1,44 @@
-amicale-src
+AmicaleGIL
 ===========
 
 Amicale GIL (Génie de l'Informatique Logicielle) is a University Project.
 
+## Customization
+
+To theme the application, you need to work with the `bootstrap-src/sass` files.
+To compile the files, you need `gulp`. Let's install it with npm :
+
+```bash
+npm install -g gulp
+```
+
+To install all the dependencies, you need to run `npm install` in the root folder where the `package.json` file is.
+Gulp is now ready. Just run `gulp css` to compile from SASS files to a CSS one. You can also run `gulp css:watch` to
+compile the SASS on the fly when you save any of the files.
+
 ## Installation
 
-1. Clone this repository
+You'll need [Composer](https://getcomposer.org/) to install all the PHP dependencies. When composer is installed on
+your server, run `composer install` to install all the dependencies such as the Symfony framework, captcha component
+etc.
 
-    ```
-     git clone https://github.com/yoannfleurydev/amicale-src.git
-    ```
+### Development
 
+1. You just need to launch the file named `launch.sh` to install everything.
 
-###Installation GULP
+### Production
 
-Pour compiler le css (et le minifier) on utilise gulp.
+1. Manually run `app/check.php` to see if you server is ready to host this application.
 
-Tout d'abord il faut installer node.js.
-Ensuite dans un terminal entrez : 
+2. Symfony requires some PHP extensions to run perfectly : `json`, `ctype`. Also, this application need `gd`. You can
+take a look at [this Symfony 2.8 wiki page](http://symfony.com/doc/2.8/reference/requirements.html) to see all the
+requirements needed by Symfony.
 
-<code>npm install -g gulp</code>
+## Contributors
 
-Une fois gulp installé, avec un terminal, allez dans le repertoire du projet. Puis entrez :
-
-<code>npm install</code>
-
-Cela va télécharger puis installer les dépendances nécessaires pour compiler le sass et minifier le css.
-
-Tout est prêt gulp est utilisable.
-
-###Les commande GULP
-
-Toutes les commandes ci-dessous sont à executer à la racine du projet (la où il y a le fichier gulp.js)
-
-Pour compiler le sass et minifier le css :
-
-<code>gulp css</code>
-
-Attention le nouveau fichier css est automatique copier dans web/css à la place de l'ancien.
-
-Pour mettre gulp en mode watch, c'est à dire que gulp surveille les fichiers sass et effectue l'opération ci-dessus à chaque 
-modification d'un fichier. Il faut utiliser :
-
-<code>gulp css:watch</code>
+* [Vincent Bernière](mailto:vincent.berniere@etu.univ-rouen.fr)
+* [Quentin Brodier](mailto:quentin.brodier@etu.univ-rouen.fr)
+* [Matthieu Coulon](mailto:matthieu.coulon@etu.univ-rouen.fr)
+* [Valentin Crochemore](mailto:valentin.crochemore1@etu.univ-rouen.fr)
+* [Yoann Fleury](mailto:yoann.fleury@etu.univ-rouen.fr)
+* [Mohamed Ibrihen](mailto:mohamed.ibrihen@etu.univ-rouen.fr)
