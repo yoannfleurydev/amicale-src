@@ -16,8 +16,14 @@ agil_chat_user:
         _controller: AGILChatBundle:Default:getUserById
     methods: [POST]
 
-agil_chat_users:
-    path:     /users
+agil_chat_message:
+    path:     /message
     defaults:
-        _controller: AGILChatBundle:Default:getUsersById
+        _controller: AGILChatBundle:Default:addChatMessage
+    methods: [POST]
+
+agil_chat_message_load:
+    path:     /message/load
+    defaults:
+        _controller: AGILChatBundle:Default:loadChatMessage
     methods: [POST]

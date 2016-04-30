@@ -2,7 +2,6 @@
 
 namespace AGIL\ChatBundle\Topic;
 
-use Gos\Bundle\WebSocketBundle\Client\ClientManipulatorInterface;
 use Gos\Bundle\WebSocketBundle\Topic\TopicInterface;
 use Gos\Bundle\WebSocketBundle\Topic\TopicPeriodicTimer;
 use Gos\Bundle\WebSocketBundle\Topic\TopicPeriodicTimerInterface;
@@ -63,18 +62,13 @@ class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
         $topicTimer = $connection->PeriodicTimer;
 
         //Add periodic timer
-        $topicTimer->addPeriodicTimer('hello', 150, function () use ($topic, $connection) {
+        $topicTimer->addPeriodicTimer('refresh', 150, function () use ($topic, $connection) {
             ;
             $topic->broadcast([
-                'refresh' => "coucou",
+                'refresh' => "refresh",
             ]);
         });
 
-
-        //exist
-        $topicTimer->isPeriodicTimerActive('hello'); //true or false
-
-//        $user = $this->clientManipulator->getClient($connection);
         $this->users[$topic->getId()] = array($connection->resourceId => "");
 
         $topic->broadcast(
@@ -104,14 +98,11 @@ class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
         if ($tmp != null) {
             $topic->broadcast([
                 'msg_deco' => $connection->resourceId . " has left " . $topic->getId() . " --> ",
-//            'users' => $this->users[$topic->getId()]
                 'user_remove' => $tmp
             ]);
         } else {
             $topic->broadcast([
                 'msg_deco' => $connection->resourceId . " has left " . $topic->getId() . " --> ",
-//            'users' => $this->users[$topic->getId()]
-//                'user_remove' => $this->users[$topic->getId()][$connection->resourceId]
             ]);
         }
 
@@ -137,17 +128,15 @@ class AgilTopic implements TopicInterface, TopicPeriodicTimerInterface
             // Quand un user se connecte
             case "user_co":
                 $this->users[$topic->getId()][$connection->resourceId] = intval($event['id_user']);
-                var_dump($this->users[$topic->getId()]);
+
                 $topic->broadcast([
                     'user_add' => intval($event['id_user']),
-//                    'users' => $this->users[$topic->getId()]
                 ]);
 
                 break;
             case "msg":
                 $topic->broadcast([
                     'msg' => $event,
-//                    'users' => $this->users[$topic->getId()]
                 ]);
                 break;
         }
