@@ -98,59 +98,6 @@
             {{ form_end(form) }}
         </div>
     </div>
-    {#<<<<<<< HEAD#}
-
-    {# ------------------------------------------------------------- #}
-    {#                  Block de la recherche Forum                  #}
-    {# ------------------------------------------------------------- #}
-    {% if searchForum is defined %}
-        {% if is_granted('ROLE_USER') %}
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">
-                            <span class="panel-title-content">
-                                Sujets de Forum
-                            </span>
-                        </h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="list">
-                            {% if searchForum[1] == 0 %}
-                                <p class="text-center">La recherche n'a retourné aucun résultat.</p>
-                            {% else %}
-                                {% for s in searchForum[0] %}
-                                    <div class="list-element">
-                                        <p>
-                                            <a href="{{ path('agil_forum_subject_answers',{'idCategory' : s.forumCategoryId,'idSubject':s.forumSubjectId}) }}"
-                                               class="internal-link">{{ s.forumSubjectTitle }}</a></p>
-                                        <em>{{ s.forumSubjectPostDate|date('d-m-Y') }}</em>
-
-                                        {% for tag in tagsForum[s.forumSubjectId] %}
-                                            <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
-                                                        class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
-                                        {% endfor %}
-
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                        {% if searchForum[1] > 4 and pagination is not defined %}
-                            <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'forum','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir
-                                Plus</a>
-                        {% endif %}
-                    </div>
-                    {% if pagination is defined and searchForum[1] != 0 and pagination.pages_count > 1 %}
-                        <nav class="text-center">
-                            {% include 'AGILSearchBundle:Pagination:pagination.html.twig' %}
-                        </nav>
-                    {% endif %}
-                </div>
-            </div>
-        {% else %}
-            <p>Veuillez vous connecter pour accéder à la recherche Forum</p>
-        {% endif %}
-    {% endif %}
 
     {# ------------------------------------------------------------- #}
     {#                   Block de la recherche Hall                  #}
@@ -201,6 +148,58 @@
     {% endif %}
 
     {# ------------------------------------------------------------- #}
+    {#                  Block de la recherche Forum                  #}
+    {# ------------------------------------------------------------- #}
+    {% if searchForum is defined %}
+        {% if is_granted('ROLE_USER') %}
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <span class="panel-title-content">
+                                Sujets de Forum
+                            </span>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list">
+                            {% if searchForum[1] == 0 %}
+                                <p class="text-center">La recherche n'a retourné aucun résultat.</p>
+                            {% else %}
+                                {% for s in searchForum[0] %}
+                                    <div class="list-element">
+                                        <p>
+                                            <a href="{{ path('agil_forum_subject_answers',{'idCategory' : s.forumCategoryId,'idSubject':s.forumSubjectId}) }}"
+                                               class="internal-link">{{ s.forumSubjectTitle }}</a></p>
+                                        <em>{{ s.forumSubjectPostDate|date('d-m-Y') }}</em>
+
+                                        {% for tag in tagsForum[s.forumSubjectId] %}
+                                            <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
+                                                        class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
+                                        {% endfor %}
+
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        {% if searchForum[1] > 4 and pagination is not defined %}
+                            <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'forum','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir
+                                Plus</a>
+                        {% endif %}
+                    </div>
+                    {% if pagination is defined and searchForum[1] != 0 and pagination.pages_count > 1 %}
+                        <nav class="text-center">
+                            {% include 'AGILSearchBundle:Pagination:pagination.html.twig' %}
+                        </nav>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center">Veuillez vous connecter pour accéder à la recherche Forum</p>
+        {% endif %}
+    {% endif %}
+
+    {# ------------------------------------------------------------- #}
     {#                  Block de la recherche Offres                 #}
     {# ------------------------------------------------------------- #}
     {% if searchOffers is defined %}
@@ -223,7 +222,7 @@
                                     <div class="list-element">
                                         <p><a href="#" class="interne-link">{{ search.offerTitle }}</a></p>
                                         <em>{{ search.offerPostDate|date('d-m-Y') }}</em>
-                                        {% for tag in tagsOffer[search.offerId] %}
+                                        {% for tag in tagsOffers[search.offerId] %}
                                             <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
                                                         class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                                         {% endfor %}
@@ -246,7 +245,7 @@
                 </div>
             </div>
         {% else %}
-            <p>Veuillez vous connecter pour accéder à la recherche des Offres</p>
+            <p class="text-center">Veuillez vous connecter pour accéder à la recherche des Offres</p>
         {% endif %}
     {% endif %}
 
@@ -276,7 +275,7 @@
                                                 ({{ search.username }})</a></p>
                                         {% for skill in tagsProfile[search.id] %}
                                             <a href="{{ path('agil_search_homepage',{'tags':skill.tag.tagName}) }}"><span
-                                                        class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }}</span></a>
+                                                        class="label {{ skill.tag.tagColor }}">{{ skill.tag.tagName | upper }} : {{ skill.skillLevel }}/10</span></a>
                                         {% endfor %}
                                     </div>
                                 {% endfor %}
@@ -297,7 +296,7 @@
                 </div>
             </div>
         {% else %}
-            <p>Veuillez vous connecter pour accéder à la recherche des Profils</p>
+            <p class="text-center">Veuillez vous connecter pour accéder à la recherche des Profils</p>
         {% endif %}
     {% endif %}
 {% endblock %}

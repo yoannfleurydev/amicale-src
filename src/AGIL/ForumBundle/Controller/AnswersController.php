@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AGIL\ForumBundle\Form\EditAnswerType;
 use AGIL\ForumBundle\Form\AddAnswerType;
+use AGIL\SearchBundle\Form\SearchType;
 
 class AnswersController extends Controller
 {
@@ -28,6 +29,9 @@ class AnswersController extends Controller
      */
     public function answersAction($idCategory, $idSubject, $page, Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         // Manager & Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager->getRepository('AGILForumBundle:AgilForumCategory');
@@ -132,7 +136,8 @@ class AnswersController extends Controller
             'relativeDate' => $relativeDatePerAnswer,
             'form' => $form->createView(),
             'userTagsSkills' => $userTagsSkills,
-            'isFirst' => $isFirst[0]->getForumAnswerId()
+            'isFirst' => $isFirst[0]->getForumAnswerId(),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -182,6 +187,9 @@ class AnswersController extends Controller
      */
     public function answersEditAction($idCategory, $idSubject, $idAnswer, Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
@@ -267,7 +275,8 @@ class AnswersController extends Controller
             'idCategory' => $idCategory,
             'idSubject' => $idSubject,
             'idAnswer' => $idAnswer,
-            'page' => ceil(($index+1) / $maxAnswers)
+            'page' => ceil(($index+1) / $maxAnswers),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -282,6 +291,9 @@ class AnswersController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function answersDeleteAction($idCategory, $idSubject, $idAnswer, Request $request) {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
@@ -387,7 +399,8 @@ class AnswersController extends Controller
             'idSubject' => $idSubject,
             'idAnswer' => $idAnswer,
             'isAdmin' => $isAdmin,
-            'page' => ceil(($index+1) / $maxAnswers)
+            'page' => ceil(($index+1) / $maxAnswers),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 

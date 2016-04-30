@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AGIL\ForumBundle\Form\DeleteSubjectType;
 use AGIL\ForumBundle\Entity\AgilForumSubject;
+use AGIL\SearchBundle\Form\SearchType;
 
 class SubjectsController extends Controller
 {
@@ -25,6 +26,9 @@ class SubjectsController extends Controller
      */
     public function subjectAddHomeAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->getUser();
@@ -78,7 +82,7 @@ class SubjectsController extends Controller
 
 
         return $this->render('AGILForumBundle:Subjects:subjects_add_home.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -93,6 +97,9 @@ class SubjectsController extends Controller
      */
     public function subjectAddAction($idCategory, Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->getUser();
@@ -149,7 +156,8 @@ class SubjectsController extends Controller
 
         return $this->render('AGILForumBundle:Subjects:subjects_add.html.twig', array(
             'form' => $form->createView(),
-            'idCategory' => $idCategory
+            'idCategory' => $idCategory,
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -162,6 +170,9 @@ class SubjectsController extends Controller
      */
     public function subjectDeleteAction($idCategory, $idSubject, Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
@@ -238,7 +249,8 @@ class SubjectsController extends Controller
             'subject' => $subject,
             'idCategory' => $idCategory,
             'idSubject' => $idSubject,
-            'isAdmin' => $isAdmin
+            'isAdmin' => $isAdmin,
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -251,6 +263,9 @@ class SubjectsController extends Controller
      */
     public function subjectResolvedAction($idCategory,$idSubject)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         // Manager & Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager->getRepository('AGILForumBundle:AgilForumCategory');

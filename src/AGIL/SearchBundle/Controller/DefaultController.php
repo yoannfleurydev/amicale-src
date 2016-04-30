@@ -44,6 +44,9 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $this->tagRepository = $this->getDoctrine()->getManager()->getRepository('AGILDefaultBundle:AgilTag');
         $this->forumSubjectRepository = $this->getDoctrine()->getManager()->getRepository('AGILForumBundle:AgilForumSubject');
         $this->hallEventRepository = $this->getDoctrine()->getManager()->getRepository('AGILHallBundle:AgilEvent');
@@ -107,7 +110,7 @@ class DefaultController extends Controller
                             'searchHall' => $searchHall, 'tagsHall' => $tagsHall,
                             'searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers,
                             'searchProfile' => $searchProfile, 'tagsProfile' => $tagsProfile,
-                            'form' => $form->createView())
+                            'form' => $form->createView(),'formSearchBar' => $formSearchBar->createView())
                     );
 
                 }
@@ -152,7 +155,8 @@ class DefaultController extends Controller
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
                             array('searchForum' => $searchForum, 'tagsForum' => $tagsForum,
-                                'form' => $form->createView(), 'pagination' => $pagination)
+                                'form' => $form->createView(), 'pagination' => $pagination,
+                                'formSearchBar' => $formSearchBar->createView())
                         );
 
                     }
@@ -175,7 +179,8 @@ class DefaultController extends Controller
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
                             array('searchHall' => $searchHall, 'tagsHall' => $tagsHall,
-                                'form' => $form->createView(), 'pagination' => $pagination)
+                                'form' => $form->createView(), 'pagination' => $pagination,
+                                'formSearchBar' => $formSearchBar->createView())
                         );
 
                     }
@@ -198,7 +203,8 @@ class DefaultController extends Controller
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
                             array('searchOffers' => $searchOffers, 'tagsOffers' => $tagsOffers,
-                                'form' => $form->createView(), 'pagination' => $pagination)
+                                'form' => $form->createView(), 'pagination' => $pagination,
+                                'formSearchBar' => $formSearchBar->createView())
                         );
 
                     }
@@ -221,7 +227,8 @@ class DefaultController extends Controller
 
                         return $this->render('AGILSearchBundle:Default:index.html.twig',
                             array('searchProfile' => $searchProfile, 'tagsProfile' => $tagsProfile,
-                                'form' => $form->createView(), 'pagination' => $pagination)
+                                'form' => $form->createView(), 'pagination' => $pagination,
+                                'formSearchBar' => $formSearchBar->createView())
                         );
 
                     }
@@ -233,7 +240,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('AGILSearchBundle:Default:index.html.twig',array(
-            'form' => $form->createView()
+            'form' => $form->createView(), 'formSearchBar' => $formSearchBar->createView()
         ));
     }
 

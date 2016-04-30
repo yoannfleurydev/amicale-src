@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AGIL\AdminBundle\Form\EditCategoryType;
 use AGIL\AdminBundle\Form\AddCategoryType;
 use AGIL\ForumBundle\Entity\AgilForumCategory;
+use AGIL\SearchBundle\Form\SearchType;
 
 
 
@@ -21,6 +22,9 @@ class ForumController extends Controller
      */
     public function adminForumCategoriesAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         // Manager et Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager ->getRepository('AGILForumBundle:AgilForumCategory');
@@ -57,7 +61,8 @@ class ForumController extends Controller
 
         return $this->render('AGILAdminBundle:Forum:admin_forum_categories.html.twig',array(
             'categories' => $categories, 'form' => $form->createView(),
-            'nbSubjectsPerCategory' => $nbSubjectsPerCategory
+            'nbSubjectsPerCategory' => $nbSubjectsPerCategory,
+            'formSearchBar' => $formSearchBar->createView()
             ));
     }
 
@@ -69,6 +74,9 @@ class ForumController extends Controller
      */
     public function adminForumCategoryEditAction($idCategory,Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         // Manager et Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager ->getRepository('AGILForumBundle:AgilForumCategory');
@@ -103,7 +111,8 @@ class ForumController extends Controller
 
 
         return $this->render('AGILAdminBundle:Forum:admin_forum_category_edit.html.twig',array(
-            'category' => $category, 'form' => $form->createView()
+            'category' => $category, 'form' => $form->createView(),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
@@ -115,6 +124,9 @@ class ForumController extends Controller
      */
     public function adminForumCategoryDeleteAction($idCategory)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         // Manager et Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager ->getRepository('AGILForumBundle:AgilForumCategory');

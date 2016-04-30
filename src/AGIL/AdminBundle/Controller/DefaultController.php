@@ -3,12 +3,16 @@
 namespace AGIL\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AGIL\SearchBundle\Form\SearchType;
 
 class DefaultController extends Controller
 {
     public function adminAction()
     {
         $em = $this->getDoctrine()->getManager();
+
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
 
         $count_users = $em->getRepository("AGILUserBundle:AgilUser")->getCount();
 
@@ -25,7 +29,8 @@ class DefaultController extends Controller
             'nbUsers' => $count_users,
             'nbSubjects' => $count_subjects,
             'nbEvents' => $count_events,
-            'nbOffers' => $count_offers
+            'nbOffers' => $count_offers,
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 }

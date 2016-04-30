@@ -6,6 +6,7 @@ use Essence\Essence;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use AGIL\SearchBundle\Form\SearchType;
 use Symfony\Component\VarDumper\VarDumper;
 
 class DefaultController extends Controller {
@@ -13,7 +14,10 @@ class DefaultController extends Controller {
 
 	/* index */
 	public function indexAction($page) {
-		$em = $this->getDoctrine()->getManager();
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
+        $em = $this->getDoctrine()->getManager();
 		$eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
 
         $eventCount = $eventRepo->getCountEvents();
@@ -33,11 +37,16 @@ class DefaultController extends Controller {
 
         $events = $eventRepo->getEventsByPage($page, DefaultController::MAX_EVENTS);
 
-		return $this->render('AGILHallBundle:Default:index.html.twig', array('events' => $events, 'pagination'=>$pagination));
+		return $this->render('AGILHallBundle:Default:index.html.twig',
+            array('events' => $events, 'pagination'=>$pagination,
+                'formSearchBar' => $formSearchBar->createView()));
 	}
 
 	/* Affichage d'un événement comme un post de blog */
     public function eventAction($idEvent) {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $eventRepo = $em->getRepository('AGILHallBundle:AgilEvent');
         $event = $eventRepo->find($idEvent);
@@ -65,24 +74,33 @@ HTML;
 		});
 
         return $this->render('AGILHallBundle:Event:event.html.twig', array('event' => $event, 'eventContent' =>
-            $eventContent));
+            $eventContent,'formSearchBar' => $formSearchBar->createView()));
     }
 
 	/* Affichage des photos d'un événement */
 	public function photosEventAction($idEvent) {
-		$em = $this->getDoctrine()->getManager();
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
+        $em = $this->getDoctrine()->getManager();
 		$photoRepo = $em->getRepository('AGILHallBundle:AgilPhoto');
 		$photos = $photoRepo->findByEvent($idEvent);
 
-		return $this->render('AGILHallBundle:Default:photoEvent.html.twig', array('photos' => $photos));
+		return $this->render('AGILHallBundle:Default:photoEvent.html.twig', array('photos' => $photos,
+            'formSearchBar' => $formSearchBar->createView()));
 	}
 
 	/* Affichage des vidéos d'un événement */
 	public function videosEventAction($idEvent) {
-		$em = $this->getDoctrine()->getManager();
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
+        $em = $this->getDoctrine()->getManager();
 		$videoRepo = $em->getRepository('AGILHallBundle:AgilPhoto');
 		$videos = $videoRepo->findByEvent($idEvent);
 
-		return $this->render('AGILHallBundle:Default:videoEvent.html.twig');
+		return $this->render('AGILHallBundle:Default:videoEvent.html.twig',array(
+            'formSearchBar' => $formSearchBar->createView()
+        ));
 	}
 }

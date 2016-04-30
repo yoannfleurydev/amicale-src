@@ -4,6 +4,7 @@ namespace AGIL\ForumBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use AGIL\SearchBundle\Form\SearchType;
 
 class CategoriesController extends Controller
 {
@@ -16,6 +17,9 @@ class CategoriesController extends Controller
      */
     public function subjectsAction($idCategory,$page)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         // Manager & Repositories
         $manager = $this->getDoctrine()->getManager();
         $categoryRepository = $manager ->getRepository('AGILForumBundle:AgilForumCategory');
@@ -64,7 +68,7 @@ class CategoriesController extends Controller
         return $this->render('AGILForumBundle:Categories:subjects.html.twig',
             array('category' => $category,'subjects' => $subjects,'pagination' => $pagination,
                 'countAnswers' => $countAnswersPerSubject, 'relativeDate' => $relativeDatePerSubject,
-                'tagsPerSubject' => $tagsPerSubject));
+                'tagsPerSubject' => $tagsPerSubject,'formSearchBar' => $formSearchBar->createView()));
     }
 
 

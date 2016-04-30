@@ -3,6 +3,7 @@
 namespace AGIL\DefaultBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AGIL\SearchBundle\Form\SearchType;
 
 class DefaultController extends Controller
 {
@@ -14,6 +15,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $manager = $this->getDoctrine()->getManager();
 
         // Repository des Sujets de forum
@@ -28,12 +32,15 @@ class DefaultController extends Controller
         return $this->render('AGILDefaultBundle:Default:index.html.twig',
             array(
                 'lastSubjects' => $lastSubjects,
-                'offers' => $lastOffers
+                'offers' => $lastOffers,
+                'formSearchBar' => $formSearchBar->createView()
             )
         );
     }
 
     public function creditsAction() {
-        return $this->render('AGILDefaultBundle:Default:credits.html.twig');
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+        return $this->render('AGILDefaultBundle:Default:credits.html.twig',array('formSearchBar' => $formSearchBar->createView()));
     }
 }

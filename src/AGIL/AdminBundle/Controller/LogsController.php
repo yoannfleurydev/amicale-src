@@ -4,6 +4,7 @@ namespace AGIL\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AGIL\SearchBundle\Form\SearchType;
 
 
 
@@ -17,6 +18,9 @@ class LogsController extends Controller
      */
     public function forumAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $pathLogFile = $this->get('kernel')->getLogDir().'/logsForum.log';
 
         // Suppression du fichier
@@ -35,7 +39,8 @@ class LogsController extends Controller
             $contentLogFile = "Fichier vide";
         }
 
-        return $this->render('AGILAdminBundle:Logs:logs_forum.html.twig',array('logsForum' => $contentLogFile));
+        return $this->render('AGILAdminBundle:Logs:logs_forum.html.twig',array('logsForum' => $contentLogFile,
+            'formSearchBar' => $formSearchBar->createView()));
     }
 
 
@@ -47,6 +52,9 @@ class LogsController extends Controller
      */
     public function searchAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $pathLogFile = $this->get('kernel')->getLogDir().'/logsSearch.log';
 
         // Suppression du fichier
@@ -65,7 +73,8 @@ class LogsController extends Controller
             $contentLogFile = "Fichier vide";
         }
 
-        return $this->render('AGILAdminBundle:Logs:logs_search.html.twig',array('logsSearch' => $contentLogFile));
+        return $this->render('AGILAdminBundle:Logs:logs_search.html.twig',array('logsSearch' => $contentLogFile,
+            'formSearchBar' => $formSearchBar->createView()));
     }
 
 
@@ -77,6 +86,9 @@ class LogsController extends Controller
      */
     public function offerAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $pathLogFile = $this->get('kernel')->getLogDir().'/logsOffer.log';
 
         // Suppression du fichier
@@ -95,7 +107,8 @@ class LogsController extends Controller
             $contentLogFile = "Fichier vide";
         }
 
-        return $this->render('AGILAdminBundle:Logs:logs_offer.html.twig',array('logsOffer' => $contentLogFile));
+        return $this->render('AGILAdminBundle:Logs:logs_offer.html.twig',array('logsOffer' => $contentLogFile,
+            'formSearchBar' => $formSearchBar->createView()));
     }
 
 
@@ -107,6 +120,9 @@ class LogsController extends Controller
      */
     public function profileAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $pathLogFile = $this->get('kernel')->getLogDir().'/logsProfile.log';
 
         // Suppression du fichier
@@ -125,7 +141,8 @@ class LogsController extends Controller
             $contentLogFile = "Fichier vide";
         }
 
-        return $this->render('AGILAdminBundle:Logs:logs_profile.html.twig',array('logsProfile' => $contentLogFile));
+        return $this->render('AGILAdminBundle:Logs:logs_profile.html.twig',array('logsProfile' => $contentLogFile,
+            'formSearchBar' => $formSearchBar->createView()));
     }
 
 
@@ -137,6 +154,9 @@ class LogsController extends Controller
      */
     public function chatAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $pathLogFile = $this->get('kernel')->getLogDir().'/logsChat.log';
 
         // Suppression du fichier
@@ -155,7 +175,8 @@ class LogsController extends Controller
             $contentLogFile = "Fichier vide";
         }
 
-        return $this->render('AGILAdminBundle:Logs:logs_chat.html.twig',array('logsChat' => $contentLogFile));
+        return $this->render('AGILAdminBundle:Logs:logs_chat.html.twig',array('logsChat' => $contentLogFile,
+            'formSearchBar' => $formSearchBar->createView()));
     }
 
 
@@ -167,6 +188,9 @@ class LogsController extends Controller
      */
     public function hallAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $pathLogFile = $this->get('kernel')->getLogDir().'/logsHall.log';
 
         // Suppression du fichier
@@ -185,7 +209,8 @@ class LogsController extends Controller
             $contentLogFile = "Fichier vide";
         }
 
-        return $this->render('AGILAdminBundle:Logs:logs_hall.html.twig',array('logsHall' => $contentLogFile));
+        return $this->render('AGILAdminBundle:Logs:logs_hall.html.twig',array('logsHall' => $contentLogFile,
+            'formSearchBar' => $formSearchBar->createView()));
     }
 
 

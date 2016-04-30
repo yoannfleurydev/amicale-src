@@ -54,6 +54,7 @@
                                                                     {% for tag in subject.tags %}
                                                                         <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper}}</span></a>
                                                                     {% endfor %}
+                                                                    <p>NOMBRE DE MESSAGES (A Design) : {{ answersCountPerSubject[subject.forumSubjectId] }}</p>
                                                                 </div>
                                                                 <div class="col-xs-4 col-xm-3 col-md-3 col-lg-3 text-right">
                                                                     <h6>

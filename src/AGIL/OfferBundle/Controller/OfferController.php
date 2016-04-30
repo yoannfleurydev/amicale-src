@@ -9,12 +9,16 @@ use AGIL\OfferBundle\Form\OfferType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use AGIL\SearchBundle\Form\SearchType;
 
 
 class OfferController extends Controller
 {
     public function offerAction($id)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->find($id);
 
@@ -23,7 +27,10 @@ class OfferController extends Controller
             return $this->redirect($this->generateUrl('agil_offer_homepage'));
         }
 
-        return $this->render('AGILOfferBundle:Offer:offer.html.twig', array('offer' => $offer));
+        return $this->render('AGILOfferBundle:Offer:offer.html.twig', array(
+            'offer' => $offer,
+            'formSearchBar' => $formSearchBar->createView()
+        ));
     }
 
     /**
@@ -33,6 +40,9 @@ class OfferController extends Controller
      */
     public function offerAddAction(Request $request)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $offer = new AgilOffer();
         $form = $this->createForm(new OfferType(), $offer);
@@ -88,17 +98,24 @@ class OfferController extends Controller
             $em->persist($offer);
             $em->flush();
 
+            $logger = $this->get('service_offer.logger');
+            $logger->info("[Nouvelle Offre proposée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
+
             $this->addFlash('success', 'Un mail de confirmation vous a été envoyé.');
             return $this->redirect($this->generateUrl('agil_offer_homepage'));
         }
 
         return $this->render('AGILOfferBundle:Offer:offer_add.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
     public function offerEditAction(Request $request, $idCrypt)
     {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerRoute' => $idCrypt));
 
@@ -114,6 +131,8 @@ class OfferController extends Controller
             $offer->setOfferPublish(true);
             $em->persist($offer);
             $em->flush();
+            $logger = $this->get('service_offer.logger');
+            $logger->info("[Nouvelle Offre validée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
         }
 
         $form = $this->createForm(new EditOfferType(date_format($offer->getOfferExpirationDate(), 'Y')), $offer);
@@ -158,6 +177,7 @@ class OfferController extends Controller
             $offer->removeTags();
             $em->persist($offer);
             $em->flush();
+
             $offer->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
             // expiration
@@ -166,6 +186,8 @@ class OfferController extends Controller
 
             $em->persist($offer);
             $em->flush();
+            $logger = $this->get('service_offer.logger');
+            $logger->info("[Offre modifiée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
             return $this->redirect($this->generateUrl('agil_offer_view', array('id' => $offer->getOfferId())));
         }
@@ -178,11 +200,15 @@ class OfferController extends Controller
 
         return $this->render('AGILOfferBundle:Offer:offer_edit.html.twig', array(
             'offer' => $offer,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'formSearchBar' => $formSearchBar->createView()
         ));
     }
 
     public function offerDeleteAction(Request $request, $idCrypt) {
+        // Formulaire barre de recherche (header)
+        $formSearchBar = $this->createForm(new SearchType());
+
         $em = $this->getDoctrine()->getManager();
         $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerRoute' => $idCrypt))[0];
 
@@ -194,6 +220,9 @@ class OfferController extends Controller
 
         $em->remove($offer);
         $em->flush();
+
+        $logger = $this->get('service_offer.logger');
+        $logger->info("[Offre supprimée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
         $this->addFlash('success', 'Annonce supprimée.');
         return $this->redirect($this->generateUrl('agil_offer_homepage'));
