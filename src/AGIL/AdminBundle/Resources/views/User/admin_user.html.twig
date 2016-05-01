@@ -57,8 +57,8 @@
                                     <td>{{ user.userSignupDate|date("m/d/Y") }}</td>
                                     <td><a href="{{ path('agil_admin_user_up', {'id': user.id}) }}" class="btn btn-default"
                                            data-toggle="tooltip" data-placement="top" title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
-                                    <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" data-target="#confirm"
-                                           type="button"class="btn btn-default btn-danger" data-toggle="modal"
+                                    <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': user.id}) }}" data-target="#confirm-delete"
+                                           type="button" class="btn btn-default btn-danger" data-toggle="modal"
                                            title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
                                 </tr>
                                 {% endfor %}
@@ -106,8 +106,8 @@
                                                title="Promouvoir"><i class="glyphicon glyphicon-arrow-up"></i> </a></td>
                                         <td><a href="{{ path('agil_admin_user_down', {'id': moderator.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
                                                title="Rétrograder"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                        <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" data-target="#confirm"
-                                               type="button"class="btn btn-default btn-danger" data-toggle="modal"
+                                        <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': moderator.id}) }}" data-target="#confirm-delete"
+                                               type="button" class="btn btn-default btn-danger" data-toggle="modal"
                                                title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
                                     </tr>
                                 {% endfor %}
@@ -148,7 +148,7 @@
                                             <td>{{ admin.userSignupDate|date("m/d/Y") }}</td>
                                             <td><a href="{{ path('agil_admin_user_down', {'id': admin.id}) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top"
                                                    title="Rétrograder"><i class="glyphicon glyphicon-arrow-down"></i> </a></td>
-                                            <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" data-target="#confirm"
+                                            <td><a role="button" data-href="{{ path('agil_admin_user_delete', {'id': admin.id}) }}" data-target="#confirm-delete"
                                                    type="button"class="btn btn-default btn-danger" data-toggle="modal"
                                                    title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
                                         </tr>
@@ -163,7 +163,7 @@
     </div>
 
     <!-- Panel qui s'affiche pour la confirmation de suppression -->
-    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

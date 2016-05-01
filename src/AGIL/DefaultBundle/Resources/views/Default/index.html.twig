@@ -131,9 +131,18 @@
                         <div class="list">
                             {% for offer in offers %}
                                 <div class="list-element">
-                                    <p>
-                                        <a class="internal-link" href="{{ path('agil_offer_view', {'id' : offer.offerId}) }}">{{ offer.offerTitle }}</a>
-                                    </p>
+                                    <div class="row">
+                                        <div class="col-lg-9 col-md-9 col-sm-9">
+                                            <p>
+                                                <a class="internal-link"
+                                                   href="{{ path('agil_offer_view', {'id' : offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
+                                        </div>
+                                    </div>
+
                                     {% for tag in offer.tags %}
                                         <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
                                     {% endfor %}
@@ -182,19 +191,21 @@
                     <div class="panel-body">
                         <div class="list">
                             {% for sub in lastSubjects %}
-                            <div class="list-element">
-                                <p>
-                                    <a
-                                        class="internal-link"
-                                        href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}"
-                                    >
-                                        {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})
-                                    </a>
-                                </p>
-                                {% for tag in sub.tags %}
-                                    <a class="label-link" href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
-                                {% endfor %}
-                            </div>
+                                <div class="list-element">
+                                    <p>
+                                        <a
+                                                class="internal-link"
+                                                href="{{ path('agil_forum_subject_answers',{'idCategory' : sub.category.forumCategoryId, 'idSubject' : sub.forumSubjectId} ) }}"
+                                        >
+                                            {{ sub.forumSubjectTitle }} ({{ sub.forumSubjectPostDate|date('d M Y') }})
+                                        </a>
+                                    </p>
+                                    {% for tag in sub.tags %}
+                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}">
+                                            <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
+                                        </a>
+                                    {% endfor %}
+                                </div>
                             {% endfor %}
                         </div>
                         <p class="row text-center">
@@ -238,21 +249,21 @@
                     <div class="panel-heading">
                         <h2 class="panel-title">
                         <span class="panel-title-content">
-                            Boite à suggestions
+                            Boite à idées
                         </span>
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <form action="#" method="POST">
+                        {{ form_start(form) }}
                             <div class="form-group">
                                 <label for="idea">Une idée ?</label>
-                                <textarea class="form-control" name="idea" id="idea"
-                                          placeholder="Entrer votre idée ici..."></textarea>
+                                {{ form_widget(form.idea) }}
+                                {{ form_errors(form.idea) }}
                             </div>
                             <div class="text-center">
-                                <input type="submit" class="btn btn-primary" value="Valider">
+                                {{ form_widget(form.Valider) }}
                             </div>
-                        </form>
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>

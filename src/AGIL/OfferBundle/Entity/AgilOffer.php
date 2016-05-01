@@ -2,6 +2,8 @@
 
 namespace AGIL\OfferBundle\Entity;
 
+use AGIL\DefaultBundle\Entity\AgilTag;
+use AGIL\UserBundle\Entity\AgilUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -135,9 +137,9 @@ class AgilOffer
      */
     public function __construct()
     {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->offerPostDate = new \DateTime();
         $date = new \DateTime();
-        $this->offerPostDate = $date;
         $this->offerExpirationDate = $date->add(new \DateInterval("P3M"));
         $this->offerPublish = false;
         $this->offerRoute = md5(uniqid());
@@ -322,7 +324,7 @@ class AgilOffer
      * @param \AGIL\UserBundle\Entity\AgilUser $user
      * @return AgilOffer
      */
-    public function setUser(\AGIL\UserBundle\Entity\AgilUser $user = null)
+    public function setUser(AgilUser $user = null)
     {
         $this->user = $user;
 
@@ -345,7 +347,7 @@ class AgilOffer
      * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
      * @return AgilOffer
      */
-    public function addTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    public function addTag(AgilTag $tags)
     {
         $this->tags[] = $tags;
 
@@ -357,7 +359,7 @@ class AgilOffer
      *
      * @param \AGIL\DefaultBundle\Entity\AgilTag $tags
      */
-    public function removeTag(\AGIL\DefaultBundle\Entity\AgilTag $tags)
+    public function removeTag(AgilTag $tags)
     {
         $this->tags->removeElement($tags);
     }
@@ -375,6 +377,7 @@ class AgilOffer
     /**
      * Set tags
      *
+     * @param $collection
      * @return \Doctrine\Common\Collections\Collection
      */
     public function setTags($collection)

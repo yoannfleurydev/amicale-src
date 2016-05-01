@@ -25,6 +25,9 @@ class OfferController extends Controller
         if ($offer == null) {
             $this->addFlash('warning', 'Cette annonce n\'existe pas.');
             return $this->redirect($this->generateUrl('agil_offer_homepage'));
+        } elseif (!$offer->getOfferPublish()) {
+            $this->addFlash('warning', 'Cette annonce n\'est pas encore publiée.');
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
         }
 
         return $this->render('AGILOfferBundle:Offer:offer.html.twig', array(
@@ -92,6 +95,7 @@ class OfferController extends Controller
             $message .= "<p>Merci d'avoir créé une annonce sur Amicale GIL !</p>";
             $message .= "<p>Pour confirmer votre annonce sur le site, veuillez cliquer sur le lien suivant :</p>";
             $message .= "<p><strong><a href=\"$url\" TARGET=\"_blank\">Confirmer votre annonce</a></strong></p>";
+            $message .= "<p><i>Il est important de garder ce mail pour pouvoir modifier ou supprimer cette annonce.</i></p>";
             $message .= "<p>Cordialement.</p>";
             $this->sendMail($subject, $message, $form->get('offerEmail')->getData());
 
@@ -102,7 +106,7 @@ class OfferController extends Controller
             $logger->info("[Nouvelle Offre proposée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
             $this->addFlash('success', 'Un mail de confirmation vous a été envoyé.');
-            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            return $this->redirect($this->generateUrl('agil_offer_add'));
         }
 
         return $this->render('AGILOfferBundle:Offer:offer_add.html.twig', array(
@@ -121,7 +125,11 @@ class OfferController extends Controller
 
         if ($offer == null) {
             $this->addFlash('warning', 'Cette annonce n\'existe plus !');
-            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            if (!empty($this->getUser())) {
+                return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            } else {
+                return $this->redirect($this->generateUrl('agil_offer_add'));
+            }
         }
 
         $offer = $offer[0];
@@ -189,7 +197,12 @@ class OfferController extends Controller
             $logger = $this->get('service_offer.logger');
             $logger->info("[Offre modifiée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
-            return $this->redirect($this->generateUrl('agil_offer_view', array('id' => $offer->getOfferId())));
+            $this->addFlash('success','Annonce modifiée.');
+            if (!empty($this->getUser())) {
+                return $this->redirect($this->generateUrl('agil_offer_view', array('id' => $offer->getOfferId())));
+            } else {
+                return $this->redirect($this->generateUrl('agil_offer_edit', array('idCrypt' => $offer->getOfferRoute())));
+            }
         }
 
         $tagArray = "";
@@ -212,6 +225,16 @@ class OfferController extends Controller
         $em = $this->getDoctrine()->getManager();
         $offer = $em->getRepository('AGILOfferBundle:AgilOffer')->findBy(array('offerRoute' => $idCrypt))[0];
 
+        if ($offer == null) {
+            $this->addFlash('success', 'Annonce déjà supprimée.');
+
+            if (!empty($this->getUser())) {
+                return $this->redirect($this->generateUrl('agil_offer_homepage'));
+            } else {
+                return $this->redirect($this->generateUrl('agil_offer_add'));
+            }
+        }
+
         if ($offer->getOfferPdfUrl() != null) {
             $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/offer';
             $fs = new Filesystem();
@@ -225,7 +248,12 @@ class OfferController extends Controller
         $logger->info("[Offre supprimée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
         $this->addFlash('success', 'Annonce supprimée.');
-        return $this->redirect($this->generateUrl('agil_offer_homepage'));
+
+        if (!empty($this->getUser())) {
+            return $this->redirect($this->generateUrl('agil_offer_homepage'));
+        } else {
+            return $this->redirect($this->generateUrl('agil_offer_add'));
+        }
     }
 
     /**

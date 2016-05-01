@@ -75,12 +75,10 @@
                     <div class="form-group">
 
                         <div class="fileUpload btn btn-primary">
-                            <span id="button_name_cv"><i
-                                        class="material-icons">file_upload</i> Choisir un fichier</span>
-                            {{ form_row(form.offerPdfUrl) }}
+                            <span id="button_name_cv"><i class="material-icons">file_upload</i> Choisir un fichier</span>
+                            {{ form_widget(form.offerPdfUrl) }}
                         </div>
                         {{ form_errors(form.offerPdfUrl) }}
-                        {{ form_widget(form.offerPdfUrl) }}
                         <p><i>(Format autorisé: PDF)</i></p>
                     </div>
 
