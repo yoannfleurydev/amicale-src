@@ -744,11 +744,11 @@ $panel-danger-heading-bg:     $brand-danger !default;
 //** Padding around the thumbnail image
 $thumbnail-padding:           4px !default;
 //** Thumbnail background color
-$thumbnail-bg:                $body-bg !default;
+$thumbnail-bg:                #ffffff !default;
 //** Thumbnail border color
-$thumbnail-border:            #ddd !default;
+$thumbnail-border:            none !default;
 //** Thumbnail border radius
-$thumbnail-border-radius:     $border-radius-base !default;
+$thumbnail-border-radius:     none !default;
 
 //** Custom text color for thumbnail captions
 $thumbnail-caption-color:     $text-color !default;
