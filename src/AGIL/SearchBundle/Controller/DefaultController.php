@@ -11,30 +11,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
-
     private $forumSubjectRepository;
     private $hallEventRepository;
     private $offerRepository;
     private $tagRepository;
     private $skillRepository;
-
-
-    /**
-     * Code qui sera à insérer dans tous les contrôleurs du site !!
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function testAction()
-    {
-        // Ajouter cette ligne dans tous les contrôleurs du site
-        $formSearchBar = $this->createForm(new SearchType());
-
-        // Ajouter 'formSearchBar' => $formSearchBar->createView() dans l'array de retour du render
-        return $this->render('AGILSearchBundle:Default:test.html.twig',array('formSearchBar' => $formSearchBar->createView()));
-    }
-
-
-
 
     /**
      * Contrôleur du formulaire avancé de recherche
@@ -80,7 +61,6 @@ class DefaultController extends Controller
         ));
 
         if($formFilter != null && $formTags != null){
-
             // Méthode de recherche qui de tout (4/type au maximum)
             if($formFilter == "all"){
 
