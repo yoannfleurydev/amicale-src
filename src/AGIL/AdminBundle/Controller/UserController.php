@@ -163,7 +163,7 @@ class UserController extends Controller
         $user = $em->getRepository('AGILUserBundle:AgilUser')->find($id);
 
         if (null === $user) {
-            throw new NotFoundHttpException("L'utilisateur d'id " . $id . " n'existe pas.");
+            $this->addFlash('warning','Cet utilisateur n\'existe déjà plus !');
         } else {
             $imgOld = $user->getUserProfilePictureUrl();
             if ($imgOld !== AgilUser::DEFAULT_PROFILE_PICTURE) {

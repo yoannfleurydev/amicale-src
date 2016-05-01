@@ -259,51 +259,20 @@ class EventController extends Controller
         if (null === $event) {
             throw new NotFoundHttpException("L'evénement d'id " . $idEvent . " n'existe pas.");
         }
-        $essence = new Essence();
+        
+        $em->remove($event);
 
-        $eventContent = $essence->replace($event->getEventText(), function ($media) {
-            return <<<HTML
-		<div class="well well-lg col-lg-6 col-lg-offset-3 col-md-8 col-md-2 col-sm-12">
-			<p class="text-primary-blue text-center">
-				$media->title par
-				<a href="$media->authorUrl" title="Accès à la chaine de $media->authorName">
-					$media->authorName
-				</a>
-			 </p>
-			<div class="embed-responsive embed-responsive-16by9">$media->html</div>
-		</div>
-HTML;
-        });
-
-        $form = $this->createForm(new DeleteEventType(), $event);
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em->remove($event);
-
-            $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall/';
-            foreach($event->getPhotos() as $photo) {
-                $url = $photo->getPhotoUrl();
-                $fs = new Filesystem();
-                $fs->remove(array('symlink', $dir.'/'.$url));
-                $em->remove($photo);
-            }
-
-            $em->flush();
-
-            $logger = $this->get('service_hall.logger');
-            $logger->info("[Evenement Supprimé] ".$event->getEventTitle());
-
-            $this->addFlash('success', "L'évenement a été supprimé");
-
-            return $this->redirect($this->generateUrl('agil_hall_homepage'));
+        $dir = $this->container->getParameter('kernel.root_dir') . '/../web/img/hall/';
+        foreach($event->getPhotos() as $photo) {
+            $url = $photo->getPhotoUrl();
+            $fs = new Filesystem();
+            $fs->remove(array('symlink', $dir.'/'.$url));
+            $em->remove($photo);
         }
 
-        return $this->render('AGILHallBundle:Event:event_delete.html.twig', array(
-            'form' => $form->createView(),
-            'event' => $event,
-            'eventContent' => $eventContent,
-            'formSearchBar' => $formSearchBar->createView()
-        ));
+        $em->flush();
+        $this->addFlash('success', "L'évenement a été supprimé");
+
+        return $this->redirect($this->generateUrl('agil_hall_homepage'));
     }
 }

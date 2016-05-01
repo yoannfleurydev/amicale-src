@@ -11,39 +11,42 @@
 
     {% for event in events %}
         <div class="row">
-        <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+        <div class="col-md-offset-2 col-md-9 col-lg-offset-2 col-lg-9">
             <div class="card-events">
                 <div class="row">
                     {% if not is_granted("ROLE_ADMIN") %}
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         {% else %}
-                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                             {% endif %}
                             <h5>
                                 <a href="{{ path('agil_hall_event',{'idEvent' : event.eventId}) }}">
                                     {{ event.eventTitle }}
                                 </a>
                             </h5>
+                            {% for tag in event.tags %}
+                                <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
+                            {% endfor %}
                             <p>
-                                {{ event.eventText|slice(0, 180) }}
-                                {% if event.eventText|length > 180 %}
+                                {{ event.eventText|slice(0, 250)|raw }}
+                                {% if event.eventText|length > 250 %}
                                     ...
                                 {% endif %}
                             </p>
                             <p>
                             <h6>{{ event.eventPostDate | localizeddate('none', 'none', null, null, 'd LLL Y') }}</h6></p>
-                            {% for tag in event.tags %}
-                                <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
-                            {% endfor %}
                         </div>
                         {% if is_granted("ROLE_ADMIN") %}
 
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 vcenter">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 vcenter">
                                 <a class="btn btn-primary" role="button"
                                    href="{{ path('agil_hall_event_edit', {'idEvent': event.eventId}) }}">Editer</a>
-                                <a class="btn btn-default"
-                                   href="{{ path('agil_hall_event_delete', {'idEvent': event.eventId}) }}"
-                                   role="button">Supprimer</a>
+                                <a role="button"
+                                   data-href="{{ path('agil_hall_event_delete', {'idEvent': event.eventId}) }}"
+                                   data-target="#confirm-delete" title="Supprimer"
+                                   class="btn btn-danger" data-toggle="modal"><i
+                                            class="glyphicon glyphicon-trash"></i>
+                                </a>
                             </div>
                         {% endif %}
                     </div>
@@ -51,6 +54,22 @@
             </div>
         </div>
     {% endfor %}
+
+    <!-- Panel qui s'affiche pour la confirmation de suppression -->
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Etes vous sûr ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-danger btn-ok">Confirmer</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {% if pagination.pages_count>1 %}
         <nav class="text-center">
