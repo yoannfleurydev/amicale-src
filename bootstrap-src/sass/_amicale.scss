@@ -609,7 +609,7 @@ span.panel-title-content {
 
 .navbar-mobile {
   float: left;
-  padding: 20.5px 15px;
+  padding: 15.5px 10px;
   font-size: 14px;
   line-height: 23px;
   height: 64px;
@@ -787,4 +787,16 @@ $margin-value: 15px !important;
   bottom: 0;
   right: 0;
   width: 200px;
+}
+
+.glyphicon-log-in {
+  padding-top : 6px !important;
+}
+
+.label-link:hover {
+  text-decoration : none;
+}
+
+.offer-job {
+  color : $menu-color;
 }

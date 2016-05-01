@@ -56,13 +56,13 @@
 
                 <!--Si non connecté-->
                 {% if not is_granted("ROLE_USER") %}
-                <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Se connecter"><span class="glyphicon glyphicon-log-in"></span></a>
+                <a class="navbar-mobile right" href="{{ path("fos_user_security_login") }}" data-toggle="tooltip" data-placement="bottom" title="Connexion"><span class="glyphicon glyphicon-log-in"></span></a>
                 {% else %}
                 <!--Si connecté-->
 
                 <div class="dropdown navbar-dropdown-mobile right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="50" alt="Photo de profil">
+                            <img class="img-circle img-responsive" src="{{ asset("img/profile/") ~ app.user.userProfilePictureUrl }}" width="40" alt="Photo de profil">
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -196,13 +196,22 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="footer-title">Amicale GIL</div>
                         </div>
                         <div class="panel-body">
                             <p>&copy; Université de Rouen. Site développé par 7 étudiants de l'Université de Rouen dans le cadre d'un projet universitaire.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="footer-title">Crédits</div>
+                        </div>
+                        <div class="panel-body">
                             <a class="btn btn-primary" href="{{ path('agil_default_credits') }}">Crédits</a>
                         </div>
                     </div>

@@ -41,23 +41,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">
-                        <span class="panel-title-content">
-                             Calendrier
-                        </span>
-                        </h2>
-                    </div>
-                    <div class="panel-body">
-                        {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         Vous souhaitez déposer une oﬀre de stage à destination des étudiants du Master GIL ou une oﬀre
@@ -73,7 +57,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -115,16 +101,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
-                            <span class="panel-title-content">
-                                Calendrier
-                            </span>
+                        <span class="panel-title-content">
+                             Calendrier
+                        </span>
                         </h2>
                     </div>
                     <div class="panel-body">
@@ -132,7 +115,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -157,9 +143,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -184,7 +168,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -206,7 +192,7 @@
                                     </a>
                                 </p>
                                 {% for tag in sub.tags %}
-                                    <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
+                                    <a class="label-link" href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span></a>
                                 {% endfor %}
                             </div>
                             {% endfor %}
@@ -219,9 +205,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -247,7 +231,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -267,6 +253,20 @@
                                 <input type="submit" class="btn btn-primary" value="Valider">
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <span class="panel-title-content">
+                                Calendrier
+                            </span>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        {{ include('AGILHallBundle::Calendar/calendar.html.twig') }}
                     </div>
                 </div>
             </div>

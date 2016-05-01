@@ -100,54 +100,6 @@
     </div>
 
     {# ------------------------------------------------------------- #}
-    {#                   Block de la recherche Hall                  #}
-    {# ------------------------------------------------------------- #}
-    {% if searchHall is defined %}
-
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
-                        <span class="panel-title-content">
-                            Evènements du Hall
-                        </span>
-                    </h2>
-                </div>
-                <div class="panel-body">
-                    <div class="list">
-                        {% if searchHall[1] == 0 %}
-                            <p class="text-center">La recherche n'a retourné aucun résultat.</p>
-                        {% else %}
-                            {% for search in searchHall[0] %}
-                                <div class="list-element">
-                                    <p><a href="{{ path('agil_hall_event',{'idEvent':search.eventId}) }}"
-                                          class="interne-link">{{ search.eventTitle }}</a></p>
-                                    <em>{{ search.eventDate|date('d-m-Y') }}</em>
-                                    {% for tag in tagsHall[search.eventId] %}
-                                        <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
-                                                    class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    {% if searchHall[1] > 4 and pagination is not defined %}
-                        <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'hall','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir
-                            Plus</a>
-                    {% endif %}
-                </div>
-
-                {% if pagination is defined and searchHall[1] != 0 and pagination.pages_count > 1 %}
-                    <nav class="text-center">
-                        {% include 'AGILSearchBundle:Pagination:pagination.html.twig' %}
-                    </nav>
-                {% endif %}
-
-            </div>
-        </div>
-    {% endif %}
-
-    {# ------------------------------------------------------------- #}
     {#                  Block de la recherche Forum                  #}
     {# ------------------------------------------------------------- #}
     {% if searchForum is defined %}
@@ -174,7 +126,7 @@
                                         <em>{{ s.forumSubjectPostDate|date('d-m-Y') }}</em>
 
                                         {% for tag in tagsForum[s.forumSubjectId] %}
-                                            <a href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
+                                            <a class="label-link" href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
                                                         class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
                                         {% endfor %}
 
@@ -197,6 +149,54 @@
         {% else %}
             <p class="text-center">Veuillez vous connecter pour accéder à la recherche Forum</p>
         {% endif %}
+    {% endif %}
+
+    {# ------------------------------------------------------------- #}
+    {#                   Block de la recherche Hall                  #}
+    {# ------------------------------------------------------------- #}
+    {% if searchHall is defined %}
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        <span class="panel-title-content">
+                            Evènements du Hall
+                        </span>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="list">
+                        {% if searchHall[1] == 0 %}
+                            <p class="text-center">La recherche n'a retourné aucun résultat.</p>
+                        {% else %}
+                            {% for search in searchHall[0] %}
+                                <div class="list-element">
+                                    <p><a href="{{ path('agil_hall_event',{'idEvent':search.eventId}) }}"
+                                          class="interne-link">{{ search.eventTitle }}</a></p>
+                                    <em>{{ search.eventDate|date('d-m-Y') }}</em>
+                                    {% for tag in tagsHall[search.eventId] %}
+                                        <a class="label-link" href="{{ path('agil_search_homepage',{'tags':tag.tagName}) }}"><span
+                                                    class="label {{ tag.tagColor }}">{{ tag.tagName|upper }}</span></a>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% if searchHall[1] > 4 and pagination is not defined %}
+                        <a href="{{ path('agil_search_homepage',{'tags':form.tags.vars.value,'filter':'hall','method':form.method.vars.value,'no':form.no.vars.value}) }}">Voir
+                            Plus</a>
+                    {% endif %}
+                </div>
+
+                {% if pagination is defined and searchHall[1] != 0 and pagination.pages_count > 1 %}
+                    <nav class="text-center">
+                        {% include 'AGILSearchBundle:Pagination:pagination.html.twig' %}
+                    </nav>
+                {% endif %}
+
+            </div>
+        </div>
     {% endif %}
 
     {# ------------------------------------------------------------- #}

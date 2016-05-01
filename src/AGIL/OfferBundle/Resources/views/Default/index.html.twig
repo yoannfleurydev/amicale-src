@@ -15,14 +15,28 @@
                         {% if is_granted("ROLE_ADMIN") %}
                             <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
                                 <h5>
-                                    <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                                    <a {% if offer.offerType == 'emploi' %} class="offer-job" {% endif %}
+                                            href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">
+                                        {{ offer.offerTitle }}
+                                    </a>
                                 </h5>
+
+                                {% if offer.offerText is not null %}
+                                    <p>Auteur: {{ offer.offerAuthor }}</p>
+                                {% endif %}
                             </div>
                         {% else %}
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <h5>
-                                    <a href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">{{ offer.offerTitle }}</a>
+                                    <a {% if offer.offerType == 'emploi' %} class="offer-job" {% endif %}
+                                            href="{{ path('agil_offer_view', {'id': offer.offerId}) }}">
+                                        {{ offer.offerTitle }}
+                                    </a>
                                 </h5>
+
+                                {% if offer.offerText is not null %}
+                                    <p>Auteur: {{ offer.offerAuthor }}</p>
+                                {% endif %}
                             </div>
                         {% endif %}
                         {% if is_granted("ROLE_ADMIN") %}
@@ -37,15 +51,11 @@
                         {% endif %}
                         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
                             {% for tag in offer.tags %}
-                                <span class="label {{ tag.tagColor }}">{{ tag.tagName }}</span>
+                                <span class="label {{ tag.tagColor }}">{{ tag.tagName | upper }}</span>
                             {% endfor %}
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center">
                             <p>{{ offer.offerPostDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}</p>
-
-                            {% if offer.offerText is not null %}
-                                <p>Auteur: {{ offer.offerAuthor }}</p>
-                            {% endif %}
                         </div>
                     </div>
                 </div>

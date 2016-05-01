@@ -66,7 +66,17 @@
                         <div class="form-group required">
                             <label class="control-label">Expiration de l'annonce dans :</label>
                             {{ form_errors(form.offerExpirationDate) }}
-                            {{ form_widget(form.offerExpirationDate) }}
+                            <div class="row">
+                                <div class="col-lg-1 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.offerExpirationDate.date.day, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.offerExpirationDate.date.month, {attr : {class: 'form-control'}}) }}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+                                    {{ form_widget(form.offerExpirationDate.date.year, {attr : {class: 'form-control'}}) }}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
