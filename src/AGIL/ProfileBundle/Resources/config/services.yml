@@ -1,6 +1,18 @@
 services:
     agil_profile.eventsML:
         class: AGIL\ProfileBundle\EventListener\EventsListener
-        arguments: [@mailer]
+        arguments: ['@mailer']
         tags:
-            - {name: doctrine.event_listener, event: postPersist}
+            - { name: doctrine.event_listener, event: postPersist }
+
+    agil_profile.offersML:
+        class: AGIL\ProfileBundle\EventListener\OffersListener
+        arguments: ['@mailer']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+
+    agil_profile.forumML:
+        class: AGIL\ProfileBundle\EventListener\ForumListener
+        arguments: ['@mailer']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

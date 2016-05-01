@@ -2,12 +2,9 @@
 
 namespace AGIL\ProfileBundle\EventListener;
 
-use AGIL\HallBundle\Entity\AgilEvent;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use AGIL\DefaultBundle\Entity\AgilMailingList;
+use AGIL\OfferBundle\Entity\AgilOffer;
 
-
-class EventsListener
+class OffersListener
 {
     private $mailer;
 
@@ -17,13 +14,13 @@ class EventsListener
 
     public function postPersist(LifecycleEventArgs $args) {
         $entity = $args->getEntity();
-        if(!$entity instanceof AgilEvent) {
+        if(!$entity instanceof AgilOffer) {
             return;
         }
 
         $message = new \Swift_Message(
-            'Nouvel événement',
-            'Un nouvel événement a été publié ...'
+            'Nouvelle offre',
+            'Un nouvelle offre a été publiée ...'
         );
 
         $message

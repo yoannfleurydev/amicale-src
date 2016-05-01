@@ -1,14 +1,14 @@
 <?php
 
 namespace AGIL\ProfileBundle\EventListener;
+use AGIL\ForumBundle\Entity\AgilForumSubject;
 
-use AGIL\HallBundle\Entity\AgilEvent;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use AGIL\DefaultBundle\Entity\AgilMailingList;
-
-
-class EventsListener
-{
+/**
+ * Class ForumListener
+ *
+ * @package \AGIL\ProfileBundle\EventListener
+ */
+class ForumListener {
     private $mailer;
 
     public function __construct(\Swift_Mailer $mailer) {
@@ -17,13 +17,13 @@ class EventsListener
 
     public function postPersist(LifecycleEventArgs $args) {
         $entity = $args->getEntity();
-        if(!$entity instanceof AgilEvent) {
+        if(!$entity instanceof AgilForumSubject) {
             return;
         }
 
         $message = new \Swift_Message(
-            'Nouvel événement',
-            'Un nouvel événement a été publié ...'
+            'Nouveau sujet dans le forum',
+            'Une nouvelle offre a été publiée ...'
         );
 
         $message
