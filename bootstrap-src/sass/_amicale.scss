@@ -777,7 +777,7 @@ $margin-value: 15px !important;
   margin: $margin-value;
 }
 
-.hideSearch {
+.hideSearch, .hideNewChat {
   color: $orange-color;
   cursor: pointer;
 }
