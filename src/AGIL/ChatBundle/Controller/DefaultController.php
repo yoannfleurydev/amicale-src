@@ -41,6 +41,9 @@ class DefaultController extends Controller
                 $em->persist($chatTable);
                 $em->flush();
 
+                $logger = $this->get('service_chat.logger');
+                $logger->info("[Nouvelle Table] ".$chatTable->getChatTableName());
+
                 $this->addFlash('success', "La table a bien été créé");
             }
             return $this->redirect($this->generateUrl('agil_chat_homepage'));
