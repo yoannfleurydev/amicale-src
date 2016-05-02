@@ -1,0 +1,22 @@
+agil_topic:
+    channel: agil/channel
+    handler:
+        callback: 'agil.topic' #related to the getName() of your topic
+
+agil_rpc:
+    channel: sample/{method}
+    handler:
+        callback: 'agil.rpc' #related to the getName() or your RPC service
+    requirements:
+        method:
+            pattern: "[a-z_]+"
+
+agil_topic_chat:
+    channel: agil/chat/{room}/{user_id}
+    handler:
+        callback: 'agil.topic' #related to the getName() of your topic
+    requirements:
+        room:
+            pattern: "[a-z]+" #accept all valid regex, don't put delimiters !
+        user_id:
+            pattern: "\d+"

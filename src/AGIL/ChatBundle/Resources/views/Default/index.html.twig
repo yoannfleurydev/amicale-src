@@ -1,4 +1,57 @@
 {% extends "AGILChatBundle::baseChatBundle.html.twig" %}
 
+{% block body %}
+    <h2>TABLE</h2>
 
-Hello World!
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                        <span class="panel-title-content">
+                          Nouveau chat
+                        </span>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_start(form) }}
+
+                        <div class="form-group" id="formAddNameChatTable">
+                            <h5><label class="control-label">Nom de la table</label></h5>
+                            {{ form_errors(form.chatTableName) }}
+                            {{ form_widget(form.chatTableName) }}
+                        </div>
+
+                        <div class="form-group" id="formAddNameChatTable">
+                            <h5><label class="control-label">Password (facultatif)</label></h5>
+                            {{ form_errors(form.chatTablePassword) }}
+                            {{ form_widget(form.chatTablePassword) }}
+                        </div>
+
+                        <p class="text-center">
+                            {{ form_widget(form.Ajouter) }}
+                        </p>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+
+            {% for chatTable in chatTableList %}
+
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ chatTable.chatTableName }}</div>
+                        <div class="panel-body">
+
+                            <a class="btn btn-primary" href="{{ path('agil_chat_room',{'roomId' : chatTable.chatTableId } ) }}" target="_blank" >Rejoindre</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
