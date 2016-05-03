@@ -105,7 +105,8 @@ class OfferController extends Controller
             $logger = $this->get('service_offer.logger');
             $logger->info("[Nouvelle Offre proposée] ".$offer->getOfferTitle()." (".$offer->getOfferEmail().")");
 
-            $this->addFlash('success', 'Un mail de confirmation vous a été envoyé.');
+            $this->addFlash('success', 'Un mail de confirmation vous a été envoyé. Vous pouvez déposer une nouvelle 
+            offre tout de suite ci-dessous.');
             return $this->redirect($this->generateUrl('agil_offer_add'));
         }
 

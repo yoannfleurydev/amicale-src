@@ -1,4 +1,29 @@
 agil_chat_homepage:
-    path:     /chat
+    path:     /
     defaults:
         _controller: AGILChatBundle:Default:index
+
+agil_chat_room:
+    path:     /{roomId}
+    defaults:
+        _controller: AGILChatBundle:Default:chatLive
+    requirements:
+        roomId: \d+
+
+agil_chat_user:
+    path:     /user
+    defaults:
+        _controller: AGILChatBundle:Default:getUserById
+    methods: [POST]
+
+agil_chat_message:
+    path:     /message
+    defaults:
+        _controller: AGILChatBundle:Default:addChatMessage
+    methods: [POST]
+
+agil_chat_message_load:
+    path:     /message/load
+    defaults:
+        _controller: AGILChatBundle:Default:loadChatMessage
+    methods: [POST]

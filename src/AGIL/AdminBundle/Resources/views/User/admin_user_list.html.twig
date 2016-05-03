@@ -56,9 +56,12 @@
                                         </td>
                                         <td><a role="button"
                                                data-href="{{ path('agil_admin_user_delete', {'id': user.id}) }}"
-                                               data-target="#confirm"
+                                               data-target="#confirm-delete"
                                                type="button" class="btn btn-default btn-danger" data-toggle="modal"
-                                               title="Supprimer"><i class="glyphicon glyphicon-trash"></i></a></td>
+                                               title="Supprimer">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
 
