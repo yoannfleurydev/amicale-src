@@ -10,11 +10,32 @@ agil_chat_room:
     requirements:
         roomId: \d+
 
+agil_chat_room_pwd:
+    path :     /{roomId}
+    defaults:
+        _controller: AGILChatBundle:Default:chatLive
+    methods: [POST]
+    requirements:
+        roomId: \d+
+
+agil_chat_delete_room:
+    path:   /delete/{roomId}
+    defaults:
+        _controller: AGILChatBundle:Default:deleteTable
+    requirements:
+        roomId: \d+
+
 agil_chat_user:
     path:     /user
     defaults:
         _controller: AGILChatBundle:Default:getUserById
     methods: [POST]
+
+agil_chat_table_data:
+    path:    /table
+    defaults:
+        _controller : AGILChatBundle:Default:getDataTable
+    methods : [POST]
 
 agil_chat_message:
     path:     /message

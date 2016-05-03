@@ -132,7 +132,7 @@
                     </li>
                     {% if is_granted("ROLE_USER") %}
                         <li>
-                            <a href="#" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
+                            <a href="{{ path("agil_chat_homepage") }}" class="nav-link {% if isActive == "salon" %} nav-link-active {% endif %}">
                                 <span class="glyphicon glyphicon-comment"></span>
                                 Salon
                             </a>
