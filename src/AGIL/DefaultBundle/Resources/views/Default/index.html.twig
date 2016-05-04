@@ -170,16 +170,19 @@
                     <div class="panel-body">
                         Les tables de discussion actives.
                         <div class="list">
+                            {% for table in lastTables %}
                             <div class="list-element">
-                                <p><a class="internal-link" href="#">GP1 master 1 GIL 19 Oct. 2015</a></p>
+                                <p><a class="internal-link" href="{{ path('agil_chat_room', {'roomId':table.chatTableId}) }}">
+                                        {{ table.chatTableName }} - {{ table.chatTableDate| localizeddate('none', 'none', null, null, 'd LLL Y') }}
+                                </a></p>
                             </div>
-                            <div class="list-element">
-                                <p><a class="internal-link" href="#">GP1 master 1 SSI 64 Oct. 2035</a></p>
-                            </div>
-                            <div class="list-element">
-                                <p><a class="internal-link" href="#">Projet SUDOKU 20 Oct. 2015</a></p>
-                            </div>
-                        </div>
+                            {% endfor %}
+                        </div><hr/>
+                        <p class="row text-center">
+                            <a class="btn btn-default btn-primary" href="{{ path('agil_chat_homepage') }}"
+                               role="button">Accéder
+                                au chat</a>
+                        </p>
                     </div>
                 </div>
             </div>

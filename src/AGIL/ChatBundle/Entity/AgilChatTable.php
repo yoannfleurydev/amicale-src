@@ -37,7 +37,7 @@ class AgilChatTable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $chatTableId;
+        private $chatTableId;
 
     /**
      * @var string
@@ -52,6 +52,15 @@ class AgilChatTable
      * )
      */
     private $chatTableName;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="chatTableDate", type="datetime")
+     */
+    private $chatTableDate;
+
+
 
     /**
      * @var string
@@ -175,6 +184,30 @@ class AgilChatTable
     {
         $this->tags->removeElement($tags);
     }
+
+    /**
+     * Set chatTableDate
+     *
+     * @param \DateTime $chatTableDate
+     *
+     * @return AgilChatTable
+     */
+    public function setChatTableDate($chatTableDate)
+    {
+        $this->chatTableDate = $chatTableDate;
+
+        return $this;
+    }
+    /**
+     * Get chatTableDate
+     *
+     * @return \DateTime
+     */
+    public function getChatTableDate()
+    {
+        return $this->chatTableDate;
+    }
+
 
     /**
      * Get tags

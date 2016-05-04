@@ -6951,6 +6951,15 @@ TimeGrid.mixin({
 			startTimeText = this.getEventTimeText(event, null, false); // displayEnd=false
 		}
 
+		var endDate="";
+		if ( event.end != null){ endDate =" - "+ moment(event.end).format("ddd D MMM"); }
+
+
+		var EventContentLabel = '<h5>'+event.title+'</h5>'+
+			'<p>'+event.description+'</p>'+
+			'<p>'+moment(event.start).format("ddd D MMM")+' '+endDate+'</p>'+
+			'<a href=' + Routing.generate('agil_hall_event', {idEvent : event.eventId}, true) + '>plus de détails</a>';
+
 		return '<a class="' + classes.join(' ') + '"' +
 			(event.url ?
 				' href="' + htmlEscape(event.url) + '"' :
@@ -6960,6 +6969,11 @@ TimeGrid.mixin({
 				' style="' + skinCss + '"' :
 				''
 				) +
+			' tabindex="0" '+
+			'data-toggle="popover"'+
+			'data-trigger="focus" '+
+			'data-container="body" '+
+			'data-content="'+EventContentLabel+'"'+
 			'>' +
 				'<div class="fc-content">' +
 					(timeText ?

@@ -41,11 +41,14 @@ class DefaultController extends Controller
         // Repository des Sujets de forum
         $subjectRepository = $manager->getRepository('AGILForumBundle:AgilForumSubject');
         $offerRepository = $manager->getRepository('AGILOfferBundle:AgilOffer');
+        $chatTablesRepository = $manager->getRepository('AGILChatBundle:AgilChatTable');
 
         // Récupération des 3 derniers sujets de forum créés
         $lastSubjects = $subjectRepository->findBy(array(),array('forumSubjectPostDate' => 'desc'),3);
         // Récupération des 3 dernières annonces créés
         $lastOffers = $offerRepository->findBy(array('offerPublish' => true), array('offerPostDate' => 'desc'), 3);
+        // Récupération des 3 dernières tables créés
+        $lastTables= $chatTablesRepository->findBy(array(), array('chatTableDate' => 'desc'), 3);
 
         return $this->render('AGILDefaultBundle:Default:index.html.twig',
             array(
@@ -53,6 +56,7 @@ class DefaultController extends Controller
                 'offers' => $lastOffers,
                 'formSearchBar' => $formSearchBar->createView(),
                 'form' => $form->createView(),
+                'lastTables' => $lastTables
             )
         );
     }
