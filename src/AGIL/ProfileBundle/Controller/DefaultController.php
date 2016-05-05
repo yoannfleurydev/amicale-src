@@ -101,7 +101,10 @@ class DefaultController extends Controller {
                         caractères. Nous conseillons l\'utilisation de caractères alphanumériques et de caractères 
                         spéciaux.');
 
-                            return $this->redirect($this->generateUrl('agil_profile_edit'));
+                            return $this->redirectToRoute(
+                                'agil_profile_id',
+                                array('id' => $this->getUser()->getUserId())
+                            );
                         } else {
                             $encoder = $factory->getEncoder($user);
                             $pass = $encoder->encodePassword($form->get('password')->getData(), $user->getSalt());

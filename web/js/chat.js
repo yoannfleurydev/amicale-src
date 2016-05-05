@@ -1,4 +1,4 @@
-var webSocket = WS.connect("ws://127.0.0.1:8080");
+var webSocket = WS.connect("ws://127.0.0.1:6969");
 
 var message = $("#ChatMessage");
 var sessionGlobal = null;

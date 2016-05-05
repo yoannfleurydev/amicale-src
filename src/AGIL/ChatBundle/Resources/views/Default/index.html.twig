@@ -7,11 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
-                            <h2 class="panel-title">
-                        <span class="panel-title-content">
-                          Nouveau chat
-                        </span>
-                            </h2>
+                            <h2 class="panel-title"><span class="panel-title-content">Ajouter une nouvelle table de discussion</span></h2>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
                             <span class="rotate-icon glyphicon glyphicon-chevron-up icon-bigger hideNewChat"></span>
@@ -20,32 +16,30 @@
                     <div class="panel-body">
                         <div class="addChatContent">
                             {{ form_start(form) }}
-
                             <div class="form-group" id="formAddNameChatTable">
                                 <h5><label class="control-label">Nom de la table</label></h5>
                                 {{ form_errors(form.chatTableName) }}
                                 {{ form_widget(form.chatTableName) }}
                             </div>
-
                             <div class="form-group" id="formAddNameChatTable">
                                 <h5><label class="control-label">Password (facultatif)</label></h5>
                                 {{ form_errors(form.chatTablePassword) }}
                                 {{ form_widget(form.chatTablePassword) }}
                             </div>
-
                             <p class="text-center">
                                 {{ form_widget(form.Ajouter) }}
                             </p>
-
                             {{ form_end(form) }}
                         </div>
                     </div>
                 </div>
             </div>
             {% for chatTable in chatTableList %}
-
                 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title"><span class="panel-title-content">{{ chatTable.chatTableName }}</span></h2>
+                        </div>
                         <div class="panel-body">
                             {% if chatTable.chatTablePassword is null %}
                                 <a class="with_pwd btn btn-primary"

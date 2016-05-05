@@ -13,6 +13,8 @@ class CategoriesController extends Controller
      * Partie Contrôleur de la page d'une catégorie, qui affiche
      * la liste des sujets par ordre décroissants des dates de réponses
      *
+     * @param $idCategory
+     * @param $page
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function subjectsAction($idCategory,$page)
@@ -51,13 +53,14 @@ class CategoriesController extends Controller
 
 
         // Récupération des sujets pour la catégorie courante en fonction des dernières réponses
-        $subjects = $subjectRepository->getLastSubjectsByAnswer($page,$maxSubjects,$category);
+        $subjects = $subjectRepository->getLastSubjectsByAnswer($page, $maxSubjects, $category);
 
 
         // Pour chaque sujet, on récupère le nombre de réponses, la date relative du dernier message et les tags
         $countAnswersPerSubject = null;
         $relativeDatePerSubject = null;
         $tagsPerSubject         = null;
+
         foreach($subjects as $sub){
             $countAnswersPerSubject[$sub['forumSubjectId']] = $subjectRepository->getCountAnswersInSubject($sub['forumSubjectId']);
             $relativeDatePerSubject[$sub['forumSubjectId']] = $this->time_elapsed_string($sub['forumAnswerPostDate']);

@@ -8,11 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints\Length;
 
-class AddAnswerType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-
+class AddAnswerType extends AbstractType {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('forumAnswerText', TextareaType::class, array(
             'label' => false,
             'constraints' => array(
