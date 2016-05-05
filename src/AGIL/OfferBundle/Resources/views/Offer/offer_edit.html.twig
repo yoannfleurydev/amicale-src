@@ -55,12 +55,17 @@
                         {{ form_widget(form.offerType) }}
                     </div>
 
-                    <a href="{{ asset("img/offer/") ~ offer.offerPdfUrl }}" TARGET="_BLANK">Annonce.pdf</a>
+                    {% if offer.offerPdfUrl is not null %}
+                    <a href="{{ asset("img/offer/") ~ offer.offerPdfUrl }}" TARGET="_BLANK">PDF de l'annonce</a>
+                    {% endif %}
 
                     <div class="form-group">
+                        <div class="fileUpload btn btn-primary">
+                            <span id="button_name_cv"><i class="material-icons">file_upload</i> Choisir un fichier</span>
+                            {{ form_widget(form.offerPdfUrl) }}
+                        </div>
                         {{ form_errors(form.offerPdfUrl) }}
-                        {{ form_widget(form.offerPdfUrl) }}
-                        <p><i>(Format: PDF)</i></p>
+                        <p><i>(Format autorisé: PDF)</i></p>
                     </div>
 
                     <div class="form-group required">
@@ -105,17 +110,20 @@
         </div>
     </div>
 
-    <!-- Panel qui s'affiche pour la confirmation de suppression -->
+    {# Fenêtre modal de suppression #}
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5>Etes vous sûr ?</h5>
+                    <h5>Etes vous sûr de vouloir supprimer cette offre ?</h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <a class="btn btn-danger btn-ok">Confirmer</a>
+                    <a class="btn btn-danger btn-ok"
+                       href="{{ path('agil_offer_delete', {'idCrypt': offer.offerRoute}) }}">
+                        Confirmer
+                    </a>
                 </div>
             </div>
         </div>

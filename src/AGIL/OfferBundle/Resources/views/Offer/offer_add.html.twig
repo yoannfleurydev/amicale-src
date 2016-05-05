@@ -73,7 +73,6 @@
                     </div>
 
                     <div class="form-group">
-
                         <div class="fileUpload btn btn-primary">
                             <span id="button_name_cv"><i class="material-icons">file_upload</i> Choisir un fichier</span>
                             {{ form_widget(form.offerPdfUrl) }}
@@ -83,7 +82,7 @@
                     </div>
 
                     <div class="form-group required">
-                        <label class="control-label">Expiration de l'annonce dans : </label>
+                        <label class="control-label">Expiration de l'annonce le : </label>
                         {{ form_errors(form.expireAt) }}
                         {{ form_widget(form.expireAt) }}
                     </div>
@@ -110,5 +109,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

@@ -73,8 +73,8 @@ class EditOfferType extends AbstractType
             'label' => false,
             'required' => true,
             'choices' => array(
-                'stage' => 'stage',
-                'emploi' => 'emploi'
+                'stage' => 'Stage',
+                'emploi' => 'Emploi'
             ),
             'multiple' => false,
             'expanded' => true,

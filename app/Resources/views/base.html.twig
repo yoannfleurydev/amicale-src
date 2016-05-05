@@ -103,9 +103,11 @@
 
                     {% if is_granted("ROLE_USER") %}
                     <li>
-                        <a href="{{ path('agil_offer_homepage') }}" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
+                        <a href="{{ path('agil_offer_homepage') }}"
+                           class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}"
+                           title="Offres">
                             <span class="glyphicon glyphicon-info-sign"></span>
-                            Annonces
+                            Offres
                         </a>
                     </li>
 
@@ -118,9 +120,11 @@
                     </li>
                     {% else %}
                         <li>
-                            <a href="{{ path('agil_offer_add') }}" class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}" title="Annonces">
+                            <a href="{{ path('agil_offer_add') }}"
+                               class="nav-link {% if isActive == "annonces" %} nav-link-active {% endif %}"
+                               title="Offres">
                                 <span class="glyphicon glyphicon-info-sign"></span>
-                                Annonces
+                                Offres
                             </a>
                         </li>
                     {% endif %}

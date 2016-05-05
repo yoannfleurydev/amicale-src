@@ -189,10 +189,6 @@ class OfferController extends Controller
 
             $offer->setTags($em->getRepository("AGILDefaultBundle:AgilTag")->findByTagName($tagsArrayString));
 
-            // expiration
-           /* $date = new \DateTime();
-            $offer->setOfferExpirationDate($date->add(new \DateInterval($form->get('expireAt')->getData())));*/
-
             $em->persist($offer);
             $em->flush();
             $logger = $this->get('service_offer.logger');
