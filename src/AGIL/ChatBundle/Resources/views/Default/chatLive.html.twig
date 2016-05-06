@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <h2 class="panel-title">
                         <span class="panel-title-content">
-                          Table : {{ chatTable.chatTableName }}
+                          {{ chatTable.chatTableName }}
                         </span>
                     </h2>
                 </div>
@@ -56,10 +56,10 @@
                                           width="30px">
                                     <div class="text-center">{{ message.user.username }}</div>
                                 </div>
-                                <div class="date_message col-lg-10 col-md-10 col-sm-8 col-xs-8"
+                                <div class="date_message col-lg-10 col-md-10 col-sm-8 col-xs-8 text-right"
                                      date="{{ message_before.chatMessageDate|date('Y-m-d G:i')}}"></div>
                             </div>
-                            <div class="contenu col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                                 <p class="no-margin-top-bot">{{ message.chatMessageText }}</p>
 
@@ -71,13 +71,12 @@
                                         <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-
-                                                    <div><img class="img-circle img-responsive"
+                                                    <div><img class="img-circle"
                                                               src="{{ asset("img/profile/") ~ message.user.userProfilePictureUrl }}"
-                                                              size="5px"></div>
+                                                              width="30px"></div>
                                                     <div class="text-center">{{ message.user.username }}</div>
                                                 </div>
-                                                <div class="contenu col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                                                     <p class="no-margin-top-bot">{{ message.chatMessageText }}</p>
 
@@ -128,7 +127,6 @@
 
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

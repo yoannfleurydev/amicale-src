@@ -8,15 +8,12 @@ var theUsers = [];
 var nb_msg;
 
 $(document).ready(function () {
-
     $('#message_to_send').focus();
 
     idChatTable = $('#idChatTable').attr("idRoom");
     idUser = $('#idUser').attr("idUser");
-    nb_msg = $('.contenu').length;
+    nb_msg = $('.content').length;
 
-    console.log("Connexion de "+idUser);
-    console.log("---------------------");
     refreshDate();
 });
 
@@ -25,7 +22,7 @@ $(window).on('scroll', function () {
         if (nb_msg >= 100) {
             $.post(Routing.generate('agil_chat_message_load'), {id_table: idChatTable, nb_msg: nb_msg})
                 .done(function (data) {
-                    nb_msg = $('.contenu').length - 100;
+                    nb_msg = $('.content').length - 100;
                 });
         }
     }
@@ -71,8 +68,6 @@ webSocket.on("socket/connect", function (session) {
         }
 
         if (payload.user_remove != null) {
-            console.log("déco de : " + payload.user_remove);
-
             if (theUsers.indexOf(payload.user_remove) != -1) {
                 theUsers.splice(theUsers.indexOf(payload.user_remove), 1);
                 console.log("--"+theUsers+"--");
@@ -83,7 +78,6 @@ webSocket.on("socket/connect", function (session) {
         // Toutes les 150 secondes
         if (payload.refresh != null) { refreshDate();}
     });
-
 
     $('.send_message').on('click', function () {
         send();
@@ -103,7 +97,6 @@ webSocket.on("socket/connect", function (session) {
                 return false;
             }
         }
-
     });
 
 
@@ -125,23 +118,19 @@ webSocket.on("socket/connect", function (session) {
     }
 
     function send() {
-
         var textArea = $('#message_to_send');
         var message = {'type': 'msg', 'id_user': idUser, 'contenu': textArea.val()};
         if (message.contenu != '') {
             session.publish("agil/chat/" + idChatTable + "/", message);
             textArea.val('');
         }
-
     }
 });
-
 
 webSocket.on("socket/disconnect", function (error) {
     session = null;
     console.log("Disconnected for " + error.reason + " with code " + error.code);
 });
-
 
 function addMessage(msg) {
     var user = null;
@@ -196,7 +185,7 @@ function addMessage(msg) {
                 messages.append(theMessage);
 
             }
-            //
+
             $.post(Routing.generate('agil_chat_message'), {
                     msg_content: msg.contenu,
                     msg_date: date,
@@ -209,7 +198,6 @@ function addMessage(msg) {
 
 }
 function refreshDate() {
-
     $('.message_received').each(function () {
         var date_message = $(this).find('.contenu').attr('date');
         $(this).find('.date').empty();

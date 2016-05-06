@@ -2,7 +2,7 @@
 {% block body %}
     {% if not is_granted("ROLE_USER") %}
         <div class="row">
-            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
@@ -12,36 +12,41 @@
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Bienvenue sur le site AMICALE GIL, ce site a pour but de faciliter l'échange entre les
-                            étudiants et anciens
-                            étudiants du master GIL, mais aussi avec les professionnels. Il permet de faciliter la
-                            diffusion des offres
-                            d'emploi et de stage, grâce à un accès direct aux étudiants.
+                        <p class="alert alert-info text-justify">
+                            Bienvenu sur le site du Master GIL. Cette application est destinée aux étudiants du
+                            Master GIL de Rouen, mais également aux professionnels souhaitant déposer des offres
+                            d'emplois et de stage.
                         </p>
-                        <p>
-                            Le master GIL (Génie de l'Informatique Logicielle) est enseigné à l'Université de Rouen, au
-                            Madrillet. Ce
-                            master a pour but d'enseigner les diverses techniques de développement afin de former de
+                        <p class="text-justify">
+                            Le Master GIL (Génie de l'Informatique Logicielle) de Rouen est situé à L'U.F.R des
+                            Sciences et Techniques au Madrillet sur le pôle du Technopôle. Ce Master a pour but
+                            d'enseigner les diverses techniques de développement afin de former de
                             futurs développeurs et chefs de projet.
                             Une trentaine d’enseignants et d’enseignants-chercheurs permanents, ainsi qu’une vingtaine
-                            d’intervenants
-                            professionnels, dispensent depuis de nombreuses années un enseignement théorique et
-                            professionnel de qualité
-                            ayant permis à nos étudiants des filières professionnelles des promotions 2005 à 2008 d’être
-                            employés à <strong>100 %</strong>
+                            d’intervenants professionnels, dispensent depuis de nombreuses années un enseignement
+                            théorique et professionnel de qualité ayant permis à nos étudiants des filières
+                            professionnelles des promotions 2005 à 2008 d’être employés à <strong>100 %</strong>
                             en CDI (source : Observatoire de la vie étudiante, Université de Rouen).
-                            Vous trouverez la plaquette détaillant le Master GIL (première annèe) <a
-                                    href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1">ici</a>
                         </p>
-                        <p>
-                            Ce site a été conçu et développé, par sept étudiants du master GIL, à l'occasion d'un
-                            projet annuel pendant la première année du master.
-                        </p>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m1"
+                                class="col-sm-4">
+                                Plaquette détaillant le Master GIL 1
+                            </a>
+                            <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/contenu-pedagogique/le-contenu-pedagogique-m2"
+                                class="col-sm-4">
+                                Plaquette détaillant le Master GIL 2
+                            </a>
+                            <a href="https://dpt-info-sciences.univ-rouen.fr/index.php/formations" class="col-sm-4">
+                                Les formations du département info
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         Vous souhaitez déposer une oﬀre de stage à destination des étudiants du Master GIL ou une oﬀre

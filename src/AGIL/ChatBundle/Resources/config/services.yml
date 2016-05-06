@@ -1,7 +1,7 @@
 services:
     agil_hello.topic_sample_service:
         class: AGIL\ChatBundle\Topic\AgilTopic
-        arguments: [@gos_web_socket.websocket.client_manipulator]
+        arguments: ["@gos_web_socket.websocket.client_manipulator"]
         tags:
             - { name: gos_web_socket.topic }
 
