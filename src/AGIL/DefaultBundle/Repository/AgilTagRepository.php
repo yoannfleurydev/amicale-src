@@ -608,19 +608,31 @@ class AgilTagRepository extends EntityRepository
 				$tagTab[] = $s->getTag()->getTagName();
 			}
 
+			$inputSearchSplit = array_map('strtolower', $inputSearchSplit);
+			$inputNoSplit = array_map('strtolower', $inputNoSplit);
+			$tagTab = array_map('strtolower', $tagTab);
+
 			// Si le user n'a pas tous les tags contenu dans $inputSearchSplit,
 			// ou si il possède un tag qui appartient à $inputNoSplit, on l'enlève
 			if(array_diff($inputSearchSplit,$tagTab) != null || !empty(array_intersect($inputNoSplit, $tagTab))){
 				unset($completeResult[$key]);
 			}else{
+				$add = true;
 				// Sinon, on calcul son niveau pour les tags d'inputSearchSplit
 				$level = 0;
 				foreach($skills as $s){
 					if(in_array($s->getTag()->getTagName(),$inputSearchSplit)){
-						$level += $s->getSkillLevel();
+						if($s->getSkillLevel() >= 7){
+							$level += $s->getSkillLevel();
+						}else{
+							unset($completeResult[$key]);
+							$add = false;
+							break;
+						}
 					}
 				}
-				$bestUser[$res['id']] = $level;
+				if($add)
+					$bestUser[$res['id']] = $level;
 			}
 
 		}
@@ -725,18 +737,31 @@ class AgilTagRepository extends EntityRepository
 				$tagTab[] = $s->getTag()->getTagName();
 			}
 
+			$inputSearchSplit = array_map('strtolower', $inputSearchSplit);
+			$inputNoSplit = array_map('strtolower', $inputNoSplit);
+			$tagTab = array_map('strtolower', $tagTab);
+
 			// Si le user n'a aucun des tags contenu dans $inputSearchSplit,
 			// ou si il possède un tag qui appartient à $inputNoSplit, on l'enlève
 			if(empty(array_intersect($inputSearchSplit,$tagTab)) || !empty(array_intersect($inputNoSplit, $tagTab))){
 				unset($completeResult[$key]);
 			}else{
 				// Sinon, on calcul le niveau de son meilleur skill parmi les tags
+				$add = true;
 				$levelMax = 0;
-				foreach($skills as $s)
-					if(in_array($s->getTag()->getTagName(),$inputSearchSplit))
-						if($s->getSkillLevel() > $levelMax)
+				foreach($skills as $s){
+					if(in_array($s->getTag()->getTagName(),$inputSearchSplit)){
+						if($s->getSkillLevel() > $levelMax && $s->getSkillLevel() >= 7)
 							$levelMax = $s->getSkillLevel();
-				$bestUser[$res['id']] = $levelMax;
+						else{
+							unset($completeResult[$key]);
+							$add = false;
+							break;
+						}
+					}
+				}
+				if($add)
+					$bestUser[$res['id']] = $levelMax;
 			}
 
 		}
