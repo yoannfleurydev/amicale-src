@@ -17,19 +17,14 @@ class LoadForumCategoriesData extends AbstractFixture implements OrderedFixtureI
     {
         $categories[] = new AgilForumCategory("Cours Master 1","glyphicon glyphicon-list-alt","Cette catégorie
         recense les différents post concernant les cours de la première année du Master");
-        $this->addReference('Cours Master 1', $categories[count($categories)-1]);
         $categories[] = new AgilForumCategory("Cours Master 2","glyphicon glyphicon-list-alt","Cette catégorie
         recense les différents post concernant les cours de la deuxième année du Master");
-        $this->addReference('Cours Master 2', $categories[count($categories)-1]);
         $categories[] = new AgilForumCategory("Tutos & Aide","glyphicon glyphicon-book","Vous avez besoin d'aide ou
         vous souhaitez tout simplement poster un tutoriel ? Rendez-vous dans cette catégorie");
-        $this->addReference('Tutos & Aide', $categories[count($categories)-1]);
         $categories[] = new AgilForumCategory("Informatique","glyphicon glyphicon-hdd","Ici, vous pouvez parler de
         tout et de rien concernant l'informatique");
-        $this->addReference('Informatique', $categories[count($categories)-1]);
         $categories[] = new AgilForumCategory("Divers","glyphicon glyphicon-briefcase","Tout ce qui ne se situe pas
-        dans cette catégorie ce situe dans celle-ci, Divers.");
-        $this->addReference('Divers', $categories[count($categories)-1]);
+        dans les autres catégories ce situe dans celle-ci.");
 
         foreach($categories as $c){
             $manager->persist($c);

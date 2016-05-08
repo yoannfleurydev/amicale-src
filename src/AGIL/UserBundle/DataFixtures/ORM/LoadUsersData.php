@@ -25,11 +25,11 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
-        // ############ CREATION D'UN SUPER-ADMINISTRATEUR DE TEST ############
         $userManager = $this->container->get('fos_user.user_manager');
         $userSuperAdmin = $userManager->createUser();
+
         $userSuperAdmin->setUsername('superadmin');
-        $userSuperAdmin->setEMail('superadmin@amicale.dev');
+        $userSuperAdmin->setEmail('superadmin@amicale.dev');
         $userSuperAdmin->setPlainPassword('superadmin');
         $userSuperAdmin->setEnabled(true);
         $userSuperAdmin->setRoles(array('ROLE_SUPER_ADMIN'));
@@ -37,58 +37,6 @@ class LoadUsersData extends AbstractFixture implements FixtureInterface, Contain
         $userManager->updateUser($userSuperAdmin, true);
 
         $this->setReference('superadmin', $userSuperAdmin);
-
-        // ############ CREATION D'UN ADMINISTRATEUR DE TEST ############
-        $userManager = $this->container->get('fos_user.user_manager');
-        $userAdmin = $userManager->createUser();
-        $userAdmin->setUsername('admin');
-        $userAdmin->setEMail('admin@amicale.dev');
-        $userAdmin->setPlainPassword('admin');
-        $userAdmin->setEnabled(true);
-        $userAdmin->setRoles(array('ROLE_ADMIN'));
-
-        $userManager->updateUser($userAdmin, true);
-
-        $this->setReference('admin', $userAdmin);
-
-        // ############ CREATION D'UN MODERATEUR DE TEST ############
-        $userManager = $this->container->get('fos_user.user_manager');
-        $userModerator = $userManager->createUser();
-        $userModerator->setUsername('moderator');
-        $userModerator->setEMail('moderator@amicale.dev');
-        $userModerator->setPlainPassword('moderator');
-        $userModerator->setEnabled(true);
-        $userModerator->setRoles(array('ROLE_MODERATOR'));
-
-        $userManager->updateUser($userModerator, true);
-
-        $this->setReference('moderator', $userModerator);
-
-        // ############ CREATION D'UN MEMBRE DE TEST ############
-        $userManager = $this->container->get('fos_user.user_manager');
-        $userMember = $userManager->createUser();
-        $userMember->setUsername('user');
-        $userMember->setEMail('user@amicale.dev');
-        $userMember->setPlainPassword('user');
-        $userMember->setEnabled(true);
-        $userMember->setRoles(array('ROLE_USER'));
-
-        $userManager->updateUser($userMember, true);
-
-        $this->setReference('user', $userMember);
-
-        $userManager = $this->container->get('fos_user.user_manager');
-        $amicale = $userManager->createUser();
-        $amicale->setUsername('amicale');
-        $amicale->setEMail('amicale@amicale.dev');
-        $amicale->setPlainPassword('amicale');
-        $amicale->setEnabled(true);
-        $amicale->setRoles(array('ROLE_SUPER_ADMIN'));
-        $amicale->setUserProfilePictureUrl('default.jpg');
-
-        $userManager->updateUser($amicale, true);
-
-        $this->setReference('amicale', $amicale);
     }
 
     /**

@@ -15,39 +15,6 @@ class LoadSkillsData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        // On récupère les objets Fixture : User et Tags
-        $users[] = $this->getReference('superadmin');
-        $users[] = $this->getReference('user');
-        $users[] = $this->getReference('moderator');
-        $users[] = $this->getReference('amicale');
-
-        $tags[] = $this->getReference('tagPHP');
-        $tags[] = $this->getReference('tagJava');
-        $tags[] = $this->getReference('tagAndroid');
-        $tags[] = $this->getReference('tagJEE');
-        $tags[] = $this->getReference('tagCSS');
-        $tags[] = $this->getReference('tagC++');
-        $tags[] = $this->getReference('tagJavascript');
-        $tags[] = $this->getReference('tagHTML');
-        $tags[] = $this->getReference('tagC');
-        $tags[] = $this->getReference('tagOCaml');
-        $tags[] = $this->getReference('tagPL/SQL');
-        $tags[] = $this->getReference('tagSQL');
-        $tags[] = $this->getReference('tagCordova');
-        $tags[] = $this->getReference('tagObjectiveC');
-        $tags[] = $this->getReference('tagSwift');
-
-
-        foreach($users as $user) {
-            foreach ($tags as $tag) {
-                $skills[] = new AgilSkill($tag, $user, 5);
-            }
-        }
-
-        foreach($skills as $s){
-            $manager->persist($s);
-        }
-        $manager->flush();
 
     }
 

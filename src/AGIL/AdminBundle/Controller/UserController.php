@@ -2,23 +2,19 @@
 
 namespace AGIL\AdminBundle\Controller;
 
-use AGIL\AdminBundle\Form\UserAdminType;
-use AGIL\ProfileBundle\Entity\AgilSkill;
-use Doctrine\ORM\EntityManager;
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Model\UserInterface;
-use AGIL\UserBundle\Entity\AgilUser;
-use AGIL\AdminBundle\Form\UserType;
 use AGIL\AdminBundle\Form\SearchUserType;
+use AGIL\AdminBundle\Form\UserAdminType;
 use AGIL\AdminBundle\Form\UsersCSVType;
+use AGIL\AdminBundle\Form\UserType;
+use AGIL\ProfileBundle\Entity\AgilSkill;
+use AGIL\SearchBundle\Form\SearchType;
+use AGIL\UserBundle\Entity\AgilUser;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use AGIL\SearchBundle\Form\SearchType;
 
 class UserController extends Controller
 {
@@ -337,17 +333,17 @@ class UserController extends Controller
         if (($handle = fopen($file, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $num = count($data);
-                //echo "<p> $num champs à la ligne $row: <br /></p>\n";
+
                 $row++;
                 $attr_user[$row - 1] = array();
                 for ($c = 0; $c < $num; $c++) {
-                    //echo $data[$c] . "<br />\n";
+
                     $attr_user[$row - 1][$c] = $data[$c];
                 }
             }
             fclose($handle);
         }
-        //var_dump($attr_user);
+
         foreach ($attr_user as $value) {
             $firstName = $value[0];
             if (!isset($value[1])) {
@@ -360,7 +356,7 @@ class UserController extends Controller
                 $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
 
                 if ($user == null) {
-                    $userManager = $this->get('fos_user.user_manager.default');
+                    $userManager = $this->get('fos_user.user_manager');
                     $user = $userManager->createUser();
                     if (strlen($lastName) >= 5 and strlen($firstName) >= 3) {
                         $lastNameTmp = strtolower($lastName);

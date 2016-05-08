@@ -15,14 +15,27 @@ class LoadProfileSkillsCategoryData extends AbstractFixture implements OrderedFi
      */
     public function load(ObjectManager $manager)
     {
-        $categories[] = new AgilProfileSkillsCategory("Web");
-        $this->addReference('Web', $categories[count($categories)-1]);
-        $categories[] = new AgilProfileSkillsCategory("Logiciel");
-        $this->addReference('Logiciel', $categories[count($categories)-1]);
-        $categories[] = new AgilProfileSkillsCategory("BDD");
-        $this->addReference('BDD', $categories[count($categories)-1]);
+        $categories[] = new AgilProfileSkillsCategory('Framework et bibliothèques');
+        $this->addReference('Framework et bibliothèques', $categories[count($categories)-1]);
+
+        $categories[] = new AgilProfileSkillsCategory("Langages Web");
+        $this->addReference('Langages Web', $categories[count($categories)-1]);
+
+        $categories[] = new AgilProfileSkillsCategory("Langages Logiciels");
+        $this->addReference('Langages Logiciels', $categories[count($categories)-1]);
+
+        $categories[] = new AgilProfileSkillsCategory("Base De Données");
+        $this->addReference('Base De Données', $categories[count($categories)-1]);
+
         $categories[] = new AgilProfileSkillsCategory("Mobile");
         $this->addReference('Mobile', $categories[count($categories)-1]);
+
+        $categories[] = new AgilProfileSkillsCategory('Gestion de projet');
+        $this->addReference('Gestion de projet', $categories[count($categories)-1]);
+
+        $categories[] = new AgilProfileSkillsCategory('IDE');
+        $this->addReference('IDE', $categories[count($categories)-1]);
+
 
         foreach($categories as $c){
             $manager->persist($c);
