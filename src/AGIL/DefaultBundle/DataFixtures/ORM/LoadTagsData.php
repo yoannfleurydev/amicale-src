@@ -28,61 +28,99 @@ class LoadTagsData extends AbstractFixture implements OrderedFixtureInterface
          * Framework et bibliothèque
          */
         $tags[] = new AgilTag('symfony', 'grey-darker-1', $frameworkLibrary);
+        $this->addReference('symfony', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('angularjs', 'red', $frameworkLibrary);
+        $this->addReference('angularjs', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('laravel', 'red-lighter-2', $frameworkLibrary);
+        $this->addReference('laravel', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('jquery', 'blue', $frameworkLibrary);
+        $this->addReference('jquery', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('bootstrap', 'purple-darker-2', $frameworkLibrary);
+        $this->addReference('bootstrap', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('django', 'green-darker-4', $frameworkLibrary);
+        $this->addReference('django', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('spring', 'green-lighten-2', $frameworkLibrary);
+        $this->addReference('spring', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('nodejs', 'green', $frameworkLibrary);
+        $this->addReference('nodejs', $tags[count($tags) - 1]);
         /*
          * Web
          */
         $tags[] = new AgilTag('html', 'orange', $web);
+        $this->addReference('html', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('css', 'cyan', $web);
+        $this->addReference('css', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('php', 'purple-darker-2', $web);
+        $this->addReference('php', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('javascript', 'yellow', $web);
+        $this->addReference('javascript', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('jee', 'red-lighter-3', $web);
+        $this->addReference('jee', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('xml', 'blue-grey', $web);
+        $this->addReference('xml', $tags[count($tags) - 1]);
         /*
          * Base de données
          */
         $tags[] = new AgilTag('mysql', 'blue-darker-1', $db);
+        $this->addReference('mysql', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('postgresql', 'blue-darker-2', $db);
+        $this->addReference('postgresql', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('oracle', 'red', $db);
+        $this->addReference('oracle', $tags[count($tags) - 1]);
         /*
          * Langages Logiciels
          */
         $tags[] = new AgilTag('java', 'orange', $software);
+        $this->addReference('java', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('.net', 'cyan-darker-2', $software);
+        $this->addReference('.net', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('c', 'blue-grey', $software);
+        $this->addReference('c', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('c++', 'blue-grey', $software);
+        $this->addReference('c++', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('python', 'yellow-darker-2', $software);
+        $this->addReference('python', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('vba', 'yellow-darker-2', $software);
+        $this->addReference('vba', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('ruby', 'red', $software);
+        $this->addReference('ruby', $tags[count($tags) - 1]);
         /*
          * Gestion de projet
          */
         $tags[] = new AgilTag('git', 'red-lighter-3', $projects);
+        $this->addReference('git', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('svn', 'green-lighter-3', $projects);
+        $this->addReference('svn', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('mercurial', 'grey', $projects);
+        $this->addReference('mercurial', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('methodes_agiles', 'grey', $projects);
+        $this->addReference('methodes_agiles', $tags[count($tags) - 1]);
         /*
          * IDE
          */
         $tags[] = new AgilTag('phpstorm', 'purple-lighter-3', $ide);
+        $this->addReference('phpstorm', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('intellij', 'red-lighter-3', $ide);
+        $this->addReference('intellij', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('visual_studio', 'purple-lighter-3', $ide);
+        $this->addReference('visual_studio', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('netbeans', 'cyan-lighter-3', $ide);
+        $this->addReference('netbeans', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('android_studio', 'green-darker-4', $ide);
+        $this->addReference('android_studio', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('pycharm', 'green-darker-3', $ide);
+        $this->addReference('pycharm', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('eclipse', 'purple-darker-3', $ide);
+        $this->addReference('eclipse', $tags[count($tags) - 1]);
         /*
          * Mobile
          */
         $tags[] = new AgilTag('android', 'green-darker-2', $mobile);
+        $this->addReference('android', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('swift', 'orange-darker-2', $mobile);
+        $this->addReference('swift', $tags[count($tags) - 1]);
         $tags[] = new AgilTag('cordova', 'grey-darker-2', $mobile);
+        $this->addReference('cordova', $tags[count($tags) - 1]);
 
 
         $tags[] = new AgilTag("c#","primary-blue",NULL);
