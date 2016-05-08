@@ -325,17 +325,13 @@ class UserController extends Controller
      * @param $form
      * @param $em
      * @param $factory
+     * @param $request
      */
     function addUserByCSVFile($form, $em, $factory, $request)
     {
         $nbRegisters = 0;
         $file = $form['file']->getData();
 
-        //$name = $file->getPathname();
-        //echo $name;
-        /*$dir = __DIR__.'/../../../../web/uploads';
-
-        $file->move($dir, $name) ;*/
         $attr_user = array();
         $row = 1;
         if (($handle = fopen($file, "r")) !== FALSE) {
@@ -364,10 +360,8 @@ class UserController extends Controller
                 $user = $em->getRepository('AGILUserBundle:AgilUser')->findBy(array('email' => $email));
 
                 if ($user == null) {
-                    $userManager = $this->get('fos_user.user_manager');
+                    $userManager = $this->get('fos_user.user_manager.default');
                     $user = $userManager->createUser();
-                    $lastName = $lastName;
-                    $firstName = $firstName;
                     if (strlen($lastName) >= 5 and strlen($firstName) >= 3) {
                         $lastNameTmp = strtolower($lastName);
                         $firstNameTmp = strtolower($firstName);

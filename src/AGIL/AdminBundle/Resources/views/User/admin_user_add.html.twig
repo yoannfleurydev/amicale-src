@@ -78,7 +78,6 @@
                         {{ form_errors(formCSV) }}
 
                         <div class="form-group">
-                            <!-- with input that accepts one file -->
                             <div class="input-group">
                                 <div class="fileUpload btn btn-primary">
                                     <span id="button_name_cv"><i class="material-icons">file_upload</i> Choisir un fichier</span>
@@ -92,13 +91,21 @@
                         {{ form_rest(formCSV) }}
                     </form>
                 </div>
+                <div class="panel-footer">
+                    <div class="alert alert-info text-justify">
+                        Le fichier CSV à importer suis le format d'export du logiciel libre Thunderbird.
+                        <code>Prénom,Nom de famille,Nom à afficher,Surnom,Adresse électronique principale,etc.</code>
+                        Les champs
+                        peuvent bien entendu être vides, excepter le champs
+                        <strong>Adresse électronique principale</strong>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         $("#upload").change(function() {
-            // will log a FileList object, view gifs below
             $("#fileChoose").val(this.files[0].name);
         });
     </script>
